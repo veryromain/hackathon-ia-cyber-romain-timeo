@@ -12,6 +12,10 @@ Ajouter les entrées les plus récentes en haut.
 
 ---
 
+### 2026-10-11 01:16 — Romain (avec Claude) — DÉCISIONS DE ROMAIN SUR LE POSITIONNEMENT + AUDIT DU CONTRAT
+- **Décisions de Romain :** freinage / blocage → **solution hybride, Timéo décide** ; cible gardée (limites et risques notés pour plus tard) ; prix en B6 ; chaîne : « né sur Avalanche, portable EVM », **à mettre en avant devant le jury** ; sources pour les agents et données réelles → **Timéo** ; entrée sur le marché et personnalisation → stratégie validée telle quelle (libre-service, observation gratuite, activation de la friction, démo en second, distribution Safe/Avalanche, profils). Tout cela nourrira le pitch, la présentation et le motion design de la démo.
+- **Fait (B1 §8, contrat) :** `shared/audit-contrat.md`. **Slither : aucune détection haute ou moyenne** (informatif : timestamps, égalités sentinelles, un local non initialisé bénin, un zero-check voulu, optimisations de gas, héritage cosmétique). **Fuzzing : 300 séquences aléatoires, 6 926 appels, 0 invariant violé** (`ia-1/integration/invariants.test.js`, à lancer depuis `ia-2`). Plan : audit externe budgété avant le premier client payant, intro via les mentors demain.
+- **Timéo, deux retouches cosmétiques pour toi quand tu repasses sur le contrat :** `RiskRegistry` devrait hériter de `IRiskRegistry` ; mettre en cache `ownerList.length` dans les boucles. Et `hardhat verify` sur Snowtrace au prochain déploiement.
 ### 2026-10-11 01:13 — ia-2 / Timéo (avec Claude) — NOUVEAU SIGNAL : HISTORIQUE ON-CHAIN DU DESTINATAIRE (MOTEUR MODIFIÉ, ÉTEINT PAR DÉFAUT)
 - **⚠️ Romain : j'ai modifié ton moteur, `ia-1/score/regles.py` et `ia-1/score/moteur.py`** (décision de Timéo, 01:00). Ajout seulement, éteint par défaut. Relis les poids quand tu peux.
 - **Nouveau signal : l'historique on-chain du destinataire.** `NEW_RECIPIENT` dit « nous ne l'avons jamais payée » ; le nouveau signal dit « la chaîne non plus ne la connaît pas ». Pour un destinataire inconnu, le moteur interroge le nœud (transactions émises, contrat ou non) et l'explorateur Routescan (date de première activité, code publié ou non). Deux sources publiques, sans clé.

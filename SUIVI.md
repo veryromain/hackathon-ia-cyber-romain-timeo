@@ -4,7 +4,7 @@
 > Légende : ✅ fait · 🔄 en cours · ⬜ à faire · ✂️ coupé (manque de temps)
 > Détail du projet : [`PLAN.md`](PLAN.md) · Historique : [`JOURNAL.md`](JOURNAL.md) · Brief : [`CONTEXTE.md`](CONTEXTE.md)
 
-**Dernière mise à jour :** 2026-10-11 00:51, par Claude (Romain) — positionnement après l'étude de marché (10 décisions) ; P1 benchmark produit livré par Codex (Timéo) à 00:45
+**Dernière mise à jour :** 2026-10-11 01:16, par Claude (Romain) — audit du contrat (statique + fuzzing) fait
 **Rendu (gel définitif) :** dim. 11/10 **12:00** · **Checkpoint :** sam. **18:30** · **Pitch :** dim. 13:00
 
 ---
@@ -147,6 +147,7 @@ Un **garde antifraude pour les organisations qui gardent des millions dans un po
 | C3 | **« Ce que vous signez vraiment »** : transaction décodée + 4 derniers caractères à retaper avant de signer | Romain | Dashboard | Test | ✅ 21:51 |
 | C4 | **Immunité collective** : une fraude annulée devient un signalement pour tous, preuve on-chain | Romain | Dashboard → `flags.jsonl` | Test | ✅ 21:51 |
 | C5 | **Clé de contrainte** : signer sous menace gèle en silence | Timéo (contrat) + Romain (moteur) | Spécification `shared/proposition-cle-de-contrainte.md` | Décision Timéo : ce soir ou slide | ✅ 22:28 fusionné dans main (50 tests), **redéployé et démontré sur Fuji** : révocation en 1 tx, contrainte → alerte privée ; stockage décidé : matériel (dirigeants, signataires principaux) / passkey téléphone (autres) |
+| C6 | **Contrat : analyse statique + fuzzing + plan d'audit** (B1 §8) | Romain | Slither, test d'invariants aléatoires, `shared/audit-contrat.md` | Note d'audit prête pour le jury | ✅ 01:16 (Slither : 0 détection grave ; 300 séquences / 6 926 appels, 0 invariant violé ; audit externe budgété avant le 1er client payant) |
 | P8 | **Réglages du client** : nombre de signatures en plus (+1 par défaut), durée de la mise en attente, seuils, liste de confiance | Timéo | Paramètres du contrat (`stepUpExtra`, `holdDelay`) | Écran de réglages | 🔄 20:39 (heures et jours ouvrés : `ia-1/config/client*.json`, option `--client` ; principe des planchers et du changement « comme un paiement » écrit en B1 §7) |
 
 ## 7. Phase 5 — Livrables et pitch (dim. 09:00 → 12:00)

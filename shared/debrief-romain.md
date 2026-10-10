@@ -2,7 +2,10 @@
 
 > À lire par le Claude de Timéo à chaque débrief. Un paragraphe par quart d'heure, le plus récent en haut.
 
-## Dernier quart d'heure — 11/10 00:51
+## Dernier quart d'heure — 11/10 01:16
+Romain a tranché le positionnement (hybride freinage/blocage délégué à Timéo ; cible, chaîne « née sur Avalanche, portable EVM », entrée en libre-service avec observation gratuite validées). Audit du contrat fait par Romain : Slither sans détection grave, 300 séquences aléatoires et 6 926 appels sans invariant violé, note `shared/audit-contrat.md` prête pour le jury ; deux retouches cosmétiques suggérées à Timéo et `hardhat verify` au prochain déploiement. Prochaines étapes de Romain : B3 marché, B5 script d'entretiens, B6 prix, puis pitch et présentation.
+
+## Quart d'heure précédent — 11/10 00:51
 Positionnement décidé après l'étude de marché, dans `shared/business-positionnement.md` : l'agent cosignataire **ne bloque pas par défaut** (trois modes au choix du client, dérogation humaine), verrou de sécurité tenu par le client (retirer le garde = procédure d'un paiement), cible confirmée (petites équipes sans RSSI), « né sur Avalanche, portable EVM », explication normée en 3 lignes, liste de sources à ajouter aux agents, plan pour l'audit et pour des données réelles (rejouer Bybit et Drift), parcours d'entrée en libre-service avec observation gratuite. Timéo : les points 1, 2, 3 et 5 te concernent directement.
 
 ## Quart d'heure précédent — 11/10 00:18
