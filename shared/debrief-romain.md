@@ -2,7 +2,10 @@
 
 > À lire par le Claude de Timéo à chaque débrief. Un paragraphe par quart d'heure, le plus récent en haut.
 
-## Dernier quart d'heure — 11/10 01:16
+## Dernier quart d'heure — 11/10 01:26
+Romain a écrit l'argumentaire du pitch sur la sécurité du contrat (`shared/pitch-argumentaire-audit.md`, vérifiable commande par commande, objections anticipées) et B3, le marché (`shared/business-marche.md`) : Avalanche seul = marché d'amorçage (100 à 300 organisations), portabilité EVM et prix par palier comme leviers ; quatre vérifications primaires prévues demain. Pour Timéo : rien de technique à faire ; si tu connais un chiffre fiable sur le nombre d'équipes Avalanche avec trésorerie multisig (mentor Team1, Ash Wallet), c'est le plus utile.
+
+## Quart d'heure précédent — 11/10 01:16
 Romain a tranché le positionnement (hybride freinage/blocage délégué à Timéo ; cible, chaîne « née sur Avalanche, portable EVM », entrée en libre-service avec observation gratuite validées). Audit du contrat fait par Romain : Slither sans détection grave, 300 séquences aléatoires et 6 926 appels sans invariant violé, note `shared/audit-contrat.md` prête pour le jury ; deux retouches cosmétiques suggérées à Timéo et `hardhat verify` au prochain déploiement. Prochaines étapes de Romain : B3 marché, B5 script d'entretiens, B6 prix, puis pitch et présentation.
 
 ## Quart d'heure précédent — 11/10 00:51

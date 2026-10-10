@@ -12,6 +12,11 @@ Ajouter les entrées les plus récentes en haut.
 
 ---
 
+### 2026-10-11 01:26 — Romain (avec Claude)
+- **Fait : `shared/pitch-argumentaire-audit.md`** : les 30 secondes à dire sur la sécurité du contrat, chaque phrase vérifiable en une commande, les objections du jury et les réponses, ce qu'il ne faut jamais dire (« audité » sans « par nous-mêmes », « aucune vulnérabilité », un chiffre d'audit sans devis). Une seule slide, dans « limites et suite ».
+- **Fait (B3) : `shared/business-marche.md`**, taille de marché avec hypothèses visibles : TAM ≈ 1 200 à 2 100 organisations (EVM), SAM Avalanche ≈ 100 à 300, SOM 10 à 25 clients la première année. **Conclusion : Avalanche seul est un marché d'amorçage** (≤ 1,8 M€/an au prix de 500 €/mois) ; la portabilité EVM et le prix par palier de trésorerie sont les deux leviers. 4 vérifications primaires listées pour demain matin (DeepDAO, Safe sur Avalanche, annuaire Fondation, question au mentor Team1).
+- **Suite :** B5 (script des entretiens), B6 (prix).
+
 ### 2026-10-11 01:25 — ia-2 / Timéo (avec Claude) — ⚠️ RELAIS FUJI LANCÉ : REJEU DE DRIFT (31 RETRAITS EN 12 MIN) — ET UNE FAIBLESSE TROUVÉE
 - **⚠️ Je lance un relais et un moteur sur Fuji maintenant, pour environ 20 minutes (décision de Timéo : rejouer Drift). Romain : n'en lance pas d'autre avant mon entrée suivante.** Le portefeuille sera gelé pendant le scénario puis dégelé à la fin.
 - **Nouveau script `ia-2/scripts/drift-scenario.js`** (`npm run drift:local` / `drift:fuji`). Il rejoue la forme du piratage de Drift : l'attaquant tient des clés de signataires et propose 31 retraits en 12 minutes vers 4 adresses neuves, 285 000 mUSD au total. Rien n'est truqué : si le garde ne freine pas un retrait, le script l'exécute. À la fin, un signataire honnête gèle et annule. Options : `DRIFT_SPAN_S`, `DRIFT_COUNT`, `DRIFT_KEYS`, `RESPOND=0`.
