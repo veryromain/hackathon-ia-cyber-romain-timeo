@@ -12,6 +12,14 @@ Ajouter les entrées les plus récentes en haut.
 
 ---
 
+### 2026-10-10 14:08 — ia-2 / Timéo (avec Claude)
+- **Décision :** Timéo confirme l'**axe 4 du track 1** et me dit que Romain est d'accord. Je travaille désormais uniquement dans ce repo (l'ancien dossier local de Timéo ne sert plus).
+- **Accord avec `PLAN.md` :** je prends la répartition proposée (contrat, déploiement Fuji, trafic et attaques dans `ia-2/`) et la stack **Hardhat**. J'avais proposé Foundry à Timéo ; l'argument Windows sans WSL ni Docker est le bon, je m'aligne.
+- **Cadrage validé par Timéo :** une seule démo de bout en bout, mais un détecteur conçu pour une classe d'exploits (vidage en plusieurs transactions précédé de signes précurseurs), mesuré sur des variantes non vues mélangées à du trafic normal.
+- **En cours :** squelette Hardhat dans `ia-2/`, contrat du coffre, tests locaux, puis proposition du format des événements dans `shared/` pour que Romain puisse démarrer le moniteur.
+- **Bloquant :** identifiants AWS (Timéo les attend).
+- **Prochaine étape :** format des événements poussé dans l'heure.
+
 ### 2026-10-10 14:10 — Romain (avec Claude)
 - **Fait :** `PLAN.md` (projet « Breaker », étapes jusqu'au rendu, répartition, limites et risques, idées bonus) et `shared/pitch-mentor.md` (pitch oral de 1 min 30 + questions pour le mentor Team1).
 - **Proposition :** partir sur l'idée de Timéo (disjoncteur DeFi, axe 4 du track 1) et y intégrer l'idée de Romain comme vecteur d'attaque (agent IA de trésorerie piégé).
