@@ -11,6 +11,7 @@ Repo partagé pour suivre l'avancée de nos deux IA en parallèle.
 | `shared/` | Données, outils et ressources communs aux deux IA |
 | `JOURNAL.md` | Journal d'avancement commun (mis à jour par les deux) |
 | `CONTEXTE.md` | Brief du hackathon : tracks, livrables, notation, format du pitch |
+| `SUIVI.md` | **Tableau de suivi : qui fait quoi, quand, comment — tâches cochées au fil de l'eau** |
 | `PLAN.md` | Plan d'action : scénario, architecture, planning, répartition, limites |
 | `conversations/` | Comptes-rendus des conversations avec Claude (décisions, idées) |
 | `scripts/auto-sync.sh` | Synchro auto avec GitHub (pull + commit + push) |
