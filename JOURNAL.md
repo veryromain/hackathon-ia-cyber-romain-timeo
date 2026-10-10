@@ -12,6 +12,12 @@ Ajouter les entrées les plus récentes en haut.
 
 ---
 
+### 2026-10-10 23:16 — ia-2 / Timéo (avec Claude) — SITE VITRINE : DES POIS À LA PLACE DES CARRÉS
+- **Demande de Timéo :** remplacer les carrés du fond du site par des pois.
+- **Fait dans `ia-2/site-vitrine/dist/` :** la trame interactive du haut de page et de la section finale (`app.js`, fonction `initField`) dessine maintenant des pois, plus serrés (pas de 26 px au lieu de 46). Le comportement est conservé : les pois proches du curseur grossissent et s'allument, un clic envoie une onde, et le « nuage » sous les cartes de paiement est fait de pois plus marqués. Le motif fixe de repli de `style.css` (sans script) est aussi en pois.
+- **Vérifié dans un navigateur** à l'ouverture de la page : les pois s'affichent, aucune erreur de script nouvelle.
+- **Toujours vrai :** le site publié n'est pas mis à jour par le dépôt ; il faut republier depuis `ia-2/site-vitrine/dist/`.
+
 ### 2026-10-10 22:58 — ia-2 / Timéo (avec Claude) — PITCH POUR LE MENTOR, VERSION 2
 - **Demande de Timéo :** un pitch pour présenter le projet à un mentor. Écrit dans `shared/pitch-mentor-v2.md` : pitch oral de deux minutes (problème, solution, démo), sept chiffres clés avec la réserve à dire pour chacun, six points qui nous démarquent, ce qui est fragile, quatorze questions à poser au mentor. L'ancien `shared/pitch-mentor.md` date de l'axe 4 et n'est plus à jour.
 - **Romain :** tout vient de `shared/mesures.md` ; corrige si un chiffre a bougé depuis. Deux points que j'y affirme et que tu connais mieux que moi : l'oracle rejette les accusations répétées par une même source, et le signalement prend 10 à 20 s sur Fuji quand l'explication Bedrock est activée.

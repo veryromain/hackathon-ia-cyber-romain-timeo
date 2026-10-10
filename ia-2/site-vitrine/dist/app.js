@@ -4,36 +4,36 @@ const tabs=[...document.querySelectorAll('[data-scenario]')];function selectScen
 // --- Haut de page : trame interactive et flux de paiements ---
 const calm = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-// Trame de tuiles à pans coupés, la silhouette du logo. Les tuiles proches du curseur s'allument puis
-// s'éteignent, un clic envoie une onde. Sous l'élément [data-cloud], des tuiles pleines forment le
-// « nuage » sur lequel se posent les paiements.
+// Trame de pois. Les pois proches du curseur grossissent et s'allument puis s'éteignent, un clic envoie
+// une onde. Sous l'élément [data-cloud], des pois plus marqués forment le « nuage » sur lequel se posent
+// les paiements.
 function initField(canvas) {
   const host = canvas.parentElement;
   const ctx = canvas.getContext('2d');
-  const PITCH = 46, SIZE = 38, CUT = 10, OFF = (PITCH - SIZE) / 2, REACH = 130;
-  const LINE = 'rgba(255, 255, 255, .075)', ACCENT = '199, 250, 112', CLOUD = 'rgba(255, 255, 255, .06)'; // mêmes teintes que style.css
+  const PITCH = 26, DOT = 1.5, GROW = 2.8, REACH = 130;
+  const LINE = 'rgba(255, 255, 255, .14)', ACCENT = '199, 250, 112', CLOUD = 'rgba(255, 255, 255, .3)'; // mêmes teintes que style.css
   const BLOBS = [[.5, .5, .54, .36], [.76, .2, .34, .24], [.22, .8, .3, .22]]; // centre et rayons, en parts de la zone
   let cols = 0, rows = 0, heat = new Float32Array(0), cloud = new Uint8Array(0);
   let pointer = null, waves = [], frame = 0, last = 0;
 
-  function tile(x, y) {
+  function dot(x, y, radius) {
     ctx.beginPath();
-    ctx.moveTo(x, y); ctx.lineTo(x + SIZE - CUT, y); ctx.lineTo(x + SIZE, y + CUT);
-    ctx.lineTo(x + SIZE, y + SIZE); ctx.lineTo(x + CUT, y + SIZE); ctx.lineTo(x, y + SIZE - CUT);
-    ctx.closePath();
+    ctx.arc(x, y, radius, 0, 6.2832);
   }
 
   function draw() {
     ctx.clearRect(0, 0, cols * PITCH, rows * PITCH);
-    ctx.lineWidth = 1;
     for (let r = 0; r < rows; r++) for (let c = 0; c < cols; c++) {
       const i = r * cols + c, hot = heat[i];
-      tile(c * PITCH + OFF + .5, r * PITCH + OFF + .5);
-      if (cloud[i]) { ctx.fillStyle = CLOUD; ctx.fill(); }
+      const x = (c + .5) * PITCH, y = (r + .5) * PITCH;
       if (hot > .01) {
-        ctx.fillStyle = `rgba(${ACCENT}, ${.22 * hot})`; ctx.fill();
-        ctx.strokeStyle = `rgba(${ACCENT}, ${.15 + .55 * hot})`; ctx.stroke();
-      } else if (!cloud[i]) { ctx.strokeStyle = LINE; ctx.stroke(); }
+        dot(x, y, (cloud[i] ? DOT + .6 : DOT) + GROW * hot);
+        ctx.fillStyle = `rgba(${ACCENT}, ${.3 + .7 * hot})`;
+      } else {
+        dot(x, y, cloud[i] ? DOT + .6 : DOT);
+        ctx.fillStyle = cloud[i] ? CLOUD : LINE;
+      }
+      ctx.fill();
     }
   }
 
