@@ -122,6 +122,7 @@ contract TreasuryGuard is ReentrancyGuard {
     event OwnerReplaced(address indexed previousOwner, address indexed newOwner, uint64 keyExpiresAt);
     event ThresholdChanged(uint256 previousThreshold, uint256 newThreshold);
     event OwnerProbationStarted(address indexed owner, uint64 trustedAfter, uint256 epoch);
+    event KeyRevokedBySelf(address indexed previousOwner, address indexed newOwner);
     event Frozen(address indexed by, string reason);
     event UnfreezeApproved(address indexed owner, uint256 approvals, uint256 requiredApprovals);
     event Unfrozen(address indexed by);
@@ -210,6 +211,26 @@ contract TreasuryGuard is ReentrancyGuard {
         if (previous != bytes32(0)) delete _duressOwner[previous];
         _duressHashOf[msg.sender] = duressKeyHash;
         if (duressKeyHash != bytes32(0)) _duressOwner[duressKeyHash] = msg.sender;
+    }
+
+    // --- Clé d'identité froide (extension de la clé de contrainte, décision de Romain du 10/10 22:10) ---
+    // La même seconde clé, gardée hors ligne, sert aussi à couper sa propre clé de tous les jours si elle est volée :
+    // sans quorum, sans délai, même portefeuille gelé. La nouvelle clé entre en probation comme toute clé remplacée,
+    // donc un voleur qui tiendrait aussi la clé d'identité ne gagnerait aucun pouvoir immédiat. La clé d'identité
+    // ne peut toujours ni payer, ni exécuter, ni annuler, ni dégeler : elle freine ou retire, jamais plus.
+
+    /// @notice Révoque immédiatement la clé de tous les jours de l'appelant (identifié par sa clé d'identité)
+    ///         et la remplace par `newKey`, qui entre en probation. Le lien avec la clé d'identité est conservé.
+    function revokeMyKey(address newKey) external {
+        bytes32 h = keccak256(abi.encodePacked(msg.sender));
+        address owner = _duressOwner[h];
+        if (owner == address(0) || !isActiveOwner(owner)) revert NotActiveOwner();
+        if (newKey == address(0) || keyExpiresAt[newKey] != 0 || newKey == msg.sender) revert InvalidParameter();
+        _replaceOwner(owner, newKey);
+        delete _duressHashOf[owner];
+        _duressHashOf[newKey] = h;
+        _duressOwner[h] = newKey;
+        emit KeyRevokedBySelf(owner, newKey);
     }
 
     /// @notice Seule action du moniteur : relever le niveau de risque d'un paiement en attente.
