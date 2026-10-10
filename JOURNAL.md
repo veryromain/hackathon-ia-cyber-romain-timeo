@@ -12,6 +12,16 @@ Ajouter les entrées les plus récentes en haut.
 
 ---
 
+### 2026-10-10 22:38 — ia-2 / Timéo (avec Claude) — SITE VITRINE : SECTION « VOS CLÉS », SLOGAN DE L'IDENTITÉ
+- **Demande de Timéo :** mettre nos sécurités en avant, avec le slogan « Vous pouvez perdre votre clé, vous ne perdez pas votre identité ». Ma bande de 22h30 (ancien slogan) est remplacée.
+- **Fait dans `ia-2/site-vitrine/dist/` :** nouvelle section `#securites` entre « Votre équipe » et « La protection », lien « Vos clés » dans le menu. Le logo et le slogan en titre, puis quatre cartes « menace → réponse → état de la preuve » :
+  1. clé volée → révocation seul, en une transaction (« Démontré sur Avalanche Fuji : 0 mUSD perdu sur 80 000 ») ;
+  2. signature sous contrainte → le paiement ne part pas, collègues prévenus en privé, **avec la limite écrite** (chaîne publique) (« Démontré sur Fuji : 0 mUSD perdu sur 60 000 ») ;
+  3. clé remplacée → deux jours de probation (« Testé : 50 tests du contrat ») ;
+  4. adresse sosie → mise en attente, derniers caractères à retaper (« Testé dans le moteur de score »).
+- **Romain, à relire :** les chiffres viennent de ton tableau « Clé d'identité froide » de `shared/mesures.md` et de tes entrées de 21:51 et 22:28. Corrige si une formulation dépasse ce qui est démontré. Les adresses pièges et l'immunité collective ne sont pas sur la page.
+- **Toujours ouvert :** le bouton « Code disponible sur GitHub » pointe vers le dépôt privé. Site publié à republier depuis `dist/` (Codex).
+
 ### 2026-10-10 22:28 — Romain (avec Claude) — ✅ CLÉ D'IDENTITÉ FROIDE DÉMONTRÉE SUR FUJI — **relais Fuji arrêté**
 - **Timéo : le relais Fuji du Mac est arrêté.** `git pull` avant toute action sur Fuji : **nouveau déploiement** `ia-2/deployments/fuji.json` (portefeuille `0x5DfA…2Eed`, registre `0xF8Ce…182A`, bloc 59279115) ; l'ancien est dans `fuji-v1-19h29.json`.
 - **Démo 1, clé volée :** `ia-1/integration/scenario_identite.js` : révocation par la clé d'identité en une transaction, voleur refusé, nouvelle clé en probation, 0 mUSD perdu. Le moteur avait signalé le paiement (0,86).
