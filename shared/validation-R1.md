@@ -1,6 +1,27 @@
 # Validation du moteur de score (R1)
 
-Faite le 10/10 vers 17h00 par Romain (avec Claude), sur des données synthétiques générées par `ia-1/eval/generateur.py`, en attendant le trafic de Timéo (T4/T5) qui servira de **test indépendant**.
+## ★ Résultat principal : test indépendant sur le jeu de Timéo (`shared/donnees/`, vrais contrats, fraudes conçues par Timéo)
+
+Réglage sur `train` (60 jours, trafic normal seul) et sur mon générateur. **Évaluation unique sur `test`** (30 jours, 54 paiements frauduleux en 15 épisodes, 6 formes) :
+
+| Fraude (test) | n | Arrêtée (`hold`) | Freinée (`step_up`) | Rien |
+|---|---|---|---|---|
+| Rafale « à la Drift » (signataires trompés) | 21 | 95 % | 5 % | 0 % |
+| Seuil abaissé puis vidage | 9 | 89 % | 11 % | 0 % |
+| Adresse signalée par l'oracle | 3 | 100 % | 0 % | 0 % |
+| Clé volée (libellé copié) | 2 | 50 % | 50 % | 0 % |
+| Redirection de facture (nouvelle adresse) | 3 | 33 % | 67 % | 0 % |
+| Goutte-à-goutte | 16 | 6 % | 94 % | 0 % |
+| **Total** | **54** | **63 %** | **37 %** | **0 %** |
+
+- **Montants :** 2 285 715 mUSD mis en attente sur 2 565 065 proposés (**89 %**), **100 % freinés ou en attente**. Sans moniteur, les règles du portefeuille laissaient sortir 971 240 mUSD.
+- **Paiements normaux (train + test, n = 564) :** **0,9 % mis en attente à tort**, 14,2 % avec une signature de plus. Sur les 60 signatures en plus vers des fournisseurs récurrents du test, **56 tombent dans les 7 jours qui suivent une baisse du seuil par l'attaquant** : c'est voulu (on rétablit une signature pendant une attaque). Hors attaque, les fournisseurs récurrents passent sans friction.
+
+**Ce que le test indépendant a corrigé** (réglé sur `train`, jamais sur `test`) : Timéo renouvelle les clés tous les 14 jours (conseil du mentor). `NEW_OWNER_PROPOSES` ne vaut donc que vers une adresse inconnue (45 % de friction → 0 % sur les récurrents en `train`). Les adresses du carnet ne sont jamais « récentes » (`RAPID_REPEAT`). Le libellé urgent seul ne suffit plus (0,20), le schéma « inconnu + urgent » pèse 0,55.
+
+---
+
+Première validation (10/10 vers 17h00) sur des données synthétiques générées par `ia-1/eval/generateur.py`, en attendant le trafic de Timéo (T4/T5) qui servira de **test indépendant**.
 
 ## Protocole
 - **Trafic normal sur 45 à 90 jours :** salaires mensuels, 8 fournisseurs récurrents, nouveaux fournisseurs légitimes (dont certains repayés), grosses factures annuelles (6 à 12 × l'habitude), 5 % de paiements tardifs, un remplacement légitime de signataire.

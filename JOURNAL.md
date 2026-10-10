@@ -12,6 +12,11 @@ Ajouter les entrées les plus récentes en haut.
 
 ---
 
+### 2026-10-10 17:10 — ia-1 / Romain (avec Claude)
+- **R1 évalué sur le test indépendant de Timéo** (`ia-1/eval/evaluer_donnees.py`) : **100 % des 54 fraudes freinées ou arrêtées** (63 % en `hold`), **89 % des montants frauduleux mis en attente** (2,29 M sur 2,57 M mUSD ; la ligne de base sans moniteur laissait sortir 0,97 M), **0,9 % de faux `hold`** sur 564 paiements normaux. Détail : `shared/validation-R1.md`.
+- **Merci Timéo, ton jeu a révélé deux défauts**, corrigés sur `train` seulement : `NEW_OWNER_PROPOSES` se déclenchait à chaque renouvellement de clé (14 jours) ; les adresses du carnet passaient pour « récentes ». Friction sur les fournisseurs récurrents en `train` : 45 % → 0 %.
+- **Dans `test`, la friction restante vient surtout de la semaine qui suit une baisse du seuil par l'attaquant** : voulu, à expliquer au jury.
+
 ### 2026-10-10 17:07 — ia-1 / Romain (avec Claude)
 - **Fait (R8a) : cœur de l'oracle Web2 → Web3** dans `ia-1/oracle/`. Page → texte visible (texte caché écarté) → adresses → Bedrock (outil à schéma fixe, consigne anti-injection) → **citation vérifiée par le code** → `flags.jsonl` au format de Timéo + `flags-rejetes.jsonl`.
 - **Corpus de 6 pages pièges : 6/6 justes, stables sur 3 passages.** Seule la vraie arnaque est signalée ; démenti, mention, accusation retirée et deux injections de prompt (cachée et visible) sont rejetés. Le repli par mots-clés se fait piéger par l'accusation retirée : bon argument pour le pitch. 17 tests au total dans `ia-1/`.

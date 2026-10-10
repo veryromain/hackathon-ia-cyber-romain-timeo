@@ -4,7 +4,7 @@
 > Légende : ✅ fait · 🔄 en cours · ⬜ à faire · ✂️ coupé (manque de temps)
 > Détail du projet : [`PLAN.md`](PLAN.md) · Historique : [`JOURNAL.md`](JOURNAL.md) · Brief : [`CONTEXTE.md`](CONTEXTE.md)
 
-**Dernière mise à jour :** 2026-10-10 17:07, par Claude (Romain) — R8a fait
+**Dernière mise à jour :** 2026-10-10 17:10, par Claude (Romain) — R1 validé sur les données de Timéo
 **Rendu (gel définitif) :** dim. 11/10 **12:00** · **Checkpoint :** sam. **18:30** · **Pitch :** dim. 13:00
 
 ---
@@ -60,7 +60,7 @@ Un **garde antifraude pour la trésorerie crypto des entreprises** (portefeuille
 |---|---|---|---|---|---|
 | T1 | **Format des échanges** : `events.jsonl`, `alerts.jsonl`, **`flags.jsonl`** + fichiers d'exemple dans `shared/echantillons/` | Timéo | Markdown + JSON écrit à la main | Romain peut lancer son code sur les exemples | ✅ 16:41 (v2 : `events`, `alerts`, `flags`, `labels` + exemples) |
 | T2 | **Contrat `TreasuryGuard`** : multisig M sur N, proposition, approbation, exécution, signalement de risque (signatures en plus / mise en attente), plafond par période, gel, expiration des clés | Timéo | Solidity + Hardhat + OpenZeppelin, tests en local | Les tests passent, dont le scénario de fraude avec et sans garde | ✅ 16:55 (20 tests passent, `cd ia-2 && npm test`) |
-| R1 | **Moteur de score** : lit `events.jsonl`, tient l'historique (destinataires connus, montants habituels, rythme), applique les règles, écrit `alerts.jsonl` avec un score et des raisons | Romain | Python + pandas | Tourne sur l'exemple de T1 | ✅ 17:03 validé : 99-100 % des fraudes freinées/arrêtées, 0,3 % de faux `hold` sur 90 graines jamais vues (`shared/validation-R1.md`) |
+| R1 | **Moteur de score** : lit `events.jsonl`, tient l'historique (destinataires connus, montants habituels, rythme), applique les règles, écrit `alerts.jsonl` avec un score et des raisons | Romain | Python + pandas | Tourne sur l'exemple de T1 | ✅ 17:10 validé sur le **test indépendant de Timéo** : 100 % des fraudes freinées ou arrêtées, 89 % des montants en attente, 0,9 % de faux `hold` (`shared/validation-R1.md`) |
 | R8a | **Oracle, cœur** : lit une page Web locale → repère les adresses `0x…` → Bedrock dit « accusation / mention / démenti » + **citation exacte** → le code vérifie la citation → écrit `flags.jsonl` | Romain | Python + BeautifulSoup + boto3 (Bedrock), **partage de connexion** | Une page synthétique donne un signalement vérifié | ✅ 17:07 (6 pages pièges, 6/6 justes et stables ; injection résistée ; 17 tests) |
 | R7a | **Formulaire du checkpoint** (problème, solution, stack) : texte prêt en section 8 de `PLAN.md` | Romain | — | Formulaire envoyé à 18:30 | ⬜ |
 | ★ | ✅ **CHECKPOINT 18:30** : confirmer le track 1, axe 2 | Les deux | — | — | ⬜ |

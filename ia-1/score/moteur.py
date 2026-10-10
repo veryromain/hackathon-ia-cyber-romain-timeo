@@ -40,10 +40,11 @@ class Moteur:
             return alerte
         if t == "payment_executed":
             to, montant = d["to"].lower(), int(d["amount"])
+            if to not in e.destinataires_connus:  # les adresses du carnet ne sont jamais « récentes »
+                e.premier_paiement.setdefault(to, ev["timestamp"])
             e.destinataires_connus.add(to)
             e.montants_payes.append(montant)
             e.montants_par_dest.setdefault(to, []).append(montant)
-            e.premier_paiement.setdefault(to, ev["timestamp"])
         elif t == "address_flagged":
             e.adresses_signalees[d["flagged"].lower()] = {
                 "level": d["level"], "expires_at": d["expires_at"],

@@ -19,7 +19,7 @@ POIDS = {
     "NEW_RECIPIENT": 0.35,
     "AMOUNT_OUTLIER_MAX": 0.6,
     "BURST": 0.40,
-    "URGENCY_MEMO": 0.30,
+    "URGENCY_MEMO": 0.20,             # seul, ne suffit pas (régularisations urgentes légitimes)
     "OFF_HOURS": 0.15,               # soir ou week-end
     "OFF_HOURS_NUIT": 0.30,          # 0h–6h
     "FLAGGED_ADDRESS_HOLD": 0.90,
@@ -27,7 +27,7 @@ POIDS = {
     "RECENT_OWNER_CHANGE": 0.10,     # changement légitime fréquent (renouvellement de clé)
     "NEW_OWNER_PROPOSES": 0.50,      # le signataire tout juste ajouté propose lui-même un paiement
     "THRESHOLD_LOWERED": 0.50,
-    "PAYMENT_FRAUD_PATTERN": 0.45,   # nouveau destinataire + libellé pressant / changement de coordonnées
+    "PAYMENT_FRAUD_PATTERN": 0.55,   # nouveau destinataire + libellé pressant / changement de coordonnées
     "RAPID_REPEAT": 0.35,            # paiements répétés vers une adresse apparue il y a moins de 7 jours
 }
 SEUIL_HOLD = 0.75  # choisi par recherche sur les graines 1-20 (faux hold 0,5 % au lieu de 1,1 %)
@@ -140,7 +140,9 @@ def r_adresse_signalee(p, etat):
 
 def r_changement_recent(p, etat):
     nouveau = etat.nouveaux_signataires.get(p.get("proposer", "").lower())
-    if nouveau and 0 <= p["timestamp"] - nouveau[0] <= FENETRE_CHANGEMENT_S:
+    # Une clé renouvelée qui paie un fournisseur connu est normal (renouvellement périodique des clés) ;
+    # le signal fort, c'est un signataire tout juste ajouté qui paie une adresse inconnue.
+    if nouveau and 0 <= p["timestamp"] - nouveau[0] <= FENETRE_CHANGEMENT_S and p["to"] not in etat.destinataires_connus:
         h = (p["timestamp"] - nouveau[0]) // 3600
         return Raison("NEW_OWNER_PROPOSES", f"proposé par un signataire ajouté il y a {h} h", [nouveau[1], p["tx_hash"]],
                       POIDS["NEW_OWNER_PROPOSES"])
