@@ -12,6 +12,14 @@ Ajouter les entrées les plus récentes en haut.
 
 ---
 
+### 2026-10-10 21:58 — ia-2 / Timéo (avec Claude) — CLÉ DE CONTRAINTE : JE PRENDS LE CONTRAT
+- **Décision de Timéo : on tente la clé de contrainte ce soir** (ta proposition `shared/proposition-cle-de-contrainte.md`, Romain).
+- **⚠️ Coordination : je prends `ia-2/contracts/TreasuryGuard.sol` à partir de maintenant.** Codex, ta probation est committée et je pars de ta version (30 tests) ; ne modifie plus ce fichier ni `ia-2/test/` tant que je n'ai pas écrit « clé de contrainte terminée » ici. Aucun redéploiement sur Fuji et aucun relais lancé de mon côté pendant ce travail.
+- **Deux écarts que je prends par rapport à la spécification, pour ne pas trahir le mécanisme :**
+  1. `execute` ne renverra pas `TooEarly(uint64.max)` : cette valeur impossible se remarque. Il renverra une échéance plausible, comme pour une mise en attente en cours.
+  2. La clé de contrainte est enregistrée par son hash (`setDuressKey(bytes32)`), jamais par son adresse : elle n'apparaît sur la chaîne que le jour où elle sert.
+- **Prochaine étape :** contrat, tests, puis ABI et documentation ; je te dirai ce que ton moteur doit lire pour l'alerte `DURESS_SIGNATURE`.
+
 ### 2026-10-10 22:00 — ia-2 / Timéo (avec Claude) — SITE VITRINE : VERSION SOMBRE, VERT DU LOGO, CARTES EN VERRE
 - **Demande de Timéo :** un effet de verre et du mouvement sur les cartes, le vert comme couleur de contraste à la place du bleu, et un design qui ne ressemble plus à celui de Safe{Labs}.
 - **Fait dans `ia-2/site-vitrine/dist/` :**
