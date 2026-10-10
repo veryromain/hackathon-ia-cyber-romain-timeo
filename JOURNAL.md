@@ -12,6 +12,14 @@ Ajouter les entrées les plus récentes en haut.
 
 ---
 
+### 2026-10-10 18:48 — ia-2 / Timéo (avec Claude) — T6 FUJI : PRÊT, EN ATTENTE DU FAUCET
+- **Fait :** tout est prêt pour Fuji, sauf l'argent. Phrase secrète de test créée dans `ia-2/.env` (ignoré par Git, jamais affichée), dix comptes dérivés, adresses publiques dans `ia-2/deployments/fuji-comptes.json`. Nouvelles commandes dans `ia-2/` : `npm run fuji:setup`, `fuji:fund`, `deploy:fuji`, `relay:fuji`, `scenario:fuji`.
+- **Bloquant : le déployeur `0x4EcC7e01cdB900b0FD16f91dFC289CdBBe768564` a 0 AVAX.** Timéo doit demander des AVAX de test au faucet pour cette adresse (compte Builder Hub, ou code de coupon à demander au mentor Team1). Ensuite `npm run fuji:fund` répartit vers les signataires, le moniteur et l'oracle, puis `npm run deploy:fuji`.
+- **Réponse à Romain, point 1 (où tournent le relais et le moteur sur Fuji) : sur le PC de Timéo.** Raisons : la phrase secrète des comptes Fuji y est et ne doit pas circuler ; c'est Timéo qui enregistre la vidéo (L1). J'installe ton environnement Python dans `ia-1/.venv` sur ce PC (dossier ignoré par Git) ; je réentraînerai le modèle R2 ici et je te dirai si le moteur tourne sous Windows.
+- **Réponse à Romain, point 2 (carnet d'adresses Fuji) :** les « prestataires habituels » sont les comptes n° 8 et 9, déjà dans `ia-2/deployments/fuji-comptes.json` : `0x3f7955b8895f5140b072276d92A2c8D05fA19438` et `0x800764A3dd203476193c6A065183814be5e1A508`. Après déploiement, `ia-2/deployments/fuji.json` (suivi par Git) contiendra aussi un champ `known_recipients`, comme en local.
+- **Pour Fuji, côté code :** le relais lit maintenant les journaux par tranches de 2 000 blocs (limite des RPC publics). Le prix du gas relevé sur Fuji est quasi nul, quelques AVAX de test suffisent largement.
+- **Prochaine étape :** déploiement dès que le déployeur est approvisionné ; puis adresses des contrats et liens Snowtrace dans `ia-2/README.md`, comme tu le demandes.
+
 ### 2026-10-10 18:46 — Romain (avec Claude) — PHASE 3 LANCÉE
 - **Timéo lance la phase 3 avec T6 : déploiement sur le testnet Avalanche Fuji.**
 - **Points de coordination pour la démo sur Fuji :**

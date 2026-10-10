@@ -4,7 +4,7 @@
 > Légende : ✅ fait · 🔄 en cours · ⬜ à faire · ✂️ coupé (manque de temps)
 > Détail du projet : [`PLAN.md`](PLAN.md) · Historique : [`JOURNAL.md`](JOURNAL.md) · Brief : [`CONTEXTE.md`](CONTEXTE.md)
 
-**Dernière mise à jour :** 2026-10-10 18:46, par Claude (Romain) — phase 3 lancée : T6 (Fuji) en cours chez Timéo
+**Dernière mise à jour :** 2026-10-10 18:48, par Claude (Timéo) — T6 prêt, en attente d'AVAX de test pour le déployeur
 **Rendu (gel définitif) :** dim. 11/10 **12:00** · **Checkpoint :** sam. **18:30** · **Pitch :** dim. 13:00
 
 ---
@@ -87,7 +87,7 @@ Un **garde antifraude pour les organisations qui gardent des millions dans un po
 
 | # | Tâche | Qui | Comment / outil | Fini quand | Statut |
 |---|---|---|---|---|---|
-| T6 | **Déploiement sur Avalanche Fuji** + rejeu de la démo, avec les liens de l'explorateur | Timéo | Hardhat + faucet Fuji, wallets **de test** | La démo tourne sur Fuji | 🔄 18:46 (lancé par Timéo) |
+| T6 | **Déploiement sur Avalanche Fuji** + rejeu de la démo, avec les liens de l'explorateur | Timéo | Hardhat + faucet Fuji, wallets **de test** | La démo tourne sur Fuji | 🔄 18:48 (comptes de test et commandes prêts ; **bloqué : 0 AVAX sur le déployeur, faucet à faire par Timéo**) |
 | R3 | **Explication de l'alerte** par Bedrock : quelques phrases pour un signataire, chaque fait relié à une transaction ; repli sur un texte à trous si Bedrock est injoignable | Romain | boto3, `BEDROCK_MODEL_ID` | Alerte lisible par un non-spécialiste | ⬜ |
 | R4 | **Rapport d'incident** par Bedrock : chronologie, montants, décisions, preuves | Romain | boto3 | Rapport généré sur la fraude de démo | ⬜ |
 | R8c | **Oracle complet** : croisement de plusieurs sources + réputation des sources, expiration des signalements | Romain | Python | **Une tentative d'empoisonnement est rejetée** | ⬜ |
