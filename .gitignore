@@ -33,3 +33,4 @@ shared/tracage-roles.json
 shared/listes-publiques.jsonl
 ia-1/oracle/sources_cache/
 shared/alertes-privees.jsonl
+ia-1/oracle/collecte_cache/

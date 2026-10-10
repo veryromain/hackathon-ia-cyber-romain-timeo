@@ -12,6 +12,16 @@ Ajouter les entrées les plus récentes en haut.
 
 ---
 
+### 2026-10-11 00:21 — ia-2 / Timéo (avec Claude) — APIFY BRANCHÉ SUR L'ORACLE (CODE PRÊT, JETON MANQUANT)
+- **Décision de Timéo : on met Apify en place**, c'est la preuve de l'innovation face à Safe (un garde qui lit le vrai Web). Bedrock reste le lecteur des pages ; Clef ne le remplace pas.
+- **Fait, sans toucher à `oracle.py` :** nouveau module `ia-1/oracle/collecte_apify.py`. Il collecte de vraies pages par Apify puis les passe dans ton oracle tel quel (même nettoyage du texte caché, même vérification de citation, même croisement des sources). Deux usages :
+  - `python -m oracle.collecte_apify --urls <page…> --out ../shared/flags.jsonl` : lire des pages précises ;
+  - `python -m oracle.collecte_apify --recherche 0x… --out ../shared/flags.jsonl` : **partir d'une adresse, chercher ce que le Web en dit, lire les pages trouvées**. C'est l'usage à montrer : un destinataire inconnu déclenche une recherche.
+- **⚠️ Pas encore essayé sur le vrai Web : il n'y a pas de jeton Apify.** Timéo doit créer un compte et mettre `APIFY_TOKEN=` dans `.env`. Les noms des champs d'Apify (`saveHtml`, `organicResults`, acteurs `apify~website-content-crawler` et `apify~google-search-scraper`) sont écrits de mémoire : à confirmer au premier appel réel.
+- **Vérifié hors ligne :** 4 tests dans `ia-1/tests/test_collecte_apify.py` (Apify remplacé par des pages du corpus de démo) : la source reste l'URL réelle, donc la réputation tient à l'hôte ; une même source collectée deux fois ne compte qu'une fois ; l'oracle est remis en l'état après la lecture. 14 tests passent avec ceux de l'oracle.
+- **Données personnelles :** les pages collectées vont dans `ia-1/oracle/collecte_cache/`, ajouté à `.gitignore`. Seules l'adresse, l'URL, la phrase citée et son hash partent dans `flags.jsonl`. La phrase citée peut contenir un pseudonyme : à garder en tête pour la démo, choisir une page qui n'en contient pas.
+- **Clef, autrement qu'à la place de Bedrock (avis donné à Timéo, rien de codé) :** (1) trier les pages collectées avant Bedrock, pour ne payer la lecture que des pages qui parlent vraiment de fraude ; (2) servir de second avis, une adresse n'étant publiée que si Clef et Bedrock sont d'accord ; (3) noter les libellés pressants dans le moteur de score. Il faut un jeton Cloudflare.
+
 ### 2026-10-11 00:16 — Romain (avec Claude) — ORGANISATION APRÈS LE MENTOR + DÉBRIEF TOUTES LES 15 MIN
 - **Convenu Romain + Timéo après le mentor :** **Romain = toute la phase business (B2-B8)** + phase produit commercial (P1-P8) s'il reste du temps ; **Timéo = nouveauté technique** (harnais de clés API, Apify / Clef pour l'oracle, et le reste, suivi via GitHub).
 - **Débrief croisé toutes les 15 minutes.** Côté Romain : un paragraphe sur ton avancée pour lui, et un paragraphe sur son avancée business dans **`shared/debrief-romain.md`** pour ton Claude. **Timéo : colle le prompt de `shared/prompt-debrief-timeo.md` dans ton Claude Code** : il lira `shared/debrief-romain.md` et écrira `shared/debrief-timeo.md` toutes les 15 min. Le but : ne pas se perdre de vue, rebondir sur les idées de l'autre.
