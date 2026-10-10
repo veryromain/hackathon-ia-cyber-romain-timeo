@@ -101,7 +101,10 @@ def main():
     args = a.parse_args()
     events = [json.loads(l) for l in open(args.events) if l.strip()]
     carnet = json.loads(args.carnet.read_text()) if args.carnet else []
-    modele, n = entrainer(events, carnet)
+    # Lancé avec « python -m score.anomalie », ce fichier s'appelle __main__ : on passe par le vrai module
+    # pour que le modèle enregistré pointe vers score.anomalie et se recharge depuis le moteur.
+    from score import anomalie
+    modele, n = anomalie.entrainer(events, carnet)
     args.sortie.parent.mkdir(parents=True, exist_ok=True)
     joblib.dump(modele, args.sortie)
     print(f"modèle appris sur {n} paiements normaux → {args.sortie} "

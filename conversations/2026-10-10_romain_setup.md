@@ -78,3 +78,12 @@ Un projet compatible avec les deux tracks : la **supervision d'agents IA qui man
 - **R1 :** générateur de trafic et banc d'essai. Réglage sur 20 graines, test sur 90 graines jamais vues : 99-100 % des fraudes freinées ou arrêtées, 0,2-0,4 % de faux `hold`. Plusieurs bugs corrigés et nouvelles règles ajoutées (voir `shared/validation-R1.md`).
 - **R8a :** oracle Bedrock avec citation vérifiée et défense contre l'injection. 6/6 pages pièges justes.
 - **Incident :** les modèles 5.5 sont refusés par AWS, d'où un repli automatique sur Sonnet 4.5.
+
+## Mise à jour vers 18:40 — Phase 2 terminée
+- R2 (modèle d'anomalie), R8b (corpus de l'oracle, 100 % sur le test) et R5a (tableau de bord) faits.
+- **Démo de bout en bout réussie en local : 0 mUSD perdu**, sur la fraude en rafale comme sur l'adresse signalée sur le Web.
+- L'intégration a révélé un bug de rechargement du modèle R2, corrigé.
+- **Décisions de Romain :**
+  - phase business (B1-B8), puis phase produit commercial (P1-P8 : site vitrine et application client) après la démo ;
+  - positionnement « uniquement Avalanche » ;
+  - consigne modèles : Opus 5.5 ou Fable 5.1, jamais Sonnet (bloqués par le marketplace des organisateurs, d'où un repli sur Opus 4.8).

@@ -12,6 +12,13 @@ Ajouter les entrées les plus récentes en haut.
 
 ---
 
+### 2026-10-10 18:41 — Romain (avec Claude) — ✅ PHASE 2 TERMINÉE : DÉMO DE BOUT EN BOUT
+- **Démo complète en local sur le Mac de Romain** : chaîne + contrats + relais de Timéo, moteur de score en direct (règles + R2), oracle Bedrock, tableau de bord. Mode d'emploi en 6 terminaux : `ia-1/integration/README.md`.
+- **Scénario de Timéo (`RESPOND=1`) :** paiement normal exécuté sans friction ; 3 virements frauduleux (280 500 mUSD) mis en `hold` **dans la seconde** (score 0,93) ; **0 mUSD parti** (contre 95 000 mUSD au 1er passage, moteur arrêté par un bug).
+- **Web2 → Web3 en direct :** l'oracle signale l'arnaqueur d'une page de forum (0,95, adresse de dons rejetée), le relais l'inscrit au registre, un paiement banal de 4 800 mUSD vers lui est **bloqué par le contrat et par le moteur**.
+- **Bug trouvé grâce à l'intégration, corrigé :** le modèle R2 sauvegardé ne se rechargeait pas dans le moteur. Test de non-régression ajouté (21 tests).
+- **Timéo :** ton relais, ton déploiement et ton scénario ont marché du premier coup sur Mac, bravo. Le scénario Web2 → Web3 est dans `ia-1/integration/scenario_oracle.js` (lancé depuis `ia-2`, sans toucher à ton dossier). Remarque : la démo un samedi déclenche `OFF_HOURS` sur la fraude (juste, mais à expliquer).
+- **Suite :** phase 3 (Fuji, R3/R4 explication et rapport Bedrock, R5b, R8c), puis bilan de la démo (B1).
 ### 2026-10-10 18:35 — ia-2 / Timéo (avec Codex) — COMPARAISON MULTICHAÎNE
 - **Coordination :** recherche demandée par Timéo, complément à B4 de Romain ; ajout d'une note distincte sans modifier le positionnement ni ses analyses. B4 passe en cours pour la comparaison fonctionnelle seulement.
 - **Fait :** sources officielles vérifiées ; résultats dans shared/comparaison-autres-blockchains.md. Guardian propose déjà signatures multiples et revue, Squads dispose de délais, Forta intervient avant exécution ; ces briques ne sont pas exclusives à Breaker.

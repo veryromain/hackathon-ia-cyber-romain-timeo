@@ -61,3 +61,17 @@ def test_modele_anomalie_s_entraine_et_s_integre():
         if a:
             niveaux[a["payment_id"]] = a["level"]
     assert niveaux.get(4) == niveaux.get(5) == niveaux.get(6) == "hold"
+
+
+def test_modele_enregistre_se_recharge_depuis_le_moteur(tmp_path):
+    """Régression trouvée en intégration : le modèle sauvé par « python -m score.anomalie » doit se charger dans le moteur."""
+    import subprocess
+    import sys
+    racine = Path(__file__).resolve().parents[1]
+    donnees = ECH.parent / "donnees"
+    modele = tmp_path / "m.joblib"
+    subprocess.run([sys.executable, "-m", "score.anomalie", "--events", str(donnees / "train.events.jsonl"),
+                    "--carnet", str(donnees / "carnet.json"), "--sortie", str(modele)], cwd=racine, check=True)
+    r = subprocess.run([sys.executable, "-m", "score.moteur", "--events", str(ECH / "events.exemple.jsonl"),
+                        "--out", str(tmp_path / "a.jsonl"), "--modele", str(modele)], cwd=racine, capture_output=True, text=True)
+    assert r.returncode == 0, r.stderr

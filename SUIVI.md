@@ -4,7 +4,7 @@
 > Légende : ✅ fait · 🔄 en cours · ⬜ à faire · ✂️ coupé (manque de temps)
 > Détail du projet : [`PLAN.md`](PLAN.md) · Historique : [`JOURNAL.md`](JOURNAL.md) · Brief : [`CONTEXTE.md`](CONTEXTE.md)
 
-**Dernière mise à jour :** 2026-10-10 18:35, par Codex (Timéo) — comparaison fonctionnelle B4, étude commerciale à poursuivre
+**Dernière mise à jour :** 2026-10-10 18:41, par Claude (Romain) — **phase 2 terminée** : démo de bout en bout réussie en local
 **Rendu (gel définitif) :** dim. 11/10 **12:00** · **Checkpoint :** sam. **18:30** · **Pitch :** dim. 13:00
 
 ---
@@ -67,7 +67,7 @@ Un **garde antifraude pour les organisations qui gardent des millions dans un po
 
 ---
 
-## 4. Phase 2 — Première démo de bout en bout (sam. 18:30 → 23:00)
+## 4. Phase 2 — Première démo de bout en bout (sam. 18:30 → 23:00) ✅ terminée à 18:41
 
 | # | Tâche | Qui | Comment / outil | Fini quand | Statut |
 |---|---|---|---|---|---|
@@ -79,7 +79,7 @@ Un **garde antifraude pour les organisations qui gardent des millions dans un po
 | R8b | **Corpus Web synthétique** (~30–50 pages) avec pièges : vraies accusations, mentions neutres, démentis, adresses de dons, **tentatives d'empoisonnement** | Romain | Pages HTML générées (Bedrock peut aider à les écrire) | Corpus séparé en « mise au point » et « test » | ✅ 17:48 (40 pages, 63 adresses ; test : **100 % de précision et de rappel, 0 fausse accusation** sur 7 injections et 9 démentis ; mots-clés : 67 % / 36 %) |
 | R5a | **Dashboard v1** : paiements en cours, score, raisons, état | Romain | Streamlit | Affiche les alertes en direct | ✅ 17:50 (v1 : indicateurs, paiements à examiner avec raisons et explications, adresses signalées par l'oracle, journal ; testé sans navigateur) |
 | T5 | **Scénarios de fraude** (au moins 5) : signataires trompés, clé volée, rafale, goutte-à-goutte sous le plafond, baisse du seuil avant l'attaque, **paiement vers une adresse signalée sur le Web** | Timéo | Node, **autres graines que l'entraînement** | Fichier de test étiqueté | ✅ 17:25 (`shared/donnees/test.*` : 54 paiements frauduleux, 15 épisodes, 6 variantes) |
-| ★ | 🎯 **23:00 — DÉMO DE BOUT EN BOUT EN LOCAL** : page Web → signalement → registre → paiement ralenti → alerte dans le dashboard | Les deux | Intégration | Ça tourne, même moche | ⬜ |
+| ★ | 🎯 **23:00 — DÉMO DE BOUT EN BOUT EN LOCAL** : page Web → signalement → registre → paiement ralenti → alerte dans le dashboard | Les deux | Intégration | Ça tourne, même moche | ✅ 18:41 — **0 mUSD perdu** (fraude en rafale + adresse signalée sur le Web), paiement normal sans friction ; mode d'emploi : `ia-1/integration/README.md` |
 
 ---
 
@@ -181,7 +181,7 @@ Un **garde antifraude pour les organisations qui gardent des millions dans un po
 | Heure | Quoi | Statut |
 |---|---|---|
 | Sam. 18:30 | Checkpoint officiel (formulaire problème / solution / stack) | ⬜ |
-| Sam. 23:00 | Démo de bout en bout en local | ⬜ |
+| Sam. 23:00 | Démo de bout en bout en local | ✅ 18:41 (4 h 20 d'avance) |
 | Dim. 03:00 | Démo sur Fuji + clé Bedrock de Timéo renouvelée | ⬜ |
 | Dim. 09:00 | Chiffres définitifs | ⬜ |
 | Dim. 10:00 | Atelier coaching pitch | ⬜ |
