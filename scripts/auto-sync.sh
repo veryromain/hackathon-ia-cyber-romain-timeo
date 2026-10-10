@@ -8,7 +8,7 @@ cd "$REPO" || exit 0
 export PATH="$HOME/.local/bin:/opt/homebrew/bin:/usr/local/bin:$PATH"
 
 # Sécurité : ne jamais pousser de secrets
-if git status --porcelain | awk '{print $2}' | grep -E '(^|/)\.env($|\.)|\.pem$|\.key$' >/dev/null; then
+if git status --porcelain | awk '{print $2}' | grep -v '\.example$' | grep -E '(^|/)\.env($|\.)|\.pem$|\.key$' >/dev/null; then
   echo '{"systemMessage": "auto-sync : fichier sensible détecté (.env/.pem/.key), synchro annulée"}'
   exit 0
 fi
