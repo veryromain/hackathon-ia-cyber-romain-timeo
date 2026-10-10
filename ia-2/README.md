@@ -156,6 +156,16 @@ Le relais ne juge pas : il écrit tous les transferts sortants, poussière compr
 - Prototype non audité. Un seul actif, à 18 décimales.
 - Un signataire dont la clé est volée peut geler le portefeuille ou annuler des paiements légitimes. Il ne peut pas payer seul.
 - Si trop de clés expirent en même temps, il ne reste plus assez de signataires actifs pour agir : le renouvellement doit être étalé.
-- Si tous les signataires sont trompés à la fois, l'unanimité fait sauter le délai d'attente.
+- Si tous les signataires établis sont trompés à la fois, l'unanimité peut raccourcir le délai d'attente des paiements au délai d'examen. Elle ne raccourcit jamais le délai de gouvernance.
 - Le moniteur doit rendre son verdict pendant le délai d'examen. S'il est en panne, seuls le plafond et le registre jouent.
 - En production, ces règles seraient un module greffé sur le portefeuille que le client utilise déjà (Safe sur les chaînes EVM, Squads sur Solana), pas un portefeuille écrit de zéro. C'est aussi le canal de distribution prévu.
+
+## Probation et gouvernance (correction du 10 octobre, testée en local)
+
+Une clé remplacée attend **deux jours** avant de compter dans tout quorum renforcé : paiement risqué, dépassement du plafond, remplacement d'une autre clé, changement de seuil et dégel. Elle reste utilisable pour les paiements ordinaires. Les clés initiales sont établies au déploiement. Le retrait/réajout d'une adresse invalide ses anciens votes. L'unanimité ne permet plus de contourner le délai de gouvernance.
+
+Lectures ajoutées à l'ABI : KEY_PROBATION, keyTrustedAfter, keyEpoch, isEstablishedOwner ; événement OwnerProbationStarted. La structure Config et les interfaces déjà utilisées par le relais sont conservées.
+
+**30 tests locaux passent**, dont 10 nouvelles régressions. **Le portefeuille Fuji actuel n'a pas été redéployé : il n'applique pas cette probation.** Un redéploiement est nécessaire pour activer la correction sur Fuji ; coordonner l'arrêt du relais puis mettre à jour le carnet, les adresses et les liens de preuves.
+
+Étaler les rotations pour conserver assez de clés établies, et utiliser une durée de validité supérieure à deux jours. Aucun mécanisme indépendant de récupération n'est ajouté. Détail, sources concurrentes, gas et limites : [améliorations après bilan](../shared/ameliorations-apres-bilan.md).

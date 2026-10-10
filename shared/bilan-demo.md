@@ -77,3 +77,9 @@ Les autres lignes ci-dessous sont des constats, pas des décisions.
 5. **Responsabilité contractuelle** : garantie dans les planchers ; au-delà de nos recommandations, le client accepte le risque, et c'est tracé.
 
 Phrase pour le jury : *« le client règle sa tolérance, mais jamais seul, jamais en dessous de nos planchers, et toujours sous les yeux de ses signataires et de son auditeur. »*
+
+## 8. Corrections du contrat après ce bilan — 2026-10-10 21:16, Codex / Timéo
+
+À la demande de Timéo d'améliorer les faiblesses grâce aux documentations concurrentes : **probation de deux jours implémentée**, délai de gouvernance préservé même à l'unanimité, anciennes approbations invalidées lors du retrait/réajout d'une adresse. **30 tests locaux passent (10 nouveaux).** Les interfaces du relais restent compatibles et l'ABI est actualisée. **Pas encore déployé sur Fuji.**
+
+Les corrections du moteur de Romain et les jeux de mesure sont conservés. Cela ne démontre pas une hausse de nos taux de détection. Les gros premiers paiements, le mode observation, le module Safe et la récupération indépendante restent des points à valider ou à construire selon les sections précédentes. Détails des garanties, limites et inspirations Squads / Safe / Fireblocks / Blockaid : [améliorations après bilan](ameliorations-apres-bilan.md).

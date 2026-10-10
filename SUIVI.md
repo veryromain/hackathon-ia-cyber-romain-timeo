@@ -4,7 +4,7 @@
 > Légende : ✅ fait · 🔄 en cours · ⬜ à faire · ✂️ coupé (manque de temps)
 > Détail du projet : [`PLAN.md`](PLAN.md) · Historique : [`JOURNAL.md`](JOURNAL.md) · Brief : [`CONTEXTE.md`](CONTEXTE.md)
 
-**Dernière mise à jour :** 2026-10-10 21:08, par Claude (Romain) — démo Fuji complète depuis le Mac, listes publiques OFAC/ScamSniffer
+**Dernière mise à jour :** 2026-10-10 21:16, par Codex (Timéo) — probation et gouvernance corrigées, 30 tests locaux ; Fuji non redéployé
 **Rendu (gel définitif) :** dim. 11/10 **12:00** · **Checkpoint :** sam. **18:30** · **Pitch :** dim. 13:00
 
 ---
@@ -59,7 +59,7 @@ Un **garde antifraude pour les organisations qui gardent des millions dans un po
 | # | Tâche | Qui | Comment / outil | Fini quand | Statut |
 |---|---|---|---|---|---|
 | T1 | **Format des échanges** : `events.jsonl`, `alerts.jsonl`, **`flags.jsonl`** + fichiers d'exemple dans `shared/echantillons/` | Timéo | Markdown + JSON écrit à la main | Romain peut lancer son code sur les exemples | ✅ 16:41 (v2 : `events`, `alerts`, `flags`, `labels` + exemples) |
-| T2 | **Contrat `TreasuryGuard`** : multisig M sur N, proposition, approbation, exécution, signalement de risque (signatures en plus / mise en attente), plafond par période, gel, expiration des clés | Timéo | Solidity + Hardhat + OpenZeppelin, tests en local | Les tests passent, dont le scénario de fraude avec et sans garde | ✅ 16:55 (20 tests passent, `cd ia-2 && npm test`) |
+| T2 | **Contrat `TreasuryGuard`** : multisig M sur N, proposition, approbation, exécution, signalement de risque (signatures en plus / mise en attente), plafond par période, gel, expiration des clés | Timéo | Solidity + Hardhat + OpenZeppelin, tests en local | Les tests passent, dont le scénario de fraude avec et sans garde | ✅ 21:16 (30 tests passent ; probation 2 jours, gouvernance sous délai, anciens votes invalidés ; Fuji non redéployé) |
 | R1 | **Moteur de score** : lit `events.jsonl`, tient l'historique (destinataires connus, montants habituels, rythme), applique les règles, écrit `alerts.jsonl` avec un score et des raisons | Romain | Python + pandas | Tourne sur l'exemple de T1 | ✅ 17:10 validé ; **corrigé 20:10** après le jeu de généralisation (test : 80 % arrêtées, 97 % des montants, 1,6 % faux hold) — mesure finale sur le 4ᵉ jeu |
 | R8a | **Oracle, cœur** : lit une page Web locale → repère les adresses `0x…` → Bedrock dit « accusation / mention / démenti » + **citation exacte** → le code vérifie la citation → écrit `flags.jsonl` | Romain | Python + BeautifulSoup + boto3 (Bedrock), **partage de connexion** | Une page synthétique donne un signalement vérifié | ✅ 17:07 (6 pages pièges, 6/6 justes et stables ; injection résistée ; 17 tests) |
 | R7a | **Formulaire du checkpoint** (problème, solution, stack) : texte prêt en section 8 de `PLAN.md` | Romain | — | Formulaire envoyé à 18:30 | 🔄 17:30 (brouillon en §8 de `PLAN.md`, à compléter avec les chiffres de R1 et R8a, puis à envoyer) |
@@ -71,7 +71,7 @@ Un **garde antifraude pour les organisations qui gardent des millions dans un po
 
 | # | Tâche | Qui | Comment / outil | Fini quand | Statut |
 |---|---|---|---|---|---|
-| T2 | `TreasuryGuard` terminé | Timéo | Hardhat | Tous les tests passent | ✅ 16:55 |
+| T2 | `TreasuryGuard` terminé | Timéo | Hardhat | Tous les tests passent | ✅ 21:16 (30 tests, dont 10 nouveaux ; correction locale, pas encore sur Fuji) |
 | T8 | **Registre des adresses signalées** (dans le Guard ou un contrat `RiskRegistry`) : adresse → niveau, hash de la preuve, expiration | Timéo | Solidity | Un paiement vers une adresse signalée déclenche la friction | ✅ 16:55 (`RiskRegistry.sol`, branché au portefeuille, testé) |
 | T3 | **Relais** chaîne ↔ fichiers : écrit `events.jsonl`, lit `alerts.jsonl` et `flags.jsonl` et les envoie sur la chaîne | Timéo | Node + ethers | Une alerte de Romain change réellement le sort d'un paiement | ✅ 17:15 (`npm run relay:local` ; testé avec un faux moteur : fraude signalée en 2 s puis bloquée) |
 | T4 | **Générateur de trafic normal** d'une équipe de protocole : rémunération des contributeurs, prestataires habituels, nouveau prestataire légitime, renouvellement de clé | Timéo | Node, graines aléatoires fixées | Fichier d'entraînement de plusieurs centaines de paiements | ✅ 17:25 (`shared/donnees/train.events.jsonl` : 362 paiements normaux sur 60 jours, + `carnet.json`) |
@@ -118,7 +118,7 @@ Un **garde antifraude pour les organisations qui gardent des millions dans un po
 
 | # | Tâche | Qui | Comment / outil | Fini quand | Statut |
 |---|---|---|---|---|---|
-| B1 | **Bilan de la démo** : ce qui marche, ce qui ne marche pas ; à garder, enlever, modifier, améliorer | Les deux | Après la démo de bout en bout, à partir des mesures (R6) | Liste écrite dans `shared/bilan-demo.md` | ✅ 20:39 décisions prises par Romain (`shared/bilan-demo.md` §2-4 et §7 conflit d'intérêts) ; avis de Timéo attendu sur le contrat et Safe |
+| B1 | **Bilan de la démo** : ce qui marche, ce qui ne marche pas ; à garder, enlever, modifier, améliorer | Les deux | Après la démo de bout en bout, à partir des mesures (R6) | Liste écrite dans `shared/bilan-demo.md` | ✅ 20:39 décisions prises par Romain (`shared/bilan-demo.md` §2-4 et §7 conflit d'intérêts) ; contrat durci à la demande de Timéo à 21:16 (bilan §8) ; architecture Safe toujours à préparer |
 | B2 | **Le problème est-il réel ?** Incidents récents chiffrés et sourcés (Drift, Bybit, fraudes au président en crypto, pertes des petites équipes), fréquence, coût moyen | Romain | Recherche web, sources citées, chiffres vérifiés | Slide « pourquoi ce problème » avec 3 à 5 faits sourcés | ⬜ |
 | B3 | **Étude de marché** : combien d'organisations ciblées, quelle trésorerie, où (Safe, Squads), taille de marché (TAM / SAM / SOM) avec la méthode de calcul | Romain | Recherche web, données Safe / DefiLlama / rapports publics | Estimation chiffrée **et sourcée**, avec ses hypothèses | ⬜ |
 | B4 | **Concurrence (produit, rentabilité, mise sur le marché, site et application)** : **Hypernative Guardian en tête** (contrat de contrôle sur Safe qui *bloque* les transactions à risque, vendu aux grandes trésoreries), Safe Shield (*avertit* sans agir, via Blockaid / Tenderly / Hypernative), Fireblocks, Forta… ce qu'ils font, leur prix, leur cible, **ce qu'on fait mieux** (voir `conversations/2026-10-10_timeo_comparaison-safe.md`). **Étudier aussi comment ils abordent le marché : leur site vitrine, leur application, leur parcours d'inscription et d'abonnement, leurs notifications**, pour s'en inspirer en gardant notre différence : **uniquement Avalanche** | Romain | Sites officiels, documentation, tableau comparatif | Tableau comparatif vérifié (pas « de mémoire ») | 🔄 comparaison fonctionnelle sourcée : `shared/comparaison-autres-blockchains.md` ; prix et parcours restent à vérifier |

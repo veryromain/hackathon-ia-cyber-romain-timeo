@@ -59,19 +59,24 @@ contract TreasuryGuard is ReentrancyGuard {
 
     Config public config;
     uint256 public threshold;
+    uint64 public constant KEY_PROBATION = 2 days;
     bool public frozen;
 
     address[] public ownerList;
     mapping(address => uint64) public keyExpiresAt; // 0 = pas signataire
+    mapping(address => uint64) public keyTrustedAfter; // clés initiales établies, clés remplacées en probation
+    mapping(address => uint256) public keyEpoch; // une adresse réajoutée ne récupère jamais ses anciens votes
 
     Proposal[] private _proposals;
     mapping(uint256 => mapping(address => bool)) public hasApproved;
+    mapping(uint256 => mapping(address => uint256)) private _approvalEpoch;
 
     uint64 public windowStart;
     uint256 public windowSpent;
 
     uint256 public unfreezeRound;
     mapping(uint256 => mapping(address => bool)) public hasApprovedUnfreeze;
+    mapping(uint256 => mapping(address => uint256)) private _unfreezeEpoch;
 
     event PaymentProposed(
         uint256 indexed id,
@@ -105,12 +110,14 @@ contract TreasuryGuard is ReentrancyGuard {
     event Cancelled(uint256 indexed id, address indexed by, string reason);
     event OwnerReplaced(address indexed previousOwner, address indexed newOwner, uint64 keyExpiresAt);
     event ThresholdChanged(uint256 previousThreshold, uint256 newThreshold);
+    event OwnerProbationStarted(address indexed owner, uint64 trustedAfter, uint256 epoch);
     event Frozen(address indexed by, string reason);
     event UnfreezeApproved(address indexed owner, uint256 approvals, uint256 requiredApprovals);
     event Unfrozen(address indexed by);
 
     error NotActiveOwner();
     error NotRiskOracle();
+    error OwnerInProbation(uint64 trustedAfter);
     error WalletFrozen();
     error NotFrozen();
     error NotPending();
@@ -141,6 +148,8 @@ contract TreasuryGuard is ReentrancyGuard {
             address owner = owners_[i];
             if (owner == address(0) || keyExpiresAt[owner] != 0) revert InvalidParameter();
             keyExpiresAt[owner] = expiry;
+            keyTrustedAfter[owner] = uint64(block.timestamp);
+            keyEpoch[owner] = 1;
             ownerList.push(owner);
         }
         windowStart = uint64(block.timestamp);
@@ -176,7 +185,7 @@ contract TreasuryGuard is ReentrancyGuard {
 
     function approve(uint256 id) external onlyActiveOwner {
         _requirePending(id);
-        if (hasApproved[id][msg.sender]) revert AlreadyApproved();
+        if (hasApproved[id][msg.sender] && _approvalEpoch[id][msg.sender] == keyEpoch[msg.sender]) revert AlreadyApproved();
         _approve(id);
     }
 
@@ -199,9 +208,10 @@ contract TreasuryGuard is ReentrancyGuard {
         uint256 required = requiredApprovals(id);
         if (approvals < required) revert NotEnoughApprovals(approvals, required);
 
-        // À l'unanimité des signataires, seul le délai d'examen de base s'applique : ils gardent le dernier mot.
+        // Le recours unanime concerne les paiements, jamais la gouvernance.
+        // Sur un paiement renforcé, les clés en probation ne peuvent pas fournir cette unanimité.
         uint64 notBefore = p.executableAfter;
-        if (approvals == ownerList.length) {
+        if (p.kind == Kind.Payment && approvals == ownerList.length) {
             uint64 base = p.proposedAt + config.reviewDelay;
             if (base < notBefore) notBefore = base;
         }
@@ -255,13 +265,18 @@ contract TreasuryGuard is ReentrancyGuard {
 
     function approveUnfreeze() external onlyActiveOwner {
         if (!frozen) revert NotFrozen();
-        if (hasApprovedUnfreeze[unfreezeRound][msg.sender]) revert AlreadyApproved();
+        if (!isEstablishedOwner(msg.sender)) revert OwnerInProbation(keyTrustedAfter[msg.sender]);
+        if (hasApprovedUnfreeze[unfreezeRound][msg.sender] && _unfreezeEpoch[unfreezeRound][msg.sender] == keyEpoch[msg.sender]) {
+            revert AlreadyApproved();
+        }
         hasApprovedUnfreeze[unfreezeRound][msg.sender] = true;
+        _unfreezeEpoch[unfreezeRound][msg.sender] = keyEpoch[msg.sender];
 
         uint256 approvals;
         for (uint256 i = 0; i < ownerList.length; i++) {
             address owner = ownerList[i];
-            if (hasApprovedUnfreeze[unfreezeRound][owner] && isActiveOwner(owner)) approvals++;
+            if (hasApprovedUnfreeze[unfreezeRound][owner] && isEstablishedOwner(owner)
+                && _unfreezeEpoch[unfreezeRound][owner] == keyEpoch[owner]) approvals++;
         }
         uint256 required = _withExtra(threshold);
         emit UnfreezeApproved(msg.sender, approvals, required);
@@ -278,6 +293,12 @@ contract TreasuryGuard is ReentrancyGuard {
         return keyExpiresAt[account] > block.timestamp;
     }
 
+    /// @notice Une clé remplacée ne participe aux quorums renforcés qu'après deux jours.
+    ///         Les signataires initiaux sont établis à la création du portefeuille.
+    function isEstablishedOwner(address account) public view returns (bool) {
+        return isActiveOwner(account) && block.timestamp >= keyTrustedAfter[account];
+    }
+
     function ownerCount() external view returns (uint256) {
         return ownerList.length;
     }
@@ -290,12 +311,16 @@ contract TreasuryGuard is ReentrancyGuard {
         return _proposals[id];
     }
 
-    /// @notice Ne compte que les signataires dont la clé est encore valide : remplacer un signataire
-    ///         ou laisser sa clé expirer rend caduques les approbations données avec l'ancienne clé.
+    /// @notice Compte les votes de l'incarnation actuelle des clés encore actives.
+    ///         Gouvernance, risque et dépassement de plafond : seules les clés établies comptent.
+    ///         Paiement ordinaire : une clé en probation peut encore participer au quorum de base.
     function validApprovals(uint256 id) public view returns (uint256 approvals) {
+        Proposal storage p = _proposals[id];
+        bool establishedOnly = p.kind != Kind.Payment || p.risk != Risk.None || _overCap(p.value);
         for (uint256 i = 0; i < ownerList.length; i++) {
             address owner = ownerList[i];
-            if (hasApproved[id][owner] && isActiveOwner(owner)) approvals++;
+            if (hasApproved[id][owner] && _approvalEpoch[id][owner] == keyEpoch[owner]
+                && (establishedOnly ? isEstablishedOwner(owner) : isActiveOwner(owner))) approvals++;
         }
     }
 
@@ -341,6 +366,7 @@ contract TreasuryGuard is ReentrancyGuard {
 
     function _approve(uint256 id) private {
         hasApproved[id][msg.sender] = true;
+        _approvalEpoch[id][msg.sender] = keyEpoch[msg.sender];
         emit Approved(id, msg.sender, validApprovals(id), requiredApprovals(id));
     }
 
@@ -363,8 +389,12 @@ contract TreasuryGuard is ReentrancyGuard {
             }
         }
         delete keyExpiresAt[previousOwner];
+        delete keyTrustedAfter[previousOwner];
         uint64 expiry = _expiryFromNow();
         keyExpiresAt[newOwner] = expiry;
+        keyTrustedAfter[newOwner] = uint64(block.timestamp) + KEY_PROBATION;
+        keyEpoch[newOwner]++;
+        emit OwnerProbationStarted(newOwner, keyTrustedAfter[newOwner], keyEpoch[newOwner]);
         emit OwnerReplaced(previousOwner, newOwner, expiry);
     }
 

@@ -12,6 +12,14 @@ Ajouter les entrées les plus récentes en haut.
 
 ---
 
+### 2026-10-10 21:16 — ia-2 / Timéo (avec Codex) — CORRECTIONS DU BILAN TESTÉES
+- **Fait :** probation de deux jours des clés remplacées dans tous les quorums renforcés et le dégel ; unanimité limitée au recours des paiements (délai de gouvernance préservé) ; numéro d'incarnation invalidant les anciens votes après retrait/réajout.
+- **Vérifié :** 30 tests Hardhat réussis (20 existants + 10 nouveaux), export ABI réussi, gas local mesuré. Documentation officielle Squads / Safe / Fireblocks / Blockaid sourcée avec distinction entre inspiration et fonctions livrées.
+- **Coordination :** pas de modification du moteur/datasets/site ni de relais ou redéploiement Fuji. Les preuves Fuji existantes portent encore sur l'ancien contrat.
+- **Reste :** redéploiement coordonné pour activer la probation sur Fuji ; P7 observation, validation client des faux positifs, intégration Safe et récupération auditée selon le bilan.
+- **Fichiers :** ia-2/contracts/TreasuryGuard.sol, ia-2/test/TreasuryGuard.probation.test.js, shared/abi/TreasuryGuard.json, ia-2/README.md, shared/bilan-demo.md, shared/ameliorations-apres-bilan.md, SUIVI.md, conversation.
+
+
 ### 2026-10-10 21:15 — ia-2 / Timéo (avec Claude) — ⚠️ RELAIS FUJI LANCÉ DEPUIS LE PC DE TIMÉO
 - **Romain, ne lance pas `relay:fuji` sur le Mac tant que cette entrée n'est pas suivie d'un « relais Fuji arrêté ».** Demande de Timéo : rejouer une démo sur Fuji. Ton relais est arrêté depuis 21h08, aucun relais ne tournait ici.
 - **État lu avant de lancer (21h12, lecture seule) :** portefeuille non gelé, 993 700 mUSD, 12 paiements dont les 8 à 11 encore en attente (ta démo) ; je n'y touche pas.
