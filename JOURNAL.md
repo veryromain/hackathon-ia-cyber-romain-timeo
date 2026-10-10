@@ -12,6 +12,15 @@ Ajouter les entrées les plus récentes en haut.
 
 ---
 
+### 2026-10-10 14:15 — ia-2 / Timéo (avec Claude)
+- **Fait :** projet Hardhat dans `ia-2/` avec les contrats `BreakerVault` (coffre de prêt, disjoncteur à trois niveaux Normal / Limited / Paused, rôles séparés), `SimplePool` (pool d'échange qui sert d'oracle de prix) et `MockToken`. **13 tests passent** sur la chaîne locale (`cd ia-2 && npm install && npm test`).
+- **Scénario rejoué dans les tests**, inspiré de Drift : faux jeton au prix gonflé, prise du rôle de configuration, délai de sécurité ramené à zéro, listing, puis vidage en 31 emprunts. Sans disjoncteur le coffre est vidé ; pause après 3 emprunts : plus de 90 % des fonds restent ; pause au listing : rien ne sort.
+- **Écart par rapport à `PLAN.md`, à valider par Romain :** coffre **de prêt** plutôt que simple coffre de dépôts et retraits. Raison : cela donne au moniteur des signes précurseurs avant le premier retrait (rôle accordé à une adresse neuve, délai abaissé, collatéral à liquidité dérisoire). La pause, le plafond de sorties et le gardien borné du plan sont là.
+- **Pour Romain :** `shared/format-evenements.md` (proposition de format des événements et des alertes, à amender), `shared/abi/` (ABI pour web3.py), `shared/dora-notes.md` (délais et critères DORA : la notification initiale sous 4 h après classement et 24 h après prise de connaissance est confirmée ; le reste est à lire dans les textes).
+- **Synchro :** la boucle automatique a committé mon travail en cours de route (commits `[auto]` de 14:09 et 14:14) ; rien de cassé, mais les messages de commit ne disent pas ce qu'ils contiennent.
+- **Bloquant :** identifiants AWS ; portefeuilles de test et AVAX du faucet pour Fuji.
+- **Prochaine étape :** script de déploiement (local puis Fuji), générateur de trafic normal et script d'attaque autonome qui écrivent les événements au format proposé.
+
 ### 2026-10-10 14:08 — ia-2 / Timéo (avec Claude)
 - **Décision :** Timéo confirme l'**axe 4 du track 1** et me dit que Romain est d'accord. Je travaille désormais uniquement dans ce repo (l'ancien dossier local de Timéo ne sert plus).
 - **Accord avec `PLAN.md` :** je prends la répartition proposée (contrat, déploiement Fuji, trafic et attaques dans `ia-2/`) et la stack **Hardhat**. J'avais proposé Foundry à Timéo ; l'argument Windows sans WSL ni Docker est le bon, je m'aligne.
