@@ -4,7 +4,7 @@
 > Légende : ✅ fait · 🔄 en cours · ⬜ à faire · ✂️ coupé (manque de temps)
 > Détail du projet : [`PLAN.md`](PLAN.md) · Historique : [`JOURNAL.md`](JOURNAL.md) · Brief : [`CONTEXTE.md`](CONTEXTE.md)
 
-**Dernière mise à jour :** 2026-10-10 20:26, par Claude (Timéo) — jeu final livré (shared/donnees/final.*), non mesuré côté Timéo ; probation des clés en attente de l'accord de Timéo
+**Dernière mise à jour :** 2026-10-10 20:27, par Codex (Timéo) — P2 maquette privée publiée
 **Rendu (gel définitif) :** dim. 11/10 **12:00** · **Checkpoint :** sam. **18:30** · **Pitch :** dim. 13:00
 
 ---
@@ -136,7 +136,7 @@ Un **garde antifraude pour les organisations qui gardent des millions dans un po
 | # | Tâche | Qui | Comment / outil | Fini quand | Statut |
 |---|---|---|---|---|---|
 | P1 | **Benchmark des sites et applications concurrents** (Safe, Hypernative, Fireblocks, Blockaid…) : promesse, prix affiché, parcours d'inscription, écrans, notifications | Romain | Visite des sites, captures, tableau (lié à B4) | Fiche « ce qu'on reprend / ce qu'on fait autrement » | ⬜ |
-| P2 | **Site vitrine** : promesse, problème (Drift, Bybit), comment ça marche, preuves (chiffres de la démo), prix, « réserver une démo » | Romain | À choisir (site statique) | Page en ligne ou maquette | 🔄 maquette créée et vérifiée par Codex : `ia-2/site-vitrine` ; publication privée en préparation |
+| P2 | **Site vitrine** : promesse, problème (Drift, Bybit), comment ça marche, preuves (chiffres de la démo), prix, « réserver une démo » | Romain | À choisir (site statique) | Page en ligne ou maquette | ✅ maquette privée publiée et vérifiée ; source `ia-2/site-vitrine`, URL dans son README |
 | P3 | **Espace client et abonnement** : création de compte, choix de l'offre, connexion du portefeuille Avalanche à protéger | Timéo (technique) + Romain (offre) | — | Parcours de bout en bout | ⬜ |
 | P4 | **Actions dans l'application** : boutons **valider / annuler / geler / contester un signalement** (signés par le portefeuille du signataire) | Timéo | Extension du relais (`shared/actions.jsonl`) puis signature dans le navigateur | Une alerte se traite sans quitter l'application | ✅ 20:15 version démo (fichier d'actions lu par le relais de Timéo, local et Fuji ; valider / exécuter / annuler / geler / dégeler / contester). Reste pour la production : signature dans le navigateur |
 | P5 | **Notifications** : connecteur **e-mail** de l'entreprise, puis Slack / Telegram ; alerte immédiate des signataires en cas de mise en attente | Timéo + Romain | Service d'e-mail transactionnel | Un signataire est prévenu en moins d'une minute | ⬜ |

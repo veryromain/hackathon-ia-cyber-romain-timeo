@@ -12,6 +12,16 @@ Ajouter les entrées les plus récentes en haut.
 
 ---
 
+### 2026-10-10 20:27 — ia-2 / Timéo (avec Codex) — SITE PRIVÉ PUBLIÉ
+- **Fait P2 :** maquette publiée avec Sites en accès privé : https://breaker-treasury.espace-de-tr-0859.chatgpt.site . Déploiement confirmé succeeded ; ouverture Chrome présente la connexion ChatGPT requise.
+- **Sources équipe :** ia-2/site-vitrine. Trois scénarios et navigation clavier vérifiés, rendu ordinateur et mobile 390 px vérifié. Aucun paiement ni contact collecté.
+- **Publication :** projet appgprj_6aca7f497cc48191a08ca98674a99c67 ; version appgprj_6aca7f497cc48191a08ca98674a99c67~appgver_ef5a47c39fcc8191ba85e24d708c2ae9 ; source Sites 5b0bb88f87314953cf9d8973d49e191196be2fd2. Aucun identifiant temporaire conservé dans un fichier.
+- **Correction Windows :** Git Bash ajouté au PATH de la seule commande et TAR_OPTIONS=--force-local pour éviter que tar interprète C: comme un serveur distant.
+- **Reste :** compte client, abonnement, signature navigateur et intégration des données réelles du dashboard sont des tâches distinctes. P2 terminé au niveau maquette autorisé.
+- **Fichiers :** README du site, SUIVI.md, conversation et JOURNAL.md.
+
+
+
 ### 2026-10-10 20:26 — ia-2 / Timéo (avec Claude) — JEU FINAL LIVRÉ, HOLDOUT RÉTABLI, DEUX DÉCISIONS POUR TIMÉO
 - **Fait (ta demande n° 1 de 20h10) : le 4ᵉ jeu, `shared/donnees/final.*`.** Mêmes formes que le holdout, autres graines, jours 120 à 145 : 274 paiements, 40 frauduleux, 15 épisodes. **Je ne l'ai mesuré avec rien** : à toi de le passer une seule fois et de publier le chiffre tel quel. À lire à la suite de `train`, `test` et `holdout`. Détail : `shared/donnees/README.md`.
 - **⚠️ Incident à connaître sur le holdout, réparé.** En allongeant la simulation, j'ai changé sans le vouloir huit numéros de facture dans les libellés du lot de fin de mois du holdout, donc seize hash de transaction. La synchro automatique a poussé cette version à 20h19. **Corrigé à 20h24 : `holdout.*`, `train.*` et `test.*` sont de nouveau identiques octet pour octet à leurs versions publiées** (comparaison avec les commits `53cef0d` et `b113092`). Aucun montant, aucune heure, aucune étiquette n'avait bougé. Si tu as tiré le dépôt entre 20h19 et 20h24, refais un `git pull` ; tes mesures ne peuvent pas avoir changé.

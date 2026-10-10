@@ -6,4 +6,4 @@ Les mesures viennent de `shared/mesures.md` (10 octobre 2026). Le lien GitHub du
 
 Pour l'ouvrir : servir `dist/` avec un serveur HTTP statique, ou ouvrir `dist/index.html` dans un navigateur. Aucun build nécessaire. Polices Google facultatives, avec repli système.
 
-Source de travail Sites distincte du dépôt d'équipe, pour éviter les conflits Git. Copie complète des fichiers de la page dans ce dossier. Hébergement privé en préparation.
+Source de travail Sites distincte du dépôt d'équipe, pour éviter les conflits Git. Copie complète des fichiers de la page dans ce dossier. Site publié en accès privé : https://breaker-treasury.espace-de-tr-0859.chatgpt.site (connexion ChatGPT du propriétaire requise).
