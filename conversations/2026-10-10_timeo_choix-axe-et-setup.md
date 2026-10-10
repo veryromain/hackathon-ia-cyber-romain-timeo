@@ -61,3 +61,9 @@ Axe 1 (poste de l'analyste LCB-FT) : c'est le seul axe où un jeu de données sy
 - Importer dans `ia-2/` les notes du dossier de travail local de Timéo (journal de passation, décisions).
 - Configurer les identifiants AWS (hors Git) et tester un appel Bedrock.
 - Squelette de code une fois le sujet choisi.
+
+## Changement d'axe après le mentor (16h20 à 16h40)
+- Retour du mentor Team1, analysé dans `shared/retour-mentor-team1.md` : ne pas bloquer un protocole nous-mêmes, ne pas gérer les fonds, alerter les signataires, plafond par période, renouvellement des clés.
+- **Décision de Timéo : passer à l'axe 2 du track 1** (SOC antifraude), appliqué à une trésorerie d'entreprise sur la blockchain. Accord de Romain à confirmer.
+- Nouveau `PLAN.md` rédigé par Claude à la demande de Timéo, avec la répartition des tâches et le calendrier jusqu'au rendu. L'ancien plan est dans `shared/archive/PLAN-axe4.md`.
+- Le coffre de prêt `BreakerVault` écrit plus tôt ne sert plus ; il sera remplacé par `TreasuryGuard`.

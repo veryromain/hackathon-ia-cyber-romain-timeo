@@ -12,6 +12,13 @@ Ajouter les entrées les plus récentes en haut.
 
 ---
 
+### 2026-10-10 16:31 — ia-2 / Timéo (avec Claude)
+- **Fait :** nouveau `PLAN.md`, rédigé à la demande de Timéo pour l'**axe 2 du track 1** : garde antifraude pour une trésorerie d'entreprise tenue par un portefeuille à plusieurs signataires. **Romain, c'est une proposition : lis-la et dis ce que tu changes.** Ton plan de l'axe 4 est archivé tel quel dans `shared/archive/PLAN-axe4.md`.
+- **Répartition proposée (consigne de Timéo : le plus technique côté blockchain pour lui) :** Timéo → contrat `TreasuryGuard`, relais chaîne/fichiers, trafic normal, scénarios de fraude, Fuji. Romain → moteur de score, explication et rapport par Bedrock, tableau de bord, évaluation, livrables écrits.
+- **Interface entre les deux :** deux fichiers JSON Lines, `events.jsonl` (Timéo vers Romain) et `alerts.jsonl` (Romain vers Timéo). Romain n'a pas besoin de la blockchain pour avancer.
+- **En cours :** format des événements et fichier d'exemple (tâche T1), puis le contrat.
+- **Bloquant :** accord de Romain sur le plan ; formulaire du checkpoint à 18:30 (texte proposé en section 8 du plan).
+
 ### 2026-10-10 16:26 — ia-2 / Timéo (avec Claude)
 - **Annonce de Timéo :** après l'échange avec le mentor, il veut passer de l'axe 4 à l'**axe 2 du track 1** (SOC antifraude à l'ère de l'IA générative : prise de contrôle de compte, arnaques au paiement, fraude au président ; réponse graduée par authentification renforcée, mise en attente, gel, alerte). **Accord de Romain non confirmé ici ; `PLAN.md` n'est pas modifié.**
 - **Lecture proposée par Claude, à confirmer par Timéo :** l'axe 2 appliqué à une **trésorerie d'entreprise sur la chaîne**, pas à la fraude bancaire classique. Le client est une entreprise qui gère ses fonds par un portefeuille à plusieurs signataires. Chaque transaction proposée est notée avant son exécution (destinataire jamais vu, montant hors habitudes, rafale, signatures anciennes, changement récent des signataires ou du seuil). Réponse appliquée par le portefeuille du client lui-même : signatures supplémentaires exigées, mise en attente avec délai, gel par les signataires, alerte. Plafond par période sans autorisation supplémentaire et expiration des clés, les deux idées du mentor. L'outil ne peut qu'ajouter de la friction ; il ne valide, ne bloque ni ne déplace rien.

@@ -1,129 +1,152 @@
-# Plan d'action — projet « Breaker » (nom provisoire)
+# Plan d'action — « Breaker », SOC antifraude pour trésoreries sur la blockchain
 
-> **Statut : proposition à valider** avec Timéo et le mentor Team1 avant le checkpoint de **sam. 18:30**.
-> Track 1 — Fintech Security, axe 4 (Détection & réponse DeFi / DORA).
+> **Statut : proposition rédigée par Claude à la demande de Timéo, samedi 16h35. À valider par Romain.**
+> Elle remplace le plan de l'axe 4, archivé dans `shared/archive/PLAN-axe4.md`.
+> Track 1 (Fintech Security), **axe 2** : SOC antifraude à l'ère de l'IA générative.
 
 ## 1. Le projet en une phrase
 
-**Un disjoncteur automatique pour protocoles DeFi.** Il repère un vidage de fonds en cours, met le contrat en pause en quelques secondes et transforme l'incident en déclaration DORA pré-remplie, chaque chiffre étant relié à une transaction on-chain.
+**Un garde antifraude pour les entreprises qui gèrent leur trésorerie avec un portefeuille à plusieurs signataires.** Chaque paiement proposé est noté avant son exécution ; s'il est suspect, le portefeuille exige des signatures supplémentaires ou le met en attente, et les signataires reçoivent une alerte expliquée en clair.
 
-## 2. Le scénario de démo (un seul, maîtrisé de bout en bout)
+## 2. Pourquoi ce cadrage
 
-1. **Avant :** notre coffre (vault) tourne sur le testnet Avalanche Fuji avec du trafic normal simulé (dépôts et retraits de plusieurs utilisateurs).
-2. **Attaque :** un vidage étalé sur plusieurs transactions, comme Nomad, Ronin ou Drift (31 retraits en 12 min).
-   - **Variante proposée :** l'attaquant est un **agent IA de trésorerie piégé** par un document empoisonné (OWASP ASI01/ASI07). Elle relie l'idée de Romain et celle de Timéo dans un seul scénario.
-3. **Détection :** le moniteur calcule un score de risque à chaque bloc et le seuil est franchi en moins de N blocs.
-4. **Réponse graduée :** alerte → limitation des retraits → **pause**, déclenchée par un rôle « gardien » aux pouvoirs bornés (il peut mettre en pause, jamais déplacer de fonds).
-5. **Après :** l'incident est classé selon les critères DORA. Un rapport pré-rempli est généré par un LLM (Bedrock), avec preuves (hash de transactions), chronologie et montants sauvés. **La levée de la pause exige une validation humaine.**
-6. **Chiffres à l'écran :** temps de détection, % des fonds sauvés, faux positifs sur le trafic normal rejoué.
+- **Le retour du mentor Team1** (`shared/retour-mentor-team1.md`) : ne pas bloquer un protocole nous-mêmes, ne jamais gérer les fonds des clients, alerter les signataires, plafonner les sorties par période, forcer le renouvellement des clés.
+- **Le cas Drift (avril 2026, 280 à 285 M$)** : des signataires trompés ont validé à l'avance des transactions malveillantes, puis les fonds sont sortis en 31 retraits et 12 minutes. C'est une fraude au président, en version crypto.
+- **L'axe 2 du guide** demande exactement notre réponse : authentification renforcée, mise en attente, gel, alerte client.
+- **Ce qui nous distingue** : peu d'équipes sauront faire appliquer la réponse par un contrat sur la chaîne, et notre outil ne peut qu'ajouter de la friction. Il ne valide, ne bloque ni ne déplace jamais de fonds.
 
-## 3. Architecture
+## 3. Le scénario de démo (un seul, de bout en bout)
+
+1. **Avant.** Une entreprise fictive tient sa trésorerie dans un portefeuille à 5 signataires, dont 2 suffisent pour payer. Trafic normal : salaires, fournisseurs habituels, parfois un nouveau fournisseur.
+2. **Fraude.** Deux signataires sont trompés (faux message urgent du dirigeant) et valident une série de virements vers des adresses jamais vues. Variante : une clé volée.
+3. **Détection, avant que l'argent parte.** Le moniteur note chaque paiement dès qu'il est proposé : destinataire inconnu, montant hors habitudes, rafale, signatures anciennes, changement récent des signataires ou du seuil.
+4. **Réponse graduée, appliquée par le portefeuille du client.**
+   - risque moyen : signatures supplémentaires exigées ;
+   - risque élevé : mise en attente pendant un délai, annulable par les signataires ;
+   - à tout moment : gel du portefeuille par un signataire ;
+   - dans tous les cas : alerte avec explication en clair et preuves.
+5. **Après.** Rapport d'incident généré (Bedrock), chaque affirmation reliée à une transaction. Le journal des décisions est vérifiable sur la chaîne.
+6. **Chiffres à l'écran.** Taux de détection, faux positifs sur le trafic normal, délai entre la proposition et le signalement, part des fonds protégés.
+
+## 4. Architecture
 
 ```
- [Générateur de trafic]──┐            ┌──> [Dashboard analyste]
-   normal + attaques      │            │     alertes, score, chronologie,
-                          v            │     bouton « lever la pause » (humain)
-              [Contrat Vault sur Fuji] │
-               pause() + rate-limit    │
-               rôle GUARDIAN borné     │
-                          │ événements │
-                          v            │
-                 [Moniteur on-chain] ──┤
-                  features par bloc    │
-                  score de risque      │
-                  ── seuil ──> tx pause()
-                          │
-                          v
-               [Module conformité DORA]
-                classification (règles)
-                + rapport rédigé par LLM (Bedrock)
-                + journal d'audit horodaté et haché
+ ia-2 (Timéo)                                         ia-1 (Romain)
+┌────────────────────────────┐   events.jsonl   ┌──────────────────────────────┐
+│ Contrat TreasuryGuard      │ ───────────────> │ Moteur de score              │
+│  propose / approuve /      │                  │  règles + détection          │
+│  exécute, plafond, délai,  │                  │  d'anomalies, raisons        │
+│  gel, expiration des clés  │   alerts.jsonl   │                              │
+│                            │ <─────────────── │ Explication et rapport       │
+│ Relais chaîne <-> fichiers │                  │  (Bedrock)                   │
+│ Générateur de trafic       │                  │                              │
+│ Scénarios de fraude        │                  │ Tableau de bord (Streamlit)  │
+└────────────────────────────┘                  └──────────────────────────────┘
 ```
+
+**L'interface entre nous deux, ce sont deux fichiers JSON Lines.** Romain n'a jamais besoin de toucher à la blockchain : il lit `events.jsonl` et écrit `alerts.jsonl`. Le relais de Timéo fait le lien avec la chaîne dans les deux sens. Chacun peut donc avancer seul à partir de fichiers d'exemple.
 
 **Où est l'IA ?**
-- **Détection :** un score d'anomalie appris sur le trafic normal (ex. Isolation Forest), combiné à des règles explicables. Chaque alerte donne ses raisons.
-- **Réponse :** un LLM rédige la notification DORA et la chronologie. Il ne décide jamais de la pause : la décision vient du score et des seuils, pas du LLM.
-- **Variante :** l'agent IA de trésorerie piégé sert de vecteur d'attaque réaliste.
+- **Score :** des règles explicables, plus un modèle d'anomalie appris sur le trafic normal. Chaque alerte cite ses raisons.
+- **Bedrock :** rédige l'explication destinée aux signataires et le rapport d'incident. Il ne décide jamais du niveau de risque.
+- **Bonus :** Bedrock analyse le texte de justification du paiement pour repérer les marqueurs d'une fraude au président (urgence, secret, changement de coordonnées).
 
-**Stack proposée :**
-| Brique | Choix | Pourquoi |
+**Ce que le moniteur a le droit de faire sur la chaîne :** signaler un paiement comme risqué, rien d'autre. Le signalement ajoute des exigences ; les signataires gardent le dernier mot.
+
+**Stack**
+
+| Brique | Choix | Qui |
 |---|---|---|
-| Contrat | Solidity + **Hardhat** (Node) | Fonctionne sous Windows sans Docker. Foundry est plus confortable sous WSL |
-| Chaîne | Avalanche **Fuji testnet** | Mentors Team1, faucet gratuit, compatible EVM |
-| Moniteur / détection | Python 3.12 + web3.py + scikit-learn | Déjà installé chez Timéo |
-| LLM | AWS Bedrock (Claude) | Crédits du hackathon |
-| Dashboard | Streamlit | Une démo visuelle en quelques heures |
+| Contrat | Solidity, Hardhat, OpenZeppelin | Timéo |
+| Chaîne | Chaîne locale Hardhat pour les mesures, Avalanche Fuji pour la démo | Timéo |
+| Relais, trafic, fraudes | Scripts Node (ethers) | Timéo |
+| Score | Python 3.12, pandas, scikit-learn | Romain |
+| Modèle de langage | AWS Bedrock, modèle lu dans `BEDROCK_MODEL_ID` | Romain |
+| Tableau de bord | Streamlit | Romain |
 
-## 4. Répartition du travail
+## 5. Qui fait quoi
 
-| Qui | Dossier | Périmètre |
+### Timéo — `ia-2/` : la blockchain et les données
+
+| # | Tâche | Fini quand |
 |---|---|---|
-| **Timéo** (crypto) | `ia-2/` | Contrat Vault (pause, rate-limit, rôle gardien), déploiement Fuji, générateur de trafic et scénarios d'attaque |
-| **Romain** | `ia-1/` | Moniteur, features et score de risque, module DORA (classification + rapport Bedrock), dashboard |
-| **Ensemble** | `shared/` | Format des événements, mesures, pitch deck, vidéo, fiche défense |
+| T1 | **Format des événements et des alertes** dans `shared/format-evenements.md`, avec un fichier d'exemple écrit à la main dans `shared/echantillons/` | Romain peut lancer son moteur dessus |
+| T2 | **Contrat `TreasuryGuard`** : proposition, approbation et exécution à M signataires sur N ; plafond par période au-delà duquel il faut plus de signatures ; signalement de risque par le moniteur (signatures en plus, ou mise en attente) ; gel par un signataire ; expiration des clés | Les tests passent en local, dont le scénario de fraude avec et sans garde |
+| T3 | **Relais** : écrit les événements de la chaîne dans `events.jsonl`, lit `alerts.jsonl` et envoie le signalement sur la chaîne | Une alerte de Romain change réellement le sort d'un paiement |
+| T4 | **Générateur de trafic normal** : salaires, fournisseurs récurrents, nouveau fournisseur légitime, renouvellement de clé légitime | Un fichier d'entraînement de plusieurs centaines de paiements |
+| T5 | **Scénarios de fraude**, au moins 5 variantes : signataires trompés, clé volée, rafale, goutte-à-goutte sous le plafond, baisse du seuil avant l'attaque | Un fichier de test étiqueté, produit avec d'autres graines que l'entraînement |
+| T6 | **Déploiement sur Fuji** et rejeu de la démo, avec les liens de l'explorateur | La démo tourne sur Fuji |
+| T7 | **Mesure du gas** des transactions du garde, pour le modèle économique | Tableau dans `shared/` |
 
-**Interface à figer dès le début :** le format JSON d'un événement (bloc, tx, from, montant, type) et d'une alerte (score, raisons, tx liées). C'est ce qui permet de travailler en parallèle.
+### Romain — `ia-1/` : la détection, l'explication et la présentation
 
-## 5. Planning jusqu'au rendu (dim. 12:00, gel définitif)
-
-| Créneau | Objectif | Livrable de contrôle |
+| # | Tâche | Fini quand |
 |---|---|---|
-| **Sam. 14:00–15:30** | Valider l'idée avec le mentor Team1. Wallets Fuji + faucet. Test d'un appel Bedrock. Figer le format des événements | Décision écrite dans `JOURNAL.md` |
-| **Sam. 15:30–18:30** | Contrat Vault déployé sur Fuji. Générateur de trafic normal. Moniteur qui lit les événements en direct | Un dépôt et un retrait visibles dans le moniteur |
-| **Sam. 18:30** | ✅ **Checkpoint officiel** (formulaire problème / solution / stack, confirmation du track) | — |
-| **Sam. 18:30–23:00** | Scénarios d'attaque (au moins 2). Features et score. Pause automatique déclenchée par le moniteur | **Première démo de bout en bout**, même moche |
-| **Sam. 23:00–03:00** | Module DORA (classification + rapport LLM). Dashboard. Bouton de levée de pause humaine | Rapport généré sur une attaque réelle sur Fuji |
-| **Dim. 03:00–08:00** | Mesures : N exécutions (trafic normal + attaques) → taux de détection, faux positifs, temps de détection, fonds sauvés. Corrections | Tableau de chiffres dans `shared/` |
-| **Dim. 08:00–10:00** | Enregistrement de la **vidéo démo** (2–3 min), README final, fiche défense, slide conformité, playbook | — |
-| **Dim. 10:00** | Atelier coaching pitch | — |
-| **Dim. 10:00–12:00** | Deck (8 slides), répétition, **vérifier zéro secret dans le repo**, donner l'accès au jury | 🧊 **Rendu 12:00** |
-| **Dim. 13:00** | Round 1 | — |
+| R1 | **Moteur de score** : lit `events.jsonl`, tient l'historique (destinataires connus, montants habituels, rythme), applique les règles, sort un score et des raisons | Tourne sur l'exemple de T1 et écrit `alerts.jsonl` |
+| R2 | **Modèle d'anomalie** appris sur le trafic normal de T4, combiné aux règles | Les seuils des trois niveaux sont réglés sur l'entraînement, jamais sur le test |
+| R3 | **Explication de l'alerte** par Bedrock : quelques phrases pour un signataire, chaque fait relié à une transaction, avec repli sur un texte à trous si Bedrock est injoignable | Une alerte lisible par quelqu'un qui ne connaît pas la blockchain |
+| R4 | **Rapport d'incident** par Bedrock : chronologie, montants, décisions prises, preuves | Un rapport généré sur la fraude de démo |
+| R5 | **Tableau de bord** : paiements en cours, score, raisons, état (normal, signatures en plus, en attente, gelé), chiffres clés | Suffit à filmer la démo |
+| R6 | **Évaluation** : taux de détection, précision, faux positifs, délai de signalement, fonds protégés, sur le fichier de test de T5 | Tableau de chiffres dans `shared/` |
+| R7 | **Livrables écrits** : formulaire du checkpoint, deck, fiche de défense, playbook de réponse, slide conformité | Relus par Timéo |
 
-**Règle d'or :** une démo de bout en bout qui marche à 23:00 samedi vaut mieux que trois briques parfaites séparées. On ajoute la finition ensuite.
+### Ensemble
 
-## 6. Livrables (rappel)
+- Intégration de bout en bout, vidéo de démo, README final, répétition du pitch, vérification qu'aucun secret n'est dans le dépôt, accès du jury au dépôt.
 
-- [ ] Repo + README (problème, architecture, installation, limites connues)
-- [ ] Vidéo démo de 2–3 min
-- [ ] Pitch deck (8 slides max)
-- [ ] Fiche défense : scénario, fonctions NIST CSF (Detect, Respond, Recover), techniques ATT&CK et risques OWASP, métriques, limites
-- [ ] PoC de bout en bout
-- [ ] **Playbook de réponse** : qui est alerté, ce qui est automatique (alerte, rate-limit, pause), ce qui reste humain (levée de pause, notification au régulateur)
-- [ ] **Slide conformité** : DORA (classification et notification), MiCA (prestataires crypto), journal d'audit vérifiable
+## 6. Calendrier
 
-## 7. Limites et risques
+| Créneau | Timéo | Romain | Contrôle |
+|---|---|---|---|
+| **Sam. 16h30–17h15** | T1 : format et exemple | Lit le plan, prépare l'environnement Python | Plan validé à deux, noté dans `JOURNAL.md` |
+| **Sam. 17h15–18h30** | T2 : contrat et tests | R1 sur l'exemple ; R7 : formulaire du checkpoint | Formulaire prêt |
+| **Sam. 18h30** | ✅ **Checkpoint** | ✅ **Checkpoint** | Track confirmé |
+| **Sam. 18h30–21h00** | T2 fini, T3 : relais, T4 : trafic normal | R1 fini, R2, R5 en première version | Romain reçoit le fichier d'entraînement |
+| **Sam. 21h00–23h00** | T5 : fraudes ; intégration | Intégration ; R3 | **Première démo de bout en bout en local, même moche** |
+| **Sam. 23h00–02h00** | T6 : Fuji ; variantes de fraude | R3, R4, R5 | Rapport généré sur la fraude de démo |
+| **Dim. avant 03h00** | **Renouveler la clé Bedrock** (elle expire vers 03h28) | — | Appel de test réussi |
+| **Dim. 02h00–07h00** | Sommeil à tour de rôle ; T7 | Sommeil à tour de rôle ; R6 | — |
+| **Dim. 07h00–09h00** | Rejoue les mesures, corrige | R6 : chiffres définitifs | Tableau de chiffres dans `shared/` |
+| **Dim. 09h00–10h00** | Vidéo de démo (2 à 3 minutes) | README final | Vidéo enregistrée |
+| **Dim. 10h00** | Atelier de coaching pitch | Atelier de coaching pitch | — |
+| **Dim. 10h00–11h30** | Vérification des secrets, accès du jury | R7 : deck, fiche de défense, playbook, slide conformité | Tout est dans le dépôt |
+| **Dim. 12h00** | 🧊 **Rendu** | 🧊 **Rendu** | — |
 
-### Techniques
-| Risque | Impact | Parade |
-|---|---|---|
-| **Attaque en une seule transaction** (flash loan : Beanstalk, Euler) | Le disjoncteur arrive trop tard | On l'assume et on le dit. Notre cible, ce sont les vidages étalés ou précédés de signes. On peut citer la piste future (surveillance du mempool, ERC-7265) |
-| Timéo connaît Solana, pas Solidity | Retard sur le contrat | Contrat **minimal** (≈100 lignes), en partant d'OpenZeppelin (`Pausable`, `AccessControl`) |
-| Faucet Fuji limité, limites de débit du RPC public | Moins de transactions | Montants minuscules. RPC de secours. Option : réseau local Hardhat pour les mesures en masse, Fuji pour la démo |
-| Windows sans Docker chez Timéo | Problèmes d'outillage | Hardhat (Node), pas Foundry ni Docker |
-| Accès AWS Bedrock inconnu (identifiants, région, modèles) | Pas de rapport LLM | **À débloquer dès maintenant.** Plan B : rapport par template, sans LLM |
-| Démo live qui plante | Perte de points | Vidéo enregistrée + scénario rejouable sur réseau local |
+**Règle d'or :** une démo de bout en bout qui marche samedi à 23h00 vaut mieux que des briques parfaites séparées.
 
-### Données et mesures
-- **Tout le trafic est synthétique**, fabriqué par nous. Les chiffres seront donc favorables par construction. Il faut le dire et montrer comment on a évité le sur-apprentissage : seeds différentes, trafic de test séparé du trafic d'entraînement.
-- Peu de scénarios d'attaque, donc la généralisation n'est pas prouvée. Il faut le présenter comme une limite connue.
+## 7. Travailler chacun de son côté sans se gêner
 
-### Réglementaires (questions probables du jury)
-- **Un protocole DeFi pur n'est pas soumis à DORA ni à MiCA.** Notre client cible doit donc être une **entité régulée exposée à la DeFi**. → **Choix de cadrage :** la démo met en scène un **prestataire crypto agréé MiCA fictif** (nom inventé, pas une vraie entreprise) qui propose à ses clients un produit « Earn » reposant sur notre coffre on-chain. Pour lui, le contrat est un actif TIC critique : un exploit est un incident TIC qui relève de DORA. Les protocoles DeFi purs restent un second marché, avec la même détection et la même pause, mais un post-mortem public à la place du rapport DORA. À valider avec le mentor.
-- Les délais et seuils DORA sont **à vérifier dans les textes** (RTS sur la classification des incidents). De mémoire : notification initiale sous 4 h après la classification comme incident majeur, et au plus tard 24 h après sa détection ; rapport intermédiaire sous 72 h ; rapport final sous 1 mois.
-- **« Si votre modèle se trompe, qui est responsable ? »** Notre réponse :
-  - Le modèle ne peut que **mettre en pause**, une action réversible et bornée. Il ne déplace jamais de fonds.
-  - La levée de la pause et l'envoi au régulateur restent humains.
-  - Chaque décision est journalisée avec ses raisons, et un auditeur peut la rejouer.
-- **Une pause, c'est de la centralisation** (critique classique en DeFi). Parade : pouvoirs du gardien bornés et publics, pause limitée dans le temps, levée possible par un multisig ou un timelock.
+- Timéo n'écrit que dans `ia-2/`, Romain que dans `ia-1/`. Dans `shared/`, on prévient dans `JOURNAL.md` avant de changer un fichier de l'autre.
+- Avant de commencer : `git pull --rebase`, puis lecture du haut de `JOURNAL.md`. Après chaque avancée : une entrée dans `JOURNAL.md`, puis commit et push.
+- Le format de `shared/format-evenements.md` ne change plus sans prévenir l'autre.
+- **Bedrock** : chacun ses identifiants, dans `.env` à la racine (ignoré par Git). Le code lit le modèle dans `BEDROCK_MODEL_ID`, car nous n'avons pas accès aux mêmes modèles. Le Wi-Fi de l'école bloque Bedrock : passer en partage de connexion pour ces appels. Détail dans `shared/aws-bedrock.md`.
 
-### Organisation
-- Deux personnes, environ 22 h restantes, sommeil compris : **il faut couper dans le périmètre, pas dans la démo**.
-- Le sujet n'est pas encore validé à deux. Chaque heure de débat est une heure de code en moins. Il faut décider avant 15:30.
+## 8. Texte pour le checkpoint de 18h30 (à ajuster par Romain)
 
-## 8. Idées bonus (si on est en avance)
+- **Problème.** Les entreprises qui gèrent leur trésorerie sur la blockchain dépendent de quelques signataires. Il suffit d'en tromper deux, par un faux message du dirigeant que l'IA générative rend crédible, pour vider les fonds en quelques minutes, comme chez Drift en avril 2026.
+- **Solution.** Un garde antifraude qui note chaque paiement avant son exécution et déclenche une réponse graduée appliquée par le portefeuille du client : signatures supplémentaires, mise en attente, gel, alerte expliquée. L'outil ne détient jamais les fonds.
+- **Stack.** Solidity et Hardhat sur Avalanche Fuji, Python et scikit-learn pour le score, AWS Bedrock pour les explications et le rapport, Streamlit pour le tableau de bord.
 
-1. **L'agent IA piégé comme vecteur d'attaque.** Un agent de trésorerie lit un document empoisonné et vide le coffre en plusieurs fois. Le disjoncteur l'arrête. C'est la jonction avec l'idée de Romain et avec le contexte 2026 (OWASP Agentic). Ça fait une démo très parlante.
-2. **Réponse graduée plutôt que binaire :** alerte, puis plafond de retrait par fenêtre (inspiré de la proposition de standard **ERC-7265 « Circuit Breaker »**), puis pause. C'est plus proportionné, et donc mieux noté sur la qualité de la réponse.
-3. **Journal d'audit inviolable :** hachage chaîné des décisions, avec le hash final publié on-chain. Un auditeur peut vérifier que rien n'a été modifié après coup. C'est un vrai plus pour la conformité et l'explicabilité.
-4. **Rejeu d'un vrai exploit :** reproduire la *forme* d'un incident connu (cadence des retraits de Drift ou Nomad) sur notre propre contrat pour rendre la démo crédible.
-5. **Cartographie des tiers critiques** (exigence DORA) : lister les oracles, ponts et RPC dont dépend le protocole, et les inclure dans le rapport.
+## 9. Limites et risques
+
+| Risque | Parade |
+|---|---|
+| **Toutes les données sont synthétiques**, donc les chiffres sont favorables par construction | Graines différentes entre entraînement et test, variantes de fraude que le moteur n'a jamais vues, et on le dit au jury |
+| **Faux positifs** : un paiement légitime retardé | Le pire cas est une signature de plus ou un délai. Les signataires peuvent toujours passer outre à l'unanimité |
+| **Tous les signataires trompés à la fois** | Hors de portée : on le dit. Le délai de mise en attente laisse quand même une chance de réagir |
+| **Le renouvellement des clés ne détecte rien** et n'empêche pas un signataire trompé de signer avec une clé neuve | Présenté comme une mesure de protection, pas comme la détection |
+| **Le moniteur est lui-même compromis** | Il ne peut qu'ajouter de la friction : au pire, des paiements légitimes sont ralentis |
+| **Retard sur le contrat** | Couper dans l'ordre : expiration des clés, puis gel, puis plafond. Le signalement de risque et la mise en attente sont le cœur |
+| **Bedrock injoignable** (réseau, clé expirée) | Texte à trous sans modèle de langage, prévu dans R3 |
+| **Démo en direct qui plante** | Vidéo enregistrée et scénario rejouable en local |
+
+**À confirmer avec le mentor KPMG :** le cadre de conformité à mettre sur la slide. Si le client est une entité financière régulée, DORA s'applique à ses incidents (notes dans `shared/dora-notes.md`) ; sinon, l'angle est l'AI Act et la traçabilité des décisions.
+
+**Réponse à « si votre modèle se trompe, qui est responsable ? »** Le modèle ne peut que ralentir un paiement. La décision de payer, d'annuler ou de geler reste aux signataires, et chaque signalement est inscrit sur la chaîne avec ses raisons.
+
+## 10. Ce qu'on garde du travail déjà fait
+
+- L'installation Hardhat, les jetons de test, la mesure du gas (une transaction du garde coûte environ 0,002 $).
+- Les recherches sur Drift et sur DORA, le retour du mentor.
+- L'accès Bedrock validé chez les deux.
+- Le coffre de prêt `BreakerVault` ne sert plus : il sera retiré de `ia-2/` quand `TreasuryGuard` sera en place, et reste dans l'historique Git.
