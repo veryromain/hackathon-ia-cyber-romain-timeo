@@ -12,6 +12,14 @@ Ajouter les entrées les plus récentes en haut.
 
 ---
 
+### 2026-10-10 18:44 — ia-2 / Timéo (avec Codex) — CIBLES DE LA COMPARAISON
+- **Précision de Timéo :** inclure startups crypto, fonds et fondations de même profil (forte trésorerie, pas d'équipe de sécurité), entreprises classiques payant en stablecoins plus tard et équipes de dApps comme Drift sur Solana à titre d'exemple.
+- **Fait :** comparaison et pitch complétés dans shared/comparaison-autres-blockchains.md ; cibles déjà décidées dans le plan. Drift illustre le besoin, sans annoncer une prise en charge Solana.
+- **Actualisation :** démo intégrée locale de Romain à 18:41 mentionnée. Production auditée non acquise. B4 inchangée.
+- **Fichiers :** note comparative, compte-rendu de conversation et JOURNAL.md.
+
+
+
 ### 2026-10-10 18:41 — Romain (avec Claude) — ✅ PHASE 2 TERMINÉE : DÉMO DE BOUT EN BOUT
 - **Démo complète en local sur le Mac de Romain** : chaîne + contrats + relais de Timéo, moteur de score en direct (règles + R2), oracle Bedrock, tableau de bord. Mode d'emploi en 6 terminaux : `ia-1/integration/README.md`.
 - **Scénario de Timéo (`RESPOND=1`) :** paiement normal exécuté sans friction ; 3 virements frauduleux (280 500 mUSD) mis en `hold` **dans la seconde** (score 0,93) ; **0 mUSD parti** (contre 95 000 mUSD au 1er passage, moteur arrêté par un bug).

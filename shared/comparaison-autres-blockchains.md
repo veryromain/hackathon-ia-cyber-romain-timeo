@@ -4,7 +4,19 @@ Recherche du 10 octobre 2026 par Codex, demandée par Timéo. Sources officielle
 
 ## Notre référence
 
-Selon PLAN.md, SUIVI.md et le code : garde de trésorerie multisig sur Avalanche, score comportemental, signatures supplémentaires et attente selon le risque, oracle Web avec citation vérifiée et registre expirant. Le moniteur ne signe pas les paiements. Contrats, relais, score, oracle et dashboard ont des validations locales documentées ; ne pas présenter l'intégration complète ou une production auditée comme acquises. T9/R9 sont des bonus prévus : traçage limité à un intermédiaire et protections contre les petits transferts parasites.
+Selon PLAN.md, SUIVI.md et le code : garde de trésorerie multisig sur Avalanche, score comportemental, signatures supplémentaires et attente selon le risque, oracle Web avec citation vérifiée et registre expirant. Le moniteur ne signe pas les paiements. Contrats, relais, score, oracle et dashboard ont des validations locales documentées. Le journal de Romain à 18:41 rapporte une démo intégrée réussie en local ; une production auditée reste à établir. T9/R9 sont des bonus prévus : traçage limité à un intermédiaire et protections contre les petits transferts parasites.
+
+## Cibles à conserver dans le benchmark
+
+Précision de Timéo : la comparaison couvre toutes les cibles déjà décidées.
+
+| Priorité | Organisations | Besoin visé |
+|---|---|---|
+| Maintenant | Équipes de protocoles, dApps et DAO | Protéger la trésorerie de leur équipe et les décisions de ses signataires. Drift sur Solana est un exemple du besoin ; le PoC reste sur Avalanche. |
+| Maintenant | Startups crypto, fonds et fondations ayant ce profil | Beaucoup de fonds en crypto, plusieurs signataires, pas d'équipe de sécurité dédiée. |
+| Plus tard | Entreprises classiques qui paient en stablecoins | Besoin jugé fort par Timéo, marché encore jeune. |
+
+Pour chaque concurrent, vérifier son adéquation à ces organisations : installation, paramétrage, prix par portefeuille, alertes lisibles et gestion des faux positifs. Les dApps sont visées pour la trésorerie de leur équipe.
 
 ## Comparaison
 
@@ -20,7 +32,7 @@ Squads a aussi annoncé des hooks d'approbation dynamique et des délais adaptat
 
 ## Ce qui peut nous distinguer
 
-- Un parcours destiné aux petites équipes de protocoles et DAO Avalanche sans analyste de sécurité. C'est notre cible ; l'absence de concurrents sur ce segment n'est pas démontrée.
+- Un parcours destiné aux équipes de protocoles, dApps et DAO, aux startups crypto, fonds et fondations Avalanche ayant une forte trésorerie sans équipe de sécurité dédiée. C'est notre cible ; l'absence de concurrents sur ce segment n'est pas démontrée.
 - Une preuve Web compréhensible, vérifiée dans sa source, contestable et expirante, qui déclenche une friction dans le portefeuille. La citation prouve la présence de la phrase, pas la véracité de l'accusation. L'exclusivité de cette combinaison n'est pas démontrée.
 - Un moniteur aux pouvoirs limités : il ne déplace pas les fonds. Cela ne prouve pas que tout verrouillage est impossible : gel, expiration des clés, indisponibilité des signataires et répétition de signalements restent à analyser.
 - Un prix simple et une installation facile seraient des avantages commerciaux ; aucun prix compétitif ni intégration à Safe en production n'est démontré aujourd'hui.
@@ -29,7 +41,7 @@ Avalanche est un choix de spécialisation et de distribution, pas une barrière 
 
 ## Formulation de pitch proposée
 
-« Breaker adapte la protection des trésoreries aux petites équipes de l'écosystème Avalanche : il combine les habitudes de paiement et des signalements Web sourcés pour demander une signature supplémentaire ou laisser un délai de vérification, sans donner au moniteur le pouvoir de transférer les fonds. »
+« Breaker protège les trésoreries des équipes de protocoles et dApps, des DAO, startups crypto, fonds et fondations de l'écosystème Avalanche sans équipe de sécurité dédiée : il combine les habitudes de paiement et des signalements Web sourcés pour demander une signature supplémentaire ou laisser un délai de vérification, sans donner au moniteur le pouvoir de transférer les fonds. »
 
 Ne pas dire : premier multisig intelligent, seul outil de signatures adaptatives, invention du traçage, ou protection infaillible contre le verrouillage.
 
