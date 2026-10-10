@@ -1,0 +1,6 @@
+{"payment_id":1,"label":"normal","scenario":"payroll"}
+{"payment_id":2,"label":"normal","scenario":"recurring_supplier"}
+{"payment_id":3,"label":"normal","scenario":"new_supplier"}
+{"payment_id":4,"label":"fraud","scenario":"tricked_signers_burst"}
+{"payment_id":5,"label":"fraud","scenario":"tricked_signers_burst"}
+{"payment_id":6,"label":"fraud","scenario":"tricked_signers_burst"}

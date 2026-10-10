@@ -1,0 +1,17 @@
+{
+  "wallet": "0x4a34c0d1f1d514e638f11c23dd292ddfe13486ab",
+  "registry": "0x3939046313460d18702a619f8aa66b8869c8f47c",
+  "musd": "0xbfac19aff2aeb289d902780f2566b5352243cb62",
+  "alice": "0x7afb84bbe6214c4dd90a6e17d9dc1d3c062b3438",
+  "bruno": "0x5ad3e836aa7badd01e3637fecbd5148bb2d2bb76",
+  "chloe": "0xba3dc92b858e31ba76e35c1b3ce8b20192975a9f",
+  "david": "0x5c98380c31ce04e095c2707c535669e590356aa4",
+  "emma": "0x925d6ad849fde5afced28e0786aa2ba922c77f37",
+  "monitor": "0xf361cc2fbd1ae2876aa5cecc81b76dfb9c483387",
+  "oracle": "0x5d7d1babc8d1490a54c6e37800c66feeb157062a",
+  "payroll": "0x9d69739792cfbdf8d0b53c945bb3169e6a0af1d6",
+  "cloud": "0xf9dde0ba322567af9904321f0d4dc73c3c008616",
+  "newSupplier": "0xed490a4779bf16c010c1b4a0fdd5647961021963",
+  "mule1": "0xe98106af12431fa824188a4d4a9e1f5027dedf5a",
+  "mule2": "0x6253540229bdcc8ae009fe075005a3fa5137c352"
+}

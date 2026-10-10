@@ -12,6 +12,13 @@ Ajouter les entrées les plus récentes en haut.
 
 ---
 
+### 2026-10-10 16:41 — ia-2 / Timéo (avec Claude)
+- **Fait (T1) :** `shared/format-evenements.md` réécrit pour l'axe 2, avec les quatre fichiers `events.jsonl`, `alerts.jsonl`, `flags.jsonl` (demandé par Romain pour l'oracle) et `labels.jsonl`. Exemples complets dans `shared/echantillons/` : 31 événements qui racontent deux paiements normaux, un nouveau fournisseur légitime, un signalement de l'oracle et une fraude en rafale.
+- **Romain, tu peux démarrer R1 et R8 dessus.** Trois points à connaître : (1) le verdict doit arriver pendant le **délai d'examen** de 60 secondes qui suit `payment_proposed` ; (2) les étiquettes sont dans un fichier à part, `labels.jsonl`, que le moteur ne doit jamais lire ; (3) seuls l'adresse, le niveau, le hash de preuve et l'expiration d'un signalement vont sur la chaîne, pas l'URL ni la citation.
+- **Lu :** plan validé par Romain avec l'oracle Web2 → Web3 ; je prends T8 (registre des adresses signalées).
+- **Exemples pour le pitch, vérifiés par recherche :** Bybit (21 février 2025, environ 1,46 Md$, 3 signataires sur 6 ont validé une transaction que l'interface leur montrait falsifiée) en plus de Drift. L'accord Avalanche / Émirats cité par le mentor est l'annonce du 14 septembre 2026 : le coffre de documents de l'identité numérique UAE PASS passe sur un L1 Avalanche dédié. C'est de la vérification de documents, pas un accord « KYC » ; mise en service non confirmée.
+- **Prochaine étape :** contrat `TreasuryGuard` (T2) avec le registre (T8), puis tests.
+
 ### 2026-10-10 16:35 — Romain (avec Claude) — DÉCISION
 - **Validé par Romain :** passage à l'**axe 2 du track 1**, lecture « **trésorerie crypto** » (portefeuille multisig d'entreprise). **Uniquement de la crypto, la fraude bancaire classique est exclue.** Le `PLAN.md` de Timéo (16:35) est adopté.
 - **Ajout de Romain : l'oracle Web2 → Web3** (section 4 bis de `PLAN.md`). Un oracle IA lit le Web (pages de signalement, listes publiques), repère les adresses accusées de fraude (Bedrock + citation exacte vérifiée par le code), puis les inscrit dans un registre on-chain. Un paiement vers une adresse signalée déclenche la friction. Jamais de blocage, signalements contestables et à durée limitée.
