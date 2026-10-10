@@ -4,14 +4,14 @@
 > Légende : ✅ fait · 🔄 en cours · ⬜ à faire · ✂️ coupé (manque de temps)
 > Détail du projet : [`PLAN.md`](PLAN.md) · Historique : [`JOURNAL.md`](JOURNAL.md) · Brief : [`CONTEXTE.md`](CONTEXTE.md)
 
-**Dernière mise à jour :** 2026-10-10 17:30, par Claude (Romain) — R7a en cours
+**Dernière mise à jour :** 2026-10-10 17:35, par Claude (Timéo) — cible commerciale décidée, voir `shared/cible-et-modele-economique.md`
 **Rendu (gel définitif) :** dim. 11/10 **12:00** · **Checkpoint :** sam. **18:30** · **Pitch :** dim. 13:00
 
 ---
 
 ## 0. Le projet en 3 lignes
 
-Un **garde antifraude pour la trésorerie crypto des entreprises** (portefeuille multisig sur Avalanche).
+Un **garde antifraude pour les organisations qui gardent des millions dans un portefeuille multisig sans équipe de sécurité** : équipes de protocoles, DAO, startups crypto, fonds, fondations (cible décidée par Timéo à 17h30, voir `shared/cible-et-modele-economique.md`).
 1. Chaque paiement est noté **avant** son exécution, à partir du comportement on-chain et d'un **oracle IA qui lit les signalements de fraude sur le Web** (pont Web2 → Web3).
 2. S'il est suspect, le portefeuille du client exige des signatures en plus ou une mise en attente, et alerte les signataires.
 3. Notre outil ne détient jamais les fonds : **les humains gardent le dernier mot**.

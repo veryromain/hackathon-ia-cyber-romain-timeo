@@ -28,7 +28,7 @@ Elles servent d'argument, pas de client : en février 2025, Bybit a perdu enviro
 1. **Un coût par client presque nul.** Environ 0,002 $ de gas par alerte et 0,004 $ par adresse inscrite au registre (mesures dans `shared/frais-gas.md`), plus quelques centimes de Bedrock par explication. Lire la blockchain ne coûte rien. La marge d'un abonnement est donc très élevée.
 2. **Un trou dans les prix.** Safe, le portefeuille à plusieurs signataires le plus utilisé, est gratuit mais ne surveille rien par défaut. Fireblocks, l'outil des grands comptes, démarre plusieurs centaines de dollars par mois et monte à des dizaines de milliers par an. Entre les deux, les petites organisations n'ont rien d'abordable qui surveille leurs signataires.
 3. **Une distribution peu coûteuse.** En production, notre garde est un module à installer dans Safe (ou dans Squads sur Solana), là où les clients sont déjà. Pas besoin de leur faire changer de portefeuille.
-4. **Un produit qui s'améliore avec le nombre de clients.** Chaque fraude déjouée chez un client alimente le registre des adresses signalées, qui protège tous les autres.
+4. **Un produit qui s'améliorerait avec le nombre de clients** (idée de la feuille de route, pas encore construite) : chaque fraude déjouée chez un client alimenterait le registre des adresses signalées, qui protège tous les autres.
 
 ### Hypothèse de prix (à discuter)
 

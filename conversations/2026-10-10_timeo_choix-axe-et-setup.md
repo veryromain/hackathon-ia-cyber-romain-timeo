@@ -67,3 +67,10 @@ Axe 1 (poste de l'analyste LCB-FT) : c'est le seul axe où un jeu de données sy
 - **Décision de Timéo : passer à l'axe 2 du track 1** (SOC antifraude), appliqué à une trésorerie d'entreprise sur la blockchain. Accord de Romain à confirmer.
 - Nouveau `PLAN.md` rédigé par Claude à la demande de Timéo, avec la répartition des tâches et le calendrier jusqu'au rendu. L'ancien plan est dans `shared/archive/PLAN-axe4.md`.
 - Le coffre de prêt `BreakerVault` écrit plus tôt ne sert plus ; il sera remplacé par `TreasuryGuard`.
+
+## Cible commerciale (17h20 à 17h40)
+- Question de Timéo : entreprises du monde réel ou dApps ? Puis : qui a le plus besoin de nous, et est-ce rentable ?
+- **Décision de Timéo :** viser les organisations qui gardent des millions dans un portefeuille à plusieurs signataires sans équipe de sécurité. En priorité les équipes de protocoles, les DAO, les startups crypto, les fonds et les fondations ; plus tard les entreprises classiques qui paient en stablecoins ; pas les grandes plateformes.
+- Arguments de rentabilité, chiffres de marché et concurrence : `shared/cible-et-modele-economique.md`.
+- `PLAN.md` (sections 1, 1 bis, 3 et 8) et `SUIVI.md` (section 0) mis à jour ; Romain prévenu par le journal.
+- À faire plus tard : relibeller le jeu de données pour une équipe de protocole.

@@ -2,11 +2,22 @@
 
 > **Statut : VALIDÉ par Romain le samedi vers 16h35**, avec un ajout : l'**oracle Web2 → Web3** (section 4 bis, tâches R8 et T8).
 > Rédigé par Claude à la demande de Timéo (16h35). Remplace le plan de l'axe 4, archivé dans `shared/archive/PLAN-axe4.md`.
+> **Cible précisée par Timéo le samedi vers 17h30** (section 1 bis) : équipes de protocoles, DAO, startups crypto, fonds et fondations. Détail dans `shared/cible-et-modele-economique.md`.
 > Track 1 (Fintech Security), **axe 2** : SOC antifraude à l'ère de l'IA générative. **Uniquement de la crypto, pas de fraude bancaire classique.**
 
 ## 1. Le projet en une phrase
 
-**Un garde antifraude pour les entreprises qui gèrent leur trésorerie avec un portefeuille à plusieurs signataires, qui fait le pont entre le Web2 et le Web3.** Chaque paiement proposé est noté avant son exécution, à partir du comportement on-chain **et de ce qui se dit sur le Web à propos du destinataire**. S'il est suspect, le portefeuille exige des signatures supplémentaires ou le met en attente, et les signataires reçoivent une alerte expliquée en clair.
+**Un garde antifraude pour les organisations qui gardent des millions dans un portefeuille à plusieurs signataires sans équipe de sécurité, qui fait le pont entre le Web2 et le Web3.** Chaque paiement proposé est noté avant son exécution, à partir du comportement on-chain **et de ce qui se dit sur le Web à propos du destinataire**. S'il est suspect, le portefeuille exige des signatures supplémentaires ou le met en attente, et les signataires reçoivent une alerte expliquée en clair.
+
+## 1 bis. La cible (décision de Timéo, samedi 17h30)
+
+- **En priorité :** les **équipes de protocoles et les DAO** (dix à trente personnes, plusieurs millions tenus par quelques fondateurs, des audits de code mais rien qui surveille les signataires ; Drift entre dans ce cas), et les **startups crypto, fonds et fondations** (même profil).
+- **Plus tard :** les entreprises classiques qui paient en stablecoins.
+- **Pas visées :** les grandes plateformes comme Bybit ou Coinbase, qui ont déjà leurs équipes et leurs outils. Bybit sert d'argument (1,46 Md$ perdus par des signataires trompés), pas de client.
+- **Les dApps restent clientes pour le portefeuille de leur équipe, plus pour leur contrat.**
+- **Pourquoi c'est rentable :** coût par client presque nul (0,002 $ de gas par alerte), trou de prix entre Safe (gratuit, sans surveillance) et Fireblocks (grands comptes), distribution par un module installé dans Safe ou Squads.
+
+Tout le détail, les chiffres et leurs sources : `shared/cible-et-modele-economique.md`.
 
 ## 2. Pourquoi ce cadrage
 
@@ -17,7 +28,7 @@
 
 ## 3. Le scénario de démo (un seul, de bout en bout)
 
-1. **Avant.** Une entreprise fictive tient sa trésorerie dans un portefeuille à 5 signataires, dont 2 suffisent pour payer. Trafic normal : salaires, fournisseurs habituels, parfois un nouveau fournisseur.
+1. **Avant.** Une organisation fictive (l'équipe d'un protocole, une vingtaine de personnes) tient sa trésorerie dans un portefeuille à 5 signataires, dont 2 suffisent pour payer. Trafic normal : rémunération des contributeurs, prestataires habituels, parfois un nouveau prestataire.
 2. **Fraude.** Deux signataires sont trompés (faux message urgent du dirigeant) et valident une série de virements vers des adresses jamais vues. Variante : une clé volée.
 3. **Détection, avant que l'argent parte.** Le moniteur note chaque paiement dès qu'il est proposé : destinataire inconnu, montant hors habitudes, rafale, signatures anciennes, changement récent des signataires ou du seuil.
 4. **Réponse graduée, appliquée par le portefeuille du client.**
@@ -185,7 +196,8 @@
 
 ## 8. Texte pour le checkpoint de 18h30 (à ajuster par Romain)
 
-- **Problème.** Les entreprises qui gèrent leur trésorerie sur la blockchain dépendent de quelques signataires. Il suffit d'en tromper deux, par un faux message du dirigeant que l'IA générative rend crédible, pour vider les fonds en quelques minutes, comme chez Drift en avril 2026.
+- **Problème.** Les équipes de protocoles, les DAO et les startups crypto gardent des millions dans un portefeuille tenu par quelques signataires, sans équipe de sécurité pour les surveiller. Il suffit d'en tromper deux, par un faux message que l'IA générative rend crédible, pour vider les fonds en quelques minutes, comme chez Drift en avril 2026 (280 M$) ou Bybit en février 2025 (1,46 Md$).
+- **Cible.** Les organisations de dix à trente personnes qui tiennent une trésorerie de plusieurs millions à plusieurs signataires : équipes de protocoles, DAO, startups crypto, fonds, fondations. Pas les grandes plateformes, qui ont déjà leurs outils.
 - **Solution.** Un garde antifraude qui note chaque paiement avant son exécution, à partir du comportement on-chain et d'un oracle IA qui lit les signalements de fraude publiés sur le Web (pont Web2 → Web3). Il déclenche une réponse graduée appliquée par le portefeuille du client : signatures supplémentaires, mise en attente, gel, alerte expliquée. L'outil ne détient jamais les fonds.
 - **Stack.** Solidity et Hardhat sur Avalanche Fuji, Python et scikit-learn pour le score, AWS Bedrock pour les explications et le rapport, Streamlit pour le tableau de bord.
 

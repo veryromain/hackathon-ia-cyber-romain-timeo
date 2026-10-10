@@ -12,6 +12,22 @@ Ajouter les entrées les plus récentes en haut.
 
 ---
 
+### 2026-10-10 17:35 — ia-2 / Timéo (avec Claude) — DÉCISION SUR LA CIBLE
+- **Décision de Timéo (vers 17h30) : nous visons des organisations réelles qui gardent des millions dans un portefeuille à plusieurs signataires, sans équipe de sécurité.**
+  - **En priorité :** les équipes de protocoles et les DAO (dix à trente personnes, trésorerie de plusieurs millions tenue par quelques fondateurs ; ils paient des audits de code mais rien ne surveille leurs signataires ; Drift entre dans ce cas), et les startups crypto, fonds et fondations (même profil).
+  - **Plus tard :** les entreprises classiques qui paient en stablecoins (besoin fort, marché encore jeune).
+  - **Pas visées :** les grandes plateformes (Bybit, Coinbase), qui ont déjà leurs équipes et leurs outils. Bybit sert d'argument, pas de client.
+  - **Les dApps restent clientes pour le portefeuille de leur équipe, plus pour leur contrat.**
+- **Pourquoi c'est rentable (à reprendre dans le deck) :** coût par client presque nul (0,002 $ de gas par alerte, quelques centimes de Bedrock) ; trou de prix entre Safe (gratuit, ne surveille rien) et Fireblocks (grands comptes) ; distribution par un module installé dans Safe ou Squads. Hypothèse de prix : abonnement par portefeuille protégé, quelques centaines d'euros par mois.
+- **Tout est écrit dans `shared/cible-et-modele-economique.md`**, avec les chiffres de marché, leur niveau de confiance et les sources.
+- **Claude de Romain, à lire avant d'envoyer le formulaire du checkpoint (R7a) :**
+  1. J'ai mis à jour le texte du checkpoint en **section 8 de `PLAN.md`** (problème réécrit, ligne « Cible » ajoutée), ainsi que la section 1, une nouvelle section 1 bis et la ligne du scénario de démo. `SUIVI.md` section 0 aussi. Dis-moi si tu avais des modifications en cours sur ces passages.
+  2. Les slides « cible » et « business model » (L3) et la fiche de défense (L4) peuvent reprendre les sections 1 à 5 du nouveau document. **Ne mets pas sur une slide un chiffre marqué « à vérifier ».**
+  3. **Slide conformité (L6) :** la cible prioritaire n'est en général pas une entité financière régulée, donc l'angle DORA devient secondaire. Angles proposés, à valider par le mentor KPMG : filtrage des contreparties (LCB-FT), AI Act et supervision humaine, traçabilité des décisions.
+  4. **Rien ne change dans le code** (contrats, relais, moteur, oracle).
+  5. **Jeu de données :** NovaTreasury paie un loyer, des cotisations et la TVA en stablecoin, ce qui colle mal à la nouvelle cible. Je relibellerai en trésorerie d'une équipe de protocole à la prochaine régénération (avec T9). Structure et fraudes inchangées, adresses et hash différents : **je te préviens avant de pousser**, tes mesures actuelles restent valables d'ici là.
+- **Prochaine étape côté Timéo :** intégration avec le vrai moteur ; T6 (Fuji) dès l'accord de Timéo pour les portefeuilles de test.
+
 ### 2026-10-10 17:28 — ia-2 / Timéo (avec Claude)
 - **Question de Timéo, pour la slide « cible » et « business model » (L3) :** qui a le plus besoin de nous, les grandes plateformes (Bybit, Coinbase) ou les dApps ? **Avis donné, pas encore une décision :** ni les unes ni les contrats des autres, mais les **petites et moyennes organisations qui gardent des millions dans un portefeuille à plusieurs signataires sans équipe de sécurité** : équipes de protocoles et DAO, startups crypto, fonds, fondations. Les grandes plateformes ont déjà des équipes et des outils (Fireblocks) ; elles servent de preuve que le problème existe, pas de premier client.
 - **Chiffres trouvés par recherche web, à vérifier avant de les mettre sur une slide :**
