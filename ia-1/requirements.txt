@@ -1,0 +1,9 @@
+# Environnement de Romain (ia-1) : moteur de score, oracle Web2 → Web3, dashboard
+boto3            # AWS Bedrock
+python-dotenv    # lit le .env à la racine du repo
+pandas
+scikit-learn     # modèle d'anomalie (Isolation Forest)
+beautifulsoup4   # lecture des pages Web de l'oracle
+httpx            # téléchargement des pages
+streamlit        # dashboard
+pytest
