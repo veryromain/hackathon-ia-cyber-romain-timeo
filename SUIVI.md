@@ -4,7 +4,7 @@
 > Légende : ✅ fait · 🔄 en cours · ⬜ à faire · ✂️ coupé (manque de temps)
 > Détail du projet : [`PLAN.md`](PLAN.md) · Historique : [`JOURNAL.md`](JOURNAL.md) · Brief : [`CONTEXTE.md`](CONTEXTE.md)
 
-**Dernière mise à jour :** 2026-10-10 21:45, par Claude (Timéo) — site vitrine : charte bleu nuit et cobalt, logo d'avant redessiné, trame interactive et flux de paiements en haut de page (dépôt seulement, pas encore republié)
+**Dernière mise à jour :** 2026-10-10 21:51, par Claude (Romain) — contrôles distinctifs C1-C4 faits, C5 spécifié pour Timéo
 **Rendu (gel définitif) :** dim. 11/10 **12:00** · **Checkpoint :** sam. **18:30** · **Pitch :** dim. 13:00
 
 ---
@@ -142,6 +142,11 @@ Un **garde antifraude pour les organisations qui gardent des millions dans un po
 | P5 | **Notifications** : connecteur **e-mail** de l'entreprise, puis Slack / Telegram ; alerte immédiate des signataires en cas de mise en attente | Timéo + Romain | Service d'e-mail transactionnel | Un signataire est prévenu en moins d'une minute | ✅ 20:48 version minimale (bannière macOS pour la démo ; e-mail et Telegram prêts, à configurer dans `.env`) ; trace `shared/notifications.jsonl` |
 | P6 | **Bouton « vraie / fausse alerte »** et **rapport mensuel** (alertes, faux positifs, temps de réaction, montants protégés) : la précision mesurée chez le client | Romain | Dashboard + stockage des retours | Rapport généré automatiquement | ✅ 20:48 boutons 👍 / 👎 sur chaque alerte + indicateur « Précision jugée » (`shared/retours.jsonl`) ; le rapport mensuel reste à faire |
 | P7 | **Mode observation** au démarrage d'un client (2 à 4 semaines : l'outil note sans agir) pour prouver son efficacité avant d'activer la friction | Romain + Timéo | Réglage du moniteur | Option activable | ⬜ |
+| C1 | **Adresse sosie** (address poisoning) : même début et même fin qu'un fournisseur connu → mise en attente | Romain | Moteur, règle `LOOKALIKE_ADDRESS` | Test + démo | ✅ 21:51 (3 tests ; non mesurée sur le jeu final) |
+| C2 | **Adresses pièges** dans le carnet (honeypot) → compromission probable | Romain | Moteur, champ `pieges` du carnet | Test | ✅ 21:51 (option client, décision d'usage à prendre) |
+| C3 | **« Ce que vous signez vraiment »** : transaction décodée + 4 derniers caractères à retaper avant de signer | Romain | Dashboard | Test | ✅ 21:51 |
+| C4 | **Immunité collective** : une fraude annulée devient un signalement pour tous, preuve on-chain | Romain | Dashboard → `flags.jsonl` | Test | ✅ 21:51 |
+| C5 | **Clé de contrainte** : signer sous menace gèle en silence | Timéo (contrat) + Romain (moteur) | Spécification `shared/proposition-cle-de-contrainte.md` | Décision Timéo : ce soir ou slide | ⬜ spéc. écrite 21:51 |
 | P8 | **Réglages du client** : nombre de signatures en plus (+1 par défaut), durée de la mise en attente, seuils, liste de confiance | Timéo | Paramètres du contrat (`stepUpExtra`, `holdDelay`) | Écran de réglages | 🔄 20:39 (heures et jours ouvrés : `ia-1/config/client*.json`, option `--client` ; principe des planchers et du changement « comme un paiement » écrit en B1 §7) |
 
 ## 7. Phase 5 — Livrables et pitch (dim. 09:00 → 12:00)

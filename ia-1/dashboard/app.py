@@ -93,6 +93,18 @@ def juger(dossier: Path, payment_id, verdict, by):
         f.write(json.dumps({"payment_id": payment_id, "verdict": verdict, "by": by, "at": int(time.time())}) + "\n")
 
 
+def signaler_pour_tous(dossier: Path, p: dict, pid, by):
+    """Immunité collective : une fraude annulée chez un client devient un signalement, avec la transaction annulée pour preuve."""
+    import hashlib
+    quote = f"Paiement n° {pid} de {mutd(p['amount'])} vers cette adresse annulé par un signataire après alerte du garde (tx {p['tx']})."
+    source = f"client-verifie://{court(by)}/paiement/{pid}"
+    f = {"address": p["to"].lower(), "level": "hold", "category": "scam_report", "confidence": 0.9, "sources_count": 1,
+         "source_url": source, "quote": quote, "evidence_hash": "0x" + hashlib.sha256(f"{source}\n{quote}".encode()).hexdigest(),
+         "expires_at": int(time.time()) + 30 * 86400}
+    with open(dossier / "flags.jsonl", "a", encoding="utf-8") as fh:
+        fh.write(json.dumps(f, ensure_ascii=False) + "\n")
+
+
 def etats_actions(dossier: Path):
     res = {r["id"]: r for r in lire(dossier / "actions-resultats.jsonl")}
     return [(a, res.get(a["id"])) for a in lire(dossier / "actions.jsonl")]
@@ -196,12 +208,23 @@ def tableau():
                     if v2.button("👎 Fausse alerte", key=f"f{pid}", use_container_width=True):
                         juger(DOSSIER, pid, "fausse", MOI_ADR)
                         st.toast("Merci : alerte jugée fausse (le réglage s'affinera)")
+                if MOI_ADR and p["état"] == "✅ annulé" and p["to"].lower() not in {f["address"] for f in flags}:
+                    if st.button("📣 Signaler cette adresse pour tous les clients", key=f"sig{pid}",
+                                 help="Immunité collective : la transaction annulée sert de preuve ; le signalement reste contestable et expire dans 30 jours"):
+                        signaler_pour_tous(DOSSIER, p, pid, MOI_ADR)
+                        st.toast("Adresse signalée au registre, avec la transaction annulée pour preuve")
                 if MOI_ADR and p["état"] == "en cours":
+                    # Idée 3 : « ce que vous signez vraiment » — la transaction décodée, et le signataire retape la fin de l'adresse.
+                    st.markdown(f"<div style='font-family:monospace;font-size:12.5px;opacity:.85'>Vous signeriez : <b>wallet.approve({pid})</b> → "
+                                f"à l'exécution, transfert de <b>{mutd(p['amount'])}</b> vers <b>{p['to']}</b></div>", unsafe_allow_html=True)
+                    saisie = st.text_input("Pour signer, retapez les 4 derniers caractères du destinataire", key=f"chk{pid}", max_chars=4,
+                                           placeholder="ex. " + p["to"][-4:][:2] + "··", help="Contre la signature en aveugle (cas Bybit) et les adresses sosies")
+                    ok_saisie = saisie.strip().lower() == p["to"][-4:].lower()
                     b1, b3, b2, _ = st.columns([1, 1, 1, 2])
-                    if b1.button("✅ Valider (signer)", key=f"ok{pid}", use_container_width=True):
+                    if b1.button("✅ Valider (signer)", key=f"ok{pid}", use_container_width=True, disabled=not ok_saisie):
                         ecrire_action(DOSSIER, action="approve", payment_id=pid, by=MOI_ADR)
                         st.toast(f"Signature demandée pour le paiement {pid}")
-                    if b3.button("▶️ Exécuter", key=f"ex{pid}", use_container_width=True, help="Une fois les signatures réunies et le délai écoulé"):
+                    if b3.button("▶️ Exécuter", key=f"ex{pid}", use_container_width=True, disabled=not ok_saisie, help="Une fois les signatures réunies et le délai écoulé"):
                         ecrire_action(DOSSIER, action="execute", payment_id=pid, by=MOI_ADR)
                         st.toast(f"Exécution demandée pour le paiement {pid}")
                     if b2.button("🛑 Annuler", key=f"no{pid}", use_container_width=True):

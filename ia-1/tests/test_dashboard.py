@@ -63,3 +63,43 @@ def test_bouton_vraie_fausse_alerte(tmp_path):
     assert {m.label: m.value for m in at.metric}["Précision jugée"] == "50%"
     assert not at.exception
     del os.environ["BREAKER_DEPLOIEMENT"]
+
+
+def test_signer_exige_de_retaper_la_fin_de_l_adresse(tmp_path):
+    """Idée 3 : « ce que vous signez vraiment » — sans les 4 bons caractères, le bouton Valider est désactivé."""
+    import json
+    import shutil
+    d = tmp_path / "live"
+    shutil.copytree(ICI / "dashboard" / "demo", d)
+    lignes = (d / "events.jsonl").read_text().splitlines()
+    (d / "events.jsonl").write_text("\n".join(lignes[:-1]) + "\n")  # paiement 6 reste en cours
+    dep = tmp_path / "dep.json"
+    dep.write_text(json.dumps({"owners": ["0x" + "a" * 40]}))
+    os.environ["BREAKER_DOSSIER"], os.environ["BREAKER_DEPLOIEMENT"] = str(d), str(dep)
+    at = AppTest.from_file(str(ICI / "dashboard" / "app.py"), default_timeout=30).run()
+    assert at.button(key="ok6").disabled
+    at.text_input(key="chk6").set_value("zzzz").run()
+    assert at.button(key="ok6").disabled
+    at.text_input(key="chk6").set_value("c352").run()  # 0x6253…c352
+    assert not at.button(key="ok6").disabled
+    at.button(key="ok6").click().run()
+    assert json.loads((d / "actions.jsonl").read_text().splitlines()[0])["action"] == "approve"
+    del os.environ["BREAKER_DEPLOIEMENT"]
+
+
+def test_signaler_pour_tous_apres_annulation(tmp_path):
+    """Idée 4 : immunité collective — une fraude annulée devient un signalement avec la transaction pour preuve."""
+    import json
+    import shutil
+    d = tmp_path / "live"
+    shutil.copytree(ICI / "dashboard" / "demo", d)
+    (d / "flags.jsonl").write_text("")  # aucune adresse encore signalée
+    dep = tmp_path / "dep.json"
+    dep.write_text(json.dumps({"owners": ["0x" + "a" * 40]}))
+    os.environ["BREAKER_DOSSIER"], os.environ["BREAKER_DEPLOIEMENT"] = str(d), str(dep)
+    at = AppTest.from_file(str(ICI / "dashboard" / "app.py"), default_timeout=30).run()
+    at.button(key="sig4").click().run()  # paiement 4, annulé dans l'exemple
+    f = json.loads((d / "flags.jsonl").read_text().splitlines()[-1])
+    assert f["address"] == "0xe98106af12431fa824188a4d4a9e1f5027dedf5a" and f["level"] == "hold" and "annulé" in f["quote"]
+    assert set(f) >= {"address", "level", "category", "confidence", "sources_count", "source_url", "quote", "evidence_hash", "expires_at"}
+    del os.environ["BREAKER_DEPLOIEMENT"]

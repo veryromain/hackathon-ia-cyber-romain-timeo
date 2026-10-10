@@ -18,7 +18,7 @@ from .regles import REGLES, EtatPortefeuille, Raison
 
 
 class Moteur:
-    def __init__(self, carnet=None, modele=None, expliquer=False, services=None, notifier=None):
+    def __init__(self, carnet=None, modele=None, expliquer=False, services=None, notifier=None, pieges=None):
         self.etat = EtatPortefeuille()
         self.modele = modele  # modèle d'anomalie (R2), facultatif
         self.expliquer = expliquer  # R3 : explication rédigée par Bedrock, avec repli sur le texte à trous
@@ -27,6 +27,8 @@ class Moteur:
         self.etat.sorties_signalees, self.etat.recus_de_signalee = {}, {}
         for a in services or []:
             self.etat.services_connus.add(a.lower())
+        for a in pieges or []:
+            self.etat.pieges.add(a.lower())  # jamais dans destinataires_connus : un piège n'est pas un fournisseur
         # Carnet d'adresses du client (fournisseurs et comptes déjà connus) : évite le démarrage à froid.
         for adresse in carnet or []:
             self.etat.destinataires_connus.add(adresse.lower())
@@ -193,7 +195,10 @@ def main(argv=None):
     a.add_argument("--listes-publiques", type=Path, help="listes publiques (OFAC, ScamSniffer) lues hors chaîne : shared/listes-publiques.jsonl")
     args = a.parse_args(argv)
 
-    carnet = json.loads(args.carnet.read_text()) if args.carnet else []
+    carnet_brut = json.loads(args.carnet.read_text()) if args.carnet else []
+    # Le carnet est une liste d'adresses, ou {"adresses": [...], "pieges": [...]} (idée 2 : adresses pièges).
+    carnet = carnet_brut["adresses"] if isinstance(carnet_brut, dict) else carnet_brut
+    pieges = carnet_brut.get("pieges", []) if isinstance(carnet_brut, dict) else []
     modele = None
     if args.modele:
         import joblib
@@ -208,7 +213,7 @@ def main(argv=None):
         load_dotenv(Path(__file__).resolve().parents[2] / ".env")
         journal = args.out.with_name("notifications.jsonl")
         notif = lambda a, p: _n(a, p, journal)
-    moteur = Moteur(carnet, modele, args.expliquer, services, notif)
+    moteur = Moteur(carnet, modele, args.expliquer, services, notif, pieges)
     if args.listes_publiques:
         n = moteur.charger_listes_publiques(args.listes_publiques)
         print(f"{n} adresses de listes publiques chargées (hors chaîne)", file=sys.stderr)

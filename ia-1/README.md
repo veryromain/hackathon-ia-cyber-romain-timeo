@@ -104,6 +104,13 @@ Sur chaque alerte, 👍 / 👎 par le signataire → `shared/retours.jsonl` ; in
 ```
 `score/rapport.py` : les **faits sont établis par le code** à partir de `events.jsonl` / `alerts.jsonl` / `flags.jsonl` (paiements signalés, délai de signalement, montants tentés / sortis / protégés, gel, annulations, signalements Web), puis Bedrock rédige une **synthèse en 3 paragraphes à partir de ces faits seulement**, vérifiée (aucun montant hors des faits, aucun hash), sinon synthèse écrite par le code. Le rapport contient les preuves (hash de transaction) et la chronologie complète. Exemple généré sur la démo de ce soir : `rapports/rapport-demo-locale.md` (285 300 mUSD protégés, 0 sorti, signalement en ≤ 1 s). 5 tests.
 
+## Contrôles distinctifs ajoutés le 10/10 vers 21:35 (idées 1 à 4 de l'inventaire) ✅
+- **Adresse sosie** (`LOOKALIKE_ADDRESS`, 0,90 → hold) : un destinataire hors carnet qui partage les 4 premiers et 4 derniers caractères d'un fournisseur connu est une adresse sosie (address poisoning). Nouvelle règle, **non mesurée sur le jeu final** (il ne contient pas ce cas) ; 3 tests.
+- **Adresses pièges** (`HONEYPOT_ADDRESS`, 0,99) : carnet au format `{"adresses": [...], "pieges": [...]}` ; un paiement vers un piège = compromission probable du carnet. Option, à activer par le client.
+- **« Ce que vous signez vraiment »** (dashboard) : la transaction décodée est affichée et le signataire doit retaper les 4 derniers caractères du destinataire avant de pouvoir valider ou exécuter (contre la signature en aveugle, cas Bybit, et les sosies).
+- **Immunité collective** (dashboard) : après une annulation, « 📣 Signaler cette adresse pour tous les clients » écrit un signalement dans `flags.jsonl` avec la transaction annulée pour preuve (contestable, 30 jours).
+- **Clé de contrainte** (idée 5) : spécification pour Timéo dans `shared/proposition-cle-de-contrainte.md` (touche au contrat).
+
 ## Sources publiques en lecture seule (décision B1 §3) ✅
 `oracle/sources_publiques.py` : **OFAC** (adresses de la liste SDN, extraction publique 0xB10C, 120 adresses) et **ScamSniffer** (base publique de phishing, 2 530 adresses). Aucun scraping : listes publiées pour être réutilisées, citées, datées, expirées à 30 jours. Lues **hors chaîne** par le moteur (`--listes-publiques ../shared/listes-publiques.jsonl`, sans gas) ; `--publier N` en inscrit N par source au registre on-chain pour la démo. Testé sur Fuji : un paiement vers une adresse réellement sanctionnée est mis en attente, source officielle affichée. 2 tests.
 

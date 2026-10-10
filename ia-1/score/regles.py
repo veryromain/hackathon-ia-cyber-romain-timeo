@@ -40,7 +40,10 @@ POIDS = {
     "DAILY_CAP_RECENT": 0.50,        # cumul du jour vers des adresses récentes au-dessus des gros paiements habituels : fractionnement
     "AMOUNT_OUTLIER_EXTREME": 0.76,  # ≥ 10 × l'habitude d'un destinataire connu → hold à lui seul
     "TAINTED_FUNDS": 0.50,           # R9 : a reçu une part significative des fonds d'une adresse signalée
+    "LOOKALIKE_ADDRESS": 0.90,       # adresse sosie : mêmes premiers et derniers caractères qu'un fournisseur connu → hold
+    "HONEYPOT_ADDRESS": 0.99,        # adresse piège du carnet : seul un attaquant qui lit le carnet peut la payer
 }
+SOSIE_PREFIXE, SOSIE_SUFFIXE = 4, 4   # caractères comparés après « 0x » et en fin d'adresse (ce que l'œil vérifie)
 RATIO_EXTREME = 10.0
 FENETRE_RECENT_30J_S = 30 * 86400
 FENETRE_JOUR_S = 86400
@@ -97,6 +100,7 @@ class EtatPortefeuille:
     recus_par_dest: dict = field(default_factory=dict)         # destinataire -> total déjà exécuté vers lui
     teintees: dict = field(default_factory=dict)               # R9 : adresse -> (part des sorties de l'adresse signalée, date, tx_hash, origine)
     services_connus: set = field(default_factory=set)          # R9 : plateformes, ponts, routeurs : jamais teintés
+    pieges: set = field(default_factory=set)                   # adresses pièges du carnet (honeypots)
     propositions: dict = field(default_factory=dict)           # payment_id -> événement de proposition
     adresses_signalees: dict = field(default_factory=dict)     # adresse -> {level, expires_at, tx_hash, category}
     changements_signataires: list = field(default_factory=list)  # (timestamp, tx_hash)
@@ -229,6 +233,25 @@ def r_cumul_du_jour(p, etat):
                           [q["tx_hash"] for q in vers_recents] + [p["tx_hash"]], POIDS["DAILY_CAP_RECENT"])
 
 
+def r_adresse_sosie(p, etat):
+    """Address poisoning : l'attaquant fabrique une adresse qui imite le début et la fin de celle d'un vrai fournisseur,
+    puis l'injecte dans l'historique (dusting) pour que le trésorier la copie. Le sosie n'est jamais dans le carnet."""
+    to = p["to"]
+    if to in etat.destinataires_connus:
+        return None
+    for connu in etat.destinataires_connus:
+        if connu != to and connu[2:2 + SOSIE_PREFIXE] == to[2:2 + SOSIE_PREFIXE] and connu[-SOSIE_SUFFIXE:] == to[-SOSIE_SUFFIXE:]:
+            return Raison("LOOKALIKE_ADDRESS", f"adresse sosie : ressemble au fournisseur connu {connu[:6]}…{connu[-4:]} "
+                          f"(mêmes premiers et derniers caractères) mais n'est pas la même adresse", [p["tx_hash"]], POIDS["LOOKALIKE_ADDRESS"])
+
+
+def r_adresse_piege(p, etat):
+    """Adresse piège : un faux fournisseur glissé dans le carnet, que personne de légitime ne paiera jamais."""
+    if p["to"] in etat.pieges:
+        return Raison("HONEYPOT_ADDRESS", "adresse piège du carnet : seul quelqu'un qui a lu le carnet ou la facturation peut la proposer ; compromission probable",
+                      [p["tx_hash"]], POIDS["HONEYPOT_ADDRESS"])
+
+
 def r_fonds_teintes(p, etat):
     """R9 : le destinataire a reçu une part significative des fonds d'une adresse signalée (1 intermédiaire, 7 jours)."""
     t = etat.teintees.get(p["to"])
@@ -284,6 +307,6 @@ def r_seuil_abaisse(p, etat):
         return Raison("THRESHOLD_LOWERED", f"seuil de signatures abaissé de {b[2]} à {b[3]}", [b[1]], POIDS["THRESHOLD_LOWERED"])
 
 
-REGLES = [r_adresse_signalee, r_fonds_teintes, r_nouveau_destinataire, r_destinataire_recent, r_montant_hors_norme,
+REGLES = [r_adresse_piege, r_adresse_signalee, r_adresse_sosie, r_fonds_teintes, r_nouveau_destinataire, r_destinataire_recent, r_montant_hors_norme,
           r_cumul_du_jour, r_rafale, r_libelle_urgent, r_schema_fraude, r_repetition_rapide, r_hors_heures,
           r_changement_recent, r_seuil_abaisse]

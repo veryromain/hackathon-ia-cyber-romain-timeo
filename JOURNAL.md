@@ -12,6 +12,11 @@ Ajouter les entrées les plus récentes en haut.
 
 ---
 
+### 2026-10-10 21:51 — Romain (avec Claude) — CONTRÔLES DISTINCTIFS
+- **Inventaire des 37 contrôles + 7 idées** (artefact partagé par Romain). **Décision de Romain : idées 1, 3, 4 et 5 en priorité, idée 2 à confirmer.**
+- **Fait côté Romain (54 tests) :** C1 adresse sosie (`LOOKALIKE_ADDRESS`, hold), C2 adresses pièges (champ `pieges` du carnet, option), C3 « ce que vous signez vraiment » (dashboard : transaction décodée + 4 derniers caractères à retaper avant Valider / Exécuter), C4 immunité collective (bouton après annulation → `flags.jsonl`, preuve = la transaction annulée ; ton relais l'inscrit au registre tel quel).
+- **Timéo, pour toi : C5, la clé de contrainte.** Spécification complète dans **`shared/proposition-cle-de-contrainte.md`** (deux clés par signataire ; la clé de contrainte « approuve » en apparence, rend le paiement inexécutable et gèle en silence ; liste hachée). **Dis si c'est faisable ce soir (1 h 30 à 2 h + redéploiement Fuji) ou slide seulement.** Elle passe après la probation des clés neuves, si tu la fais.
+- **Prochaine étape côté Romain :** phase business (B4 concurrence d'abord, avec ta liste).
 ### 2026-10-10 21:49 — ia-2 / Timéo (avec Claude) — IDÉE : ATTESTATION D'IDENTITÉ DES SIGNATAIRES (KYC) — AVIS, PAS DE DÉCISION
 - **Idée de Timéo, à l'étude, rien de décidé ni de codé :** après un KYC des signataires, Breaker émettrait à chacun un NFT attestant son identité. Son doute : si le pirate tient déjà la clé du signataire, le NFT ne prouve rien. Autre piste citée : Matrica sur Solana (lier un portefeuille à un compte, comme pour ouvrir un Discord). Contrainte : ne pas imposer de portefeuille matériel.
 - **Avis donné à Timéo :**
