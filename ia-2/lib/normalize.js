@@ -4,6 +4,7 @@
 
 const LEVELS = ["none", "step_up", "hold"];
 const LOG_RANGE = 2000; // blocs par requête de journaux, sous la limite des RPC publics
+const TRANSFER_TOPIC = "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef"; // Transfer(address,address,uint256)
 const CHANGES = { 1: "replace_owner", 2: "change_threshold" };
 const lower = (address) => address.toLowerCase();
 const num = (value) => Number(value);
@@ -142,7 +143,43 @@ function createNormalizer({ provider, wallet, registry, assetAddress, chainId, s
     return events;
   }
 
-  return { normalize, collect };
+  // --- Traçage des fonds (T9) : transferts du jeton sortant d'adresses signalées ---
+
+  const seenTransfers = new Set();
+  const pad = (address) => "0x" + "0".repeat(24) + lower(address).slice(2);
+
+  /// Transferts du jeton émis par les adresses données entre deux blocs, au format `token_transfer`.
+  /// Un même transfert n'est rendu qu'une fois, même si les plages demandées se recouvrent.
+  async function collectTransfers(fromAddresses, fromBlock, toBlock) {
+    if (!fromAddresses.length || fromBlock > toBlock) return [];
+    const logs = [];
+    for (let start = fromBlock; start <= toBlock; start += LOG_RANGE) {
+      const end = Math.min(start + LOG_RANGE - 1, toBlock);
+      logs.push(...(await provider.getLogs({
+        address: assetAddress, topics: [TRANSFER_TOPIC, fromAddresses.map(pad)], fromBlock: start, toBlock: end,
+      })));
+    }
+    logs.sort((x, y) => x.blockNumber - y.blockNumber || x.index - y.index);
+    const events = [];
+    for (const log of logs) {
+      const key = `${log.transactionHash}:${log.index}`;
+      if (seenTransfers.has(key)) continue;
+      seenTransfers.add(key);
+      seq += 1;
+      events.push({
+        seq, chain_id: chainId, block: log.blockNumber, timestamp: await blockTime(log.blockNumber),
+        tx_hash: log.transactionHash, log_index: log.index, tx_from: await txFrom(log.transactionHash),
+        contract: "token", address: lower(assetAddress), type: "token_transfer",
+        data: {
+          from: lower("0x" + log.topics[1].slice(26)), to: lower("0x" + log.topics[2].slice(26)),
+          token: lower(assetAddress), amount: BigInt(log.data).toString(),
+        },
+      });
+    }
+    return events;
+  }
+
+  return { normalize, collect, collectTransfers };
 }
 
 module.exports = { createNormalizer, LEVELS };

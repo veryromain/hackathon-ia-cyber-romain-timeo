@@ -49,6 +49,16 @@ Champs communs : `seq` (numéro d'ordre, croissant), `chain_id` (43113 sur Fuji,
 | `threshold_changed` | `previous_threshold`, `new_threshold` | Nombre de signatures requis modifié. **Signal fort s'il baisse** |
 | `address_flagged` | `flagged`, `level`, `category`, `evidence_hash`, `expires_at` | L'oracle a inscrit une adresse au registre |
 | `address_unflagged` | `flagged`, `by` | Signalement retiré ou contesté avec succès |
+| `token_transfer` | `from`, `to`, `token`, `amount` | **Traçage des fonds (T9).** Un transfert du jeton sorti d'une adresse inscrite au registre. `contract` vaut `token` |
+
+### Les transferts des adresses signalées (`token_transfer`)
+
+Dès qu'une adresse entre au registre (`address_flagged`), le relais écrit une ligne `token_transfer` pour **chaque transfert du jeton sorti de cette adresse depuis le déploiement**, puis pour chaque nouveau transfert tant qu'elle reste signalée.
+
+- **Ces lignes peuvent dater d'avant le signalement** : l'arnaqueur a souvent dispersé l'argent avant d'être repéré. Leur `block` et leur `timestamp` sont ceux du transfert d'origine, donc plus anciens que ceux de la ligne `address_flagged` qui les précède. **Pour ce type seulement, `seq` ne suit pas l'ordre du temps.**
+- Seuls les transferts **sortants** des adresses signalées sont écrits, pas ceux de leurs destinataires : le traçage s'arrête à un intermédiaire, par construction.
+- Le relais ne filtre rien : la poussière et les transferts vers des services partagés sont écrits aussi. C'est au moteur de les écarter, avec la part du montant dans les sorties de l'adresse et la liste `shared/services-connus.json` (adresses factices).
+- Exemple complet : `shared/echantillons/tracage.events.jsonl`, avec `tracage.roles.json` (qui est qui) et `tracage.labels.jsonl` (la vérité sur les trois paiements).
 
 ### Le délai d'examen
 

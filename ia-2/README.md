@@ -13,6 +13,8 @@ Partie de Timéo dans le projet « Breaker » (voir `PLAN.md` et `SUIVI.md`). **
 | T3 | Relais entre la chaîne et les fichiers JSON Lines | Fait, testé de bout en bout sur la chaîne locale avec un faux moteur de score |
 | T4 | Générateur de trafic normal | Fait : `shared/donnees/train.*`, 362 paiements sur 60 jours |
 | T5 | Scénarios de fraude | Fait : `shared/donnees/test.*`, 54 paiements frauduleux, 6 variantes ; scénario de démo en direct |
+| T9 | Traçage des fonds, côté données | Fait : le relais écrit les transferts sortis des adresses signalées (`token_transfer`) ; scénario `npm run tracing:local` testé en local |
+| — | Actions des signataires depuis le tableau de bord | Fait : le relais lit `shared/actions.jsonl` (voir `shared/format-actions.md`), testé en local |
 | T6 | Déploiement sur Avalanche Fuji | **Fait le 10 octobre à 19h30** : contrats déployés, démo rejouée sur Fuji avec le moteur de score, 0 mUSD sorti |
 
 ## Le portefeuille `TreasuryGuard` en bref
@@ -136,6 +138,18 @@ Sur le PC de Timéo, là où se trouve la phrase secrète. Le moteur de score de
 **Limite sur ce PC : le modèle d'anomalie (R2) ne tourne pas.** Le contrôle d'application de Windows (Smart App Control) bloque un fichier de scikit-learn. Le moteur fonctionne avec ses règles seules, ce qui suffit au scénario de démo. Les mesures avec le modèle se font sur le Mac de Romain.
 
 Sous Windows, les commandes de `ia-1/README.md` s'écrivent avec `.venv/Scripts/python.exe` au lieu de `.venv/bin/python`, et avec la variable `PYTHONUTF8=1`.
+
+## Traçage des fonds (T9)
+
+Quand une adresse entre au registre, le relais remonte tous les transferts de mUSD qu'elle a émis depuis le déploiement et les écrit dans `events.jsonl` (type `token_transfer`), puis continue de la suivre. Le moteur de score peut ainsi freiner un paiement vers une mule dont personne ne parle sur le Web.
+
+```bash
+npm run tracing:local   # ou tracing:fuji ; le relais doit tourner à côté
+```
+
+Le scénario : un arnaqueur encaisse 100 000 mUSD, en envoie 18 000, 12 000 et 10 000 à trois mules, 30 000 à une plateforme d'échange et 0,01 à un innocent, puis l'oracle le signale. L'organisation propose ensuite trois paiements : à une mule, à l'innocent, à la plateforme. Seul le premier doit être freiné. Rôles et étiquettes : `shared/tracage-roles.json` après le passage, exemple figé dans `shared/echantillons/tracage.*`.
+
+Le relais ne juge pas : il écrit tous les transferts sortants, poussière comprise. Écarter la poussière et les services partagés (`shared/services-connus.json`, adresses factices) est le travail du moteur de score.
 
 ## Limites connues
 

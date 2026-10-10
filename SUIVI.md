@@ -4,7 +4,7 @@
 > Légende : ✅ fait · 🔄 en cours · ⬜ à faire · ✂️ coupé (manque de temps)
 > Détail du projet : [`PLAN.md`](PLAN.md) · Historique : [`JOURNAL.md`](JOURNAL.md) · Brief : [`CONTEXTE.md`](CONTEXTE.md)
 
-**Dernière mise à jour :** 2026-10-10 19:53, par Claude (Timéo) — le relais traite shared/actions.jsonl (boutons du tableau de bord), testé en local
+**Dernière mise à jour :** 2026-10-10 19:57, par Claude (Timéo) — T9 fait : le relais écrit les transferts sortis des adresses signalées ; toutes les tâches T1 à T9 de Timéo sont faites
 **Rendu (gel définitif) :** dim. 11/10 **12:00** · **Checkpoint :** sam. **18:30** · **Pitch :** dim. 13:00
 
 ---
@@ -93,7 +93,7 @@ Un **garde antifraude pour les organisations qui gardent des millions dans un po
 | R8c | **Oracle complet** : croisement de plusieurs sources + réputation des sources, expiration des signalements | Romain | Python | **Une tentative d'empoisonnement est rejetée** | ✅ 19:34 (réputation des sources, même source répétée = 1 ; **empoisonnement rejeté** en démo ; 4 tests) |
 | R5b | **Dashboard v2** : preuves Web (lien, citation), boutons « valider » / « annuler », chiffres clés | Romain | Streamlit | Suffit à filmer la démo | ✅ 19:49 en local (boutons valider / annuler / geler / dégeler / contester, testés sur la chaîne ; 37 tests). **Fuji : Timéo doit lire `shared/actions.jsonl` dans son relais** (`shared/format-actions.md`) |
 | T5+ | Variantes de fraude supplémentaires | Timéo | Node | — | ✅ 19:47 (`shared/donnees/holdout.*` : 39 fraudes, 15 épisodes, 6 formes nouvelles ; règles seules : 49 % arrêtées, 95 % freinées ou arrêtées) |
-| T9 | **Traçage des fonds — données** (bonus, `PLAN.md` §4 ter) : événements `token_transfer` sortants des adresses signalées, scénario « arnaqueur → 3 mules + dusting d'un innocent », `shared/services-connus.json` | Timéo | Node + ethers | La mule est reliée à l'adresse signalée dans `events.jsonl` | ⬜ |
+| T9 | **Traçage des fonds — données** (bonus, `PLAN.md` §4 ter) : événements `token_transfer` sortants des adresses signalées, scénario « arnaqueur → 3 mules + dusting d'un innocent », `shared/services-connus.json` | Timéo | Node + ethers | La mule est reliée à l'adresse signalée dans `events.jsonl` | ✅ 19:57 (relais : type `token_transfer` ; scénario `npm run tracing:local` testé en local ; exemple dans `shared/echantillons/tracage.*` ; pas encore rejoué sur Fuji) |
 | R9 | **Traçage des fonds — règle** (bonus) : ≥ 10 % des fonds d'une adresse signalée → `step_up` (`TAINTED_FUNDS`), 1 intermédiaire max, services exclus, dusting ignoré | Romain | Python | La mule est ralentie, l'innocent « dusté » ne l'est pas | ⬜ |
 | ⚠️ | **Renouveler la clé Bedrock de Timéo avant 03:28** | Timéo | Workshop Studio | Appel de test réussi | ⬜ |
 

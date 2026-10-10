@@ -12,6 +12,18 @@ Ajouter les entrées les plus récentes en haut.
 
 ---
 
+### 2026-10-10 19:57 — ia-2 / Timéo (avec Claude) — T9 : TRAÇAGE DES FONDS, CÔTÉ DONNÉES
+- **Fait (T9) : les données du traçage des fonds.** Dès qu'une adresse entre au registre, mon relais remonte tous les transferts de mUSD qu'elle a émis depuis le déploiement et les écrit dans `events.jsonl` sous un nouveau type, `token_transfer` (`from`, `to`, `token`, `amount`, `contract` = `token`). Il continue ensuite de suivre l'adresse. Format : `shared/format-evenements.md`, section « Les transferts des adresses signalées ».
+- **Scénario prêt et testé sur la chaîne locale :** `npm run tracing:local` (ou `tracing:fuji`), relais lancé à côté. Un arnaqueur encaisse 100 000 mUSD, envoie 18 000, 12 000 et 10 000 à trois mules, 30 000 à une plateforme d'échange et 0,01 à un innocent ; l'oracle le signale ; l'organisation propose trois paiements (mule, innocent, plateforme). Le relais a bien écrit les 5 transferts juste après `address_flagged`.
+- **Romain, pour R9, trois choses à savoir :**
+  1. **Les lignes `token_transfer` peuvent dater d'avant le signalement** : leur `block` et leur `timestamp` sont ceux du transfert d'origine. Pour ce type seulement, `seq` ne suit pas l'ordre du temps. Ton moteur ne doit pas supposer des horodatages croissants.
+  2. **Le relais ne filtre rien** : la poussière (0,01 mUSD) et le transfert vers la plateforme sont écrits aussi. À toi d'appliquer le seuil de 10 % des sorties de l'adresse signalée et la liste `shared/services-connus.json` (trois adresses factices : plateforme, pont, routeur).
+  3. Le traçage s'arrête à un intermédiaire par construction : seuls les transferts sortants des adresses signalées sont écrits.
+- **Pour développer R9 sans chaîne :** `shared/echantillons/tracage.events.jsonl` (sortie réelle du relais), `tracage.roles.json` (qui est qui, avec les parts : 18 %, 12 %, 10 %, 30 %, poussière) et `tracage.labels.jsonl` (paiement vers la mule = `fraud`, les deux autres = `normal`).
+- **Attendu par le plan :** le paiement vers la mule freiné avec la raison `TAINTED_FUNDS` ; rien à ce titre pour l'innocent ni pour la plateforme. Attention, tes règles actuelles freineront sans doute les trois par `NEW_RECIPIENT` : pour isoler l'effet du traçage, mets l'innocent et la plateforme dans le carnet d'adresses.
+- **Non fait :** je n'ai pas ajouté de `token_transfer` aux jeux `train`, `test` et `holdout`, pour ne pas les modifier. Pas encore rejoué sur Fuji.
+- **Côté Timéo, toutes les tâches T1 à T9 sont faites.** Reste : renouveler la clé Bedrock avant 03:28, rejouer la démo complète sur Fuji avec ton tableau de bord (actions et traçage), la vidéo (L1) et la vérification « zéro secret » (L8).
+
 ### 2026-10-10 19:53 — ia-2 / Timéo (avec Claude) — LE RELAIS TRAITE LES ACTIONS DU TABLEAU DE BORD
 - **Fait (ta demande de 19h49, P4 version démo) : mon relais lit `shared/actions.jsonl` et écrit `shared/actions-resultats.jsonl`**, au format de ton `shared/format-actions.md`. Il vaut pour la chaîne locale comme pour Fuji (`npm run relay:local`, `npm run relay:fuji`).
   - Actions traitées : `approve`, `cancel`, `freeze`, `unfreeze`, signées avec la clé de test du signataire indiqué dans `by`.

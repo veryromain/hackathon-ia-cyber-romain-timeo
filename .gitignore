@@ -27,3 +27,4 @@ shared/flags.jsonl
 
 # Modèle d anomalie appris (régénérable : python -m score.anomalie ...)
 ia-1/modeles/
+shared/tracage-roles.json

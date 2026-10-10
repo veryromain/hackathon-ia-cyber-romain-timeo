@@ -1,0 +1,3 @@
+{"payment_id":0,"label":"fraud","scenario":"tainted_mule"}
+{"payment_id":1,"label":"normal","scenario":"tainted_innocent_dusted"}
+{"payment_id":2,"label":"normal","scenario":"tainted_known_service"}

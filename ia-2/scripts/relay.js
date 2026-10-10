@@ -76,14 +76,34 @@ async function main() {
   console.log(`[${clock()}] Relais démarré sur ${info.network}, portefeuille ${info.wallet}`);
   console.log(`[${clock()}] Fichiers : ${DIR}`);
 
+  // Traçage des fonds : on suit les transferts du jeton qui sortent des adresses inscrites au registre.
+  const watched = new Set();
+
   async function pumpEvents() {
     const latest = await ethers.provider.getBlockNumber();
     if (latest <= lastBlock) return;
-    const events = await normalizer.collect(lastBlock + 1, latest);
+    const from = lastBlock + 1;
+    const events = [];
+    const stillWatched = [...watched];
+    for (const event of await normalizer.collect(from, latest)) {
+      events.push(event);
+      if (event.type === "address_unflagged") watched.delete(event.data.flagged);
+      if (event.type !== "address_flagged" || watched.has(event.data.flagged)) continue;
+      // Nouvelle adresse signalée : on remonte aussi dans le passé, car l'argent a souvent déjà été dispersé.
+      watched.add(event.data.flagged);
+      events.push(...(await normalizer.collectTransfers([event.data.flagged], info.deploy_block, latest)));
+    }
+    // Transferts récents des adresses déjà suivies avant ce passage.
+    events.push(...(await normalizer.collectTransfers(stillWatched, from, latest)));
     lastBlock = latest;
     if (!events.length) return;
     fs.appendFileSync(FILES.events, events.map((e) => JSON.stringify(e)).join("\n") + "\n");
     for (const e of events) {
+      if (e.type === "token_transfer") {
+        const amount = Number(ethers.formatEther(e.data.amount)).toLocaleString("fr-FR", { maximumFractionDigits: 2 });
+        console.log(`[${clock()}] traçage -> ${e.data.from.slice(0, 10)}… a envoyé ${amount} mUSD à ${e.data.to.slice(0, 10)}…`);
+        continue;
+      }
       const id = e.data.payment_id ?? e.data.proposal_id ?? "";
       console.log(`[${clock()}] chaîne -> ${e.type} ${id} ${e.data.level || ""} ${e.data.reason || ""}`.trimEnd());
     }

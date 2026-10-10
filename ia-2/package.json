@@ -19,7 +19,9 @@
     "relay:fuji": "hardhat run scripts/relay.js --network fuji",
     "scenario:fuji": "hardhat run scripts/demo-scenario.js --network fuji",
     "unfreeze:local": "hardhat run scripts/unfreeze.js --network localhost",
-    "unfreeze:fuji": "hardhat run scripts/unfreeze.js --network fuji"
+    "unfreeze:fuji": "hardhat run scripts/unfreeze.js --network fuji",
+    "tracing:local": "hardhat run scripts/tracing-scenario.js --network localhost",
+    "tracing:fuji": "hardhat run scripts/tracing-scenario.js --network fuji"
   },
   "devDependencies": {
     "@nomicfoundation/hardhat-toolbox": "^5.0.0",
