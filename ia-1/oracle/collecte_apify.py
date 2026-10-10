@@ -30,7 +30,6 @@ CACHE = Path(__file__).resolve().parent / "collecte_cache"
 API = "https://api.apify.com/v2/acts/{acteur}/run-sync-get-dataset-items"
 ACTEUR_PAGES = "apify~website-content-crawler"
 ACTEUR_RECHERCHE = "apify~google-search-scraper"
-MOTS_RECHERCHE = "scam OR arnaque OR phishing OR fraude OR hack"
 
 
 def jeton() -> str:
@@ -56,8 +55,10 @@ def appeler_apify(acteur: str, entree: dict, delai_s: int = 300) -> list[dict]:
 
 def rechercher(adresse: str, maximum: int = 5) -> list[str]:
     """URL des pages qui parlent de cette adresse, d'après une recherche Web."""
+    # L'adresse seule, entre guillemets : avec des mots-clés en plus, le moteur de recherche renvoie des
+    # pages générales sur le phishing qui ne la citent pas (constaté au premier essai réel).
     resultats = appeler_apify(ACTEUR_RECHERCHE, {
-        "queries": f'"{adresse}" {MOTS_RECHERCHE}', "maxPagesPerQuery": 1, "resultsPerPage": maximum,
+        "queries": f'"{adresse}"', "maxPagesPerQuery": 1, "resultsPerPage": max(maximum, 10),
     })
     urls = []
     for page in resultats:
