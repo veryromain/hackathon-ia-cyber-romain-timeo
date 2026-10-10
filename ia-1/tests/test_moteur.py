@@ -75,3 +75,18 @@ def test_modele_enregistre_se_recharge_depuis_le_moteur(tmp_path):
     r = subprocess.run([sys.executable, "-m", "score.moteur", "--events", str(ECH / "events.exemple.jsonl"),
                         "--out", str(tmp_path / "a.jsonl"), "--modele", str(modele)], cwd=racine, capture_output=True, text=True)
     assert r.returncode == 0, r.stderr
+
+
+def test_reglage_client_jours_ouvres(tmp_path):
+    """Le samedi déclaré ouvré (réglage client) ne déclenche plus OFF_HOURS ; le réglage par défaut, si."""
+    from score import regles
+    from score.regles import r_hors_heures, EtatPortefeuille
+    p = {"timestamp": 1760126111, "tx_hash": "0x", "to": "0x"}  # samedi 10/10/2026 21h55, heure de Paris
+    assert r_hors_heures(p, EtatPortefeuille()) is not None
+    cfg = tmp_path / "c.json"
+    cfg.write_text('{"heures_ouvrees": [7, 23], "jours_ouvres": [0,1,2,3,4,5]}')
+    regles.charger_reglages_client(cfg)
+    try:
+        assert r_hors_heures(p, EtatPortefeuille()) is None
+    finally:
+        regles.HEURES_OUVREES, regles.JOURS_OUVRES = (7, 20), {0, 1, 2, 3, 4}

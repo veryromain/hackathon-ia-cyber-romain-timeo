@@ -1,0 +1,5 @@
+{
+  "_commentaire": "Réglages du client pour la démo. En production, un réglage se change comme un paiement : proposition, signatures, délai, inscription sur la chaîne ; et jamais en dessous des planchers de l'éditeur.",
+  "heures_ouvrees": [7, 20],
+  "jours_ouvres": [0, 1, 2, 3, 4]
+}

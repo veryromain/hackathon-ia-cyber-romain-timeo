@@ -4,7 +4,7 @@
 > Légende : ✅ fait · 🔄 en cours · ⬜ à faire · ✂️ coupé (manque de temps)
 > Détail du projet : [`PLAN.md`](PLAN.md) · Historique : [`JOURNAL.md`](JOURNAL.md) · Brief : [`CONTEXTE.md`](CONTEXTE.md)
 
-**Dernière mise à jour :** 2026-10-10 20:27, par Codex (Timéo) — P2 maquette privée publiée
+**Dernière mise à jour :** 2026-10-10 20:39, par Claude (Romain) — B1 décidé, OFF_HOURS du samedi levé (réglage client)
 **Rendu (gel définitif) :** dim. 11/10 **12:00** · **Checkpoint :** sam. **18:30** · **Pitch :** dim. 13:00
 
 ---
@@ -118,7 +118,7 @@ Un **garde antifraude pour les organisations qui gardent des millions dans un po
 
 | # | Tâche | Qui | Comment / outil | Fini quand | Statut |
 |---|---|---|---|---|---|
-| B1 | **Bilan de la démo** : ce qui marche, ce qui ne marche pas ; à garder, enlever, modifier, améliorer | Les deux | Après la démo de bout en bout, à partir des mesures (R6) | Liste écrite dans `shared/bilan-demo.md` | 🔄 20:10 brouillon `shared/bilan-demo.md` (marche / modifier / enlever / améliorer / conséquences business) — **à compléter par Timéo et Romain** |
+| B1 | **Bilan de la démo** : ce qui marche, ce qui ne marche pas ; à garder, enlever, modifier, améliorer | Les deux | Après la démo de bout en bout, à partir des mesures (R6) | Liste écrite dans `shared/bilan-demo.md` | ✅ 20:39 décisions prises par Romain (`shared/bilan-demo.md` §2-4 et §7 conflit d'intérêts) ; avis de Timéo attendu sur le contrat et Safe |
 | B2 | **Le problème est-il réel ?** Incidents récents chiffrés et sourcés (Drift, Bybit, fraudes au président en crypto, pertes des petites équipes), fréquence, coût moyen | Romain | Recherche web, sources citées, chiffres vérifiés | Slide « pourquoi ce problème » avec 3 à 5 faits sourcés | ⬜ |
 | B3 | **Étude de marché** : combien d'organisations ciblées, quelle trésorerie, où (Safe, Squads), taille de marché (TAM / SAM / SOM) avec la méthode de calcul | Romain | Recherche web, données Safe / DefiLlama / rapports publics | Estimation chiffrée **et sourcée**, avec ses hypothèses | ⬜ |
 | B4 | **Concurrence (produit, rentabilité, mise sur le marché, site et application)** : **Hypernative Guardian en tête** (contrat de contrôle sur Safe qui *bloque* les transactions à risque, vendu aux grandes trésoreries), Safe Shield (*avertit* sans agir, via Blockaid / Tenderly / Hypernative), Fireblocks, Forta… ce qu'ils font, leur prix, leur cible, **ce qu'on fait mieux** (voir `conversations/2026-10-10_timeo_comparaison-safe.md`). **Étudier aussi comment ils abordent le marché : leur site vitrine, leur application, leur parcours d'inscription et d'abonnement, leurs notifications**, pour s'en inspirer en gardant notre différence : **uniquement Avalanche** | Romain | Sites officiels, documentation, tableau comparatif | Tableau comparatif vérifié (pas « de mémoire ») | 🔄 comparaison fonctionnelle sourcée : `shared/comparaison-autres-blockchains.md` ; prix et parcours restent à vérifier |
@@ -142,7 +142,7 @@ Un **garde antifraude pour les organisations qui gardent des millions dans un po
 | P5 | **Notifications** : connecteur **e-mail** de l'entreprise, puis Slack / Telegram ; alerte immédiate des signataires en cas de mise en attente | Timéo + Romain | Service d'e-mail transactionnel | Un signataire est prévenu en moins d'une minute | ⬜ |
 | P6 | **Bouton « vraie / fausse alerte »** et **rapport mensuel** (alertes, faux positifs, temps de réaction, montants protégés) : la précision mesurée chez le client | Romain | Dashboard + stockage des retours | Rapport généré automatiquement | ⬜ |
 | P7 | **Mode observation** au démarrage d'un client (2 à 4 semaines : l'outil note sans agir) pour prouver son efficacité avant d'activer la friction | Romain + Timéo | Réglage du moniteur | Option activable | ⬜ |
-| P8 | **Réglages du client** : nombre de signatures en plus (+1 par défaut), durée de la mise en attente, seuils, liste de confiance | Timéo | Paramètres du contrat (`stepUpExtra`, `holdDelay`) | Écran de réglages | ⬜ |
+| P8 | **Réglages du client** : nombre de signatures en plus (+1 par défaut), durée de la mise en attente, seuils, liste de confiance | Timéo | Paramètres du contrat (`stepUpExtra`, `holdDelay`) | Écran de réglages | 🔄 20:39 (heures et jours ouvrés : `ia-1/config/client*.json`, option `--client` ; principe des planchers et du changement « comme un paiement » écrit en B1 §7) |
 
 ## 7. Phase 5 — Livrables et pitch (dim. 09:00 → 12:00)
 

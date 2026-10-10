@@ -13,7 +13,8 @@ cd ia-2 && npm run deploy:local && npx hardhat run ../ia-1/integration/carnet.js
 cd ia-2 && npm run relay:local
 # 4. moteur de score en direct, avec le modèle d'anomalie
 cd ia-1 && .venv/bin/python -m score.moteur --events ../shared/events.jsonl --out ../shared/alerts.jsonl \
-  --carnet integration/carnet-local.json --modele modeles/anomalie.joblib --suivre --expliquer   # --expliquer : explications Bedrock (R3)
+  --carnet integration/carnet-local.json --modele modeles/anomalie.joblib --suivre --expliquer \
+  --services ../shared/services-connus.json --client config/client.demo-samedi.json   # Bedrock (R3) ; R9 ; samedi déclaré ouvré
 # 5. tableau de bord → http://localhost:8599
 cd ia-1 && .venv/bin/streamlit run dashboard/app.py --server.port 8599
 # (5b. l'exécuteur d'actions n'est plus nécessaire : le relais de Timéo lit shared/actions.jsonl depuis 19:53)

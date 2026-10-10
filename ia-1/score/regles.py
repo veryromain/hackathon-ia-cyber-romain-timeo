@@ -56,7 +56,20 @@ FENETRE_RECENT_S = 7 * 86400     # un destinataire « récent » a reçu son 1er
 FENETRE_REPETITION_S = 3 * 86400
 FENETRE_RAFALE_S = 600           # autres propositions dans les 10 dernières minutes
 FENETRE_CHANGEMENT_S = 7 * 86400  # changement de signataire ou de seuil dans les 7 derniers jours
-HEURES_OUVREES = (7, 20)         # 7h–20h, heure de Paris, du lundi au vendredi
+HEURES_OUVREES = (7, 20)         # 7h–20h, heure de Paris (réglage client, voir charger_reglages_client)
+JOURS_OUVRES = {0, 1, 2, 3, 4}   # lundi à vendredi (réglage client)
+
+
+def charger_reglages_client(chemin):
+    """Réglages du client (config/client.json) : heures et jours ouvrés. Jamais changés par une personne seule en
+    production (ils passent par le portefeuille, comme un paiement) ; ici un simple fichier pour la démo."""
+    import json
+    global HEURES_OUVREES, JOURS_OUVRES
+    d = json.loads(open(chemin, encoding="utf-8").read())
+    if "heures_ouvrees" in d:
+        HEURES_OUVREES = tuple(d["heures_ouvrees"])
+    if "jours_ouvres" in d:
+        JOURS_OUVRES = set(d["jours_ouvres"])
 
 MOTS_URGENCE = re.compile(
     r"urgent|confidentiel|secret|discr[eè]t|ne pas en parler|imm[ée]diat|"
@@ -150,7 +163,7 @@ def r_libelle_urgent(p, etat):
 
 def r_hors_heures(p, etat):
     t = datetime.fromtimestamp(p["timestamp"], FUSEAU)
-    if t.weekday() >= 5 or not (HEURES_OUVREES[0] <= t.hour < HEURES_OUVREES[1]):
+    if t.weekday() not in JOURS_OUVRES or not (HEURES_OUVREES[0] <= t.hour < HEURES_OUVREES[1]):
         poids = POIDS["OFF_HOURS_NUIT"] if t.hour < 6 else POIDS["OFF_HOURS"]
         return Raison("OFF_HOURS", f"proposé le {t:%d/%m à %Hh%M} (heure de Paris)", [p["tx_hash"]], poids)
 

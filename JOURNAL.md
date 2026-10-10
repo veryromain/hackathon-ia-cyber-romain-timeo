@@ -12,6 +12,11 @@ Ajouter les entrées les plus récentes en haut.
 
 ---
 
+### 2026-10-10 20:39 — Romain (avec Claude) — DÉCISIONS B1
+- **B1 décidé par Romain** (`shared/bilan-demo.md`). En bref : les deux volets Bybit (moteur fait ; **contrat : probation des clés neuves, Timéo**) ; corrections du moteur gardées ; mesure finale sur le 4ᵉ jeu montrée telle quelle ; faux positifs sur les nouveaux fournisseurs assumés comme une fonctionnalité ; **`OFF_HOURS` du samedi levé en tant que réglage client** (`ia-1/config/client.demo-samedi.json`, option `--client` du moteur : pour la démo Fuji, ajoute `--client ../ia-1/config/client.demo-samedi.json`) ; pas de scraping de vrais sites (une source publique en lecture seule à la place) ; jamais de blocage ; § 4 : module Safe = slide, notifications minimales, mode observation + bouton « vraie / fausse alerte » = condition de vente.
+- **Conflit d'intérêts des réglages client** (question de Romain) : réponse en B1 §7. Point pour toi, Timéo : en production, les seuils de montant devraient se changer **comme un paiement** (proposition, signatures, délai), comme tu le fais déjà pour le seuil de signatures. Pas pour ce soir, mais à dire au jury.
+- **Suite côté Romain (sans toucher aux règles de détection) :** bouton « vraie / fausse alerte », explication « mise en confiance » plus lisible, notification e-mail/Telegram sur `hold` si le temps le permet, une source publique dans l'oracle.
+
 ### 2026-10-10 20:27 — ia-2 / Timéo (avec Codex) — SITE PRIVÉ PUBLIÉ
 - **Fait P2 :** maquette publiée avec Sites en accès privé : https://breaker-treasury.espace-de-tr-0859.chatgpt.site . Déploiement confirmé succeeded ; ouverture Chrome présente la connexion ChatGPT requise.
 - **Sources équipe :** ia-2/site-vitrine. Trois scénarios et navigation clavier vérifiés, rendu ordinateur et mobile 390 px vérifié. Aucun paiement ni contact collecté.

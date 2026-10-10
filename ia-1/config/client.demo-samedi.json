@@ -1,0 +1,5 @@
+{
+  "_commentaire": "Démo du hackathon (samedi 10/10) : le samedi est déclaré jour ouvré pour que OFF_HOURS ne se déclenche pas sur le scénario. Décision de Romain, 20:25.",
+  "heures_ouvrees": [7, 23],
+  "jours_ouvres": [0, 1, 2, 3, 4, 5]
+}

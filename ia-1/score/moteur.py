@@ -169,6 +169,7 @@ def main(argv=None):
     a.add_argument("--modele", type=Path, help="modèle d'anomalie appris (R2), ex. modeles/anomalie.joblib")
     a.add_argument("--expliquer", action="store_true", help="R3 : explication rédigée par Bedrock (partage de connexion)")
     a.add_argument("--services", type=Path, help="R9 : JSON des adresses de services connus (plateformes, ponts), jamais teintées")
+    a.add_argument("--client", type=Path, help="réglages du client (config/client.json) : heures et jours ouvrés")
     args = a.parse_args(argv)
 
     carnet = json.loads(args.carnet.read_text()) if args.carnet else []
@@ -177,6 +178,8 @@ def main(argv=None):
         import joblib
         modele = joblib.load(args.modele)
     services = charger_services(args.services) if args.services else []
+    if args.client:
+        regles.charger_reglages_client(args.client)
     moteur = Moteur(carnet, modele, args.expliquer, services)
     with open(args.out, "a" if args.suivre else "w") as sortie:
         for ev in lire(args.events, args.suivre):
