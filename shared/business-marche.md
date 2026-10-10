@@ -1,6 +1,6 @@
 # B3 — Le marché : combien d'organisations, combien de trésorerie, et Avalanche est-il assez grand ?
 
-> Romain (avec Claude), 11/10 vers 01:35. **Brouillon chiffré avec hypothèses explicites.** Les sources trouvées sont secondaires et se contredisent ; chaque chiffre porte son niveau de confiance. **À vérifier avant la slide sur trois sources primaires :** le tableau de bord DeepDAO, le service de transactions Safe sur Avalanche (nombre de Safe au-dessus d'un seuil), l'annuaire de l'écosystème de la Fondation Avalanche.
+> Romain (avec Claude), 11/10 vers 01:26. **Brouillon chiffré avec hypothèses explicites.** Les sources trouvées sont secondaires et se contredisent ; chaque chiffre porte son niveau de confiance. **À vérifier avant la slide sur trois sources primaires :** le tableau de bord DeepDAO, le service de transactions Safe sur Avalanche (nombre de Safe au-dessus d'un seuil), l'annuaire de l'écosystème de la Fondation Avalanche.
 
 ## 1. Les repères qu'on a (et ce qu'ils valent)
 

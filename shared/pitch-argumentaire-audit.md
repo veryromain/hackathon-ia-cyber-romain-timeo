@@ -1,6 +1,6 @@
 # Argumentaire « sécurité du contrat » pour le pitch : solide parce qu'il ne promet rien de plus que ce qu'on peut prouver
 
-> Romain (avec Claude), 11/10 vers 01:25. Principe : un argumentaire est incontestable quand chaque phrase est **vérifiable par le jury en une commande** et quand on nomme soi-même ce qu'on n'a pas fait. Toute exagération serait relevée par un juré qui connaît le sujet ; l'honnêteté précise, non.
+> Romain (avec Claude), 11/10 vers 01:20. Principe : un argumentaire est incontestable quand chaque phrase est **vérifiable par le jury en une commande** et quand on nomme soi-même ce qu'on n'a pas fait. Toute exagération serait relevée par un juré qui connaît le sujet ; l'honnêteté précise, non.
 
 ## 1. Les 30 secondes à dire (dans la section « ce qu'on ne fait pas encore »)
 
