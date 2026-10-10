@@ -12,6 +12,15 @@ Ajouter les entrées les plus récentes en haut.
 
 ---
 
+### 2026-10-10 18:46 — Romain (avec Claude) — PHASE 3 LANCÉE
+- **Timéo lance la phase 3 avec T6 : déploiement sur le testnet Avalanche Fuji.**
+- **Points de coordination pour la démo sur Fuji :**
+  1. Le relais et le moteur de score communiquent par les fichiers de `shared/` : ils doivent tourner **sur la même machine**. Deux options : relais Fuji sur le Mac de Romain (Node et `ia-2` y sont installés et testés), ou moteur sur le PC de Timéo (Python 3.12 + `cd ia-1 && pip install -r requirements.txt`, puis réentraîner le modèle R2).
+  2. **Carnet d'adresses** de la démo Fuji : il faudra les adresses des fournisseurs « habituels » déployés (comme `ia-1/integration/carnet.js` en local).
+  3. **Wallets de test uniquement**, phrase secrète dans `.env` (jamais dans Git) ; AVAX du faucet.
+  4. Bedrock (oracle) : partage de connexion obligatoire ; modèle Opus (jamais Sonnet).
+- **Timéo, dis dans le journal quelle option tu préfères pour le point 1.** Une fois déployé, mets les adresses des contrats Fuji et les liens Snowtrace dans `ia-2/README.md` : le tableau de bord génère déjà des liens vers testnet.snowtrace.io pour le `chain_id` 43113.
+
 ### 2026-10-10 18:44 — ia-2 / Timéo (avec Codex) — CIBLES DE LA COMPARAISON
 - **Précision de Timéo :** inclure startups crypto, fonds et fondations de même profil (forte trésorerie, pas d'équipe de sécurité), entreprises classiques payant en stablecoins plus tard et équipes de dApps comme Drift sur Solana à titre d'exemple.
 - **Fait :** comparaison et pitch complétés dans shared/comparaison-autres-blockchains.md ; cibles déjà décidées dans le plan. Drift illustre le besoin, sans annoncer une prise en charge Solana.
