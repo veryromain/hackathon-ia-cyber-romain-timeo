@@ -4,7 +4,7 @@
 > Légende : ✅ fait · 🔄 en cours · ⬜ à faire · ✂️ coupé (manque de temps)
 > Détail du projet : [`PLAN.md`](PLAN.md) · Historique : [`JOURNAL.md`](JOURNAL.md) · Brief : [`CONTEXTE.md`](CONTEXTE.md)
 
-**Dernière mise à jour :** 2026-10-10 20:39, par Claude (Romain) — B1 décidé, OFF_HOURS du samedi levé (réglage client)
+**Dernière mise à jour :** 2026-10-10 20:40, par Claude (Romain) — mesure finale publiée
 **Rendu (gel définitif) :** dim. 11/10 **12:00** · **Checkpoint :** sam. **18:30** · **Pitch :** dim. 13:00
 
 ---
@@ -105,7 +105,7 @@ Un **garde antifraude pour les organisations qui gardent des millions dans un po
 | # | Tâche | Qui | Comment / outil | Fini quand | Statut |
 |---|---|---|---|---|---|
 | T7 | **Mesure du gas** des transactions du Guard et du registre (pour le modèle économique) | Timéo | `npm run gas` | Tableau dans `shared/` | ✅ 16:55 (`shared/frais-gas.md` : une alerte ≈ 0,002 $) |
-| R6 | **Évaluation** sur le fichier de test : taux de détection, précision, faux positifs, délai de signalement, fonds protégés + **précision de l'oracle** et **délai Web2 → chaîne** | Romain | Python | Tableau de chiffres dans `shared/mesures.md` | ✅ 19:42 (`shared/mesures.md` : 6 chiffres clés, détection, réponse local/Fuji, oracle, coûts, limites ; tout reproductible) |
+| R6 | **Évaluation** sur le fichier de test : taux de détection, précision, faux positifs, délai de signalement, fonds protégés + **précision de l'oracle** et **délai Web2 → chaîne** | Romain | Python | Tableau de chiffres dans `shared/mesures.md` | ✅ 19:42, **mesure finale 20:40** sur le 4ᵉ jeu (formes jamais vues, après corrections) : 95 % freinées/arrêtées, 78 % arrêtées, 91 % des montants, 5,1 % de faux hold (tous sur de gros nouveaux bénéficiaires) |
 | — | Rejouer les mesures, corriger | Timéo | — | Chiffres définitifs | ⬜ |
 
 ---

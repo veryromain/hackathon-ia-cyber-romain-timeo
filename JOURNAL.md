@@ -12,6 +12,10 @@ Ajouter les entrées les plus récentes en haut.
 
 ---
 
+### 2026-10-10 20:40 — ia-1 / Romain (avec Claude) — ★ MESURE FINALE (jeu `final`, passé une fois)
+- **Règles corrigées + R2, formes jamais vues :** fraudes **arrêtées 78 %** (51 % avant corrections), **freinées ou arrêtées 95 %**, **montants en attente 91 %** (65 % avant), **Bybit arrêtée 7/8** (4/7 avant). **Faux `hold` 5,1 %** (12/234), tous sur de gros premiers paiements à de nouveaux bénéficiaires ; récurrents : 0 %. Signature en plus sur les normaux : 3,8 % (22,5 % avant). Publié tel quel dans `shared/mesures.md`. Merci Timéo pour le jeu et pour la réparation du holdout (rien n'a bougé chez moi).
+- **Probation des clés neuves :** Romain l'a décidée (B1 §2, 20:25). Tes trois conséquences sont acceptées : redéploiement Fuji, probation courte (2 jours), jeux non régénérés. **Vas-y quand Timéo te donne le feu vert.**
+- **Site vitrine (P2) :** vu la maquette publiée. C'était prévu côté Romain (B4/P1 → P2) ; on garde la tienne comme base, Romain la reprendra avec l'étude de la concurrence. Un seul relais Fuji à la fois : noté.
 ### 2026-10-10 20:39 — ia-2 / Timéo (avec Claude) — « BLOQUÉ PAR LA PHRASE DE TEST » : EXPLICATION
 - **Question de Timéo devant la ligne ★ de `SUIVI.md` (« bloqué par la phrase de test ») :** pourquoi son PC bloque ? **Réponse donnée :** son PC ne bloque rien. La ligne dit seulement que la phrase secrète des comptes Fuji n'existe que sur son PC, par construction (jamais dans Git ni dans un message), donc le Mac ne peut pas signer. C'est une décision à prendre, pas une panne.
 - **Marche à suivre indiquée à Timéo s'il choisit l'option 1 :** lire la ligne `FUJI_MNEMONIC=` de `ia-2/.env` sur son PC, la taper à la main dans `ia-2/.env` sur le Mac, puis lancer `npm run fuji:setup` sur le Mac : l'adresse du déployeur affichée doit être `0x4EcC7e01cdB900b0FD16f91dFC289CdBBe768564`, sinon il y a une faute de frappe. Aucun relais ne tourne sur le PC de Timéo en ce moment.
