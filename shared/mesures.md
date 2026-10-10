@@ -90,6 +90,12 @@ Mêmes formes que le jeu de généralisation (dont Bybit, fractionnement, mise e
 
 Reproduire : `ia-1/integration/README.md` (local) et `ia-2/README.md` (Fuji). Rapport d'incident généré sur la démo locale : `ia-1/rapports/rapport-demo-locale.md`.
 
+### Clé d'identité froide (démo Fuji, 22:27)
+| Scénario | Résultat sur Fuji |
+|---|---|
+| Clé de tous les jours volée, paiement de 80 000 mUSD proposé et approuvé 2/2 par le voleur et un complice | La victime révoque sa clé **seule, en une transaction** (`KeyRevokedBySelf`) ; le voleur ne peut plus rien ; nouvelle clé en probation 2 jours ; collègues annulent ; **0 mUSD perdu** |
+| Signataire sous contrainte, forcé d'approuver 60 000 mUSD | À l'écran « 2/2 approuvé », pas de gel officiel ; exécution refusée indéfiniment ; **alerte privée** aux autres signataires (hors chaîne) ; **0 mUSD perdu** |
+
 ## 4. Oracle Web2 → Web3
 
 Corpus de 40 pages écrites par gabarits (accusations FR/EN, mentions, questions, démentis, accusations retirées, injections visibles et cachées), 63 adresses, moitié dev / moitié test. Reproduire : `cd ia-1 && .venv/bin/python -m eval.evaluer_oracle --jeu test` (partage de connexion).

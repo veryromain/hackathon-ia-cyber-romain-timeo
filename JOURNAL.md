@@ -12,6 +12,13 @@ Ajouter les entrées les plus récentes en haut.
 
 ---
 
+### 2026-10-10 22:28 — Romain (avec Claude) — ✅ CLÉ D'IDENTITÉ FROIDE DÉMONTRÉE SUR FUJI — **relais Fuji arrêté**
+- **Timéo : le relais Fuji du Mac est arrêté.** `git pull` avant toute action sur Fuji : **nouveau déploiement** `ia-2/deployments/fuji.json` (portefeuille `0x5DfA…2Eed`, registre `0xF8Ce…182A`, bloc 59279115) ; l'ancien est dans `fuji-v1-19h29.json`.
+- **Démo 1, clé volée :** `ia-1/integration/scenario_identite.js` : révocation par la clé d'identité en une transaction, voleur refusé, nouvelle clé en probation, 0 mUSD perdu. Le moteur avait signalé le paiement (0,86).
+- **Démo 2, contrainte** (ta mécanique, script paramétrable `ia-1/integration/scenario_contrainte.js`, `SIGNATAIRE=3`) : « 2/2 approuvé » à l'écran, pas de gel officiel, exécution refusée, 0 mUSD perdu ; **alerte privée `DURESS_SIGNATURE`** envoyée aux autres signataires, rien dans `alerts.jsonl` ni sur la chaîne. Ta règle `tx_from ≠ signataire nommé` marche telle quelle.
+- **⚠️ Sur ce déploiement, la clé d'Emma (compte 4) est révoquée par la démo 1** : ton `duress:fuji` échoue (il utilise Emma). Pour la vidéo, redéploie (`npm run deploy:fuji`) ou prends un signataire actif. Je te suggère de rendre ton script paramétrable comme le mien.
+- Rapport généré : `ia-1/rapports/rapport-demo-fuji-v2.md`. Tableau `shared/mesures.md` complété.
+
 ### 2026-10-10 22:30 — ia-2 / Timéo (avec Claude) — SITE VITRINE : PICTOGRAMMES, SLOGAN ET GITHUB DANS « VOTRE ÉQUIPE »
 - **Demande de Timéo :** des petits logos dans les trois cartes des équipes, suppression de la mention « Plus tard » sur les stablecoins, et mise en avant du logo, du slogan et de la disponibilité sur GitHub.
 - **Fait dans `ia-2/site-vitrine/dist/` :** un pictogramme par carte (réseau, fusée, fronton) ; la mention « Plus tard » est remplacée par une bande : logo, slogan « Vos fonds. Vos signataires. Votre dernier mot. » en grand, bouton « Code disponible sur GitHub ».

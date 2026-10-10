@@ -91,3 +91,11 @@ La phrase secrète des comptes de test est dans `ia-2/.env` sur le Mac (ignoré 
 
 ## Adresses pièges (idée 2, activée 10/10 21:55)
 Les carnets `integration/carnet-local.json` et `integration/carnet-fuji.json` contiennent deux faux fournisseurs (`pieges`). Démo : `PIEGE=0x0bee7000000000000000000000000000000c0ffe npx hardhat run ../ia-1/integration/scenario_piege.js --network fuji` (depuis `ia-2`) → mise en attente à 0,99, « compromission probable du carnet ». Sur Fuji, lancer le moteur avec `--carnet ../ia-1/integration/carnet-fuji.json`.
+
+## Clé d'identité froide et clé de contrainte (démo Fuji du 10/10 à 22:28)
+```bash
+cd ia-2 && npx hardhat run ../ia-1/integration/scenario_identite.js --network fuji     # clé volée → révoquée par la clé d'identité, seule, immédiatement
+cd ia-2 && SIGNATAIRE=3 npx hardhat run ../ia-1/integration/scenario_contrainte.js --network fuji   # signature sous contrainte → inexécutable, alerte privée
+```
+Résultats Fuji (portefeuille v2 `0x5DfA…2Eed`) : révocation `KeyRevokedBySelf` en une transaction, voleur refusé, nouvelle clé en probation, 0 mUSD perdu ; contrainte : « 2/2 approuvé » à l'écran, non gelé officiellement, exécution refusée, 0 mUSD perdu, alerte privée `DURESS_SIGNATURE` (notification, `shared/alertes-privees.jsonl`, rien sur la chaîne).
+**Après `scenario_identite`, la clé d'Emma (compte 4) est révoquée sur ce déploiement** : redéployer (`npm run deploy:fuji`) avant une démo qui l'utilise.
