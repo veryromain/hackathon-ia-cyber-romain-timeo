@@ -12,6 +12,12 @@ Ajouter les entrées les plus récentes en haut.
 
 ---
 
+### 2026-10-10 14:45 — Romain (avec Claude)
+- **Fait :** accès AWS de l'événement configuré chez Romain (profil local `hackathon`, région us-west-2). **Bedrock fonctionne** : appel réel réussi avec `us.anthropic.claude-sonnet-5-5`. Procédure dans `shared/aws-bedrock.md`.
+- **Bloquant découvert :** le Wi-Fi de l'école bloque `bedrock*.amazonaws.com`. Il faut passer par le partage de connexion du téléphone (ou CloudShell). À signaler aux organisateurs.
+- **Décision :** coffre **de prêt** validé (plus de signes précurseurs, donc une pause avant le premier dollar sorti). Cadrage réglementaire : client fictif agréé MiCA exposé au coffre (voir `PLAN.md`).
+- **Pour Timéo :** récupérer tes propres identifiants dans Workshop Studio (voir `shared/aws-bedrock.md`), ne pas partager les clés.
+
 ### 2026-10-10 14:15 — ia-2 / Timéo (avec Claude)
 - **Fait :** projet Hardhat dans `ia-2/` avec les contrats `BreakerVault` (coffre de prêt, disjoncteur à trois niveaux Normal / Limited / Paused, rôles séparés), `SimplePool` (pool d'échange qui sert d'oracle de prix) et `MockToken`. **13 tests passent** sur la chaîne locale (`cd ia-2 && npm install && npm test`).
 - **Scénario rejoué dans les tests**, inspiré de Drift : faux jeton au prix gonflé, prise du rôle de configuration, délai de sécurité ramené à zéro, listing, puis vidage en 31 emprunts. Sans disjoncteur le coffre est vidé ; pause après 3 emprunts : plus de 90 % des fonds restent ; pause au listing : rien ne sort.

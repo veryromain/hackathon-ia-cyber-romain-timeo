@@ -43,3 +43,12 @@ Un projet compatible avec les deux tracks : la **supervision d'agents IA qui man
 - Création de `shared/pitch-mentor.md` : pitch oral pour le mentor Team1, questions à lui poser et réponses aux objections.
 - **Proposition clé :** fusionner les deux idées. Le disjoncteur DeFi de Timéo arrête un agent IA de trésorerie piégé, qui reprend l'idée de Romain.
 - **À décider :** valider avec Timéo et le mentor avant 15:30.
+
+## Mise à jour 14:45 — AWS Bedrock et cadrage
+- **Cadrage réglementaire :** la démo met en scène un prestataire crypto fictif agréé MiCA, avec un produit « Earn » qui repose sur notre coffre. C'est ce qui rend DORA applicable. Les protocoles DeFi purs restent un second marché, avec un post-mortem public à la place du rapport DORA.
+- **Coffre de prêt validé.** Il fait apparaître des signes précurseurs (prix manipulé, rôle donné à une adresse neuve, délai supprimé, jeton douteux accepté), ce qui permet une pause avant le premier dollar sorti.
+- **AWS :**
+  - `aws login` a échoué : il ne gère pas les comptes Workshop Studio.
+  - Les identifiants ont été récupérés via « Get AWS CLI credentials », depuis le presse-papier, sans passer par la conversation.
+  - Le Wi-Fi de l'école bloque Bedrock ; ça fonctionne sur le partage de connexion du téléphone.
+  - L'appel test à Claude Sonnet 5.5 a réussi.
