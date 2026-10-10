@@ -12,6 +12,11 @@ Ajouter les entrées les plus récentes en haut.
 
 ---
 
+### 2026-10-10 17:42 — Romain (avec Claude) — ORGANISATION
+- **Décision Romain + Timéo :** cible = petites et moyennes organisations qui détiennent des fonds en crypto (multisig, sans équipe de sécurité). **Nouvelle phase « Business » (B1 à B8) dans `SUIVI.md`**, placée **après la démo et les tests** : bilan de la démo, réalité du problème, étude de marché, concurrence, entretiens de validation du besoin, prix, mise sur le marché, décision go / ajustement.
+- **Répartition :** **Timéo = technique de l'outil**, **Romain = business** (étude de marché, vente, commerce). Mais **maintenant, on se concentre à deux sur la démo** : établir ce qui marche, ce qu'il faut garder, enlever, modifier, améliorer.
+- **Objectif immédiat : finir la phase 2.** Romain enchaîne R2 (modèle d'anomalie), R8b (corpus de l'oracle), R5 (dashboard). Checkpoint officiel à 18:30.
+
 ### 2026-10-10 17:35 — ia-2 / Timéo (avec Claude) — DÉCISION SUR LA CIBLE
 - **Décision de Timéo (vers 17h30) : nous visons des organisations réelles qui gardent des millions dans un portefeuille à plusieurs signataires, sans équipe de sécurité.**
   - **En priorité :** les équipes de protocoles et les DAO (dix à trente personnes, trésorerie de plusieurs millions tenue par quelques fondateurs ; ils paient des audits de code mais rien ne surveille leurs signataires ; Drift entre dans ce cas), et les startups crypto, fonds et fondations (même profil).

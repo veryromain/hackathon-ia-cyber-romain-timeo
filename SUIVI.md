@@ -4,7 +4,7 @@
 > Légende : ✅ fait · 🔄 en cours · ⬜ à faire · ✂️ coupé (manque de temps)
 > Détail du projet : [`PLAN.md`](PLAN.md) · Historique : [`JOURNAL.md`](JOURNAL.md) · Brief : [`CONTEXTE.md`](CONTEXTE.md)
 
-**Dernière mise à jour :** 2026-10-10 17:35, par Claude (Timéo) — cible commerciale décidée, voir `shared/cible-et-modele-economique.md`
+**Dernière mise à jour :** 2026-10-10 17:42, par Claude (Romain) — phase business ajoutée (B1-B8), Romain au business, Timéo à la technique
 **Rendu (gel définitif) :** dim. 11/10 **12:00** · **Checkpoint :** sam. **18:30** · **Pitch :** dim. 13:00
 
 ---
@@ -22,7 +22,7 @@ Un **garde antifraude pour les organisations qui gardent des millions dans un po
 
 | | **Romain** — `ia-1/` | **Timéo** — `ia-2/` |
 |---|---|---|
-| **Rôle** | Détection, IA, oracle Web2, dashboard, présentation | Blockchain : contrats, relais, données de trafic et de fraude |
+| **Rôle** | Détection, IA, oracle Web2, dashboard **puis business** : étude de marché, concurrence, validation du besoin, prix, vente (phase 4 bis) | **Technique de l'outil** : contrats, relais, données de trafic et de fraude, déploiement |
 | **Langage** | Python 3.12 | Solidity (contrats), JavaScript/Node (scripts) |
 | **Outils** | pandas, scikit-learn, boto3 (Bedrock), BeautifulSoup, Streamlit | Hardhat, OpenZeppelin, ethers, Avalanche Fuji |
 | **Modèle Bedrock** | `us.anthropic.claude-sonnet-5-5` | `us.anthropic.claude-opus-5-5` |
@@ -108,6 +108,23 @@ Un **garde antifraude pour les organisations qui gardent des millions dans un po
 | — | Rejouer les mesures, corriger | Timéo | — | Chiffres définitifs | ⬜ |
 
 ---
+
+## 6 bis. Phase 4 bis — Business : le besoin est-il réel et payant ? (après la démo et les tests)
+
+> **Décision du 10/10 vers 17:40 (Romain + Timéo).** Cible : les **petites et moyennes organisations qui détiennent des fonds en crypto** dans un portefeuille multisig sans équipe de sécurité (équipes de protocoles, DAO, startups crypto, fonds, fondations). Base de travail : `shared/cible-et-modele-economique.md`.
+> **Romain porte cette phase**, Timéo reste sur la technique. Elle démarre **une fois la démo et les tests stabilisés** (phases 2 à 4) : d'abord savoir ce qui marche dans l'outil, ce qu'il faut garder, enlever, modifier ou améliorer.
+> **La question à trancher :** notre outil répond-il à un **vrai besoin** qui touche vraiment ces organisations, et **seraient-elles prêtes à payer** ?
+
+| # | Tâche | Qui | Comment / outil | Fini quand | Statut |
+|---|---|---|---|---|---|
+| B1 | **Bilan de la démo** : ce qui marche, ce qui ne marche pas ; à garder, enlever, modifier, améliorer | Les deux | Après la démo de bout en bout, à partir des mesures (R6) | Liste écrite dans `shared/bilan-demo.md` | ⬜ |
+| B2 | **Le problème est-il réel ?** Incidents récents chiffrés et sourcés (Drift, Bybit, fraudes au président en crypto, pertes des petites équipes), fréquence, coût moyen | Romain | Recherche web, sources citées, chiffres vérifiés | Slide « pourquoi ce problème » avec 3 à 5 faits sourcés | ⬜ |
+| B3 | **Étude de marché** : combien d'organisations ciblées, quelle trésorerie, où (Safe, Squads), taille de marché (TAM / SAM / SOM) avec la méthode de calcul | Romain | Recherche web, données Safe / DefiLlama / rapports publics | Estimation chiffrée **et sourcée**, avec ses hypothèses | ⬜ |
+| B4 | **Concurrence** : Safe (gratuit, sans surveillance), Hypernative, Blockaid, Fireblocks, Forta… ce qu'ils font, leur prix, leur cible, **ce qu'on fait mieux** | Romain | Sites officiels, documentation, tableau comparatif | Tableau comparatif vérifié (pas « de mémoire ») | ⬜ |
+| B5 | **Validation du besoin sur le terrain** : interroger 3 à 5 personnes concernées (équipes de protocoles présentes au hackathon, mentors Team1, Kryptosphère, KPMG) : « comment protégez-vous votre trésorerie ? avez-vous déjà eu peur ? paieriez-vous, combien ? » | Romain (+ Timéo s'il est disponible) | Mini-entretiens de 5 minutes, script de questions | Synthèse des réponses, avec citations anonymisées | ⬜ |
+| B6 | **Modèle économique et prix** : abonnement par portefeuille, palier selon la trésorerie, coûts réels (gas 0,002 $/alerte, Bedrock), marge, point mort | Romain | Tableur ; frais mesurés dans `shared/frais-gas.md` | Grille de prix + calcul de rentabilité simple | ⬜ |
+| B7 | **Mise sur le marché** : canal de distribution (module Safe / Squads, partenaires auditeurs), premiers clients visés, feuille de route 6 mois | Romain | — | Slide « go-to-market » | ⬜ |
+| B8 | **Décision go / ajustement** : le besoin est-il confirmé ? Faut-il ajuster la cible, l'offre ou le prix ? | Les deux | À partir de B1 à B7 | Décision écrite dans `JOURNAL.md` | ⬜ |
 
 ## 7. Phase 5 — Livrables et pitch (dim. 09:00 → 12:00)
 
