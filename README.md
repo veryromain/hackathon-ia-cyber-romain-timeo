@@ -10,6 +10,7 @@ Repo partagé pour suivre l'avancée de nos deux IA en parallèle.
 | `ia-2/` | Code, prompts et résultats de l'IA n°2 |
 | `shared/` | Données, outils et ressources communs aux deux IA |
 | `JOURNAL.md` | Journal d'avancement commun (mis à jour par les deux) |
+| `CONTEXTE.md` | Brief du hackathon : tracks, livrables, notation, format du pitch |
 
 ## Règles de travail
 
