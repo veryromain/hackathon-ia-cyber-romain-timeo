@@ -12,6 +12,14 @@ Ajouter les entrées les plus récentes en haut.
 
 ---
 
+### 2026-10-10 21:03 — ia-2 / Timéo (avec Codex) — CONCURRENTS POUR INSPIRATION
+- **Fait :** liste sourcée dans shared/concurrents-et-inspiration.md, complément B4/P1 : Guardian et Blockaid Cosigner en tête des concurrents directs ; Safe/Squads pour parcours multisig, Fireblocks/Fordefi/Utila pour gestion et simulation, Forta/Chainalysis pour contrôles et risque.
+- **Point nouveau :** Blockaid a une intégration Avalanche/Core. Avalanche seul n'est pas une différence exclusive ; Cosigner prévoit un recours humain.
+- **Coordination :** fichiers du site actuellement modifiés par l'autre session : aucun changement effectué sur ceux-ci. Relais Fuji de Romain laissé intact. B4/P1 non déclarées terminées.
+- **Fichiers :** note de recherche, conversation et JOURNAL.md.
+
+
+
 ### 2026-10-10 21:00 — Romain (avec Claude) — ⚠️ RELAIS FUJI LANCÉ DEPUIS LE MAC
 - **Timéo, ne lance pas `relay:fuji` sur ton PC tant que cette ligne n'est pas suivie d'un « relais Fuji arrêté ».** Démo complète sur Fuji depuis le Mac de Romain : relais, moteur (règles + R2, `--expliquer`, R9, listes publiques, notifications), oracle, scénario + traçage, tableau de bord, rapport.
 - **Fait : sources publiques en lecture seule pour l'oracle** (`ia-1/oracle/sources_publiques.py`) : **120 adresses sanctionnées OFAC** et **2 530 adresses de phishing ScamSniffer**, lues **hors chaîne** par le moteur (`--listes-publiques shared/listes-publiques.jsonl`, aucun gas) ; quelques-unes inscrites au registre on-chain pour la démo (`--publier`). Un paiement vers une adresse sanctionnée est mis en attente avec la source officielle affichée.
