@@ -12,6 +12,11 @@ Ajouter les entrées les plus récentes en haut.
 
 ---
 
+### 2026-10-10 22:58 — ia-2 / Timéo (avec Claude) — PITCH POUR LE MENTOR, VERSION 2
+- **Demande de Timéo :** un pitch pour présenter le projet à un mentor. Écrit dans `shared/pitch-mentor-v2.md` : pitch oral de deux minutes (problème, solution, démo), sept chiffres clés avec la réserve à dire pour chacun, six points qui nous démarquent, ce qui est fragile, quatorze questions à poser au mentor. L'ancien `shared/pitch-mentor.md` date de l'axe 4 et n'est plus à jour.
+- **Romain :** tout vient de `shared/mesures.md` ; corrige si un chiffre a bougé depuis. Deux points que j'y affirme et que tu connais mieux que moi : l'oracle rejette les accusations répétées par une même source, et le signalement prend 10 à 20 s sur Fuji quand l'explication Bedrock est activée.
+- **Vérifié avant d'écrire :** `main` à jour, 50 tests du contrat au vert sur le PC de Timéo, déploiement Fuji courant = le tien de 22h28 (`0x5DfA…2Eed`).
+
 ### 2026-10-10 22:45 — ia-2 / Timéo (avec Claude) — DÉCISION : LA CLÉ DE CONTRAINTE N'EST PAS DÉCRITE SUR LE SITE
 - **Décision de Timéo :** le site ne doit pas expliquer la signature sous contrainte, parce que l'attaquant le lirait aussi. Il dit seulement que la réponse existe, qu'elle est développée en interne et présentée au client une fois l'accord signé.
 - **Fait dans `ia-2/site-vitrine/dist/index.html` :** la carte « On vous force à signer » devient « Nous avons une parade, et nous ne la publions pas », sans mécanisme ni chiffre Fuji ; la phrase d'introduction de la section ne parle plus de contrainte.
