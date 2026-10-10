@@ -31,8 +31,11 @@ ADRESSE = re.compile(r"0x[a-fA-F0-9]{40}\b")
 DUREE_SIGNALEMENT_S = 30 * 86400  # un signalement expire au bout de 30 jours
 CONFIANCE_MIN = 0.6
 CONFIANCE_HOLD = 0.8
-MODELES_REPLI = ["us.anthropic.claude-sonnet-4-5-20250929-v1:0", "us.anthropic.claude-opus-4-5-20251101-v1:0",
-                 "us.anthropic.claude-sonnet-5-5", "us.anthropic.claude-opus-5-5"]
+# Ordre de préférence. Consigne de l'équipe : Opus 5.5, puis Fable 5.1 ; JAMAIS de Sonnet.
+# Les deux premiers sont bloqués sur le compte de l'événement (accord Marketplace non disponible) : repli sur Opus 4.8.
+MODELES_REPLI = ["us.anthropic.claude-opus-5-5", "global.anthropic.claude-opus-5-5",
+                 "us.anthropic.claude-fable-5-1", "global.anthropic.claude-fable-5-1",
+                 "us.anthropic.claude-opus-4-8", "us.anthropic.claude-opus-4-5-20251101-v1:0"]
 CATEGORIES = ["scam_report", "phishing", "impersonation", "rug_pull", "sanctions", "other"]
 
 OUTIL = {
@@ -105,19 +108,28 @@ def analyser_bedrock(texte: str, adresses: list[str]) -> list[dict]:
     client = session.client("bedrock-runtime")
     msg = f"Adresses à analyser : {', '.join(adresses)}\n\n<page>\n{texte[:20000]}\n</page>"
     # Le modèle préféré d'abord, puis des replis : l'accès aux modèles du compte de l'événement varie.
-    modeles = [m for m in [os.getenv("BEDROCK_MODEL_ID")] + MODELES_REPLI if m]
+    modeles = [m for m in [os.getenv("BEDROCK_MODEL_ID")] + MODELES_REPLI if m and "sonnet" not in m.lower()]
+    def appel(modele, reglages):
+        return client.converse(
+            modelId=modele,
+            system=[{"text": CONSIGNE}],
+            messages=[{"role": "user", "content": [{"text": msg}]}],
+            toolConfig={"tools": [OUTIL], "toolChoice": {"tool": {"name": "rapporter_adresses"}}},
+            inferenceConfig=reglages,
+        )
+
     for modele in dict.fromkeys(modeles):
         try:
-            r = client.converse(
-                modelId=modele,
-                system=[{"text": CONSIGNE}],
-                messages=[{"role": "user", "content": [{"text": msg}]}],
-                toolConfig={"tools": [OUTIL], "toolChoice": {"tool": {"name": "rapporter_adresses"}}},
-                inferenceConfig={"maxTokens": 2000, "temperature": 0},
-            )
+            try:
+                r = appel(modele, {"maxTokens": 2000, "temperature": 0})
+            except client.exceptions.ValidationException as err:
+                if "temperature" not in str(err):
+                    raise
+                r = appel(modele, {"maxTokens": 2000})  # les modèles récents refusent le réglage de température
             analyser_bedrock.modele = modele
             break
-        except client.exceptions.AccessDeniedException:
+        except (client.exceptions.AccessDeniedException, client.exceptions.ValidationException) as err:
+            analyser_bedrock.erreurs = getattr(analyser_bedrock, "erreurs", {}) | {modele: str(err)[:120]}
             continue
     else:
         raise RuntimeError(f"aucun modèle Bedrock accessible parmi {modeles}")

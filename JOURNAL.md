@@ -12,6 +12,11 @@ Ajouter les entrées les plus récentes en haut.
 
 ---
 
+### 2026-10-10 17:19 — Romain (avec Claude) — CONSIGNE MODÈLES
+- **Décision de Romain : utiliser Opus 5.5, ou Fable 5.1 si besoin. Ne jamais utiliser Sonnet.**
+- **Blocage :** sur le compte de l'événement, Opus 5.5 et Fable 5.1 sont « autorisés » mais leur accord Marketplace est `NOT_AVAILABLE` (marketplace privé des organisateurs). Demande à faire aux organisateurs / au mentor AWS. **Opus 4.8 fonctionne** : c'est le repli actuel de l'oracle (6/6 sur le corpus). Détail : `shared/aws-bedrock.md`.
+- **Timéo :** merci d'appliquer la même règle dans ton code (pas de Sonnet) et de vérifier si ton Opus 5.5 par clé d'API marche encore.
+
 ### 2026-10-10 17:13 — ia-2 / Timéo (avec Claude)
 - **Fait (T3) :** relais `ia-2/scripts/relay.js` (`npm run relay:local`), déploiement local (`npm run deploy:local`) et scénario de démo en direct (`npm run scenario:local`). Mode d'emploi en quatre terminaux dans `ia-2/README.md`.
 - **Testé de bout en bout sur la chaîne locale, avec un faux moteur de score à la place du tien :** paiement normal exécuté ; trois virements frauduleux de 95 000 mUSD signalés `hold` **2 secondes** après leur proposition, puis bloqués (2 signatures sur 3 exigées) ; adresse inscrite au registre depuis `flags.jsonl` ; gel et annulation par un signataire. 0 mUSD sorti sur 280 500 tentés.

@@ -43,3 +43,16 @@ Timéo a reçu une **clé d'API Bedrock de courte durée** (elle commence par `b
 
 ## ⚠️ 17:07 — Les modèles 5.5 sont refusés chez Romain aussi
 Depuis environ 17h, `claude-sonnet-5-5` et `claude-opus-5-5` renvoient `AccessDeniedException` (« private marketplace eligibility ») avec le profil de Romain. **`us.anthropic.claude-sonnet-4-5-20250929-v1:0` fonctionne.** L'oracle (`ia-1/oracle/oracle.py`) essaie `BEDROCK_MODEL_ID`, puis bascule tout seul sur une liste de repli. **Timéo : vérifie si ton Opus 5.5 marche encore.**
+
+## 17:19 — Consigne de l'équipe : Opus 5.5, ou Fable 5.1. **Jamais de Sonnet.**
+Diagnostic avec `aws bedrock get-foundation-model-availability` (profil de Romain) :
+
+| Modèle | Autorisé | Accord Marketplace | Appel |
+|---|---|---|---|
+| `anthropic.claude-opus-5-5` | oui | **NOT_AVAILABLE** | refusé (« private marketplace eligibility ») |
+| `anthropic.claude-fable-5-1` | oui | **NOT_AVAILABLE** | refusé |
+| `anthropic.claude-opus-4-8` | oui | AVAILABLE | ✅ fonctionne (6/6 sur le corpus de l'oracle) |
+
+→ Le compte de l'événement ne peut pas accepter l'accord commercial d'Opus 5.5 / Fable 5.1 : c'est un réglage du **marketplace privé des organisateurs**, que notre rôle `WSParticipantRole` ne peut pas modifier. **À demander aux organisateurs / au mentor AWS.**
+→ En attendant, le code essaie dans l'ordre : Opus 5.5 → Fable 5.1 → **Opus 4.8** → Opus 4.5. Sonnet est exclu même s'il est indiqué dans `BEDROCK_MODEL_ID`. `.env` : `BEDROCK_MODEL_ID=us.anthropic.claude-opus-5-5`.
+→ Les modèles récents refusent `temperature` : le code réessaie sans.
