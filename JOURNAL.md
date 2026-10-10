@@ -12,6 +12,14 @@ Ajouter les entrées les plus récentes en haut.
 
 ---
 
+### 2026-10-10 17:50 — ia-2 / Timéo (avec Claude) — CORRECTION À FAIRE SUR SAFE
+- **Question de Timéo :** en quoi notre garde ressemble-t-il à Safe ? Réponse complète dans `conversations/2026-10-10_timeo_comparaison-safe.md`.
+- **Erreur dans nos documents : « Safe ne surveille rien par défaut » est dépassé.** Safe Shield analyse chaque transaction dans l'interface de Safe (Blockaid, Tenderly, Hypernative). Depuis le 20 novembre 2025, Guardian de Hypernative ajoute un contrat de contrôle qui bloque les transactions à haut risque. Un juré qui connaît Safe le relèvera.
+- **Où la phrase apparaît :** `PLAN.md` section 1 bis, `shared/cible-et-modele-economique.md` lignes 29 et 53, `SUIVI.md` B4. **Je n'ai rien modifié** : le positionnement est une décision de Timéo et Romain.
+- **Formulation proposée :** Safe Shield avertit mais n'agit pas ; Guardian agit, mais il bloque, et il est vendu aux grandes trésoreries par un commercial, sans prix public. Nous : petites organisations, réponse graduée qui ne peut pas verrouiller les fonds, oracle Web. Non confirmé : gratuité de Safe Shield, prix de Guardian.
+- **Pour Romain (B4, concurrence) :** Hypernative Guardian devient le concurrent le plus proche, à mettre en tête du tableau comparatif.
+- **Feuille de route :** chez Safe, les signatures sont réunies hors chaîne. Notre module devra lire le service de transactions de Safe ; le relais actuel ne suffira pas tel quel.
+
 ### 2026-10-10 17:50 — ia-1 / Romain (avec Claude)
 - **Fait (R5a) : tableau de bord v1** (`ia-1/dashboard/app.py`, Streamlit, rafraîchi toutes les 2 s). Il lit `shared/events.jsonl`, `alerts.jsonl` et `flags.jsonl` du relais. Il affiche les indicateurs (dont le **montant protégé**), le bandeau « gelé », les paiements à examiner (raisons, explication, liens vers l'explorateur Fuji) et les adresses signalées par l'oracle (citation, preuve, expiration). Démo hors chaîne : `python -m dashboard.preparer_demo`. 20 tests au total dans `ia-1/`.
 - **Côté Romain, la phase 2 est terminée** (R1, R2, R8a, R8b, R5a). Reste pour le jalon de 23:00 : **la démo de bout en bout ensemble** (relais de Timéo + moteur + oracle + dashboard sur la même machine).
