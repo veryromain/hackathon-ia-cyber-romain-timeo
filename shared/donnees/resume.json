@@ -6,13 +6,16 @@
     "test": 777,
     "fraud": 4242,
     "holdout": 31337,
-    "holdoutFraud": 9091
+    "holdoutFraud": 9091,
+    "final": 4141,
+    "finalFraud": 6262
   },
   "period": {
     "start": "2026-05-31T22:00:00Z",
     "train_days": 60,
     "test_days": 30,
     "holdout_days": 30,
+    "final_days": 26,
     "timezone": "Europe/Paris (UTC+2)"
   },
   "contracts": {
@@ -88,12 +91,38 @@
       "flagged_address": 1
     }
   },
+  "final": {
+    "events": 1253,
+    "payments": 274,
+    "fraud_payments": 40,
+    "fraud_episodes": 15,
+    "by_scenario": {
+      "recurring_supplier": 205,
+      "trust_building": 6,
+      "new_supplier": 7,
+      "legit_month_end_batch": 8,
+      "legit_urgent_memo": 3,
+      "owner_swap_then_drain": 8,
+      "fixed_charge": 2,
+      "structuring": 13,
+      "legit_large": 2,
+      "weekend_single": 2,
+      "legit_weekend_emergency": 2,
+      "known_recipient_overpay": 2,
+      "legit_off_hours": 3,
+      "memo_prompt_injection": 2,
+      "tricked_signers_burst": 5,
+      "legit_big_new_supplier": 2,
+      "invoice_redirect": 1,
+      "flagged_address": 1
+    }
+  },
   "address_book_size": 42,
   "stats": {
     "reverted": 0,
-    "blockedFraud": 38,
-    "executedFraud": 55,
-    "executedNormal": 786,
-    "extraApprovals": 55
+    "blockedFraud": 47,
+    "executedFraud": 86,
+    "executedNormal": 1020,
+    "extraApprovals": 104
   }
 }

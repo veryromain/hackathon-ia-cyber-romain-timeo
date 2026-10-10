@@ -1,0 +1,13 @@
+{"proposal_id":940,"label":"normal","scenario":"key_rotation"}
+{"proposal_id":954,"label":"fraud","scenario":"owner_swap_then_drain","episode":"E31"}
+{"proposal_id":960,"label":"normal","scenario":"key_recovery"}
+{"proposal_id":1013,"label":"normal","scenario":"key_rotation"}
+{"proposal_id":1035,"label":"normal","scenario":"key_rotation"}
+{"proposal_id":1045,"label":"normal","scenario":"key_rotation"}
+{"proposal_id":1056,"label":"normal","scenario":"key_rotation"}
+{"proposal_id":1089,"label":"normal","scenario":"key_rotation"}
+{"proposal_id":1116,"label":"fraud","scenario":"owner_swap_then_drain","episode":"E32"}
+{"proposal_id":1122,"label":"normal","scenario":"key_recovery"}
+{"proposal_id":1156,"label":"normal","scenario":"key_rotation"}
+{"proposal_id":1190,"label":"normal","scenario":"key_rotation"}
+{"proposal_id":1205,"label":"normal","scenario":"key_rotation"}
