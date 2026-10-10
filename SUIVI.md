@@ -4,7 +4,7 @@
 > Légende : ✅ fait · 🔄 en cours · ⬜ à faire · ✂️ coupé (manque de temps)
 > Détail du projet : [`PLAN.md`](PLAN.md) · Historique : [`JOURNAL.md`](JOURNAL.md) · Brief : [`CONTEXTE.md`](CONTEXTE.md)
 
-**Dernière mise à jour :** 2026-10-10 19:49, par Claude (Romain) — R5b fait en local ; côté Romain, phases 1 à 4 terminées
+**Dernière mise à jour :** 2026-10-10 19:53, par Claude (Timéo) — le relais traite shared/actions.jsonl (boutons du tableau de bord), testé en local
 **Rendu (gel définitif) :** dim. 11/10 **12:00** · **Checkpoint :** sam. **18:30** · **Pitch :** dim. 13:00
 
 ---

@@ -2,8 +2,11 @@
 //   chaîne  -> events.jsonl   : tout ce qu'émettent le portefeuille et le registre
 //   alerts.jsonl -> chaîne    : le moniteur signale le paiement (flagRisk)
 //   flags.jsonl  -> chaîne    : l'oracle inscrit ou retire une adresse du registre
-// Les trois fichiers sont dans shared/ par défaut (RELAY_DIR pour changer).
-// Usage : npm run relay:local
+//   actions.jsonl -> chaîne   : un signataire agit depuis le tableau de bord (approuver, annuler, geler,
+//                               dégeler, exécuter) ; le résultat est écrit dans actions-resultats.jsonl
+// Formats : shared/format-evenements.md et shared/format-actions.md.
+// Les fichiers sont dans shared/ par défaut (RELAY_DIR pour changer).
+// Usage : npm run relay:local   ou   npm run relay:fuji
 const fs = require("fs");
 const path = require("path");
 const hre = require("hardhat");
@@ -12,9 +15,20 @@ const { createNormalizer, LEVELS } = require("../lib/normalize");
 
 const DIR = process.env.RELAY_DIR ? path.resolve(process.env.RELAY_DIR) : path.join(__dirname, "..", "..", "shared");
 const POLL_MS = Number(process.env.RELAY_POLL_MS || 1000);
-const FILES = { events: path.join(DIR, "events.jsonl"), alerts: path.join(DIR, "alerts.jsonl"), flags: path.join(DIR, "flags.jsonl") };
+const FILES = {
+  events: path.join(DIR, "events.jsonl"), alerts: path.join(DIR, "alerts.jsonl"), flags: path.join(DIR, "flags.jsonl"),
+  actions: path.join(DIR, "actions.jsonl"), results: path.join(DIR, "actions-resultats.jsonl"),
+};
 const clock = () => new Date().toLocaleTimeString("fr-FR");
 const short = (text) => String(text).split("\n")[0].slice(0, 160);
+
+/// Nom de l'erreur du contrat quand il y en a une (« NotEnoughApprovals(2, 3) »), sinon le message abrégé.
+function describeError(error) {
+  if (error && error.revert && error.revert.name) return `${error.revert.name}(${[...error.revert.args].join(", ")})`;
+  const message = String((error && (error.shortMessage || error.message)) || error);
+  const custom = message.match(/custom error '([^']+)'/);
+  return custom ? custom[1] : short(message);
+}
 
 /// Lit les lignes complètes ajoutées à un fichier depuis le dernier passage.
 function makeTail(file, { fromEnd = false } = {}) {
@@ -50,11 +64,13 @@ async function main() {
 
   fs.mkdirSync(DIR, { recursive: true });
   fs.writeFileSync(FILES.events, ""); // reconstruit depuis le déploiement à chaque démarrage
-  for (const file of [FILES.alerts, FILES.flags]) if (!fs.existsSync(file)) fs.writeFileSync(file, "");
-  // Les alertes visent un numéro de paiement : celles d'une session précédente ne valent plus rien, on les saute.
-  // Les signalements d'adresses, eux, restent valables d'une session à l'autre : on les rejoue tous.
+  for (const file of [FILES.alerts, FILES.flags, FILES.actions, FILES.results]) if (!fs.existsSync(file)) fs.writeFileSync(file, "");
+  // Les alertes et les actions visent un numéro de paiement : celles d'une session précédente ne valent plus rien,
+  // on les saute. Les signalements d'adresses, eux, restent valables d'une session à l'autre : on les rejoue tous.
   const nextAlerts = makeTail(FILES.alerts, { fromEnd: true });
   const nextFlags = makeTail(FILES.flags);
+  const nextActions = makeTail(FILES.actions, { fromEnd: true });
+  const owners = new Set(info.owners.map((owner) => owner.toLowerCase()));
   let lastBlock = info.deploy_block - 1;
 
   console.log(`[${clock()}] Relais démarré sur ${info.network}, portefeuille ${info.wallet}`);
@@ -111,6 +127,41 @@ async function main() {
     }
   }
 
+  /// Une action de signataire venue du tableau de bord, signée avec la clé de test de ce signataire.
+  /// Le relais n'ajoute aucun pouvoir : le portefeuille refuse ce que ce signataire n'a pas le droit de faire.
+  async function runAction(action) {
+    const by = String(action.by || "").toLowerCase();
+    if (!owners.has(by)) throw new Error("unknown_signer");
+    const signed = wallet.connect(signerOf(action.by));
+    const needsId = ["approve", "cancel", "execute"].includes(action.action);
+    if (needsId && !Number.isInteger(action.payment_id)) throw new Error("invalid_payment_id");
+    switch (action.action) {
+      case "approve": return signed.approve(action.payment_id);
+      case "cancel": return signed.cancel(action.payment_id, String(action.reason || "annulé par un signataire"));
+      case "execute": return signed.execute(action.payment_id);
+      case "freeze": return signed.freeze(String(action.reason || "gel par un signataire"));
+      case "unfreeze": return signed.approveUnfreeze();
+      default: throw new Error("unknown_action");
+    }
+  }
+
+  async function pumpActions() {
+    for (const action of nextActions()) {
+      const label = `${action.action} ${action.payment_id ?? ""}`.trim();
+      let result;
+      try {
+        const receipt = await (await runAction(action)).wait();
+        result = { id: action.id, status: "done", tx_hash: receipt.hash, at: Math.floor(Date.now() / 1000) };
+        console.log(`[${clock()}] action -> ${label} par ${String(action.by).slice(0, 10)}… ${receipt.hash}`);
+      } catch (error) {
+        const message = describeError(error);
+        result = { id: action.id, status: "error", error: message, at: Math.floor(Date.now() / 1000) };
+        console.warn(`[${clock()}] action refusée (${label}) : ${message}`);
+      }
+      fs.appendFileSync(FILES.results, JSON.stringify(result) + "\n");
+    }
+  }
+
   let stopping = false;
   process.on("SIGINT", () => { stopping = true; });
   while (!stopping) {
@@ -118,6 +169,7 @@ async function main() {
       await pumpEvents();
       await pumpFlags();
       await pumpAlerts();
+      await pumpActions();
       await pumpEvents();
     } catch (error) {
       console.warn(`[${clock()}] erreur passagère : ${short(error.message)}`);

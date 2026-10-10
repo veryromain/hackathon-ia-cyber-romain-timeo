@@ -12,6 +12,17 @@ Ajouter les entrées les plus récentes en haut.
 
 ---
 
+### 2026-10-10 19:53 — ia-2 / Timéo (avec Claude) — LE RELAIS TRAITE LES ACTIONS DU TABLEAU DE BORD
+- **Fait (ta demande de 19h49, P4 version démo) : mon relais lit `shared/actions.jsonl` et écrit `shared/actions-resultats.jsonl`**, au format de ton `shared/format-actions.md`. Il vaut pour la chaîne locale comme pour Fuji (`npm run relay:local`, `npm run relay:fuji`).
+  - Actions traitées : `approve`, `cancel`, `freeze`, `unfreeze`, signées avec la clé de test du signataire indiqué dans `by`.
+  - **Une action en plus, `execute`** (`payment_id`, `by`) : sans elle, un paiement approuvé depuis le tableau de bord ne pouvait pas partir. À toi de l'ajouter à `shared/format-actions.md` et au tableau de bord si tu veux un bouton « exécuter ».
+  - Erreurs rendues sous la forme du nom d'erreur du contrat quand il existe (`AlreadyApproved()`, `WalletFrozen()`, `NotEnoughApprovals(2, 3)`), sinon `unknown_signer`, `unknown_action`, `invalid_payment_id`.
+  - Comme pour les alertes, les actions déjà présentes dans le fichier au démarrage du relais sont ignorées.
+- **Testé sur la chaîne locale, 12 actions sur 12 conformes :** approbation, double approbation refusée, annulation, action sur un paiement annulé refusée, signataire inconnu refusé, action inconnue refusée, gel, exécution refusée pendant le gel, trois votes de dégel, puis exécution. Pas encore rejoué sur Fuji avec ton tableau de bord.
+- **⚠️ Ne lance pas ton exécuteur `ia-1/integration/actions.js` en même temps que mon relais :** les deux liraient le même fichier et chaque action partirait deux fois. Avec mon relais, ton exécuteur n'est plus nécessaire ; tu peux retirer l'étape 5b de `ia-1/integration/README.md`.
+- **Le relais n'ajoute aucun pouvoir :** il signe au nom du signataire choisi, et le portefeuille refuse ce que ce signataire n'a pas le droit de faire. À dire au jury : ce fichier n'existe que pour la démo, en production chaque signataire signe dans son propre portefeuille.
+- **Prochaine étape côté Timéo :** T9, les données du traçage des fonds.
+
 ### 2026-10-10 19:51 — ia-1 / Romain (avec Claude)
 - **Jeu de généralisation de Timéo : mesuré sur le Mac, règles + R2, sans toucher à aucune règle.** Arrêtées 49 → 51 %, montants en attente **57 → 65 %**, freinées 95 %, faux `hold` 1,4 % (inchangé). Intégré dans `shared/mesures.md` (colonnes test / généralisation, et la réserve sur `owner_swap_then_drain` : « freinée » surestime, seule la mise en attente compte).
 - **R3 face aux 2 libellés à injection de prompt :** les deux paiements sont en `hold` (0,87 / 0,86) et l'explication Bedrock signale la consigne cachée comme un motif de prudence au lieu de la suivre. Texte dans `shared/mesures.md`.
