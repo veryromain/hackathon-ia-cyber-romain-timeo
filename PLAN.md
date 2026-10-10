@@ -108,7 +108,7 @@
 - Peu de scénarios d'attaque, donc la généralisation n'est pas prouvée. Il faut le présenter comme une limite connue.
 
 ### Réglementaires (questions probables du jury)
-- **Un protocole DeFi pur n'est pas soumis à DORA ni à MiCA.** Notre client cible doit donc être une **entité régulée exposée à la DeFi** : un prestataire crypto agréé MiCA qui place de la trésorerie dans des protocoles, une fintech, ou un protocole avec une façade institutionnelle. À clarifier avec le mentor.
+- **Un protocole DeFi pur n'est pas soumis à DORA ni à MiCA.** Notre client cible doit donc être une **entité régulée exposée à la DeFi**. → **Choix de cadrage :** la démo met en scène un **prestataire crypto agréé MiCA fictif** (nom inventé, pas une vraie entreprise) qui propose à ses clients un produit « Earn » reposant sur notre coffre on-chain. Pour lui, le contrat est un actif TIC critique : un exploit est un incident TIC qui relève de DORA. Les protocoles DeFi purs restent un second marché, avec la même détection et la même pause, mais un post-mortem public à la place du rapport DORA. À valider avec le mentor.
 - Les délais et seuils DORA sont **à vérifier dans les textes** (RTS sur la classification des incidents). De mémoire : notification initiale sous 4 h après la classification comme incident majeur, et au plus tard 24 h après sa détection ; rapport intermédiaire sous 72 h ; rapport final sous 1 mois.
 - **« Si votre modèle se trompe, qui est responsable ? »** Notre réponse :
   - Le modèle ne peut que **mettre en pause**, une action réversible et bornée. Il ne déplace jamais de fonds.
