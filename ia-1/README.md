@@ -69,5 +69,15 @@ Pages écrites par **gabarits** (pas par un LLM, pour ne pas faire juger un corp
 
 **Limite honnête :** des gabarits sont plus réguliers que le vrai Web (ironie, fautes, captures d'écran, langues variées). Le chiffre réel sera plus bas ; le corpus sert surtout à prouver que les pièges sont déjoués.
 
+## R5 — Tableau de bord des signataires (v1) ✅
+```bash
+.venv/bin/python -m dashboard.preparer_demo                                   # démo hors chaîne (exemple de Timéo + moteur + oracle)
+.venv/bin/streamlit run dashboard/app.py -- --dossier dashboard/demo
+.venv/bin/streamlit run dashboard/app.py                                      # en direct : lit ../shared/ (relais de Timéo)
+```
+Rafraîchi toutes les 2 s. Indicateurs (proposés, en attente, signature en plus, **montant protégé**, adresses signalées), bandeau « portefeuille gelé », **paiements à examiner** (niveau, score, explication en clair, raisons avec liens vers l'explorateur Fuji), **adresses signalées par l'oracle** (citation, source, hash de preuve, expiration), journal de la chaîne. Écrit pour des signataires non experts.
+Tests sans navigateur : `tests/test_dashboard.py` (AppTest de Streamlit).
+**v2 à faire (R5b) :** boutons « valider » / « annuler » (il faudra une commande dans le relais de Timéo), rapport d'incident (R4).
+
 ## À venir
 R8c croisement des sources · R3/R4 Bedrock · R5 dashboard · R6 évaluation · R9 traçage des fonds

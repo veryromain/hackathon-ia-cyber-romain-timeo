@@ -4,7 +4,7 @@
 > Légende : ✅ fait · 🔄 en cours · ⬜ à faire · ✂️ coupé (manque de temps)
 > Détail du projet : [`PLAN.md`](PLAN.md) · Historique : [`JOURNAL.md`](JOURNAL.md) · Brief : [`CONTEXTE.md`](CONTEXTE.md)
 
-**Dernière mise à jour :** 2026-10-10 17:48, par Claude (Romain) — R8b fait
+**Dernière mise à jour :** 2026-10-10 17:50, par Claude (Romain) — R5a fait ; côté Romain, la phase 2 est terminée (R2, R8b, R5a)
 **Rendu (gel définitif) :** dim. 11/10 **12:00** · **Checkpoint :** sam. **18:30** · **Pitch :** dim. 13:00
 
 ---
@@ -77,7 +77,7 @@ Un **garde antifraude pour les organisations qui gardent des millions dans un po
 | T4 | **Générateur de trafic normal** : salaires, fournisseurs habituels, nouveau fournisseur légitime, renouvellement de clé | Timéo | Node, graines aléatoires fixées | Fichier d'entraînement de plusieurs centaines de paiements | ✅ 17:25 (`shared/donnees/train.events.jsonl` : 362 paiements normaux sur 60 jours, + `carnet.json`) |
 | R2 | **Modèle d'anomalie** appris sur le trafic normal, combiné aux règles ; seuils des 3 niveaux réglés sur l'entraînement | Romain | scikit-learn (Isolation Forest) | Score et raisons sur chaque paiement | ✅ 17:46 (test de Timéo : fraudes arrêtées 63 → 69 %, montants en attente 89 → 94 %, faux `hold` inchangés à 0,9 %) |
 | R8b | **Corpus Web synthétique** (~30–50 pages) avec pièges : vraies accusations, mentions neutres, démentis, adresses de dons, **tentatives d'empoisonnement** | Romain | Pages HTML générées (Bedrock peut aider à les écrire) | Corpus séparé en « mise au point » et « test » | ✅ 17:48 (40 pages, 63 adresses ; test : **100 % de précision et de rappel, 0 fausse accusation** sur 7 injections et 9 démentis ; mots-clés : 67 % / 36 %) |
-| R5a | **Dashboard v1** : paiements en cours, score, raisons, état | Romain | Streamlit | Affiche les alertes en direct | ⬜ |
+| R5a | **Dashboard v1** : paiements en cours, score, raisons, état | Romain | Streamlit | Affiche les alertes en direct | ✅ 17:50 (v1 : indicateurs, paiements à examiner avec raisons et explications, adresses signalées par l'oracle, journal ; testé sans navigateur) |
 | T5 | **Scénarios de fraude** (au moins 5) : signataires trompés, clé volée, rafale, goutte-à-goutte sous le plafond, baisse du seuil avant l'attaque, **paiement vers une adresse signalée sur le Web** | Timéo | Node, **autres graines que l'entraînement** | Fichier de test étiqueté | ✅ 17:25 (`shared/donnees/test.*` : 54 paiements frauduleux, 15 épisodes, 6 variantes) |
 | ★ | 🎯 **23:00 — DÉMO DE BOUT EN BOUT EN LOCAL** : page Web → signalement → registre → paiement ralenti → alerte dans le dashboard | Les deux | Intégration | Ça tourne, même moche | ⬜ |
 
