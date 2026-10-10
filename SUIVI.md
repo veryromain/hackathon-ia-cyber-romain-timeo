@@ -4,7 +4,7 @@
 > Légende : ✅ fait · 🔄 en cours · ⬜ à faire · ✂️ coupé (manque de temps)
 > Détail du projet : [`PLAN.md`](PLAN.md) · Historique : [`JOURNAL.md`](JOURNAL.md) · Brief : [`CONTEXTE.md`](CONTEXTE.md)
 
-**Dernière mise à jour :** 2026-10-10 17:56, par Claude (Romain) — B4 corrigé (Safe Shield / Hypernative Guardian)
+**Dernière mise à jour :** 2026-10-10 18:08, par Claude (Romain) — phase 4 ter « produit commercial » (P1-P8), B4 élargi, uniquement Avalanche
 **Rendu (gel définitif) :** dim. 11/10 **12:00** · **Checkpoint :** sam. **18:30** · **Pitch :** dim. 13:00
 
 ---
@@ -120,11 +120,28 @@ Un **garde antifraude pour les organisations qui gardent des millions dans un po
 | B1 | **Bilan de la démo** : ce qui marche, ce qui ne marche pas ; à garder, enlever, modifier, améliorer | Les deux | Après la démo de bout en bout, à partir des mesures (R6) | Liste écrite dans `shared/bilan-demo.md` | ⬜ |
 | B2 | **Le problème est-il réel ?** Incidents récents chiffrés et sourcés (Drift, Bybit, fraudes au président en crypto, pertes des petites équipes), fréquence, coût moyen | Romain | Recherche web, sources citées, chiffres vérifiés | Slide « pourquoi ce problème » avec 3 à 5 faits sourcés | ⬜ |
 | B3 | **Étude de marché** : combien d'organisations ciblées, quelle trésorerie, où (Safe, Squads), taille de marché (TAM / SAM / SOM) avec la méthode de calcul | Romain | Recherche web, données Safe / DefiLlama / rapports publics | Estimation chiffrée **et sourcée**, avec ses hypothèses | ⬜ |
-| B4 | **Concurrence** : **Hypernative Guardian en tête** (contrat de contrôle sur Safe qui *bloque* les transactions à risque, vendu aux grandes trésoreries), Safe Shield (*avertit* sans agir, via Blockaid / Tenderly / Hypernative), Fireblocks, Forta… ce qu'ils font, leur prix, leur cible, **ce qu'on fait mieux** (voir `conversations/2026-10-10_timeo_comparaison-safe.md`) | Romain | Sites officiels, documentation, tableau comparatif | Tableau comparatif vérifié (pas « de mémoire ») | ⬜ |
+| B4 | **Concurrence (produit, rentabilité, mise sur le marché, site et application)** : **Hypernative Guardian en tête** (contrat de contrôle sur Safe qui *bloque* les transactions à risque, vendu aux grandes trésoreries), Safe Shield (*avertit* sans agir, via Blockaid / Tenderly / Hypernative), Fireblocks, Forta… ce qu'ils font, leur prix, leur cible, **ce qu'on fait mieux** (voir `conversations/2026-10-10_timeo_comparaison-safe.md`). **Étudier aussi comment ils abordent le marché : leur site vitrine, leur application, leur parcours d'inscription et d'abonnement, leurs notifications**, pour s'en inspirer en gardant notre différence : **uniquement Avalanche** | Romain | Sites officiels, documentation, tableau comparatif | Tableau comparatif vérifié (pas « de mémoire ») | ⬜ |
 | B5 | **Validation du besoin sur le terrain** : interroger 3 à 5 personnes concernées (équipes de protocoles présentes au hackathon, mentors Team1, Kryptosphère, KPMG) : « comment protégez-vous votre trésorerie ? avez-vous déjà eu peur ? paieriez-vous, combien ? » | Romain (+ Timéo s'il est disponible) | Mini-entretiens de 5 minutes, script de questions | Synthèse des réponses, avec citations anonymisées | ⬜ |
 | B6 | **Modèle économique et prix** : abonnement par portefeuille, palier selon la trésorerie, coûts réels (gas 0,002 $/alerte, Bedrock), marge, point mort | Romain | Tableur ; frais mesurés dans `shared/frais-gas.md` | Grille de prix + calcul de rentabilité simple | ⬜ |
 | B7 | **Mise sur le marché** : canal de distribution (module Safe / Squads, partenaires auditeurs), premiers clients visés, feuille de route 6 mois | Romain | — | Slide « go-to-market » | ⬜ |
 | B8 | **Décision go / ajustement** : le besoin est-il confirmé ? Faut-il ajuster la cible, l'offre ou le prix ? | Les deux | À partir de B1 à B7 | Décision écrite dans `JOURNAL.md` | ⬜ |
+
+## 6 ter. Phase 4 ter — Produit commercial : site vitrine et application client (une fois la démo assurée)
+
+> **Décision de Romain (10/10 vers 18:10).** Après la démo, l'outil devient un **vrai produit** : un **site Internet vitrine** qui vend l'outil, et une **application client** accessible après la souscription d'un abonnement.
+> **Positionnement :** **uniquement sur Avalanche (AVAX)**. S'inspirer de Safe, Hypernative ou Fireblocks (qui visent de plus grandes organisations) sans les copier.
+> **Ne démarre qu'une fois la démo bien assurée** (phases 2 à 4). Pendant le hackathon, viser au plus une **maquette** (page d'accueil + écran de l'application) pour le pitch ; le reste est la **feuille de route**.
+
+| # | Tâche | Qui | Comment / outil | Fini quand | Statut |
+|---|---|---|---|---|---|
+| P1 | **Benchmark des sites et applications concurrents** (Safe, Hypernative, Fireblocks, Blockaid…) : promesse, prix affiché, parcours d'inscription, écrans, notifications | Romain | Visite des sites, captures, tableau (lié à B4) | Fiche « ce qu'on reprend / ce qu'on fait autrement » | ⬜ |
+| P2 | **Site vitrine** : promesse, problème (Drift, Bybit), comment ça marche, preuves (chiffres de la démo), prix, « réserver une démo » | Romain | À choisir (site statique) | Page en ligne ou maquette | ⬜ |
+| P3 | **Espace client et abonnement** : création de compte, choix de l'offre, connexion du portefeuille Avalanche à protéger | Timéo (technique) + Romain (offre) | — | Parcours de bout en bout | ⬜ |
+| P4 | **Actions dans l'application** : boutons **valider / annuler / geler / contester un signalement** (signés par le portefeuille du signataire) | Timéo | Extension du relais (`shared/actions.jsonl`) puis signature dans le navigateur | Une alerte se traite sans quitter l'application | ⬜ |
+| P5 | **Notifications** : connecteur **e-mail** de l'entreprise, puis Slack / Telegram ; alerte immédiate des signataires en cas de mise en attente | Timéo + Romain | Service d'e-mail transactionnel | Un signataire est prévenu en moins d'une minute | ⬜ |
+| P6 | **Bouton « vraie / fausse alerte »** et **rapport mensuel** (alertes, faux positifs, temps de réaction, montants protégés) : la précision mesurée chez le client | Romain | Dashboard + stockage des retours | Rapport généré automatiquement | ⬜ |
+| P7 | **Mode observation** au démarrage d'un client (2 à 4 semaines : l'outil note sans agir) pour prouver son efficacité avant d'activer la friction | Romain + Timéo | Réglage du moniteur | Option activable | ⬜ |
+| P8 | **Réglages du client** : nombre de signatures en plus (+1 par défaut), durée de la mise en attente, seuils, liste de confiance | Timéo | Paramètres du contrat (`stepUpExtra`, `holdDelay`) | Écran de réglages | ⬜ |
 
 ## 7. Phase 5 — Livrables et pitch (dim. 09:00 → 12:00)
 

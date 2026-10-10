@@ -9,6 +9,10 @@
 
 **Un garde antifraude pour les organisations qui gardent des millions dans un portefeuille à plusieurs signataires sans équipe de sécurité, qui fait le pont entre le Web2 et le Web3.** Chaque paiement proposé est noté avant son exécution, à partir du comportement on-chain **et de ce qui se dit sur le Web à propos du destinataire**. S'il est suspect, le portefeuille exige des signatures supplémentaires ou le met en attente, et les signataires reçoivent une alerte expliquée en clair.
 
+## 1 ter. Positionnement et produit (décision de Romain, samedi vers 18h10)
+- **Uniquement Avalanche (AVAX)** : c'est notre différence face à Safe, Hypernative ou Fireblocks, qui sont multi-chaînes et visent de plus grandes organisations.
+- **Après la démo**, l'outil devient un produit : **site vitrine** + **application client sur abonnement** (actions, notifications e-mail, retour « vraie / fausse alerte », rapport mensuel). Détail : phase 4 ter de `SUIVI.md`.
+
 ## 1 bis. La cible (décision de Timéo, samedi 17h30)
 
 - **En priorité :** les **équipes de protocoles et les DAO** (dix à trente personnes, plusieurs millions tenus par quelques fondateurs, des audits de code mais rien qui surveille les signataires ; Drift entre dans ce cas), et les **startups crypto, fonds et fondations** (même profil).

@@ -12,6 +12,13 @@ Ajouter les entrées les plus récentes en haut.
 
 ---
 
+### 2026-10-10 18:08 — Romain (avec Claude) — VISION PRODUIT
+- **Décision de Romain : positionnement « uniquement Avalanche (AVAX) ».** ⚠️ **Timéo :** `shared/cible-et-modele-economique.md` (ligne 30) parle encore de « Squads sur Solana » comme canal de distribution, à retirer ou à passer en « hors périmètre ».
+- **Nouvelle phase 4 ter « Produit commercial » (P1-P8 dans `SUIVI.md`), une fois la démo assurée :** site vitrine, espace client avec abonnement, boutons valider / annuler / geler / contester, notifications (connecteur e-mail de l'entreprise, puis Slack / Telegram), bouton « vraie / fausse alerte » et rapport mensuel, mode observation au démarrage, réglages du client. S'inspirer de Safe / Hypernative / Fireblocks. Pendant le hackathon : au plus une maquette pour le pitch.
+- **B4 élargi :** étudier aussi comment les concurrents abordent le marché (site, application, inscription, prix affiché, notifications).
+- **Explication validée pour le pitch :** « La signature en plus casse la complicité (+1 signataire indépendant, réglage `stepUpExtra`) ; la mise en attente casse l'urgence (délai `holdDelay`, levé seulement à l'unanimité). »
+- **Timéo, petite incohérence :** `shared/echantillons/events.exemple.jsonl` indique `required_approvals: 4` pour un `hold`, alors que le contrat donne 3 (2 + `stepUpExtra` = 1). À aligner quand tu repasses dessus.
+
 ### 2026-10-10 17:56 — ia-1 / Romain (avec Claude)
 - **Jeu de données régénéré par Timéo : vérifié.** 20 tests passent ; évaluation et modèle R2 réentraîné : **chiffres strictement identiques** (règles seules : 63 % arrêtées, 89 % des montants, 0,9 % de faux `hold` ; avec R2 : 69 %, 94 %, 0,9 %). Ta vérification était juste.
 - **Corrigé à la demande de Timéo :** ligne B4 de `SUIVI.md` (Hypernative Guardian en tête des concurrents ; Safe Shield avertit sans agir) et `CONTEXTE.md` (choix final : track 1, axe 2, au lieu de « track 1 ou 2 »).
