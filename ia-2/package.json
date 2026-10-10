@@ -25,7 +25,9 @@
     "duress:local": "hardhat run scripts/duress-scenario.js --network localhost",
     "duress:fuji": "hardhat run scripts/duress-scenario.js --network fuji",
     "sanctions:local": "hardhat run scripts/sanctions-scenario.js --network localhost",
-    "sanctions:fuji": "hardhat run scripts/sanctions-scenario.js --network fuji"
+    "sanctions:fuji": "hardhat run scripts/sanctions-scenario.js --network fuji",
+    "drift:local": "hardhat run scripts/drift-scenario.js --network localhost",
+    "drift:fuji": "hardhat run scripts/drift-scenario.js --network fuji"
   },
   "devDependencies": {
     "@nomicfoundation/hardhat-toolbox": "^5.0.0",
