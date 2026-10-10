@@ -20,8 +20,14 @@ fi
 
 if ! git pull -q --rebase --autostash origin main 2>/dev/null; then
   # Conflits sur JOURNAL.md / SUIVI.md (écrits par les deux en même temps) : résolution automatique.
+  essais=0
   while [ -d .git/rebase-merge ] || [ -d .git/rebase-apply ]; do
+    essais=$((essais + 1))
     conflits=$(git diff --name-only --diff-filter=U)
+    if [ "$essais" -gt 20 ] || [ -z "$conflits" ]; then
+      git rebase --abort 2>/dev/null
+      echo '{"systemMessage": "auto-sync : rebase bloqué, à résoudre à la main"}'; exit 0
+    fi
     autres=$(echo "$conflits" | grep -vE '^(JOURNAL|SUIVI)\.md$' | grep -v '^$')
     if [ -n "$autres" ] || ! python3 scripts/resoudre-conflits.py $conflits; then
       git rebase --abort 2>/dev/null
