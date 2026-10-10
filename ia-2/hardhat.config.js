@@ -1,8 +1,9 @@
 require("@nomicfoundation/hardhat-toolbox");
 require("dotenv").config();
 
-// Les clés privées de test viennent de .env (ignoré par Git), jamais du dépôt.
-const fujiAccounts = [process.env.DEPLOYER_KEY, process.env.GUARDIAN_KEY, process.env.ATTACKER_KEY].filter(Boolean);
+// La phrase secrète de test vient de .env (ignoré par Git), jamais du dépôt.
+// Le déploiement a besoin de 8 comptes (déployeur, 5 signataires, moniteur, oracle) : ils sont dérivés d'une seule phrase.
+const fujiAccounts = process.env.FUJI_MNEMONIC ? { mnemonic: process.env.FUJI_MNEMONIC, count: 10 } : [];
 
 /** @type import('hardhat/config').HardhatUserConfig */
 module.exports = {

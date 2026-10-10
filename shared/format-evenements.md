@@ -110,12 +110,12 @@ Sortie de l'oracle Web2 → Web3 (section 4 bis de `PLAN.md`).
 {"payment_id": 4, "label": "fraud", "scenario": "tricked_signers_burst"}
 ```
 
-`label` vaut `normal` ou `fraud`. Les fraudes portent aussi `episode` (`E1`, `E2`…), qui regroupe les paiements d'une même attaque. Les vrais jeux de données sont dans `shared/donnees/` (voir son README). `scenario` nomme la variante (`payroll`, `recurring_supplier`, `new_supplier`, `tricked_signers_burst`, `stolen_key`, `slow_drip`, `threshold_lowered`…).
+`label` vaut `normal` ou `fraud`. Les fraudes portent aussi `episode` (`E1`, `E2`…), qui regroupe les paiements d'une même attaque. Les vrais jeux de données sont dans `shared/donnees/` (voir son README). `scenario` nomme la variante : `fixed_charge`, `recurring_supplier`, `new_supplier`, `legit_off_hours`, `legit_urgent_memo`, `legit_large` pour le trafic normal ; `tricked_signers_burst`, `threshold_lowered`, `slow_drip`, `flagged_address`, `stolen_key`, `invoice_redirect` pour les fraudes.
 
 ## 5. Les exemples de `shared/echantillons/`
 
 `events.exemple.jsonl` raconte une petite histoire en 31 événements :
-1. deux paiements normaux (salaires, fournisseur habituel) ;
+1. deux paiements normaux (rémunération des contributeurs, prestataire habituel) ;
 2. un nouveau fournisseur légitime, signalé `step_up`, payé avec une troisième signature : **un cas où il ne faut pas bloquer** ;
 3. une adresse inscrite au registre par l'oracle ;
 4. une fraude : deux signataires trompés proposent trois gros paiements en moins de deux minutes vers des adresses jamais vues, dont l'adresse signalée. Chacun est mis en attente en 4 secondes, un autre signataire gèle le portefeuille puis annule tout.

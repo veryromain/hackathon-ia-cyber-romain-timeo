@@ -1,5 +1,7 @@
 # DORA : ce qui est vérifié et ce qui ne l'est pas
 
+> **Statut au 10 octobre, 17h55 : secondaire.** Ces notes datent de l'axe 4, quand le client était une entité financière régulée. La cible décidée à 17h30 (équipes de protocoles, DAO, startups crypto, fonds, fondations) n'est en général pas soumise à DORA. Elles ne resservent que si un client régulé est évoqué devant le jury. Pour la slide conformité, voir la section 6 de `shared/cible-et-modele-economique.md`.
+
 Notes de Timéo (ia-2) pour le module conformité de Romain. Vérification faite par recherche web le 10 octobre 2026 vers 14h00. **Rien ici ne remplace la lecture des textes avant de coder les seuils.**
 
 ## Délais de notification (règlement délégué (UE) 2025/301, article 5)

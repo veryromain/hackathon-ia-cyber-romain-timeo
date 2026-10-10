@@ -12,6 +12,21 @@ Ajouter les entrées les plus récentes en haut.
 
 ---
 
+### 2026-10-10 17:53 — ia-2 / Timéo (avec Claude) — RELECTURE DE LA PARTIE DE TIMÉO
+- **Demande de Timéo :** relire toute sa partie pour qu'elle concorde avec la cible et les arguments de rentabilité décidés à 17h30. Fait ; détail ci-dessous.
+- **⚠️ Romain : le jeu de données `shared/donnees/` a été régénéré.** Il décrivait une entreprise classique (loyer, cotisations, TVA en stablecoin) ; il décrit maintenant l'équipe d'un protocole (rémunération des contributeurs, subventions, infrastructure RPC, audit de sécurité, primes de bug).
+  - **Ce qui change :** 323 libellés sur 618, les 42 adresses du carnet et des prestataires, les hash de transaction.
+  - **Ce qui ne change pas, vérifié ligne à ligne par un script :** le nombre et l'ordre des événements, les heures, les montants, les identifiants de paiement, les niveaux de risque, les étiquettes (fichiers identiques), et le résultat de ton filtre de mots d'urgence sur chaque libellé. Tes caractéristiques et tes mesures devraient donc être identiques.
+  - **À faire de ton côté :** réentraîner le modèle d'anomalie (tu l'avais demandé) et relancer l'évaluation pour confirmer. Dis-le dans le journal si un chiffre bouge : ce serait un défaut de ma vérification.
+  - Les fichiers d'exemple de `shared/echantillons/` ne changent que d'un libellé (« Salaires » devient « Rémunération des contributeurs ») ; adresses et hash identiques.
+- **Affirmation fausse corrigée :** « Safe ne surveille rien par défaut », relevée par l'autre session de Timéo (entrée de 17h50). Corrigée dans `shared/cible-et-modele-economique.md` (argument de rentabilité n° 2, section concurrence, sources) et `PLAN.md` section 1 bis. Nouvelle formulation, **à valider par Timéo et Romain** : Safe Shield avertit sans agir ; Guardian de Hypernative agit mais bloque et vise les grandes trésoreries ; nous visons les petites organisations avec une réponse graduée qui ne peut pas verrouiller les fonds. **Romain : la ligne B4 de `SUIVI.md` dit encore « Safe (gratuit, sans surveillance) », je te la laisse.**
+- **Autres alignements :** bandeau « secondaire » sur `shared/dora-notes.md` et bandeau de mise en contexte sur `shared/retour-mentor-team1.md` (écrits à l'époque de l'axe 4) ; `ia-2/README.md`, `shared/format-evenements.md`, `shared/frais-gas.md`, lignes T4 de `PLAN.md` et `SUIVI.md`.
+- **Deux corrections hors ciblage trouvées en relisant :**
+  - `.env.example` à la racine proposait encore Sonnet : remplacé par Opus 5.5, selon la consigne de 17h19.
+  - Fuji : `ia-2/.env.example` et `hardhat.config.js` attendaient trois clés de l'époque de l'axe 4 (dont une « clé d'attaquant ») alors que le déploiement demande huit comptes. Remplacé par une seule phrase secrète de test, `FUJI_MNEMONIC`.
+- **Rien à changer :** les contrats, les tests (20 passent), le relais, le scénario de démo, la mesure du gas.
+- **Non modifié, à voir par Romain :** `CONTEXTE.md` ligne 12 dit encore « Nos choix : Track 1 ou Track 2 ».
+
 ### 2026-10-10 17:50 — ia-2 / Timéo (avec Claude) — CORRECTION À FAIRE SUR SAFE
 - **Question de Timéo :** en quoi notre garde ressemble-t-il à Safe ? Réponse complète dans `conversations/2026-10-10_timeo_comparaison-safe.md`.
 - **Erreur dans nos documents : « Safe ne surveille rien par défaut » est dépassé.** Safe Shield analyse chaque transaction dans l'interface de Safe (Blockaid, Tenderly, Hypernative). Depuis le 20 novembre 2025, Guardian de Hypernative ajoute un contrat de contrôle qui bloque les transactions à haut risque. Un juré qui connaît Safe le relèvera.

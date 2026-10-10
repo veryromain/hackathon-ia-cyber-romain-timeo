@@ -1,6 +1,6 @@
 # ia-2 : le portefeuille gardé, le registre et les données de test
 
-Partie de Timéo dans le projet « Breaker » (voir `PLAN.md` et `SUIVI.md`) : les contrats sur la chaîne, le relais vers le moteur de score de `ia-1/`, et de quoi produire du trafic normal et des fraudes pour le mesurer.
+Partie de Timéo dans le projet « Breaker » (voir `PLAN.md` et `SUIVI.md`). **Client visé :** une organisation qui garde des millions dans un portefeuille à plusieurs signataires sans équipe de sécurité, par exemple l'équipe d'un protocole, une DAO, une startup crypto ou un fonds (`shared/cible-et-modele-economique.md`). Ce dossier contient : les contrats sur la chaîne, le relais vers le moteur de score de `ia-1/`, et de quoi produire du trafic normal et des fraudes pour le mesurer.
 
 ## État
 
@@ -93,4 +93,4 @@ Pour Fuji, copier `.env.example` en `.env` et y mettre les clés de portefeuille
 - Si trop de clés expirent en même temps, il ne reste plus assez de signataires actifs pour agir : le renouvellement doit être étalé.
 - Si tous les signataires sont trompés à la fois, l'unanimité fait sauter le délai d'attente.
 - Le moniteur doit rendre son verdict pendant le délai d'examen. S'il est en panne, seuls le plafond et le registre jouent.
-- En production, ces règles seraient un module greffé sur un portefeuille existant (un Safe, par exemple), pas un portefeuille écrit de zéro.
+- En production, ces règles seraient un module greffé sur le portefeuille que le client utilise déjà (Safe sur les chaînes EVM, Squads sur Solana), pas un portefeuille écrit de zéro. C'est aussi le canal de distribution prévu.

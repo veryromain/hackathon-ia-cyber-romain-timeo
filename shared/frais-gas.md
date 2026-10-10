@@ -20,7 +20,7 @@ Gas mesuré sur la chaîne locale par `cd ia-2 && npm run gas`, le 10 octobre à
 - **Notre coût par alerte est d'environ 0,002 $.** Un client dont on signalerait 100 paiements par mois nous coûterait 0,24 $ de gas.
 - **Lire la chaîne ne coûte rien** : le moniteur ne paie que lorsqu'il signale.
 - Un paiement complet (proposer, approuver, exécuter) coûte environ 0,024 $ au client, garde compris.
-- Le gas est donc négligeable dans le prix d'un abonnement, comme le disait le mentor Team1. Le prix du gas varie avec la charge du réseau : même multiplié par cent, une alerte resterait sous 0,25 $.
+- Le gas est donc négligeable dans le prix d'un abonnement, comme le disait le mentor Team1. Hypothèse de prix et cible : `shared/cible-et-modele-economique.md`. Le prix du gas varie avec la charge du réseau : même multiplié par cent, une alerte resterait sous 0,25 $.
 
 ## Limites de ces chiffres
 

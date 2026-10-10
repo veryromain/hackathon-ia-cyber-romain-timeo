@@ -4,7 +4,7 @@
 > Légende : ✅ fait · 🔄 en cours · ⬜ à faire · ✂️ coupé (manque de temps)
 > Détail du projet : [`PLAN.md`](PLAN.md) · Historique : [`JOURNAL.md`](JOURNAL.md) · Brief : [`CONTEXTE.md`](CONTEXTE.md)
 
-**Dernière mise à jour :** 2026-10-10 17:50, par Claude (Romain) — R5a fait ; côté Romain, la phase 2 est terminée (R2, R8b, R5a)
+**Dernière mise à jour :** 2026-10-10 17:53, par Claude (Timéo) — relecture de la partie de Timéo, jeu de données relibellé (voir JOURNAL)
 **Rendu (gel définitif) :** dim. 11/10 **12:00** · **Checkpoint :** sam. **18:30** · **Pitch :** dim. 13:00
 
 ---
@@ -74,7 +74,7 @@ Un **garde antifraude pour les organisations qui gardent des millions dans un po
 | T2 | `TreasuryGuard` terminé | Timéo | Hardhat | Tous les tests passent | ✅ 16:55 |
 | T8 | **Registre des adresses signalées** (dans le Guard ou un contrat `RiskRegistry`) : adresse → niveau, hash de la preuve, expiration | Timéo | Solidity | Un paiement vers une adresse signalée déclenche la friction | ✅ 16:55 (`RiskRegistry.sol`, branché au portefeuille, testé) |
 | T3 | **Relais** chaîne ↔ fichiers : écrit `events.jsonl`, lit `alerts.jsonl` et `flags.jsonl` et les envoie sur la chaîne | Timéo | Node + ethers | Une alerte de Romain change réellement le sort d'un paiement | ✅ 17:15 (`npm run relay:local` ; testé avec un faux moteur : fraude signalée en 2 s puis bloquée) |
-| T4 | **Générateur de trafic normal** : salaires, fournisseurs habituels, nouveau fournisseur légitime, renouvellement de clé | Timéo | Node, graines aléatoires fixées | Fichier d'entraînement de plusieurs centaines de paiements | ✅ 17:25 (`shared/donnees/train.events.jsonl` : 362 paiements normaux sur 60 jours, + `carnet.json`) |
+| T4 | **Générateur de trafic normal** d'une équipe de protocole : rémunération des contributeurs, prestataires habituels, nouveau prestataire légitime, renouvellement de clé | Timéo | Node, graines aléatoires fixées | Fichier d'entraînement de plusieurs centaines de paiements | ✅ 17:25 (`shared/donnees/train.events.jsonl` : 362 paiements normaux sur 60 jours, + `carnet.json`) |
 | R2 | **Modèle d'anomalie** appris sur le trafic normal, combiné aux règles ; seuils des 3 niveaux réglés sur l'entraînement | Romain | scikit-learn (Isolation Forest) | Score et raisons sur chaque paiement | ✅ 17:46 (test de Timéo : fraudes arrêtées 63 → 69 %, montants en attente 89 → 94 %, faux `hold` inchangés à 0,9 %) |
 | R8b | **Corpus Web synthétique** (~30–50 pages) avec pièges : vraies accusations, mentions neutres, démentis, adresses de dons, **tentatives d'empoisonnement** | Romain | Pages HTML générées (Bedrock peut aider à les écrire) | Corpus séparé en « mise au point » et « test » | ✅ 17:48 (40 pages, 63 adresses ; test : **100 % de précision et de rappel, 0 fausse accusation** sur 7 injections et 9 démentis ; mots-clés : 67 % / 36 %) |
 | R5a | **Dashboard v1** : paiements en cours, score, raisons, état | Romain | Streamlit | Affiche les alertes en direct | ✅ 17:50 (v1 : indicateurs, paiements à examiner avec raisons et explications, adresses signalées par l'oracle, journal ; testé sans navigateur) |
@@ -154,7 +154,7 @@ Un **garde antifraude pour les organisations qui gardent des millions dans un po
 | **Formats** | `shared/format-evenements.md` ne change plus sans prévenir l'autre |
 | **Bedrock** | Chacun ses identifiants dans `.env` (ignoré par Git). Modèle lu dans `BEDROCK_MODEL_ID`. **Le Wi-Fi de l'école bloque Bedrock : partage de connexion obligatoire** |
 | **Secrets** | Jamais de clé dans le repo ni dans un message. Wallets **de test** uniquement |
-| **Données** | 100 % synthétiques : pages Web, transactions, entreprise fictive « NovaTreasury » |
+| **Données** | 100 % synthétiques : pages Web, transactions, organisation fictive « NovaTreasury » (l'équipe d'un protocole) |
 | **En cas de retard** | On coupe dans le périmètre, jamais dans la démo. Ordre de coupe : expiration des clés → gel → plafond (contrat) ; réputation des sources → croisement (oracle) |
 
 ---

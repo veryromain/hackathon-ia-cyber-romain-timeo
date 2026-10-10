@@ -15,7 +15,7 @@
 - **Plus tard :** les entreprises classiques qui paient en stablecoins.
 - **Pas visées :** les grandes plateformes comme Bybit ou Coinbase, qui ont déjà leurs équipes et leurs outils. Bybit sert d'argument (1,46 Md$ perdus par des signataires trompés), pas de client.
 - **Les dApps restent clientes pour le portefeuille de leur équipe, plus pour leur contrat.**
-- **Pourquoi c'est rentable :** coût par client presque nul (0,002 $ de gas par alerte), trou de prix entre Safe (gratuit, sans surveillance) et Fireblocks (grands comptes), distribution par un module installé dans Safe ou Squads.
+- **Pourquoi c'est rentable :** coût par client presque nul (0,002 $ de gas par alerte), trou dans l'offre pour les petites organisations (Safe Shield avertit sans agir ; Guardian de Hypernative et Fireblocks visent les grands comptes), distribution par un module installé dans Safe ou Squads.
 
 Tout le détail, les chiffres et leurs sources : `shared/cible-et-modele-economique.md`.
 
@@ -142,7 +142,7 @@ Tout le détail, les chiffres et leurs sources : `shared/cible-et-modele-economi
 | T1 | **Format des événements et des alertes** dans `shared/format-evenements.md`, avec un fichier d'exemple écrit à la main dans `shared/echantillons/` | Romain peut lancer son moteur dessus |
 | T2 | **Contrat `TreasuryGuard`** : proposition, approbation et exécution à M signataires sur N ; plafond par période au-delà duquel il faut plus de signatures ; signalement de risque par le moniteur (signatures en plus, ou mise en attente) ; gel par un signataire ; expiration des clés | Les tests passent en local, dont le scénario de fraude avec et sans garde |
 | T3 | **Relais** : écrit les événements de la chaîne dans `events.jsonl`, lit `alerts.jsonl` et envoie le signalement sur la chaîne | Une alerte de Romain change réellement le sort d'un paiement |
-| T4 | **Générateur de trafic normal** : salaires, fournisseurs récurrents, nouveau fournisseur légitime, renouvellement de clé légitime | Un fichier d'entraînement de plusieurs centaines de paiements |
+| T4 | **Générateur de trafic normal** d'une équipe de protocole : rémunération des contributeurs, prestataires récurrents, nouveau prestataire légitime, renouvellement de clé légitime | Un fichier d'entraînement de plusieurs centaines de paiements |
 | T5 | **Scénarios de fraude**, au moins 5 variantes : signataires trompés, clé volée, rafale, goutte-à-goutte sous le plafond, baisse du seuil avant l'attaque | Un fichier de test étiqueté, produit avec d'autres graines que l'entraînement |
 | T6 | **Déploiement sur Fuji** et rejeu de la démo, avec les liens de l'explorateur | La démo tourne sur Fuji |
 | T7 | **Mesure du gas** des transactions du garde, pour le modèle économique | Tableau dans `shared/` |

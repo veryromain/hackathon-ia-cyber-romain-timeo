@@ -1,6 +1,8 @@
 # Jeux de données synthétiques (tâches T4 et T5)
 
-90 jours de trésorerie de l'entreprise fictive **NovaTreasury**, du 1er juin au 29 août 2026, joués sur la chaîne locale de Hardhat avec les vrais contrats `TreasuryGuard` et `RiskRegistry`. Les lignes sortent du même traducteur que le relais : le format est exactement celui de `shared/format-evenements.md`.
+90 jours de trésorerie de **NovaTreasury**, l'équipe fictive d'un protocole (une vingtaine de personnes, cinq signataires), du 1er juin au 29 août 2026, joués sur la chaîne locale de Hardhat avec les vrais contrats `TreasuryGuard` et `RiskRegistry`. Les lignes sortent du même traducteur que le relais : le format est exactement celui de `shared/format-evenements.md`.
+
+> **Version du 10 octobre, 17h55.** Le jeu a été relibellé pour coller à la cible décidée à 17h30 (`shared/cible-et-modele-economique.md`) : la première version décrivait une entreprise classique qui payait loyer, cotisations et TVA en stablecoin. **Seuls les libellés, les adresses et les hash ont changé.** Les paiements, montants, heures, identifiants et étiquettes sont identiques, ce qui a été vérifié ligne à ligne.
 
 Pour tout régénérer à l'identique : `cd ia-2 && npm run dataset` (15 secondes).
 
@@ -10,7 +12,7 @@ Pour tout régénérer à l'identique : `cd ia-2 && npm run dataset` (15 seconde
 |---|---|---|
 | `train.events.jsonl` | Jours 0 à 59, **trafic normal seul** : 1 576 événements, 362 paiements | Le moteur de score, pour apprendre les habitudes |
 | `test.events.jsonl` | Jours 60 à 89, trafic normal **et fraudes** : 1 151 événements, 256 paiements | Le moteur de score, pour être évalué |
-| `carnet.json` | Les 42 adresses que l'entreprise payait déjà avant le 1er juin | Le moteur de score |
+| `carnet.json` | Les 42 adresses que l'organisation payait déjà avant le 1er juin | Le moteur de score |
 | `train.labels.jsonl`, `test.labels.jsonl` | La vérité par paiement : `label`, `scenario`, et `episode` pour les fraudes | **L'évaluation uniquement** |
 | `config-labels.jsonl` | La vérité sur les propositions de configuration (renouvellements de clé, changements de seuil) | L'évaluation uniquement |
 | `resume.json` | Graines, adresses des contrats, réglages du portefeuille, comptages | Tout le monde |
@@ -19,7 +21,7 @@ Pour tout régénérer à l'identique : `cd ia-2 && npm run dataset` (15 seconde
 
 ## Le trafic normal
 
-- 38 fournisseurs récurrents et 4 charges fixes (salaires vers le 26, cotisations vers le 5, loyer le 1er, un acompte de TVA le 20 juillet).
+- 38 prestataires récurrents (contributeurs indépendants, hébergement, oracle de prix, primes de bug, conseil en sécurité, avocats…) et 4 charges fixes : rémunération des contributeurs vers le 26, tranche de subventions vers le 5, infrastructure RPC le 1er, solde d'un audit de sécurité le 20 juillet.
 - Propositions entre 8h30 et 18h30, heure de Paris, du lundi au vendredi. La période est entièrement en heure d'été (UTC+2).
 - Deuxième signature après 25 minutes en médiane, parfois plusieurs heures.
 - **Les clés des signataires sont renouvelées tous les 14 jours** : 33 remplacements de signataire sur la période. Un remplacement récent n'est donc pas, à lui seul, un signe de fraude.
@@ -52,11 +54,11 @@ La dernière colonne est la ligne de base : **ce qui sort quand seules les règl
 
 - **Aucune alerte du moniteur n'a été jouée pendant la simulation.** Les 49 événements `risk_flagged` du jeu viennent du portefeuille lui-même (`OVER_PERIOD_CAP`) ou du registre (`FLAGGED_ADDRESS`) : leur champ `by` n'est jamais l'adresse du moniteur.
 - Un paiement frauduleux peut rester en suspens sans jamais s'exécuter : les fraudeurs n'obtiennent pas la signature supplémentaire qu'exige le plafond.
-- 21 adresses sont inscrites au registre ; 18 n'ont aucun rapport avec l'entreprise.
+- 21 adresses sont inscrites au registre ; 18 n'ont aucun rapport avec l'organisation.
 - Les fraudes les plus dures à voir sont `invoice_redirect`, `stolen_key` et `slow_drip` : heures normales, libellés banals, montants habituels. Il est normal d'en manquer, et il faut le dire dans les mesures.
 
 ## Limites
 
 - Tout est fabriqué par nous : les chiffres obtenus sur ce jeu sont favorables par construction.
 - 21 % de fraudes, c'est beaucoup plus que dans la réalité. La précision mesurée ici serait plus basse sur un trafic réel, où les fraudes sont rares.
-- Une seule entreprise, un seul actif, trois mois : la généralisation à d'autres profils n'est pas démontrée.
+- Une seule organisation, un seul actif, trois mois : la généralisation à d'autres profils n'est pas démontrée.

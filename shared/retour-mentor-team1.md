@@ -1,5 +1,7 @@
 # Retour du mentor Team1 (Avalanche) et ce qu'on en fait
 
+> **À lire avec recul (note du 10 octobre, 17h55).** Les sections 2 et 4 ont été écrites quand le projet était un disjoncteur pour dApp de prêt (axe 4). Depuis, l'équipe est passée à l'axe 2 et a fixé sa cible : voir `PLAN.md` et `shared/cible-et-modele-economique.md`. **Restent valables :** le compte-rendu de la section 1, et quatre idées du mentor reprises dans le produit : ne jamais gérer les fonds des clients, alerter les signataires, plafonner les sorties par période, forcer le renouvellement des clés. **Ne sont plus d'actualité :** la pause d'un contrat de prêt, le cadrage DORA du client, et le tableau de gas de la section 3, remplacé par `shared/frais-gas.md`.
+
 **Source du pitch avec le mentor :** [Notes Granola](https://notes.granola.ai/t/7bf42777-eba3-48f0-a9ab-3780744381e7), lien transmis par Timéo le 10 octobre 2026.
 
 Échange du 10 octobre vers 16h00. Notes prises par Granola (titre « Avalanche security tool plan », partagées par Romain), relues et confrontées au plan par Claude côté Timéo à 16h20. La première partie rapporte ce qui a été dit ; la seconde est une analyse, à valider par Romain et Timéo.
