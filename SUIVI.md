@@ -4,7 +4,7 @@
 > Légende : ✅ fait · 🔄 en cours · ⬜ à faire · ✂️ coupé (manque de temps)
 > Détail du projet : [`PLAN.md`](PLAN.md) · Historique : [`JOURNAL.md`](JOURNAL.md) · Brief : [`CONTEXTE.md`](CONTEXTE.md)
 
-**Dernière mise à jour :** 2026-10-10 19:47, par Claude (Timéo) — T5+ fait : jeu holdout de 39 fraudes de formes nouvelles, première mesure dans shared/donnees/README.md
+**Dernière mise à jour :** 2026-10-10 19:49, par Claude (Romain) — R5b fait en local ; côté Romain, phases 1 à 4 terminées
 **Rendu (gel définitif) :** dim. 11/10 **12:00** · **Checkpoint :** sam. **18:30** · **Pitch :** dim. 13:00
 
 ---
@@ -91,7 +91,7 @@ Un **garde antifraude pour les organisations qui gardent des millions dans un po
 | R3 | **Explication de l'alerte** par Bedrock : quelques phrases pour un signataire, chaque fait relié à une transaction ; repli sur un texte à trous si Bedrock est injoignable | Romain | boto3, `BEDROCK_MODEL_ID` | Alerte lisible par un non-spécialiste | ✅ 19:25 (validé en direct avec Opus 4.8 : ≈ 6 s par alerte, explications fidèles ; 27 tests) |
 | R4 | **Rapport d'incident** par Bedrock : chronologie, montants, décisions, preuves | Romain | boto3 | Rapport généré sur la fraude de démo | ✅ 19:34 (faits par le code, synthèse Bedrock vérifiée ; rapport de la démo : 285 300 mUSD protégés ; 5 tests) |
 | R8c | **Oracle complet** : croisement de plusieurs sources + réputation des sources, expiration des signalements | Romain | Python | **Une tentative d'empoisonnement est rejetée** | ✅ 19:34 (réputation des sources, même source répétée = 1 ; **empoisonnement rejeté** en démo ; 4 tests) |
-| R5b | **Dashboard v2** : preuves Web (lien, citation), boutons « valider » / « annuler », chiffres clés | Romain | Streamlit | Suffit à filmer la démo | ⬜ |
+| R5b | **Dashboard v2** : preuves Web (lien, citation), boutons « valider » / « annuler », chiffres clés | Romain | Streamlit | Suffit à filmer la démo | ✅ 19:49 en local (boutons valider / annuler / geler / dégeler / contester, testés sur la chaîne ; 37 tests). **Fuji : Timéo doit lire `shared/actions.jsonl` dans son relais** (`shared/format-actions.md`) |
 | T5+ | Variantes de fraude supplémentaires | Timéo | Node | — | ✅ 19:47 (`shared/donnees/holdout.*` : 39 fraudes, 15 épisodes, 6 formes nouvelles ; règles seules : 49 % arrêtées, 95 % freinées ou arrêtées) |
 | T9 | **Traçage des fonds — données** (bonus, `PLAN.md` §4 ter) : événements `token_transfer` sortants des adresses signalées, scénario « arnaqueur → 3 mules + dusting d'un innocent », `shared/services-connus.json` | Timéo | Node + ethers | La mule est reliée à l'adresse signalée dans `events.jsonl` | ⬜ |
 | R9 | **Traçage des fonds — règle** (bonus) : ≥ 10 % des fonds d'une adresse signalée → `step_up` (`TAINTED_FUNDS`), 1 intermédiaire max, services exclus, dusting ignoré | Romain | Python | La mule est ralentie, l'innocent « dusté » ne l'est pas | ⬜ |
@@ -137,7 +137,7 @@ Un **garde antifraude pour les organisations qui gardent des millions dans un po
 | P1 | **Benchmark des sites et applications concurrents** (Safe, Hypernative, Fireblocks, Blockaid…) : promesse, prix affiché, parcours d'inscription, écrans, notifications | Romain | Visite des sites, captures, tableau (lié à B4) | Fiche « ce qu'on reprend / ce qu'on fait autrement » | ⬜ |
 | P2 | **Site vitrine** : promesse, problème (Drift, Bybit), comment ça marche, preuves (chiffres de la démo), prix, « réserver une démo » | Romain | À choisir (site statique) | Page en ligne ou maquette | ⬜ |
 | P3 | **Espace client et abonnement** : création de compte, choix de l'offre, connexion du portefeuille Avalanche à protéger | Timéo (technique) + Romain (offre) | — | Parcours de bout en bout | ⬜ |
-| P4 | **Actions dans l'application** : boutons **valider / annuler / geler / contester un signalement** (signés par le portefeuille du signataire) | Timéo | Extension du relais (`shared/actions.jsonl`) puis signature dans le navigateur | Une alerte se traite sans quitter l'application | ⬜ |
+| P4 | **Actions dans l'application** : boutons **valider / annuler / geler / contester un signalement** (signés par le portefeuille du signataire) | Timéo | Extension du relais (`shared/actions.jsonl`) puis signature dans le navigateur | Une alerte se traite sans quitter l'application | 🔄 19:49 (version démo faite en R5b : fichier d'actions + exécuteur ; reste la signature dans le navigateur) |
 | P5 | **Notifications** : connecteur **e-mail** de l'entreprise, puis Slack / Telegram ; alerte immédiate des signataires en cas de mise en attente | Timéo + Romain | Service d'e-mail transactionnel | Un signataire est prévenu en moins d'une minute | ⬜ |
 | P6 | **Bouton « vraie / fausse alerte »** et **rapport mensuel** (alertes, faux positifs, temps de réaction, montants protégés) : la précision mesurée chez le client | Romain | Dashboard + stockage des retours | Rapport généré automatiquement | ⬜ |
 | P7 | **Mode observation** au démarrage d'un client (2 à 4 semaines : l'outil note sans agir) pour prouver son efficacité avant d'activer la friction | Romain + Timéo | Réglage du moniteur | Option activable | ⬜ |

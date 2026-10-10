@@ -12,6 +12,10 @@ Ajouter les entrées les plus récentes en haut.
 
 ---
 
+### 2026-10-10 19:49 — ia-1 / Romain (avec Claude)
+- **Fait (R5b) : actions des signataires dans le tableau de bord.** Barre « Je suis… », boutons valider / annuler / geler / dégeler / contester, panneau d'état. Le dashboard n'a aucune clé : il écrit dans **`shared/actions.jsonl`** (format proposé dans **`shared/format-actions.md`**, nouveau fichier, sans toucher au tien), un exécuteur signe et répond dans `shared/actions-resultats.jsonl`. Contester = ligne `{"address", "remove": true}` dans `flags.jsonl`, que ton relais gère déjà. **Testé en direct en local** : annulation du paiement 4 par un signataire et retrait du signalement, tous deux visibles sur la chaîne.
+- **Timéo, pour Fuji (seule étape qui dépend de toi) :** ajouter à ton relais la lecture de `actions.jsonl` (approve / cancel / freeze / approveUnfreeze signés par `signerOf(by)`) et l'écriture de `actions-resultats.jsonl`. Mon exécuteur local `ia-1/integration/actions.js` (60 lignes) fait exactement ça, tu peux le reprendre tel quel.
+- **Côté Romain, les phases 1 à 4 sont terminées** (R1-R8, R5b en local). Prochaine étape : B1, bilan de la démo, à faire à deux.
 ### 2026-10-10 19:47 — ia-2 / Timéo (avec Claude) — T5+ : JEU DE GÉNÉRALISATION (FRAUDES DE FORMES NOUVELLES)
 - **Fait (T5+) : un troisième jeu de données, `shared/donnees/holdout.*`**, fait de formes de fraude que le moteur n'a jamais vues. 30 jours de plus (jours 90 à 119), 261 paiements dont **39 frauduleux en 15 épisodes**. Détail et tableau dans `shared/donnees/README.md`.
   - Six formes nouvelles : `owner_swap_then_drain` (remplacement d'un signataire par la clé d'un intrus, maquillé en renouvellement, puis vidage : la forme de Bybit), `structuring` (fractionnement vers des adresses toutes différentes), `trust_building` (deux petits paiements, puis le gros), `known_recipient_overpay` (bonne adresse, dix à vingt fois le montant), `weekend_single`, `memo_prompt_injection` (consigne cachée dans le libellé, visant Bedrock).

@@ -13,6 +13,8 @@ from pathlib import Path
 
 import pandas as pd
 import streamlit as st
+import time
+import uuid
 
 U = 10**18
 ICI = Path(__file__).resolve().parent
@@ -55,6 +57,37 @@ def lien_tx(h, chain):
     return f"[{h[:10]}…]({base}{h})" if base else f"`{h[:10]}…`"
 
 
+def deploiement(dossier: Path):
+    """Signataires du déploiement (ia-2/deployments/<réseau>.json) : pour choisir « je suis… » dans la démo."""
+    candidats = [Path(os.environ["BREAKER_DEPLOIEMENT"])] if os.getenv("BREAKER_DEPLOIEMENT") else \
+        [dossier.parents[0] / "ia-2" / "deployments" / n for n in ("localhost.json", "fuji.json")]
+    for f in candidats:
+        if f.exists():
+            try:
+                d = json.loads(f.read_text())
+                return {f"Signataire {i + 1} ({court(o)})": o for i, o in enumerate(d.get("owners", []))}
+            except (OSError, json.JSONDecodeError):
+                pass
+    return {}
+
+
+def ecrire_action(dossier: Path, **a):
+    a = {"id": f"act-{datetime.utcnow():%Y-%m-%dT%H:%M:%SZ}-{uuid.uuid4().hex[:4]}", "created_at": int(time.time()), **a}
+    with open(dossier / "actions.jsonl", "a", encoding="utf-8") as f:
+        f.write(json.dumps(a, ensure_ascii=False) + "\n")
+    return a["id"]
+
+
+def contester(dossier: Path, adresse: str):
+    with open(dossier / "flags.jsonl", "a", encoding="utf-8") as f:
+        f.write(json.dumps({"address": adresse, "remove": True}) + "\n")
+
+
+def etats_actions(dossier: Path):
+    res = {r["id"]: r for r in lire(dossier / "actions-resultats.jsonl")}
+    return [(a, res.get(a["id"])) for a in lire(dossier / "actions.jsonl")]
+
+
 def etat_paiements(events):
     pay, gel = {}, False
     for e in events:
@@ -77,13 +110,32 @@ def etat_paiements(events):
 
 st.set_page_config(page_title="Breaker — garde de trésorerie", page_icon="🛡️", layout="wide")
 DOSSIER = args().dossier
+SIGNATAIRES = deploiement(DOSSIER)
+with st.sidebar:
+    st.header("Je suis…")
+    MOI = st.selectbox("Signataire", list(SIGNATAIRES) or ["(aucun déploiement trouvé)"], label_visibility="collapsed")
+    MOI_ADR = SIGNATAIRES.get(MOI)
+    st.caption("Démo : les clics écrivent dans `shared/actions.jsonl`, un exécuteur signe avec la clé de test du signataire. "
+               "En production, vous signeriez avec votre propre portefeuille.")
+    st.divider()
+    if MOI_ADR:
+        motif = st.text_input("Motif", "Alerte du garde, vérification en cours")
+        c1, c2 = st.columns(2)
+        if c1.button("🧊 Geler", use_container_width=True):
+            ecrire_action(DOSSIER, action="freeze", by=MOI_ADR, reason=motif)
+            st.toast("Gel demandé")
+        if c2.button("🔓 Dégeler", use_container_width=True):
+            ecrire_action(DOSSIER, action="unfreeze", by=MOI_ADR)
+            st.toast("Dégel approuvé par vous")
 
 
 @st.fragment(run_every=2)
 def tableau():
     events = lire(DOSSIER / "events.jsonl")
     alertes = {a["payment_id"]: a for a in lire(DOSSIER / "alerts.jsonl")}
-    flags = [f for f in lire(DOSSIER / "flags.jsonl") if not f.get("remove")]
+    toutes = lire(DOSSIER / "flags.jsonl")
+    retirees = {f["address"] for f in toutes if f.get("remove")}
+    flags = [f for f in toutes if not f.get("remove") and f["address"] not in retirees]
     pay, gel = etat_paiements(events)
 
     st.title("🛡️ Breaker — garde antifraude de la trésorerie")
@@ -118,6 +170,14 @@ def tableau():
                 for r in a["reasons"]:
                     preuves = " ".join(lien_tx(h, p["chain"]) for h in r.get("evidence", [])[:3])
                     st.markdown(f"- `{r['code']}` — {r['detail']} {preuves}")
+                if MOI_ADR and p["état"] == "en cours":
+                    b1, b2, _ = st.columns([1, 1, 3])
+                    if b1.button("✅ Valider (signer)", key=f"ok{pid}", use_container_width=True):
+                        ecrire_action(DOSSIER, action="approve", payment_id=pid, by=MOI_ADR)
+                        st.toast(f"Signature demandée pour le paiement {pid}")
+                    if b2.button("🛑 Annuler", key=f"no{pid}", use_container_width=True):
+                        ecrire_action(DOSSIER, action="cancel", payment_id=pid, by=MOI_ADR, reason="Demande non confirmée par un autre canal")
+                        st.toast(f"Annulation demandée pour le paiement {pid}")
     with droite:
         st.subheader("🌐 Signalées sur le Web (oracle)")
         if not flags:
@@ -128,6 +188,18 @@ def tableau():
                 st.markdown(f"> {f.get('quote', '')}")
                 exp = datetime.fromtimestamp(f["expires_at"]).strftime("%d/%m/%Y") if f.get("expires_at") else "?"
                 st.caption(f"Source : {f.get('source_url', '?')} · preuve `{f.get('evidence_hash', '')[:14]}…` · expire le {exp}")
+                if st.button("⚖️ Contester ce signalement", key=f"ct{f['address']}"):
+                    contester(DOSSIER, f["address"])
+                    st.toast("Contestation envoyée : le signalement sera retiré du registre")
+
+    actions = etats_actions(DOSSIER)
+    if actions:
+        with st.expander(f"Actions des signataires ({len(actions)})", expanded=True):
+            for a, r in actions[::-1][:8]:
+                etat = "⏳ en attente" if not r else ("✔ fait " + lien_tx(r["tx_hash"], 43113 if DOSSIER.name != "demo" else None)
+                                                   if r["status"] == "done" else f"✖ {r.get('error', '')}")
+                st.markdown(f"- `{a['action']}` {('paiement ' + str(a['payment_id'])) if a.get('payment_id') is not None else ''} "
+                            f"par `{court(a.get('by', ''))}` — {etat}")
 
     with st.expander("Journal de la chaîne (derniers événements)"):
         if events:

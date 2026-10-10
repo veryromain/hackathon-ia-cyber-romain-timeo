@@ -16,6 +16,8 @@ cd ia-1 && .venv/bin/python -m score.moteur --events ../shared/events.jsonl --ou
   --carnet integration/carnet-local.json --modele modeles/anomalie.joblib --suivre --expliquer   # --expliquer : explications Bedrock (R3)
 # 5. tableau de bord → http://localhost:8599
 cd ia-1 && .venv/bin/streamlit run dashboard/app.py --server.port 8599
+# 5b. exécuteur d'actions (boutons du tableau de bord, R5b) — depuis ia-2
+cd ia-2 && npx hardhat run ../ia-1/integration/actions.js --network localhost
 # 6a. scénario de Timéo : paiement normal + fraude en rafale + réponse d'un signataire
 cd ia-2 && RESPOND=1 npm run scenario:local
 # 6b. Web2 → Web3 : l'oracle signale une adresse (partage de connexion pour Bedrock !), puis on tente de la payer

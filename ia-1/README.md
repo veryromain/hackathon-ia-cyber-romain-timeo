@@ -77,7 +77,7 @@ Pages écrites par **gabarits** (pas par un LLM, pour ne pas faire juger un corp
 ```
 Rafraîchi toutes les 2 s. Indicateurs (proposés, en attente, signature en plus, **montant protégé**, adresses signalées), bandeau « portefeuille gelé », **paiements à examiner** (niveau, score, explication en clair, raisons avec liens vers l'explorateur Fuji), **adresses signalées par l'oracle** (citation, source, hash de preuve, expiration), journal de la chaîne. Écrit pour des signataires non experts.
 Tests sans navigateur : `tests/test_dashboard.py` (AppTest de Streamlit).
-**v2 à faire (R5b) :** boutons « valider » / « annuler » (il faudra une commande dans le relais de Timéo), rapport d'incident (R4).
+**v2 (R5b) ✅ :** barre latérale « Je suis… » (signataire choisi parmi ceux du déploiement), boutons **✅ Valider / 🛑 Annuler** sur chaque paiement en cours, **🧊 Geler / 🔓 Dégeler**, **⚖️ Contester** un signalement, et un panneau « Actions des signataires » (en attente / fait avec lien / erreur). Le dashboard n'a aucune clé : un clic écrit dans `shared/actions.jsonl` (format : `shared/format-actions.md`), l'exécuteur signe. En local : `npx hardhat run ../ia-1/integration/actions.js --network localhost` (depuis `ia-2`). Sur Fuji : à intégrer dans le relais de Timéo. Contester écrit `{"address", "remove": true}` dans `flags.jsonl`, déjà géré par le relais. Testé en direct : annulation du paiement 4 et retrait du signalement, visibles sur la chaîne.
 
 ## R3 — Explication des alertes par Bedrock ✅
 ```bash
@@ -103,4 +103,4 @@ Une adresse n'est publiée dans `flags.jsonl` que si la **somme des réputations
 `--sans-croisement` pour l'ancien comportement. 4 tests.
 
 ## À venir
-R5b actions du dashboard · R6 évaluation finale · R9 traçage des fonds
+R9 traçage des fonds (bonus)
