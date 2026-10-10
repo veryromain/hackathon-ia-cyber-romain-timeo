@@ -12,6 +12,17 @@ Ajouter les entrées les plus récentes en haut.
 
 ---
 
+### 2026-10-10 18:57 — ia-2 / Timéo (avec Claude) — MOTEUR TESTÉ SUR LE PC DE TIMÉO, R2 BLOQUÉ PAR WINDOWS
+- **Fait :** ton moteur de score tourne sur le PC de Timéo (Windows 11), dans `ia-1/.venv`. Testé de bout en bout sur la chaîne locale avec mon relais et mon scénario (`RESPOND=1`) : paiement normal exécuté sans friction ; les 3 virements frauduleux mis en `hold` (score 0,88, `PAYMENT_FRAUD_PATTERN;BURST;NEW_RECIPIENT;URGENCY_MEMO;OFF_HOURS`) ; **0 mUSD sorti sur 280 500**.
+- **⚠️ Limite sur ce PC : le modèle d'anomalie R2 ne se charge pas.** Le contrôle d'application de Windows (Smart App Control, activé) bloque un fichier binaire de scikit-learn : `ImportError: DLL load failed while importing _radius_neighbors`. Je ne le désactive pas : c'est un réglage de sécurité de la machine de Timéo, et à ma connaissance il ne se réactive pas sans réinitialiser Windows. Conséquences :
+  - `pytest` ici : 19 tests passent, les 2 tests du modèle échouent pour cette raison, pas à cause du code.
+  - Le moteur est lancé **sans `--modele`** sur ce PC. Le scénario de démo n'en a pas besoin (0,88 par les règles).
+  - **Toutes les mesures avec le modèle R2 se font sur ton Mac.**
+- **Tes chiffres R1 confirmés de façon indépendante**, sur le jeu relibellé et sur une autre machine : fraudes arrêtées 63 %, freinées ou arrêtées 100 %, 2 285 715 mUSD mis en attente sur 2 565 065 (89 %), faux `hold` 0,9 % sur 564 paiements normaux.
+- **Sous Windows :** `.venv/Scripts/python.exe` au lieu de `.venv/bin/python`, et `PYTHONUTF8=1` devant la commande (sinon les accents des libellés font planter la lecture).
+- **Donc, pour Fuji :** démo sur le PC de Timéo avec les règles seules. Si tu tiens à montrer R2 sur Fuji, il faudrait lancer le relais sur ton Mac, donc y recopier la phrase secrète de test hors de Git : à décider entre vous deux, je ne la fais pas circuler.
+- **Toujours bloquant :** 0 AVAX sur le déployeur `0x4EcC7e01cdB900b0FD16f91dFC289CdBBe768564`.
+
 ### 2026-10-10 18:48 — ia-2 / Timéo (avec Claude) — T6 FUJI : PRÊT, EN ATTENTE DU FAUCET
 - **Fait :** tout est prêt pour Fuji, sauf l'argent. Phrase secrète de test créée dans `ia-2/.env` (ignoré par Git, jamais affichée), dix comptes dérivés, adresses publiques dans `ia-2/deployments/fuji-comptes.json`. Nouvelles commandes dans `ia-2/` : `npm run fuji:setup`, `fuji:fund`, `deploy:fuji`, `relay:fuji`, `scenario:fuji`.
 - **Bloquant : le déployeur `0x4EcC7e01cdB900b0FD16f91dFC289CdBBe768564` a 0 AVAX.** Timéo doit demander des AVAX de test au faucet pour cette adresse (compte Builder Hub, ou code de coupon à demander au mentor Team1). Ensuite `npm run fuji:fund` répartit vers les signataires, le moniteur et l'oracle, puis `npm run deploy:fuji`.

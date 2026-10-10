@@ -13,7 +13,7 @@ Partie de Timéo dans le projet « Breaker » (voir `PLAN.md` et `SUIVI.md`). **
 | T3 | Relais entre la chaîne et les fichiers JSON Lines | Fait, testé de bout en bout sur la chaîne locale avec un faux moteur de score |
 | T4 | Générateur de trafic normal | Fait : `shared/donnees/train.*`, 362 paiements sur 60 jours |
 | T5 | Scénarios de fraude | Fait : `shared/donnees/test.*`, 54 paiements frauduleux, 6 variantes ; scénario de démo en direct |
-| T6 | Déploiement sur Avalanche Fuji | À faire |
+| T6 | Déploiement sur Avalanche Fuji | Prêt : comptes de test et commandes en place. **En attente d'AVAX de test sur le déployeur** |
 
 ## Le portefeuille `TreasuryGuard` en bref
 
@@ -85,6 +85,32 @@ Sous PowerShell, une variable se passe ainsi : `$env:RESPOND = "1"; npm run scen
 Les trois fichiers vivants de `shared/` et `deployments/localhost.json` sont ignorés par Git.
 
 Pour Fuji, copier `.env.example` en `.env` et y mettre les clés de portefeuilles **de test**. `.env` est ignoré par Git.
+
+## Déploiement sur Avalanche Fuji (T6)
+
+**État au 10 octobre, 18h55 : rien n'est encore déployé sur Fuji.** Le déployeur `0x4EcC7e01cdB900b0FD16f91dFC289CdBBe768564` attend des AVAX de test.
+
+```bash
+cd ia-2
+npm run fuji:setup     # crée la phrase secrète de test dans ia-2/.env (une seule fois) et affiche les adresses
+#   -> demander des AVAX de test au faucet pour l'adresse du déployeur
+npm run fuji:fund      # répartit vers les 5 signataires, le moniteur et l'oracle
+npm run deploy:fuji    # déploie mUSD, le registre et le portefeuille ; écrit deployments/fuji.json
+npm run relay:fuji     # relais, comme en local
+npm run scenario:fuji  # scénario de démo, comme en local
+```
+
+- Les dix comptes de test et leur rôle sont dans `deployments/fuji-comptes.json` (adresses publiques seulement). Les comptes n° 8 et 9 sont les prestataires habituels : c'est le carnet d'adresses à donner au moteur de score.
+- La phrase secrète reste dans `ia-2/.env`, sur le PC de Timéo. Elle ne va ni dans Git ni dans un message.
+- Après le déploiement, les adresses des contrats et les liens Snowtrace seront ajoutés ici.
+
+### Où lancer la démo Fuji
+
+Sur le PC de Timéo, là où se trouve la phrase secrète. Le moteur de score de `ia-1/` y est installé (`ia-1/.venv`) et a été testé avec le relais sur la chaîne locale : paiement normal exécuté, trois virements frauduleux mis en attente, 0 mUSD sorti.
+
+**Limite sur ce PC : le modèle d'anomalie (R2) ne tourne pas.** Le contrôle d'application de Windows (Smart App Control) bloque un fichier de scikit-learn. Le moteur fonctionne avec ses règles seules, ce qui suffit au scénario de démo. Les mesures avec le modèle se font sur le Mac de Romain.
+
+Sous Windows, les commandes de `ia-1/README.md` s'écrivent avec `.venv/Scripts/python.exe` au lieu de `.venv/bin/python`, et avec la variable `PYTHONUTF8=1`.
 
 ## Limites connues
 

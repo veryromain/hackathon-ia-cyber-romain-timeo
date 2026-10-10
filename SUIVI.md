@@ -4,7 +4,7 @@
 > Légende : ✅ fait · 🔄 en cours · ⬜ à faire · ✂️ coupé (manque de temps)
 > Détail du projet : [`PLAN.md`](PLAN.md) · Historique : [`JOURNAL.md`](JOURNAL.md) · Brief : [`CONTEXTE.md`](CONTEXTE.md)
 
-**Dernière mise à jour :** 2026-10-10 18:48, par Claude (Timéo) — T6 prêt, en attente d'AVAX de test pour le déployeur
+**Dernière mise à jour :** 2026-10-10 18:57, par Claude (Timéo) — moteur de score testé sur le PC de Timéo (règles seules), Fuji en attente du faucet
 **Rendu (gel définitif) :** dim. 11/10 **12:00** · **Checkpoint :** sam. **18:30** · **Pitch :** dim. 13:00
 
 ---
