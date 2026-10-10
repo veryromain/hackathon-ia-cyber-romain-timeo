@@ -4,7 +4,7 @@
 > Légende : ✅ fait · 🔄 en cours · ⬜ à faire · ✂️ coupé (manque de temps)
 > Détail du projet : [`PLAN.md`](PLAN.md) · Historique : [`JOURNAL.md`](JOURNAL.md) · Brief : [`CONTEXTE.md`](CONTEXTE.md)
 
-**Dernière mise à jour :** 2026-10-10 22:28, par Claude (Romain) — clé d'identité froide démontrée sur Fuji
+**Dernière mise à jour :** 2026-10-11 00:18, par Claude (Romain) — phase business démarrée : B4 fait, B2 en cours
 **Rendu (gel définitif) :** dim. 11/10 **12:00** · **Checkpoint :** sam. **18:30** · **Pitch :** dim. 13:00
 
 ---
@@ -119,7 +119,7 @@ Un **garde antifraude pour les organisations qui gardent des millions dans un po
 | # | Tâche | Qui | Comment / outil | Fini quand | Statut |
 |---|---|---|---|---|---|
 | B1 | **Bilan de la démo** : ce qui marche, ce qui ne marche pas ; à garder, enlever, modifier, améliorer | Les deux | Après la démo de bout en bout, à partir des mesures (R6) | Liste écrite dans `shared/bilan-demo.md` | ✅ 20:39 décisions prises par Romain (`shared/bilan-demo.md` §2-4 et §7 conflit d'intérêts) ; contrat durci à la demande de Timéo à 21:16 (bilan §8) ; architecture Safe toujours à préparer |
-| B2 | **Le problème est-il réel ?** Incidents récents chiffrés et sourcés (Drift, Bybit, fraudes au président en crypto, pertes des petites équipes), fréquence, coût moyen | Romain | Recherche web, sources citées, chiffres vérifiés | Slide « pourquoi ce problème » avec 3 à 5 faits sourcés | ⬜ |
+| B2 | **Le problème est-il réel ?** Incidents récents chiffrés et sourcés (Drift, Bybit, fraudes au président en crypto, pertes des petites équipes), fréquence, coût moyen | Romain | Recherche web, sources citées, chiffres vérifiés | Slide « pourquoi ce problème » avec 3 à 5 faits sourcés | 🔄 00:18 brouillon `shared/business-probleme.md` (Bybit, Drift, 3,4 Md$ en 2025, S1 2026) ; chiffres à remonter aux rapports primaires |
 | B3 | **Étude de marché** : combien d'organisations ciblées, quelle trésorerie, où (Safe, Squads), taille de marché (TAM / SAM / SOM) avec la méthode de calcul | Romain | Recherche web, données Safe / DefiLlama / rapports publics | Estimation chiffrée **et sourcée**, avec ses hypothèses | ⬜ |
 | B4 | **Concurrence (produit, rentabilité, mise sur le marché, site et application)** : **Hypernative Guardian en tête** (contrat de contrôle sur Safe qui *bloque* les transactions à risque, vendu aux grandes trésoreries), Safe Shield (*avertit* sans agir, via Blockaid / Tenderly / Hypernative), Fireblocks, Forta… ce qu'ils font, leur prix, leur cible, **ce qu'on fait mieux** (voir `conversations/2026-10-10_timeo_comparaison-safe.md`). **Étudier aussi comment ils abordent le marché : leur site vitrine, leur application, leur parcours d'inscription et d'abonnement, leurs notifications**, pour s'en inspirer en gardant notre différence : **uniquement Avalanche** | Romain | Sites officiels, documentation, tableau comparatif | Tableau comparatif vérifié (pas « de mémoire ») | 🔄 comparaison fonctionnelle sourcée : `shared/comparaison-autres-blockchains.md` ; prix et parcours restent à vérifier |
 | B5 | **Validation du besoin sur le terrain** : interroger 3 à 5 personnes concernées (équipes de protocoles présentes au hackathon, mentors Team1, Kryptosphère, KPMG) : « comment protégez-vous votre trésorerie ? avez-vous déjà eu peur ? paieriez-vous, combien ? » | Romain (+ Timéo s'il est disponible) | Mini-entretiens de 5 minutes, script de questions | Synthèse des réponses, avec citations anonymisées | ⬜ |
