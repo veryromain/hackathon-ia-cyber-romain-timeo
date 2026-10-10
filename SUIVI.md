@@ -4,7 +4,7 @@
 > Légende : ✅ fait · 🔄 en cours · ⬜ à faire · ✂️ coupé (manque de temps)
 > Détail du projet : [`PLAN.md`](PLAN.md) · Historique : [`JOURNAL.md`](JOURNAL.md) · Brief : [`CONTEXTE.md`](CONTEXTE.md)
 
-**Dernière mise à jour :** 2026-10-10 21:23, par Claude (Timéo) — démo rejouée sur Fuji depuis le PC de Timéo (0 mUSD sorti, signalement en 5 à 6 s), relais Fuji arrêté
+**Dernière mise à jour :** 2026-10-10 21:45, par Claude (Timéo) — site vitrine : charte bleu nuit et cobalt, logo d'avant redessiné, trame interactive et flux de paiements en haut de page (dépôt seulement, pas encore republié)
 **Rendu (gel définitif) :** dim. 11/10 **12:00** · **Checkpoint :** sam. **18:30** · **Pitch :** dim. 13:00
 
 ---

@@ -9,9 +9,18 @@
 </head>
 <body>
 
+<!-- Le logo : un B dans un bloc à pans coupés. Dessiné une fois, repris partout par <use>. -->
+<svg class="sprite" aria-hidden="true">
+  <symbol id="mark" viewBox="0 0 34 38">
+    <path d="M1 1h22.6L33 10.4V37H10.4L1 27.6z" fill="var(--mark)" stroke="var(--mark)" stroke-width="2" stroke-linejoin="round"/>
+    <path d="M10.5 9h7.25a5.25 5.25 0 0 1 0 10.5H10.5zM10.5 17.5h8.25a5.75 5.75 0 0 1 0 11.5H10.5z" fill="var(--mark-letter)"/>
+    <path d="M14.5 12.6h3.1a1.65 1.65 0 0 1 0 3.3h-3.1zM14.5 21.6h4.1a1.9 1.9 0 0 1 0 3.8h-4.1z" fill="var(--mark)"/>
+  </symbol>
+</svg>
+
 <header class="topbar">
   <div class="topbar-inner">
-    <a class="brand" href="#" aria-label="Breaker, accueil"><span class="brand-mark" aria-hidden="true"></span>Breaker</a>
+    <a class="brand" href="#" aria-label="Breaker, accueil"><svg class="brand-mark" aria-hidden="true"><use href="#mark"/></svg><span class="brand-word">breaker<i>.</i></span></a>
     <nav aria-label="Navigation">
       <a href="#probleme">Le problème</a>
       <a href="#equipes">Votre équipe</a>
@@ -19,34 +28,45 @@
       <a href="#preuves">Les preuves</a>
       <a href="#questions">Questions</a>
     </nav>
-    <a class="btn btn-mint btn-small" href="#demo">Explorer la démo <span aria-hidden="true">→</span></a>
+    <a class="btn btn-primary btn-small" href="#demo">Explorer la démo <span aria-hidden="true">→</span></a>
   </div>
 </header>
 
 <main>
 
 <section class="hero">
+  <canvas class="field" aria-hidden="true"></canvas>
   <div class="wrap hero-grid">
     <div class="hero-copy">
       <h1>Une signature ne suffit pas à faire confiance</h1>
       <p class="lead">Breaker repère un paiement inhabituel et ajoute la bonne vérification, avant que votre trésorerie parte.</p>
       <div class="hero-actions">
-        <a class="btn btn-mint" href="#demo">Voir la protection en action <span aria-hidden="true">→</span></a>
+        <a class="btn btn-primary" href="#demo">Voir la protection en action <span aria-hidden="true">→</span></a>
         <a class="btn btn-ghost" href="#preuves">Voir les preuves</a>
       </div>
       <p class="fineprint">Vos fonds. Vos signataires. Votre dernier mot.</p>
     </div>
-    <div class="hero-visual" aria-hidden="true">
-      <div class="mock">
-        <div class="mock-top"><span>Paiement proposé</span><span class="status hold">En attente</span></div>
-        <div class="mock-amount">95 000 <small>mUSD</small></div>
-        <p class="mock-line">Nouveau destinataire · montant inhabituel</p>
-        <div class="mock-foot"><span>2 signatures sur 3 exigées</span><span>◷ 1 h</span></div>
-      </div>
-      <ul class="pills">
-        <li><span class="dot"></span>Signature en plus</li>
-        <li><span class="dot amber"></span>Mise en attente</li>
-        <li><span class="dot ink"></span>Alerte expliquée</li>
+    <!-- Trois paiements fixes sans script ; app.js les fait défiler (arrivée, verdict, départ). -->
+    <div class="hero-visual" data-cloud aria-hidden="true">
+      <ul class="stream">
+        <li class="bubble">
+          <span class="avatar"></span>
+          <div class="who"><strong>Prestataire habituel</strong><code>0x3f79…9438</code></div>
+          <div class="what"><strong>3 150 <small>mUSD</small></strong><span class="sigs"><b>2/2</b></span></div>
+          <span class="status normal">Sans friction</span>
+        </li>
+        <li class="bubble">
+          <span class="avatar"></span>
+          <div class="who"><strong>Nouveau prestataire</strong><code>0x51b2…c07e</code></div>
+          <div class="what"><strong>12 000 <small>mUSD</small></strong><span class="sigs raised"><b>2/3</b></span></div>
+          <span class="status step-up">Signature supplémentaire</span>
+        </li>
+        <li class="bubble">
+          <span class="avatar"></span>
+          <div class="who"><strong>Adresse jamais vue</strong><code>0xa3Cd…F126</code></div>
+          <div class="what"><strong>95 000 <small>mUSD</small></strong><span class="sigs raised"><b>2/3</b></span></div>
+          <span class="status hold">En attente</span>
+        </li>
       </ul>
     </div>
   </div>
@@ -136,7 +156,7 @@
       <h3>Un contrôle qui refuse</h3>
       <p>La transaction est rejetée d’office. Si l’outil se trompe ou tombe en panne, des paiements légitimes restent bloqués avec les autres.</p>
     </article>
-    <article class="card mint">
+    <article class="card accent">
       <span class="label">Freiner · Breaker</span>
       <h3>Une vérification de plus, au bon moment</h3>
       <p>Une signature supplémentaire, puis un délai d’attente si le risque est élevé. Une fausse alerte coûte une signature et un peu de temps, jamais l’accès à vos fonds.</p>
@@ -155,7 +175,7 @@
         <button id="tab-risk" role="tab" aria-selected="false" aria-controls="panel" data-scenario="risk" tabindex="-1"><span>03</span><div>Paiement à risque<small>Une pause pour vérifier.</small></div><b aria-hidden="true">→</b></button>
       </div>
       <div class="dashboard" id="panel" role="tabpanel" aria-labelledby="tab-normal">
-        <div class="dash-header"><span class="dash-brand"><span class="brand-mark" aria-hidden="true"></span>Nova Treasury</span><small>Aperçu client</small></div>
+        <div class="dash-header"><span class="dash-brand"><svg class="brand-mark" aria-hidden="true"><use href="#mark"/></svg>Nova Treasury</span><small>Aperçu client</small></div>
         <div class="dash-title"><div><span class="label">Paiement #104</span><h3 id="recipient">Infrastructure RPC</h3></div><span class="status normal" id="verdict">Sans friction</span></div>
         <div class="amount"><span id="amount">2 400</span> <small>mUSD</small></div>
         <div class="risk-label"><span>Risque estimé</span><strong id="score">12 / 100</strong></div>
@@ -165,7 +185,7 @@
           <div><span class="label">Vérification</span><strong id="approvals">2 signatures sur 5</strong></div>
           <div><span class="label">Délai ajouté</span><strong id="delay">Aucun</strong></div>
         </div>
-        <button class="btn btn-mint full" id="explain" aria-expanded="false" aria-controls="detail">Comprendre la décision <span aria-hidden="true">→</span></button>
+        <button class="btn btn-primary full" id="explain" aria-expanded="false" aria-controls="detail">Comprendre la décision <span aria-hidden="true">→</span></button>
         <p id="detail" class="detail" hidden></p>
         <p class="demo-note">Simulation pédagogique · scores illustratifs · sans portefeuille connecté</p>
       </div>
@@ -233,13 +253,14 @@
 </section>
 
 <section class="closing">
+  <canvas class="field" aria-hidden="true"></canvas>
   <div class="wrap closing-grid">
     <div>
-      <span class="brand-mark big" aria-hidden="true"></span>
+      <svg class="brand-mark big" aria-hidden="true"><use href="#mark"/></svg>
       <h2 class="title">Gardez la main<br>sur votre trésorerie</h2>
       <p class="subtitle">Découvrez le prototype et imaginez le parcours de votre équipe.</p>
       <div class="hero-actions">
-        <a class="btn btn-mint" href="#demo">Explorer l’espace client <span aria-hidden="true">→</span></a>
+        <a class="btn btn-primary" href="#demo">Explorer l’espace client <span aria-hidden="true">→</span></a>
         <a class="btn btn-ghost" href="#preuves">Voir les preuves</a>
       </div>
     </div>
@@ -250,7 +271,7 @@
 
 <footer class="footer">
   <div class="wrap footer-inner">
-    <a class="brand" href="#"><span class="brand-mark" aria-hidden="true"></span>Breaker</a>
+    <a class="brand" href="#" aria-label="Breaker, accueil"><svg class="brand-mark" aria-hidden="true"><use href="#mark"/></svg><span class="brand-word">breaker<i>.</i></span></a>
     <p>Construit pour Avalanche. Pensé pour les signataires.</p>
     <small>Secure Horizons · Prototype 2026</small>
   </div>

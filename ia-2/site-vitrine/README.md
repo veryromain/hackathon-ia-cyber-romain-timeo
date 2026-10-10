@@ -50,3 +50,37 @@ Le contenu est celui de la révision de 21h (problème, positionnement, mesure f
 
 Vérifié dans un navigateur à 1440 px et à 390 px : aucune barre de défilement horizontale, polices chargées, les trois scénarios et le bouton d'explication fonctionnent.
 
+## Charte, logo et haut de page animé, 10 octobre, 21h45 (Claude, à la demande de Timéo)
+
+Timéo a demandé quatre choses : une charte de couleurs qui ne soit plus celle de Safe et qui inspire confiance, le retour du logo d'avant, un fond interactif, et des bulles qui apparaissent puis repartent. La mise en page, les textes et les boutons d'appel à l'action n'ont pas changé.
+
+### Charte de couleurs
+
+| Rôle | Couleur | Valeur |
+|---|---|---|
+| Fond | Givre | `#F2F5FA` |
+| Texte, section sombre, pied de page | Bleu nuit | `#0A1B33` |
+| Boutons, liens, logo | Cobalt | `#2454E6` |
+| Accent sur fond sombre | Cobalt clair | `#8FB1FF` |
+| Réponse « sans friction » | Vert | `#0B7F5F` |
+| Réponse « signature supplémentaire » | Cobalt | `#2454E6` |
+| Réponse « en attente » | Ambre | `#9A5600` sur `#FDF0D8` |
+
+Le vert menthe et le gris neutre de Safe ont disparu. Toutes les valeurs sont des variables en tête de `style.css`.
+
+### Logo
+
+Celui de la première maquette : un B dans un bloc à deux pans coupés, suivi de « breaker. » en minuscules grasses avec le point en couleur. Il est redessiné en SVG (le B n'est plus une lettre de police) et passe du vert citron au cobalt. Il est défini une fois en tête de `index.html` (`<symbol id="mark">`) et repris par `<use>`.
+
+### Fond interactif
+
+Une trame de tuiles qui ont la silhouette du logo, dessinée par `app.js` dans un `<canvas class="field">`, en haut de page et dans l'appel final. Les tuiles proches du curseur s'allument en cobalt puis s'éteignent ; un clic envoie une onde. Sans JavaScript, un motif fixe équivalent reste affiché.
+
+### Flux de paiements
+
+À droite du titre, trois emplacements posés sur un « nuage » de tuiles pleines. Chaque paiement arrive avec la mention « Analyse en cours », reçoit son verdict au bout d'une seconde (le nombre de signatures exigées passe de 2/2 à 2/3 quand le garde freine), puis laisse la place au suivant. Six paiements tournent : trois sans friction, un avec signature supplémentaire, deux en attente. Les adresses sont celles des comptes de test du déploiement Fuji ou sont inventées ; aucune ne vient d'une liste réelle. Ce flux remplace la carte fixe « Paiement proposé » et sa légende.
+
+Si le visiteur a demandé à réduire les animations, trois paiements fixes s'affichent, la trame réagit sans traînée et sans onde. Quand l'onglet est caché, le flux s'arrête.
+
+Vérifié dans un navigateur à 1440 px et à 390 px : aucune erreur dans la console, aucune barre de défilement horizontale, survol et clic sur la trame, défilement des paiements, démo des trois scénarios. Le site publié (adresse privée gérée par Codex) n'a pas changé : il faut republier depuis `dist/`.
+

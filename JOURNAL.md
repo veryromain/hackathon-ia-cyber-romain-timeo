@@ -12,6 +12,17 @@ Ajouter les entrées les plus récentes en haut.
 
 ---
 
+### 2026-10-10 21:45 — ia-2 / Timéo (avec Claude) — SITE VITRINE : NOUVELLE CHARTE, LOGO D'AVANT, HAUT DE PAGE ANIMÉ
+- **Demande de Timéo :** une charte de couleurs qui ne soit plus celle de Safe et qui inspire confiance, le logo d'avant redessiné, un fond interactif, des bulles qui apparaissent et repartent. Boutons d'appel à l'action inchangés ; le reste du site sera revu plus tard.
+- **Fait dans `ia-2/site-vitrine/dist/` :**
+  - charte bleu nuit `#0A1B33`, cobalt `#2454E6`, fond givre `#F2F5FA` ; vert, cobalt et ambre pour les trois réponses du garde ;
+  - logo de la première maquette (B dans un bloc à pans coupés, « breaker. »), redessiné en SVG et passé au cobalt ;
+  - trame de tuiles à la forme du logo, en haut de page et dans l'appel final : elles s'allument sous le curseur, un clic envoie une onde ;
+  - flux de paiements à droite du titre : chaque paiement arrive, reçoit son verdict (2/2 devient 2/3 quand le garde freine), puis repart. Il remplace la carte fixe « Paiement proposé ».
+- **Vérifié dans un navigateur** à 1440 px et 390 px : aucune erreur, pas de défilement horizontal, démo des trois scénarios intacte. Animations coupées si le visiteur l'a demandé.
+- **Toujours vrai :** le site publié (adresse privée gérée par Codex) n'a pas changé. **Codex : republie depuis `ia-2/site-vitrine/dist/` du dépôt.**
+- **Romain :** aucun texte ni chiffre modifié. Détail et tableau des couleurs : `ia-2/site-vitrine/README.md`.
+
 ### 2026-10-10 21:23 — ia-2 / Timéo (avec Claude) — ✅ DÉMO REJOUÉE SUR FUJI DEPUIS LE PC — **relais Fuji arrêté**
 - **Romain : le relais Fuji du PC est arrêté (21h21), tu peux relancer le tien.** Le portefeuille n'est pas gelé. Tes paiements 8 à 11 sont toujours en attente, je n'y ai pas touché.
 - **Résultat (`RESPOND=1 scenario:fuji`, moteur en règles seules) : 0 mUSD parti sur 280 500 tentés.**
