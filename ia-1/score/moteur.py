@@ -134,6 +134,16 @@ def explication(niveau, raisons):
     return f"Paiement inhabituel : {faits}. {action}"
 
 
+def charger_services(chemin: Path) -> list[str]:
+    """shared/services-connus.json : liste d'adresses, ou {"services": [{"address": …}]}, ou {"adresses": […]}."""
+    d = json.loads(chemin.read_text(encoding="utf-8"))
+    if isinstance(d, list):
+        return [str(a).lower() for a in d]
+    if "services" in d:
+        return [str(x["address"] if isinstance(x, dict) else x).lower() for x in d["services"]]
+    return [str(a).lower() for a in d.get("adresses", [])]
+
+
 def lire(chemin: Path, suivre: bool):
     with open(chemin) as f:
         while True:
@@ -166,7 +176,7 @@ def main(argv=None):
     if args.modele:
         import joblib
         modele = joblib.load(args.modele)
-    services = json.loads(args.services.read_text()) if args.services else []
+    services = charger_services(args.services) if args.services else []
     moteur = Moteur(carnet, modele, args.expliquer, services)
     with open(args.out, "a" if args.suivre else "w") as sortie:
         for ev in lire(args.events, args.suivre):

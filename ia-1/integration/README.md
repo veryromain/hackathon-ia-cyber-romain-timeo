@@ -16,8 +16,7 @@ cd ia-1 && .venv/bin/python -m score.moteur --events ../shared/events.jsonl --ou
   --carnet integration/carnet-local.json --modele modeles/anomalie.joblib --suivre --expliquer   # --expliquer : explications Bedrock (R3)
 # 5. tableau de bord → http://localhost:8599
 cd ia-1 && .venv/bin/streamlit run dashboard/app.py --server.port 8599
-# 5b. exécuteur d'actions (boutons du tableau de bord, R5b) — depuis ia-2
-cd ia-2 && npx hardhat run ../ia-1/integration/actions.js --network localhost
+# (5b. l'exécuteur d'actions n'est plus nécessaire : le relais de Timéo lit shared/actions.jsonl depuis 19:53)
 # 6a. scénario de Timéo : paiement normal + fraude en rafale + réponse d'un signataire
 cd ia-2 && RESPOND=1 npm run scenario:local
 # 6b. Web2 → Web3 : l'oracle signale une adresse (partage de connexion pour Bedrock !), puis on tente de la payer
@@ -41,4 +40,10 @@ cd ia-2 && ADRESSE=0x6253540229bdcc8ae009fe075005a3fa5137c352 npx hardhat run ..
 ## Après la démo : le rapport d'incident (R4)
 ```bash
 cd ia-1 && .venv/bin/python -m score.rapport --dossier ../shared --sortie rapports/rapport-incident.md
+```
+
+## Traçage des fonds (R9/T9)
+```bash
+cd ia-2 && npm run tracing:local      # arnaqueur → 3 mules + plateforme + dusting, puis 3 paiements ; relais lancé à côté
+# moteur avec la liste des services : ... --services ../shared/services-connus.json
 ```

@@ -44,3 +44,23 @@ def test_un_seul_intermediaire():
 
 def test_teinte_expire():
     assert moteur().traiter(prop(5, MULE, T0 + 8 * 86400)) is None
+
+
+def test_echantillon_reel_du_relais_de_timeo():
+    """T9 : sortie réelle du relais (shared/echantillons/tracage.*) : mule freinée, innocent « dusté » et plateforme ignorés."""
+    import json
+    from pathlib import Path
+    from score.moteur import charger_services
+    ech = Path(__file__).resolve().parents[2] / "shared" / "echantillons"
+    roles = json.loads((ech / "tracage.roles.json").read_text())
+    services = charger_services(Path(__file__).resolve().parents[2] / "shared" / "services-connus.json")
+    assert roles["known_service"] in services
+    m = Moteur(carnet=[roles["innocent_dusted"], roles["known_service"]] + roles["mules"], services=services)  # tous connus : seul R9 parle
+    niveaux, codes = {}, {}
+    for l in (ech / "tracage.events.jsonl").read_text().splitlines():
+        a = m.traiter(json.loads(l))
+        if a:
+            niveaux[a["payment_id"]] = a["level"]
+            codes[a["payment_id"]] = [r["code"] for r in a["reasons"]]
+    assert niveaux.get(0) == "step_up" and codes[0][0] == "TAINTED_FUNDS"  # la mule (26 % des sorties)
+    assert 1 not in niveaux and 2 not in niveaux  # innocent (0,01 mUSD) et plateforme : rien

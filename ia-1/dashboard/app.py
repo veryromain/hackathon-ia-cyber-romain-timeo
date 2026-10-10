@@ -171,10 +171,13 @@ def tableau():
                     preuves = " ".join(lien_tx(h, p["chain"]) for h in r.get("evidence", [])[:3])
                     st.markdown(f"- `{r['code']}` — {r['detail']} {preuves}")
                 if MOI_ADR and p["état"] == "en cours":
-                    b1, b2, _ = st.columns([1, 1, 3])
+                    b1, b3, b2, _ = st.columns([1, 1, 1, 2])
                     if b1.button("✅ Valider (signer)", key=f"ok{pid}", use_container_width=True):
                         ecrire_action(DOSSIER, action="approve", payment_id=pid, by=MOI_ADR)
                         st.toast(f"Signature demandée pour le paiement {pid}")
+                    if b3.button("▶️ Exécuter", key=f"ex{pid}", use_container_width=True, help="Une fois les signatures réunies et le délai écoulé"):
+                        ecrire_action(DOSSIER, action="execute", payment_id=pid, by=MOI_ADR)
+                        st.toast(f"Exécution demandée pour le paiement {pid}")
                     if b2.button("🛑 Annuler", key=f"no{pid}", use_container_width=True):
                         ecrire_action(DOSSIER, action="cancel", payment_id=pid, by=MOI_ADR, reason="Demande non confirmée par un autre canal")
                         st.toast(f"Annulation demandée pour le paiement {pid}")
