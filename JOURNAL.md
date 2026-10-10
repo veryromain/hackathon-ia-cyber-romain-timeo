@@ -12,6 +12,23 @@ Ajouter les entrées les plus récentes en haut.
 
 ---
 
+### 2026-10-10 19:34 — ia-2 / Timéo (avec Claude) — ✅ T6 : DÉPLOYÉ SUR FUJI, DÉMO REJOUÉE (0 mUSD PERDU)
+- **Fait (T6) : les contrats sont sur Avalanche Fuji et la démo y tourne.** Timéo a envoyé 0,5 AVAX de test au déployeur ; répartition vers les comptes, puis déploiement à 19h29 (bloc 59275146).
+  - Portefeuille `TreasuryGuard` : `0xfDb595EA595195C149ABf2bf28892c34a1a06D9c`
+  - Registre `RiskRegistry` : `0x24871b8A07a7C7B2632E760c23051661E341cC40`
+  - Jeton de test `mUSD` : `0xFF65eD05180D3f725a1DE658e0f539A3452274bD`
+  - Liens Snowtrace, réglages et transactions de la démo : `ia-2/README.md`, section « Déploiement sur Avalanche Fuji ».
+- **Première démo sur Fuji, sur le PC de Timéo, avec ton moteur (règles seules) :** paiement normal exécuté sans friction ; les 3 virements frauduleux mis en `hold` **5 à 6 secondes** après leur proposition (délai d'examen : 30 s), score 0,88 ; les fraudeurs bloqués à 2 signatures sur 3 ; gel et annulation par un signataire. **0 mUSD sorti sur 280 500 tentés.**
+- **Chiffre pour la mesure « délai de signalement » (R6) :** 5 à 6 s sur Fuji, contre 1 à 2 s en local. La différence vient du temps de bloc de Fuji et de l'interrogation du RPC public par le relais, pas du moteur.
+- **Coût réel sur Fuji :** environ 0,00054 AVAX pour tout le déploiement, 0,00005 AVAX pour les trois signalements. Il reste 0,25 AVAX au déployeur.
+- **Pour Romain :**
+  - `ia-2/deployments/fuji.json` (adresses, bloc, réglages) et `ia-2/deployments/fuji-carnet.json` (carnet d'adresses du moteur) sont dans le dépôt.
+  - La phrase secrète n'est que sur le PC de Timéo : tu peux lire Fuji depuis ton Mac (tableau de bord, relais en lecture), mais pas y signer.
+  - Je n'ai pas lancé `--expliquer` : le PC est sur le Wi-Fi de l'école, qui bloque Bedrock. À faire en partage de connexion pour la vidéo.
+  - `OFF_HOURS` s'est déclenché (samedi soir), comme chez toi.
+- **État du portefeuille Fuji :** dégelé après la démo par `npm run unfreeze:fuji` (nouveau script), prêt pour un nouveau passage.
+- **Prochaine étape côté Timéo :** T9 (traçage des fonds, bonus) et les variantes de fraude ; renouveler la clé Bedrock avant 03:28.
+
 ### 2026-10-10 19:25 — ia-1 / Romain (avec Claude)
 - **R3 validé en direct** (partage de connexion) : Bedrock (Opus 4.8) reformule les 4 alertes de l'exemple en 2 à 4 phrases fidèles aux faits, avec l'action à faire ; ≈ 6 s par alerte, sous les 30 s du délai d'examen. Exemple pour le paiement vers l'adresse signalée : « …destinataire inconnu signalé comme problématique sur le Web… Avant toute signature, contactez la personne à l'origine de la demande par un autre canal… »
 - **Timéo :** pour la démo Fuji, lance le moteur avec `--expliquer` (Bedrock en partage de connexion) pour que le tableau de bord montre ces explications ; sans réseau, le texte à trous prend le relais tout seul.

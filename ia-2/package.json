@@ -17,7 +17,9 @@
     "fuji:fund": "hardhat run scripts/fund-accounts.js --network fuji",
     "deploy:fuji": "hardhat run scripts/deploy.js --network fuji",
     "relay:fuji": "hardhat run scripts/relay.js --network fuji",
-    "scenario:fuji": "hardhat run scripts/demo-scenario.js --network fuji"
+    "scenario:fuji": "hardhat run scripts/demo-scenario.js --network fuji",
+    "unfreeze:local": "hardhat run scripts/unfreeze.js --network localhost",
+    "unfreeze:fuji": "hardhat run scripts/unfreeze.js --network fuji"
   },
   "devDependencies": {
     "@nomicfoundation/hardhat-toolbox": "^5.0.0",

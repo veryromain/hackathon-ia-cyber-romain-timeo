@@ -13,7 +13,7 @@ Partie de Timéo dans le projet « Breaker » (voir `PLAN.md` et `SUIVI.md`). **
 | T3 | Relais entre la chaîne et les fichiers JSON Lines | Fait, testé de bout en bout sur la chaîne locale avec un faux moteur de score |
 | T4 | Générateur de trafic normal | Fait : `shared/donnees/train.*`, 362 paiements sur 60 jours |
 | T5 | Scénarios de fraude | Fait : `shared/donnees/test.*`, 54 paiements frauduleux, 6 variantes ; scénario de démo en direct |
-| T6 | Déploiement sur Avalanche Fuji | Prêt : comptes de test et commandes en place. **En attente d'AVAX de test sur le déployeur** |
+| T6 | Déploiement sur Avalanche Fuji | **Fait le 10 octobre à 19h30** : contrats déployés, démo rejouée sur Fuji avec le moteur de score, 0 mUSD sorti |
 
 ## Le portefeuille `TreasuryGuard` en bref
 
@@ -88,25 +88,50 @@ Pour Fuji, copier `.env.example` en `.env` et y mettre les clés de portefeuille
 
 ## Déploiement sur Avalanche Fuji (T6)
 
-**État au 10 octobre, 18h55 : rien n'est encore déployé sur Fuji.** Le déployeur `0x4EcC7e01cdB900b0FD16f91dFC289CdBBe768564` attend des AVAX de test.
+**Déployé le 10 octobre 2026 à 19h29 (bloc 59275146), réseau Fuji C-Chain, identifiant de chaîne 43113.**
+
+| Contrat | Adresse |
+|---|---|
+| Portefeuille `TreasuryGuard` | [`0xfDb595EA595195C149ABf2bf28892c34a1a06D9c`](https://testnet.snowtrace.io/address/0xfDb595EA595195C149ABf2bf28892c34a1a06D9c) |
+| Registre `RiskRegistry` | [`0x24871b8A07a7C7B2632E760c23051661E341cC40`](https://testnet.snowtrace.io/address/0x24871b8A07a7C7B2632E760c23051661E341cC40) |
+| Jeton de test `mUSD` | [`0xFF65eD05180D3f725a1DE658e0f539A3452274bD`](https://testnet.snowtrace.io/address/0xFF65eD05180D3f725a1DE658e0f539A3452274bD) |
+
+Réglages : 2 signataires sur 5, délai d'examen de 30 secondes, mise en attente de 180 secondes, plafond de 100 000 mUSD par jour. Tout est dans `deployments/fuji.json` ; le carnet d'adresses du moteur de score est dans `deployments/fuji-carnet.json`.
+
+### Première démo sur Fuji (19h30)
+
+Relais et moteur de score de `ia-1/` (règles seules) lancés sur le PC de Timéo, scénario `RESPOND=1 npm run scenario:fuji`.
+
+| Étape | Résultat | Transaction |
+|---|---|---|
+| Paiement normal de 3 150 mUSD à un prestataire habituel | Exécuté sans friction, 40 s après la proposition | [exécution](https://testnet.snowtrace.io/tx/0x694ff4b823b92aaa9ae0ad074d15d22b76ec41031b8eda2d56369430863d46fb) |
+| Fraude n° 1, 95 000 mUSD vers une adresse inconnue | Mise en attente **6 s** après la proposition | [proposition](https://testnet.snowtrace.io/tx/0xc10d4c72af80c11696a5ec795889b261da8a77cc7b4fc24c1fa218a32f4f6555), [signalement](https://testnet.snowtrace.io/tx/0x396d108192305d1c9da8a0adbf2975c76821c46585cbf158084bcf4941a30ef1) |
+| Fraude n° 2, 93 500 mUSD | Mise en attente **5 s** après | [signalement](https://testnet.snowtrace.io/tx/0x6b79fc2689a88fc31ff929b7ba4b07780199c73f89d918d8d8ff68b7644dc9bd) |
+| Fraude n° 3, 92 000 mUSD | Mise en attente **6 s** après | [signalement](https://testnet.snowtrace.io/tx/0x6b03e5bbcae8409a0d27421c4c13e06de0106f88742aa86b77c68498de2e59fd) |
+| Les deux signataires trompés tentent d'exécuter | Bloqués : 2 signatures sur 3 exigées | — |
+| Un signataire alerté gèle puis annule | Portefeuille gelé, 3 paiements annulés | [gel](https://testnet.snowtrace.io/tx/0xadc503aceb8de75877481fccaf0f1ed312b5c2f726e005912fc65f4a7d5c857b) |
+
+**Bilan : 0 mUSD parti chez le fraudeur sur 280 500 tentés.** Raisons inscrites sur la chaîne par le moniteur : `PAYMENT_FRAUD_PATTERN;BURST;NEW_RECIPIENT;URGENCY_MEMO;OFF_HOURS` (score 0,88).
+
+Coût réel constaté : environ 0,00054 AVAX pour tout le déploiement et 0,00005 AVAX pour les trois signalements du moniteur.
+
+### Rejouer la démo sur Fuji
 
 ```bash
 cd ia-2
-npm run fuji:setup     # crée la phrase secrète de test dans ia-2/.env (une seule fois) et affiche les adresses
-#   -> demander des AVAX de test au faucet pour l'adresse du déployeur
-npm run fuji:fund      # répartit vers les 5 signataires, le moniteur et l'oracle
-npm run deploy:fuji    # déploie mUSD, le registre et le portefeuille ; écrit deployments/fuji.json
-npm run relay:fuji     # relais, comme en local
-npm run scenario:fuji  # scénario de démo, comme en local
+npm run unfreeze:fuji   # si la démo précédente a gelé le portefeuille (trois signataires votent le dégel)
+npm run relay:fuji      # terminal 1 ; écrit shared/events.jsonl, lit shared/alerts.jsonl et shared/flags.jsonl
+# terminal 2, depuis ia-1 : le moteur de score en mode suivi, avec --carnet ../ia-2/deployments/fuji-carnet.json
+npm run scenario:fuji   # terminal 3 ; RESPOND=1 pour le gel et l'annulation
 ```
 
-- Les dix comptes de test et leur rôle sont dans `deployments/fuji-comptes.json` (adresses publiques seulement). Les comptes n° 8 et 9 sont les prestataires habituels : c'est le carnet d'adresses à donner au moteur de score.
+- Les dix comptes de test et leur rôle sont dans `deployments/fuji-comptes.json` (adresses publiques seulement).
 - La phrase secrète reste dans `ia-2/.env`, sur le PC de Timéo. Elle ne va ni dans Git ni dans un message.
-- Après le déploiement, les adresses des contrats et les liens Snowtrace seront ajoutés ici.
+- Pour repartir d'un portefeuille neuf : `npm run deploy:fuji`, puis mettre à jour les adresses ci-dessus. Il reste environ 0,25 AVAX de test au déployeur, de quoi redéployer des centaines de fois.
 
 ### Où lancer la démo Fuji
 
-Sur le PC de Timéo, là où se trouve la phrase secrète. Le moteur de score de `ia-1/` y est installé (`ia-1/.venv`) et a été testé avec le relais sur la chaîne locale : paiement normal exécuté, trois virements frauduleux mis en attente, 0 mUSD sorti.
+Sur le PC de Timéo, là où se trouve la phrase secrète. Le moteur de score de `ia-1/` y est installé (`ia-1/.venv`) et a été testé avec le relais sur la chaîne locale puis sur Fuji.
 
 **Limite sur ce PC : le modèle d'anomalie (R2) ne tourne pas.** Le contrôle d'application de Windows (Smart App Control) bloque un fichier de scikit-learn. Le moteur fonctionne avec ses règles seules, ce qui suffit au scénario de démo. Les mesures avec le modèle se font sur le Mac de Romain.
 
