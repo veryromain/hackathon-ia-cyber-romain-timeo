@@ -4,7 +4,7 @@
 > Légende : ✅ fait · 🔄 en cours · ⬜ à faire · ✂️ coupé (manque de temps)
 > Détail du projet : [`PLAN.md`](PLAN.md) · Historique : [`JOURNAL.md`](JOURNAL.md) · Brief : [`CONTEXTE.md`](CONTEXTE.md)
 
-**Dernière mise à jour :** 2026-10-10 16:53, par Claude (Romain) — T2 et T8 en cours
+**Dernière mise à jour :** 2026-10-10 16:56, par Claude (Timéo) — T2, T7 et T8 faits
 **Rendu (gel définitif) :** dim. 11/10 **12:00** · **Checkpoint :** sam. **18:30** · **Pitch :** dim. 13:00
 
 ---
@@ -59,7 +59,7 @@ Un **garde antifraude pour la trésorerie crypto des entreprises** (portefeuille
 | # | Tâche | Qui | Comment / outil | Fini quand | Statut |
 |---|---|---|---|---|---|
 | T1 | **Format des échanges** : `events.jsonl`, `alerts.jsonl`, **`flags.jsonl`** + fichiers d'exemple dans `shared/echantillons/` | Timéo | Markdown + JSON écrit à la main | Romain peut lancer son code sur les exemples | ✅ 16:41 (v2 : `events`, `alerts`, `flags`, `labels` + exemples) |
-| T2 | **Contrat `TreasuryGuard`** : multisig M sur N, proposition, approbation, exécution, signalement de risque (signatures en plus / mise en attente), plafond par période, gel, expiration des clés | Timéo | Solidity + Hardhat + OpenZeppelin, tests en local | Les tests passent, dont le scénario de fraude avec et sans garde | 🔄 16:51 (`TreasuryGuard.sol` + 20 tests écrits, non annoncé comme fini) |
+| T2 | **Contrat `TreasuryGuard`** : multisig M sur N, proposition, approbation, exécution, signalement de risque (signatures en plus / mise en attente), plafond par période, gel, expiration des clés | Timéo | Solidity + Hardhat + OpenZeppelin, tests en local | Les tests passent, dont le scénario de fraude avec et sans garde | ✅ 16:55 (20 tests passent, `cd ia-2 && npm test`) |
 | R1 | **Moteur de score** : lit `events.jsonl`, tient l'historique (destinataires connus, montants habituels, rythme), applique les règles, écrit `alerts.jsonl` avec un score et des raisons | Romain | Python + pandas | Tourne sur l'exemple de T1 | ⬜ |
 | R8a | **Oracle, cœur** : lit une page Web locale → repère les adresses `0x…` → Bedrock dit « accusation / mention / démenti » + **citation exacte** → le code vérifie la citation → écrit `flags.jsonl` | Romain | Python + BeautifulSoup + boto3 (Bedrock), **partage de connexion** | Une page synthétique donne un signalement vérifié | ⬜ |
 | R7a | **Formulaire du checkpoint** (problème, solution, stack) : texte prêt en section 8 de `PLAN.md` | Romain | — | Formulaire envoyé à 18:30 | ⬜ |
@@ -71,8 +71,8 @@ Un **garde antifraude pour la trésorerie crypto des entreprises** (portefeuille
 
 | # | Tâche | Qui | Comment / outil | Fini quand | Statut |
 |---|---|---|---|---|---|
-| T2 | `TreasuryGuard` terminé | Timéo | Hardhat | Tous les tests passent | ⬜ |
-| T8 | **Registre des adresses signalées** (dans le Guard ou un contrat `RiskRegistry`) : adresse → niveau, hash de la preuve, expiration | Timéo | Solidity | Un paiement vers une adresse signalée déclenche la friction | 🔄 16:51 (`RiskRegistry.sol` écrit) |
+| T2 | `TreasuryGuard` terminé | Timéo | Hardhat | Tous les tests passent | ✅ 16:55 |
+| T8 | **Registre des adresses signalées** (dans le Guard ou un contrat `RiskRegistry`) : adresse → niveau, hash de la preuve, expiration | Timéo | Solidity | Un paiement vers une adresse signalée déclenche la friction | ✅ 16:55 (`RiskRegistry.sol`, branché au portefeuille, testé) |
 | T3 | **Relais** chaîne ↔ fichiers : écrit `events.jsonl`, lit `alerts.jsonl` et `flags.jsonl` et les envoie sur la chaîne | Timéo | Node + ethers | Une alerte de Romain change réellement le sort d'un paiement | ⬜ |
 | T4 | **Générateur de trafic normal** : salaires, fournisseurs habituels, nouveau fournisseur légitime, renouvellement de clé | Timéo | Node, graines aléatoires fixées | Fichier d'entraînement de plusieurs centaines de paiements | ⬜ |
 | R2 | **Modèle d'anomalie** appris sur le trafic normal, combiné aux règles ; seuils des 3 niveaux réglés sur l'entraînement | Romain | scikit-learn (Isolation Forest) | Score et raisons sur chaque paiement | ⬜ |
@@ -103,7 +103,7 @@ Un **garde antifraude pour la trésorerie crypto des entreprises** (portefeuille
 
 | # | Tâche | Qui | Comment / outil | Fini quand | Statut |
 |---|---|---|---|---|---|
-| T7 | **Mesure du gas** des transactions du Guard et du registre (pour le modèle économique) | Timéo | `npm run gas` | Tableau dans `shared/` | ⬜ |
+| T7 | **Mesure du gas** des transactions du Guard et du registre (pour le modèle économique) | Timéo | `npm run gas` | Tableau dans `shared/` | ✅ 16:55 (`shared/frais-gas.md` : une alerte ≈ 0,002 $) |
 | R6 | **Évaluation** sur le fichier de test : taux de détection, précision, faux positifs, délai de signalement, fonds protégés + **précision de l'oracle** et **délai Web2 → chaîne** | Romain | Python | Tableau de chiffres dans `shared/mesures.md` | ⬜ |
 | — | Rejouer les mesures, corriger | Timéo | — | Chiffres définitifs | ⬜ |
 

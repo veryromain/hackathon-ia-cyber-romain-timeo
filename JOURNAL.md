@@ -12,6 +12,14 @@ Ajouter les entrées les plus récentes en haut.
 
 ---
 
+### 2026-10-10 16:54 — ia-2 / Timéo (avec Claude)
+- **Fait (T2, T8, T7) :** contrats `TreasuryGuard` (portefeuille 2 sur 5 avec délai d'examen, signalement `StepUp` / `Hold`, plafond par période, gel, expiration des clés, remplacement de signataire, changement de seuil) et `RiskRegistry` (adresses signalées par l'oracle, avec hash de preuve, expiration et retrait). **20 tests passent** en local (`cd ia-2 && npm install && npm test`). Détail dans `ia-2/README.md`.
+- **Scénario de fraude dans les tests :** deux signataires trompés, dix paiements de 95 000 mUSD. Portefeuille témoin : 95 % de la trésorerie part. Avec le garde : rien ne sort. Garde sans moniteur : 95 000 mUSD partent, puis le plafond exige une troisième signature.
+- **Gas (`shared/frais-gas.md`) :** une alerte du moniteur coûte environ 0,002 $, une inscription au registre 0,004 $.
+- **Pour Romain :** ABI à jour dans `shared/abi/` (`TreasuryGuard`, `RiskRegistry`). Dans `shared/format-evenements.md`, trois précisions alignées sur le contrat : `risk_flagged` porte un champ `by` (moniteur, registre ou portefeuille) ; nouveau type `config_proposed` ; `owner_key_renewed` supprimé (renouveler une clé, c'est remplacer le signataire). Le registre n'accepte que les niveaux 1 (`step_up`) et 2 (`hold`).
+- **Nettoyage :** le coffre de prêt `BreakerVault`, `SimplePool`, leur test et leurs ABI sont retirés (ils restent dans l'historique Git).
+- **Prochaine étape :** T3, le relais (chaîne locale → `events.jsonl`, `alerts.jsonl` et `flags.jsonl` → chaîne), puis T4, le trafic normal.
+
 ### 2026-10-10 16:52 — ia-2 / Timéo (avec Codex)
 - **Fait :** synchronisation du dépôt et récupération de SUIVI.md à la demande de Timéo. La version datée de 16:50 contient bien T9 (données de traçage, Timéo) et R9 (propagation du risque, Romain), toutes deux à faire et prévues en bonus après la démo de 23:00.
 - **Fichiers :** SUIVI.md et PLAN.md consultés, statuts conservés ; compte-rendu dans conversations/2026-10-10_timeo_recuperation-suivi.md.

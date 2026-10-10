@@ -4,7 +4,7 @@ const fs = require("fs");
 const path = require("path");
 const hre = require("hardhat");
 
-const CONTRACTS = ["BreakerVault", "SimplePool", "MockToken"];
+const CONTRACTS = ["TreasuryGuard", "RiskRegistry", "MockToken"];
 
 async function main() {
   await hre.run("compile");

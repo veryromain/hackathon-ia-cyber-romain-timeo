@@ -37,18 +37,21 @@ Champs communs : `seq` (numéro d'ordre, croissant), `chain_id` (43113 sur Fuji,
 |---|---|---|
 | `payment_proposed` | `payment_id`, `proposer`, `to`, `token`, `amount`, `memo`, `required_approvals`, `executable_after` | Un signataire propose un paiement. **C'est ici que le moteur doit rendre son verdict** |
 | `payment_approved` | `payment_id`, `owner`, `approvals`, `required_approvals` | Un signataire approuve |
-| `risk_flagged` | `payment_id`, `level`, `reason`, `required_approvals`, `executable_after` (si `hold`) | Le signalement du moniteur est inscrit sur la chaîne |
+| `risk_flagged` | `payment_id`, `level`, `reason`, `by`, `required_approvals`, `executable_after` | Un signalement est inscrit sur la chaîne. `by` dit qui l'a émis : le moniteur, le registre (`FLAGGED_ADDRESS`) ou le portefeuille lui-même (`OVER_PERIOD_CAP`) |
 | `payment_executed` | `payment_id`, `to`, `token`, `amount`, `executor` | L'argent est parti |
 | `payment_cancelled` | `payment_id`, `by`, `reason` | Paiement annulé par un signataire |
+| `unfreeze_approved` | `owner`, `approvals`, `required_approvals` | Un signataire vote la levée du gel |
 | `wallet_frozen` | `by`, `reason` | Portefeuille gelé : plus aucun paiement ne s'exécute |
 | `wallet_unfrozen` | `by` | Gel levé |
-| `owner_replaced` | `previous_owner`, `new_owner`, `key_expires_at` | Changement de signataire. Signal à surveiller s'il précède de gros paiements |
-| `owner_key_renewed` | `owner`, `key_expires_at` | Renouvellement périodique d'une clé |
+| `config_proposed` | `proposal_id`, `change` (`replace_owner` ou `change_threshold`), `proposer`, `new_owner`, `previous_owner`, `new_threshold`, `required_approvals`, `executable_after` | Un signataire propose de remplacer un signataire ou de changer le seuil. **Signal fort**, surtout avant de gros paiements |
+| `owner_replaced` | `previous_owner`, `new_owner`, `key_expires_at` | Le remplacement est effectif. Les approbations de l'ancienne clé ne comptent plus |
 | `threshold_changed` | `previous_threshold`, `new_threshold` | Nombre de signatures requis modifié. **Signal fort s'il baisse** |
 | `address_flagged` | `flagged`, `level`, `category`, `evidence_hash`, `expires_at` | L'oracle a inscrit une adresse au registre |
 | `address_unflagged` | `flagged`, `by` | Signalement retiré ou contesté avec succès |
 
 ### Le délai d'examen
+
+Les identifiants de paiement et de proposition de configuration partagent la même numérotation, qui commence à 0.
 
 Tout paiement attend au moins `executable_after` avant de pouvoir s'exécuter (60 secondes dans la démo). **Le verdict du moteur doit arriver dans ce délai**, sinon le paiement part sans avoir été noté. C'est la mesure « délai de signalement » : `timestamp` de `risk_flagged` moins `timestamp` de `payment_proposed`.
 

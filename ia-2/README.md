@@ -1,53 +1,74 @@
-# ia-2 : contrats, trafic et attaques simulées
+# ia-2 : le portefeuille gardé, le registre et les données de test
 
-Partie de Timéo dans le projet « Breaker » (voir `PLAN.md`) : le coffre surveillé, son disjoncteur, et de quoi produire du trafic normal et des attaques pour mesurer le moniteur de `ia-1/`.
+Partie de Timéo dans le projet « Breaker » (voir `PLAN.md` et `SUIVI.md`) : les contrats sur la chaîne, le relais vers le moteur de score de `ia-1/`, et de quoi produire du trafic normal et des fraudes pour le mesurer.
 
 ## État
 
-| Brique | État |
+| Tâche | Brique | État |
+|---|---|---|
+| T1 | Format des fichiers échangés (`shared/format-evenements.md`) et exemples | Fait |
+| T2 | Contrat `TreasuryGuard` | Fait, 20 tests passent sur la chaîne locale |
+| T8 | Contrat `RiskRegistry` (adresses signalées par l'oracle) | Fait, branché au portefeuille |
+| T7 | Mesure du gas (`shared/frais-gas.md`) | Fait |
+| T3 | Relais entre la chaîne et les fichiers JSON Lines | À faire |
+| T4 | Générateur de trafic normal | À faire |
+| T5 | Scénarios de fraude autonomes | Un scénario rejoué dans les tests ; variantes à faire |
+| T6 | Déploiement sur Avalanche Fuji | À faire |
+
+## Le portefeuille `TreasuryGuard` en bref
+
+Un portefeuille de trésorerie à plusieurs signataires (2 sur 5 dans la démo), pour un seul actif (mUSD, faux dollar de test).
+
+1. Un signataire **propose** un paiement ; sa proposition vaut première approbation.
+2. Les autres **approuvent**.
+3. Après un **délai d'examen** (60 secondes), un signataire **exécute** si le nombre d'approbations suffit.
+
+Ce qui ajoute de la friction :
+
+| Déclencheur | Effet |
 |---|---|
-| Contrat `BreakerVault` (coffre de prêt, disjoncteur à trois niveaux, rôles séparés) | Écrit, 13 tests passent sur la chaîne locale |
-| `SimplePool` (pool d'échange minimal, sert d'oracle de prix) et `MockToken` | Écrits, testés |
-| Scénario d'attaque inspiré de Drift | Rejoué dans les tests ; pas encore de script autonome |
-| Générateur de trafic normal | À faire |
-| Déploiement sur Avalanche Fuji | À faire (portefeuilles de test et faucet) |
+| Le moniteur signale `StepUp` | Une signature de plus |
+| Le moniteur signale `Hold` | Une signature de plus et une heure d'attente, pendant laquelle un signataire peut annuler |
+| Le bénéficiaire est au registre des adresses signalées | `StepUp` ou `Hold`, appliqué dès la proposition |
+| Le plafond de la période (100 000 mUSD par jour) serait dépassé | Une signature de plus |
+| Remplacement d'un signataire ou changement du seuil | Toujours une signature de plus et une heure d'attente |
 
-## Le coffre en bref
+Ce qui protège les signataires eux-mêmes :
+- **Gel** : un seul signataire suffit pour geler les paiements, il en faut trois pour dégeler.
+- **Expiration des clés** : une clé de plus de 15 jours ne peut plus rien signer, et les approbations qu'elle a données ne comptent plus. Remplacer un signataire annule aussi ses approbations en cours.
+- **Unanimité** : si les cinq signataires approuvent, le délai d'attente saute. Ils gardent le dernier mot.
 
-- Les déposants apportent du mUSD (faux dollar de test) ; les emprunteurs le sortent contre un collatéral listé, dans la limite d'un ratio.
-- Le prix d'un collatéral est lu sur un pool d'échange. Avec un pool mince, ce prix se manipule : c'est la faiblesse rejouée.
-- Trois niveaux de garde : `Normal`, `Limited` (sorties plafonnées par fenêtre de temps), `Paused`.
-- Quatre rôles séparés :
-  - `DEFAULT_ADMIN_ROLE` distribue les rôles ;
-  - `CONFIG_ROLE` liste les collatéraux, après un délai de sécurité ;
-  - `GUARDIAN_ROLE` (le moniteur) ne peut que durcir le niveau de garde ;
-  - `RESUME_ROLE` (un humain) est le seul à pouvoir relancer.
-- Aucun rôle ne peut déplacer les fonds des déposants.
+**Le moniteur n'a qu'un pouvoir : relever le niveau de risque d'un paiement en attente.** Il ne peut ni proposer, ni approuver, ni exécuter, ni annuler, ni geler, ni abaisser un niveau. Les tests le vérifient un par un.
 
-## Le scénario d'attaque
+## Le scénario de fraude des tests
 
-1. L'attaquant crée un faux jeton et un pool de 1 000 jetons contre 10 mUSD, puis achète pour 90 mUSD : le prix passe de 0,01 à 1 mUSD.
-2. Il obtient `CONFIG_ROLE` (signataire trompé), ramène le délai de sécurité à zéro et liste son jeton.
-3. Il dépose 4 000 000 de faux jetons et vide le coffre en 31 emprunts.
+Deux signataires trompés proposent et approuvent dix paiements de 95 000 mUSD vers une adresse inconnue.
 
-Résultats des tests : sans disjoncteur, le coffre est vidé ; avec une pause après le troisième emprunt, plus de 90 % des fonds restent ; avec une pause au listing, rien ne sort.
+| Configuration | Résultat |
+|---|---|
+| Portefeuille témoin, simple 2 sur 5 | 950 000 mUSD sur 1 000 000 partent |
+| Avec le garde : chaque paiement est signalé `Hold`, un signataire alerté gèle et annule | Rien ne sort |
+| Garde sans moniteur : seul le plafond joue | 95 000 mUSD partent, le deuxième paiement exige une troisième signature |
 
-## Installation et tests
+## Installation et commandes
 
 Il faut Node.js 20 ou plus récent.
 
 ```bash
 cd ia-2
 npm install
-npm test            # compile et lance les 13 tests sur la chaîne locale de Hardhat
-npm run export-abi  # régénère shared/abi/*.json pour le moniteur
+npm test            # compile et lance les 20 tests sur la chaîne locale de Hardhat
+npm run gas         # mesure le gas des transactions
+npm run export-abi  # régénère shared/abi/*.json
 ```
 
 Pour Fuji, copier `.env.example` en `.env` et y mettre les clés de portefeuilles **de test**. `.env` est ignoré par Git.
 
 ## Limites connues
 
-- Prototype non audité. Pas d'intérêts, pas de liquidations, jetons à 18 décimales seulement.
-- Le délai de sécurité se modifie sans délai : c'est la faiblesse voulue du scénario.
-- Si l'attaquant obtient aussi `DEFAULT_ADMIN_ROLE`, il peut s'accorder `RESUME_ROLE` et lever la pause. Le disjoncteur suppose que la clé de relance est tenue à part.
-- Une attaque qui tient en une seule transaction passe avant toute réaction du moniteur.
+- Prototype non audité. Un seul actif, à 18 décimales.
+- Un signataire dont la clé est volée peut geler le portefeuille ou annuler des paiements légitimes. Il ne peut pas payer seul.
+- Si trop de clés expirent en même temps, il ne reste plus assez de signataires actifs pour agir : le renouvellement doit être étalé.
+- Si tous les signataires sont trompés à la fois, l'unanimité fait sauter le délai d'attente.
+- Le moniteur doit rendre son verdict pendant le délai d'examen. S'il est en panne, seuls le plafond et le registre jouent.
+- En production, ces règles seraient un module greffé sur un portefeuille existant (un Safe, par exemple), pas un portefeuille écrit de zéro.
