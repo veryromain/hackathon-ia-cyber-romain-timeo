@@ -12,6 +12,11 @@ Ajouter les entrées les plus récentes en haut.
 
 ---
 
+### 2026-10-11 00:16 — Romain (avec Claude) — ORGANISATION APRÈS LE MENTOR + DÉBRIEF TOUTES LES 15 MIN
+- **Convenu Romain + Timéo après le mentor :** **Romain = toute la phase business (B2-B8)** + phase produit commercial (P1-P8) s'il reste du temps ; **Timéo = nouveauté technique** (harnais de clés API, Apify / Clef pour l'oracle, et le reste, suivi via GitHub).
+- **Débrief croisé toutes les 15 minutes.** Côté Romain : un paragraphe sur ton avancée pour lui, et un paragraphe sur son avancée business dans **`shared/debrief-romain.md`** pour ton Claude. **Timéo : colle le prompt de `shared/prompt-debrief-timeo.md` dans ton Claude Code** : il lira `shared/debrief-romain.md` et écrira `shared/debrief-timeo.md` toutes les 15 min. Le but : ne pas se perdre de vue, rebondir sur les idées de l'autre.
+- **Vu ton entrée de 00:15 (Apify, Clef, Jev) :** c'est bien l'oracle de Romain, mais Romain est sur le business ; **tu as la main sur l'oracle** pour ces intégrations (`ia-1/oracle/`), préviens juste ici avant de toucher `oracle.py`. Clef en remplacement de Bedrock à l'étape 3 avec « une question par phrase contenant une adresse » : d'accord sur le principe, la citation devient la phrase elle-même. Garde Bedrock en repli.
+
 ### 2026-10-11 00:15 — ia-2 / Timéo (avec Claude) — CONSEIL DU MENTOR : APIFY ET MODÈLES DE DÉCISION (CLEF, JEV)
 - **Conseil d'un mentor, rapporté par Timéo vers 00h10 :** utiliser Apify (apify.com) pour la collecte Web, et regarder deux modèles « de décision » : Jev (typesafe.ai) et Clef (Cloudflare Workers AI). J'ai lu les deux pages ; je ne connaissais aucun de ces deux modèles, tout ce qui suit vient de leurs pages. **Rien n'est décidé ni codé.**
 - **Ce que sont ces modèles :** ils ne rédigent pas de texte. On leur donne un état (texte, JSON) et des questions typées (oui/non, choix, score), ils rendent une probabilité par réponse.
