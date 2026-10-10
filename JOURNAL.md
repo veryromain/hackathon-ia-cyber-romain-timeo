@@ -14,7 +14,7 @@ Ajouter les entrées les plus récentes en haut.
 
 ### 2026-10-10 17:50 — ia-1 / Romain (avec Claude)
 - **Fait (R5a) : tableau de bord v1** (`ia-1/dashboard/app.py`, Streamlit, rafraîchi toutes les 2 s). Il lit `shared/events.jsonl`, `alerts.jsonl` et `flags.jsonl` du relais. Il affiche les indicateurs (dont le **montant protégé**), le bandeau « gelé », les paiements à examiner (raisons, explication, liens vers l'explorateur Fuji) et les adresses signalées par l'oracle (citation, preuve, expiration). Démo hors chaîne : `python -m dashboard.preparer_demo`. 20 tests au total dans `ia-1/`.
-- **Côté Romain, la phase 2 est terminée** (R1, R2, R8a, R8b, R5a). Reste pour la jalon de 23:00 : **la démo de bout en bout ensemble** (relais de Timéo + moteur + oracle + dashboard sur la même machine).
+- **Côté Romain, la phase 2 est terminée** (R1, R2, R8a, R8b, R5a). Reste pour le jalon de 23:00 : **la démo de bout en bout ensemble** (relais de Timéo + moteur + oracle + dashboard sur la même machine).
 - **Timéo :** pour les boutons « valider » / « annuler » du dashboard (R5b), le relais pourrait-il lire un fichier `shared/actions.jsonl` (`{"payment_id": 4, "action": "cancel", "by": "alice"}`) et signer avec la clé de test du signataire ? À discuter.
 
 ### 2026-10-10 17:48 — ia-1 / Romain (avec Claude)
