@@ -4,7 +4,7 @@
 > Légende : ✅ fait · 🔄 en cours · ⬜ à faire · ✂️ coupé (manque de temps)
 > Détail du projet : [`PLAN.md`](PLAN.md) · Historique : [`JOURNAL.md`](JOURNAL.md) · Brief : [`CONTEXTE.md`](CONTEXTE.md)
 
-**Dernière mise à jour :** 2026-10-10 17:53, par Claude (Timéo) — relecture de la partie de Timéo, jeu de données relibellé (voir JOURNAL)
+**Dernière mise à jour :** 2026-10-10 17:56, par Claude (Romain) — B4 corrigé (Safe Shield / Hypernative Guardian)
 **Rendu (gel définitif) :** dim. 11/10 **12:00** · **Checkpoint :** sam. **18:30** · **Pitch :** dim. 13:00
 
 ---
@@ -120,7 +120,7 @@ Un **garde antifraude pour les organisations qui gardent des millions dans un po
 | B1 | **Bilan de la démo** : ce qui marche, ce qui ne marche pas ; à garder, enlever, modifier, améliorer | Les deux | Après la démo de bout en bout, à partir des mesures (R6) | Liste écrite dans `shared/bilan-demo.md` | ⬜ |
 | B2 | **Le problème est-il réel ?** Incidents récents chiffrés et sourcés (Drift, Bybit, fraudes au président en crypto, pertes des petites équipes), fréquence, coût moyen | Romain | Recherche web, sources citées, chiffres vérifiés | Slide « pourquoi ce problème » avec 3 à 5 faits sourcés | ⬜ |
 | B3 | **Étude de marché** : combien d'organisations ciblées, quelle trésorerie, où (Safe, Squads), taille de marché (TAM / SAM / SOM) avec la méthode de calcul | Romain | Recherche web, données Safe / DefiLlama / rapports publics | Estimation chiffrée **et sourcée**, avec ses hypothèses | ⬜ |
-| B4 | **Concurrence** : Safe (gratuit, sans surveillance), Hypernative, Blockaid, Fireblocks, Forta… ce qu'ils font, leur prix, leur cible, **ce qu'on fait mieux** | Romain | Sites officiels, documentation, tableau comparatif | Tableau comparatif vérifié (pas « de mémoire ») | ⬜ |
+| B4 | **Concurrence** : **Hypernative Guardian en tête** (contrat de contrôle sur Safe qui *bloque* les transactions à risque, vendu aux grandes trésoreries), Safe Shield (*avertit* sans agir, via Blockaid / Tenderly / Hypernative), Fireblocks, Forta… ce qu'ils font, leur prix, leur cible, **ce qu'on fait mieux** (voir `conversations/2026-10-10_timeo_comparaison-safe.md`) | Romain | Sites officiels, documentation, tableau comparatif | Tableau comparatif vérifié (pas « de mémoire ») | ⬜ |
 | B5 | **Validation du besoin sur le terrain** : interroger 3 à 5 personnes concernées (équipes de protocoles présentes au hackathon, mentors Team1, Kryptosphère, KPMG) : « comment protégez-vous votre trésorerie ? avez-vous déjà eu peur ? paieriez-vous, combien ? » | Romain (+ Timéo s'il est disponible) | Mini-entretiens de 5 minutes, script de questions | Synthèse des réponses, avec citations anonymisées | ⬜ |
 | B6 | **Modèle économique et prix** : abonnement par portefeuille, palier selon la trésorerie, coûts réels (gas 0,002 $/alerte, Bedrock), marge, point mort | Romain | Tableur ; frais mesurés dans `shared/frais-gas.md` | Grille de prix + calcul de rentabilité simple | ⬜ |
 | B7 | **Mise sur le marché** : canal de distribution (module Safe / Squads, partenaires auditeurs), premiers clients visés, feuille de route 6 mois | Romain | — | Slide « go-to-market » | ⬜ |

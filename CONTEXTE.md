@@ -9,7 +9,7 @@ Hackathon **blue team** de 36 h : construire les outils des défenseurs, là où
 - **Dotation :** 20 000 € en cash selon le guide Notion (Luma annonce 15 000 € en cash et crédits)
 - **Organisation :** Utopia, Kryptosphère ESSEC, METALAB ESSEC, Team1 France
 
-**Nos choix :** Track 1 ou Track 2, avec deux IA développées en parallèle.
+**Notre choix (décidé le 10/10 à 16:35) :** **Track 1 — Fintech Security, axe 2** (SOC antifraude), appliqué à la trésorerie crypto des petites et moyennes organisations (multisig sans équipe de sécurité). Détail : `PLAN.md` et `shared/cible-et-modele-economique.md`.
 
 ---
 

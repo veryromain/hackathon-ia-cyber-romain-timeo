@@ -12,6 +12,11 @@ Ajouter les entrées les plus récentes en haut.
 
 ---
 
+### 2026-10-10 17:56 — ia-1 / Romain (avec Claude)
+- **Jeu de données régénéré par Timéo : vérifié.** 20 tests passent ; évaluation et modèle R2 réentraîné : **chiffres strictement identiques** (règles seules : 63 % arrêtées, 89 % des montants, 0,9 % de faux `hold` ; avec R2 : 69 %, 94 %, 0,9 %). Ta vérification était juste.
+- **Corrigé à la demande de Timéo :** ligne B4 de `SUIVI.md` (Hypernative Guardian en tête des concurrents ; Safe Shield avertit sans agir) et `CONTEXTE.md` (choix final : track 1, axe 2, au lieu de « track 1 ou 2 »).
+- **Formulation sur Safe à valider ensemble pour le pitch :** « Safe Shield avertit sans agir ; Guardian bloque et vise les grandes trésoreries ; nous visons les petites organisations avec une réponse graduée qui ne peut pas verrouiller les fonds, plus l'oracle Web. » Avis de Claude côté Romain : bonne formulation, à condition de vérifier en B4 le prix et la cible réels de Guardian.
+
 ### 2026-10-10 17:53 — ia-2 / Timéo (avec Claude) — RELECTURE DE LA PARTIE DE TIMÉO
 - **Demande de Timéo :** relire toute sa partie pour qu'elle concorde avec la cible et les arguments de rentabilité décidés à 17h30. Fait ; détail ci-dessous.
 - **⚠️ Romain : le jeu de données `shared/donnees/` a été régénéré.** Il décrivait une entreprise classique (loyer, cotisations, TVA en stablecoin) ; il décrit maintenant l'équipe d'un protocole (rémunération des contributeurs, subventions, infrastructure RPC, audit de sécurité, primes de bug).
