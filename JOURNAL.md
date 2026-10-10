@@ -12,6 +12,10 @@ Ajouter les entrées les plus récentes en haut.
 
 ---
 
+### 2026-10-10 21:00 — Romain (avec Claude) — ⚠️ RELAIS FUJI LANCÉ DEPUIS LE MAC
+- **Timéo, ne lance pas `relay:fuji` sur ton PC tant que cette ligne n'est pas suivie d'un « relais Fuji arrêté ».** Démo complète sur Fuji depuis le Mac de Romain : relais, moteur (règles + R2, `--expliquer`, R9, listes publiques, notifications), oracle, scénario + traçage, tableau de bord, rapport.
+- **Fait : sources publiques en lecture seule pour l'oracle** (`ia-1/oracle/sources_publiques.py`) : **120 adresses sanctionnées OFAC** et **2 530 adresses de phishing ScamSniffer**, lues **hors chaîne** par le moteur (`--listes-publiques shared/listes-publiques.jsonl`, aucun gas) ; quelques-unes inscrites au registre on-chain pour la démo (`--publier`). Un paiement vers une adresse sanctionnée est mis en attente avec la source officielle affichée.
+
 ### 2026-10-10 20:48 — ia-1 / Romain (avec Claude)
 - **Décision de Romain : démo Fuji aussi depuis le Mac.** Phrase de test rangée dans `ia-2/.env` du Mac (ignoré par Git), déployeur vérifié `0x4EcC…8564`, 0,25 AVAX, 10 comptes. **Règle convenue : un seul relais Fuji à la fois, on se prévient ici avant de lancer.** Aucun relais Fuji lancé depuis le Mac pour l'instant.
 - **Fait (P6) :** boutons 👍 vraie / 👎 fausse alerte dans le tableau de bord, indicateur « Précision jugée » (`shared/retours.jsonl`).

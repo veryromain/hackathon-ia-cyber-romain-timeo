@@ -28,3 +28,7 @@ shared/flags.jsonl
 # Modèle d anomalie appris (régénérable : python -m score.anomalie ...)
 ia-1/modeles/
 shared/tracage-roles.json
+
+# Listes publiques téléchargées (régénérables : python -m oracle.sources_publiques)
+shared/listes-publiques.jsonl
+ia-1/oracle/sources_cache/
