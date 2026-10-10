@@ -200,6 +200,13 @@ Tout le détail, les chiffres et leurs sources : `shared/cible-et-modele-economi
 - **Cible.** Les organisations de dix à trente personnes qui tiennent une trésorerie de plusieurs millions à plusieurs signataires : équipes de protocoles, DAO, startups crypto, fonds, fondations. Pas les grandes plateformes, qui ont déjà leurs outils.
 - **Solution.** Un garde antifraude qui note chaque paiement avant son exécution, à partir du comportement on-chain et d'un oracle IA qui lit les signalements de fraude publiés sur le Web (pont Web2 → Web3). Il déclenche une réponse graduée appliquée par le portefeuille du client : signatures supplémentaires, mise en attente, gel, alerte expliquée. L'outil ne détient jamais les fonds.
 - **Stack.** Solidity et Hardhat sur Avalanche Fuji, Python et scikit-learn pour le score, AWS Bedrock pour les explications et le rapport, Streamlit pour le tableau de bord.
+- **Où on en est à 18h30.**
+  - Contrats écrits et testés (20 tests) : portefeuille multisig gardé et registre des adresses signalées.
+  - Relais chaîne ↔ moteur testé de bout en bout sur la chaîne locale : 0 $ sorti sur 280 500 tentés.
+  - Moteur de score (règles explicables + modèle d'anomalie), évalué sur un jeu de test indépendant de 54 paiements frauduleux : **100 % des fraudes freinées ou arrêtées, 94 % des montants frauduleux mis en attente, 0,9 % de paiements légitimes mis en attente à tort**.
+  - Oracle Web2 → Web3 : **100 % de précision et de rappel** sur 35 adresses de test, y compris 7 tentatives d'injection de prompt déjouées.
+  - Coût d'une alerte on-chain : 0,002 $.
+  - Prochaines étapes : tableau de bord, démo sur Fuji, étude de marché et entretiens avec des équipes cibles.
 
 ## 9. Limites et risques
 
