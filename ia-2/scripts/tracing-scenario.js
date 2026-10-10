@@ -11,8 +11,7 @@ const { loadDeployment } = require("../lib/deployment");
 
 const { ethers } = hre;
 const DIR = process.env.RELAY_DIR ? path.resolve(process.env.RELAY_DIR) : path.join(__dirname, "..", "..", "shared");
-// Services partagés (plateformes, ponts) : liste d'adresses factices tenue par ia-1, clé « adresses ».
-const SERVICES = JSON.parse(fs.readFileSync(path.join(__dirname, "..", "..", "shared", "services-connus.json"), "utf8")).adresses;
+const SERVICES = JSON.parse(fs.readFileSync(path.join(__dirname, "..", "..", "shared", "services-connus.json"), "utf8")).services;
 const e18 = (n) => ethers.parseEther(String(n));
 const sleep = (seconds) => new Promise((resolve) => setTimeout(resolve, seconds * 1000));
 // Adresses de destination sans clé : elles ne font que recevoir. Mêmes adresses sur tous les réseaux.
@@ -27,7 +26,7 @@ async function main() {
   const scammer = ethers.Wallet.createRandom().connect(ethers.provider);
   const mules = [addr("mule-1"), addr("mule-2"), addr("mule-3")];
   const innocent = addr("innocent");
-  const exchange = ethers.getAddress(SERVICES[0]);
+  const exchange = ethers.getAddress(SERVICES.find((s) => s.kind === "exchange").address);
 
   console.log("1. L'arnaqueur encaisse 100 000 mUSD");
   await (await deployer.sendTransaction({ to: scammer.address, value: ethers.parseEther("0.01") })).wait(); // de quoi payer le gas
