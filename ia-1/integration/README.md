@@ -13,7 +13,7 @@ cd ia-2 && npm run deploy:local && npx hardhat run ../ia-1/integration/carnet.js
 cd ia-2 && npm run relay:local
 # 4. moteur de score en direct, avec le modèle d'anomalie
 cd ia-1 && .venv/bin/python -m score.moteur --events ../shared/events.jsonl --out ../shared/alerts.jsonl \
-  --carnet integration/carnet-local.json --modele modeles/anomalie.joblib --suivre
+  --carnet integration/carnet-local.json --modele modeles/anomalie.joblib --suivre --expliquer   # --expliquer : explications Bedrock (R3)
 # 5. tableau de bord → http://localhost:8599
 cd ia-1 && .venv/bin/streamlit run dashboard/app.py --server.port 8599
 # 6a. scénario de Timéo : paiement normal + fraude en rafale + réponse d'un signataire
@@ -35,3 +35,8 @@ cd ia-2 && ADRESSE=0x6253540229bdcc8ae009fe075005a3fa5137c352 npx hardhat run ..
 - `OFF_HOURS` se déclenche pendant la démo du samedi (week-end) : c'est juste, mais à expliquer au jury (ou faire la démo filmée un jour de semaine, ou régler les heures ouvrées).
 - `BURST` s'ajoute au paiement vers l'adresse signalée parce qu'il suit de près la rafale du scénario : artefact de démo, sans effet sur le résultat.
 - Hardhat installé sur le Mac : `npm install` a demandé des réessais (réseau lent en partage de connexion).
+
+## Après la démo : le rapport d'incident (R4)
+```bash
+cd ia-1 && .venv/bin/python -m score.rapport --dossier ../shared --sortie rapports/rapport-incident.md
+```

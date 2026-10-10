@@ -85,5 +85,22 @@ Tests sans navigateur : `tests/test_dashboard.py` (AppTest de Streamlit).
 ```
 `score/explication.py` : le modèle reçoit **uniquement les faits du moteur** (niveau, montant, libellé, destinataire abrégé, raisons) et les reformule en 2 à 4 phrases pour un signataire non expert, avec l'action à faire. **Garde-fous vérifiés par le code** : aucune adresse étrangère ou complète, longueur bornée, sinon repli sur le texte à trous ; après une panne Bedrock, pause de 60 s sans appel pour que les alertes partent sans délai. Appel commun dans `commun/bedrock.py` (Opus 5.5 → Fable 5.1 → Opus 4.8, jamais Sonnet). 6 tests hors ligne. **Validé en direct** (Opus 4.8, ≈ 6 s par alerte, sous les 30 s du délai d'examen) : les 4 alertes de l'exemple reformulées sans fait inventé, avec l'action à faire.
 
+## R4 — Rapport d'incident ✅
+```bash
+.venv/bin/python -m score.rapport --dossier ../shared --sortie rapports/rapport-incident.md   # [--sans-llm]
+```
+`score/rapport.py` : les **faits sont établis par le code** à partir de `events.jsonl` / `alerts.jsonl` / `flags.jsonl` (paiements signalés, délai de signalement, montants tentés / sortis / protégés, gel, annulations, signalements Web), puis Bedrock rédige une **synthèse en 3 paragraphes à partir de ces faits seulement**, vérifiée (aucun montant hors des faits, aucun hash), sinon synthèse écrite par le code. Le rapport contient les preuves (hash de transaction) et la chronologie complète. Exemple généré sur la démo de ce soir : `rapports/rapport-demo-locale.md` (285 300 mUSD protégés, 0 sorti, signalement en ≤ 1 s). 5 tests.
+
+## R8c — Croisement des sources de l'oracle ✅
+Une adresse n'est publiée dans `flags.jsonl` que si la **somme des réputations des sources distinctes ≥ 0,8** (`oracle/sources.json` ; source inconnue = 0,4 ; identité = hôte de l'URL, ou nom du site dans le `<h1>` d'une page locale). Une source réputée suffit ; deux sites inconnus indépendants aussi ; **la même source répétée compte une fois**. Les accusations insuffisantes vont dans `flags-rejetes.jsonl` (`single_low_reputation_source`), en attente d'autres sources.
+
+| Scénario (`oracle/corpus_demo/`) | Résultat |
+|---|---|
+| **Empoisonnement** : 3 pages du même « Blog anonyme » accusent le fournisseur CloudNova | ⏸ **en attente, non publiée** (1 source, poids 0,40) |
+| Forum réputé (0,8) accuse l'arnaqueur | ✓ publiée |
+| Même accusation sur 2 sites inconnus différents | ✓ publiée (2 sources) |
+
+`--sans-croisement` pour l'ancien comportement. 4 tests.
+
 ## À venir
-R8c croisement des sources · R4 rapport · R5 dashboard · R6 évaluation · R9 traçage des fonds
+R5b actions du dashboard · R6 évaluation finale · R9 traçage des fonds

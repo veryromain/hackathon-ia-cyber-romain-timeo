@@ -191,15 +191,70 @@ def traiter_page(source: str, sans_llm=False, maintenant=None) -> tuple[list, li
     return acceptes, rejetes
 
 
+# ---------------------------------------------------------------------------------------------------
+# R8c — croisement des sources : une adresse n'est publiée que si l'accusation est assez étayée.
+# Réputation des sources dans oracle/sources.json (clé : hôte de l'URL, ou titre <h1> d'une page locale).
+# Règle : somme des réputations des sources DISTINCTES >= SEUIL_PUBLICATION. Une source réputée suffit ;
+# deux sources inconnues indépendantes aussi ; la même source répétée dix fois compte une fois (anti-empoisonnement).
+SEUIL_PUBLICATION = 0.8
+REPUTATION_INCONNUE = 0.4
+FICHIER_SOURCES = Path(__file__).resolve().parent / "sources.json"
+
+
+def reputations() -> dict:
+    try:
+        return json.loads(FICHIER_SOURCES.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return {}
+
+
+def cle_source(source: str) -> str:
+    """Identité d'une source : l'hôte pour une URL, le titre <h1> pour une page locale (sinon son dossier)."""
+    if source.startswith("http://") or source.startswith("https://"):
+        return re.sub(r"^www\.", "", source.split("/")[2].lower())
+    try:
+        soup = BeautifulSoup(Path(source).read_text(encoding="utf-8"), "html.parser")
+        h1 = soup.find("h1")
+        if h1 and h1.get_text(strip=True):
+            return re.split(r"\s+[—–|-]\s+", h1.get_text(strip=True))[0].strip().lower()  # « Forum X — sujet » → « forum x »
+    except OSError:
+        pass
+    return Path(source).parent.name.lower()
+
+
+def consolider(candidats: list[dict]) -> tuple[list[dict], list[dict]]:
+    """Regroupe les signalements acceptés page par page, par adresse ; publie ou met en attente."""
+    rep = reputations()
+    par_adresse: dict[str, dict] = {}
+    for c in candidats:
+        src = cle_source(c["source_url"])
+        g = par_adresse.setdefault(c["address"], {"sources": {}, "meilleur": c})
+        g["sources"][src] = max(g["sources"].get(src, 0.0), rep.get(src, REPUTATION_INCONNUE))
+        if c["confidence"] > g["meilleur"]["confidence"]:
+            g["meilleur"] = c
+    publies, attente = [], []
+    for adr, g in par_adresse.items():
+        poids = sum(g["sources"].values())
+        m = {**g["meilleur"], "sources_count": len(g["sources"])}
+        if poids >= SEUIL_PUBLICATION:
+            publies.append(m)
+        else:
+            attente.append({**m, "reject_reason": "single_low_reputation_source",
+                            "detail": f"{len(g['sources'])} source(s) indépendante(s), poids {poids:.2f} < {SEUIL_PUBLICATION}"})
+    return publies, attente
+
+
 def main(argv=None):
     a = argparse.ArgumentParser(description="Oracle Web2 → Web3 (R8a)")
     a.add_argument("sources", nargs="+", help="fichiers HTML locaux ou URL")
     a.add_argument("--out", type=Path, default=Path("flags.jsonl"))
     a.add_argument("--rejets", type=Path, help="défaut : flags-rejetes.jsonl à côté de --out")
     a.add_argument("--sans-llm", action="store_true")
+    a.add_argument("--sans-croisement", action="store_true", help="publie chaque accusation sans exiger d'autres sources")
     args = a.parse_args(argv)
     rejets = args.rejets or args.out.with_name("flags-rejetes.jsonl")
-    with open(args.out, "a") as fa, open(rejets, "a") as fr:
+    candidats = []
+    with open(rejets, "a") as fr:
         for src in args.sources:
             t0 = time.time()
             try:
@@ -207,13 +262,21 @@ def main(argv=None):
             except Exception as err:  # une page qui échoue ne doit pas arrêter l'oracle
                 print(f"✗ {src} : {err!r}", file=sys.stderr)
                 continue
-            for x in acc:
-                fa.write(json.dumps(x, ensure_ascii=False) + "\n")
+            candidats += acc
             for x in rej:
                 fr.write(json.dumps(x, ensure_ascii=False) + "\n")
-            print(f"{Path(src).name:<32} {time.time() - t0:5.1f} s  signalées {len(acc)}  rejetées {len(rej)}"
-                  + "".join(f"\n   ✓ {x['address'][:12]}… {x['level']:<7} {x['category']} ({x['confidence']})" for x in acc)
+            print(f"{Path(src).name:<32} {time.time() - t0:5.1f} s  accusations {len(acc)}  rejetées {len(rej)}"
+                  + "".join(f"\n   • {x['address'][:12]}… {x['level']:<7} {x['category']} ({x['confidence']}) source « {cle_source(src)} »" for x in acc)
                   + "".join(f"\n   ✗ {x['address'][:12]}… {x['reject_reason']}" for x in rej), file=sys.stderr)
+        publies, attente = (candidats, []) if args.sans_croisement else consolider(candidats)
+        with open(args.out, "a") as fa:
+            for x in publies:
+                fa.write(json.dumps(x, ensure_ascii=False) + "\n")
+        for x in attente:
+            fr.write(json.dumps(x, ensure_ascii=False) + "\n")
+    print("— croisement des sources :"
+          + "".join(f"\n   ✓ PUBLIÉE {x['address'][:12]}… {x['level']} ({x['sources_count']} source(s))" for x in publies)
+          + "".join(f"\n   ⏸ EN ATTENTE {x['address'][:12]}… {x['detail']}" for x in attente), file=sys.stderr)
 
 
 if __name__ == "__main__":

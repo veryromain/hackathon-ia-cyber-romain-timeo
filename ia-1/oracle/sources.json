@@ -1,0 +1,10 @@
+{
+  "_commentaire": "Réputation des sources (0 à 1). Clé : hôte de l'URL, ou titre <h1> d'une page locale, en minuscules. Inconnue : 0,4.",
+  "forum cryptoentraide": 0.8,
+  "r/cryptofraude": 0.6,
+  "blog sécurité web3": 0.7,
+  "fil telegram archivé": 0.3,
+  "avis clients": 0.3,
+  "chainabuse.com": 0.9,
+  "scamsniffer.io": 0.9
+}

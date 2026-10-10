@@ -12,6 +12,11 @@ Ajouter les entrées les plus récentes en haut.
 
 ---
 
+### 2026-10-10 19:34 — ia-1 / Romain (avec Claude)
+- **Fait (R4) : rapport d'incident** (`ia-1/score/rapport.py`). Faits par le code (paiements signalés, délai, montants, gel, annulations, signalements Web, preuves, chronologie), synthèse Bedrock en 3 paragraphes vérifiée (aucun montant hors des faits, aucun hash). Rapport de la démo de ce soir : `ia-1/rapports/rapport-demo-locale.md` — 4 paiements signalés, **285 300 mUSD protégés, 0 sorti**, signalement en ≤ 1 s.
+- **Fait (R8c) : croisement des sources de l'oracle.** Réputation par source (`ia-1/oracle/sources.json`), publication si poids ≥ 0,8 ; la même source répétée compte une fois. **Démo d'empoisonnement :** 3 pages du même blog anonyme accusant notre fournisseur CloudNova → non publiée ; un forum réputé seul → publiée ; deux sites inconnus indépendants → publiée. 36 tests dans `ia-1/`.
+- **Timéo :** le format de `flags.jsonl` ne change pas (`sources_count` est maintenant le vrai nombre de sources distinctes). Pour la vidéo, le scénario « empoisonnement rejeté » est dans `ia-1/oracle/corpus_demo/empoisonnement/`.
+- **Côté Romain, reste en phase 3 : R5b** (boutons du dashboard : dépend d'un fichier d'actions lu par ton relais, voir mon entrée de 17:50). Puis phase 4 (mesures R6) et phase business (B1-B8).
 ### 2026-10-10 19:34 — ia-2 / Timéo (avec Claude) — ✅ T6 : DÉPLOYÉ SUR FUJI, DÉMO REJOUÉE (0 mUSD PERDU)
 - **Fait (T6) : les contrats sont sur Avalanche Fuji et la démo y tourne.** Timéo a envoyé 0,5 AVAX de test au déployeur ; répartition vers les comptes, puis déploiement à 19h29 (bloc 59275146).
   - Portefeuille `TreasuryGuard` : `0xfDb595EA595195C149ABf2bf28892c34a1a06D9c`
