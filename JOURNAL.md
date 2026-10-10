@@ -12,6 +12,16 @@ Ajouter les entrées les plus récentes en haut.
 
 ---
 
+### 2026-10-10 20:25 — ia-1 / Romain (avec Claude) — DÉMO FUJI DEPUIS LE MAC : PRÊTE, SAUF LA PHRASE DE TEST
+- **Réponse à ton entrée de 20:13 : aucune démo n'a été lancée depuis le Mac, et pour cause.** Le Mac lit Fuji sans clé (nouveau script `ia-1/integration/etat-fuji.js`, lecture seule ; état à 20:16 : **non gelé, 996 850 mUSD, 4 paiements dont 1 exécuté et 3 annulés, 0,25 AVAX au déployeur**), mais **il ne peut rien y signer** : `ia-2/.env` n'existait pas ici, et ton relais exige les clés du moniteur et de l'oracle dès le démarrage. Scénario, oracle, actions du tableau de bord et traçage passent tous par le relais.
+- **Ce que Romain veut :** rejouer la démo complète (actions, traçage) **depuis sa console et son tableau de bord sur le Mac**, avec le modèle R2 et Bedrock, qui ne tournent pas sur ton PC.
+- **Fait :** mode d'emploi complet dans `ia-1/integration/README.md`, section « Rejouer la démo complète sur Fuji depuis le Mac » (relais, moteur avec `--modele --expliquer --services`, tableau de bord avec `BREAKER_DEPLOIEMENT`, scénario **sans** `RESPOND=1` pour que le signataire gèle et annule depuis les boutons, oracle, traçage, rapport). `ia-2/.env` créé sur le Mac avec la phrase vide (ignoré par Git). Bedrock et AWS OK depuis le Mac, 43 tests au vert. Détail : `conversations/2026-10-10_romain_demo-fuji.md`.
+- **Timéo, une décision à prendre à deux :** comment donner au Mac le droit de signer ?
+  1. **Proposé :** tu tapes la phrase de test **directement dans `ia-2/.env` sur le Mac** (même salle, rien ne circule par message ni par Git). Mêmes contrats, mêmes liens Snowtrace, démo en 2 minutes.
+  2. Sinon : phrase neuve sur le Mac (`npm run fuji:setup`), tu envoies 0,1 AVAX de test au nouveau déployeur, et on redéploie (adresses à changer dans `ia-2/README.md` et `shared/mesures.md`).
+  3. Sinon : la démo reste sur ton PC, déjà prêt d'après ton entrée de 20:13, et Romain y pilote le tableau de bord (sans R2).
+- **Pour ton relais :** rien à changer. Noté : Opus 5.5 refusé, Opus 4.8 fonctionne ; le code commun `ia-1/commun/bedrock.py` retombe tout seul sur Opus 4.8.
+
 ### 2026-10-10 20:15 — ia-1 / Romain (avec Claude)
 - **R9 validé sur ta sortie réelle du relais** (`shared/echantillons/tracage.*`) : mule (26 % des sorties) → `step_up` avec `TAINTED_FUNDS` ; innocent « dusté » et plateforme → rien. Test ajouté (43 tests dans `ia-1/`). Ton point 1 (horodatages non croissants des `token_transfer`) est géré : la règle compare au transfert, pas à `seq`.
 - **⚠️ Je t'ai écrasé `shared/services-connus.json` par erreur** (créé en même temps des deux côtés, mon commit a gagné le rebase) : **restauré dans ta version** (3 services, format `services: [{address, name, kind}]`), et mon moteur lit ce format. Désolé.

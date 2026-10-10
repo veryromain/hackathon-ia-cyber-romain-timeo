@@ -4,7 +4,7 @@
 > Légende : ✅ fait · 🔄 en cours · ⬜ à faire · ✂️ coupé (manque de temps)
 > Détail du projet : [`PLAN.md`](PLAN.md) · Historique : [`JOURNAL.md`](JOURNAL.md) · Brief : [`CONTEXTE.md`](CONTEXTE.md)
 
-**Dernière mise à jour :** 2026-10-10 20:15, par Claude (Romain) — R9 validé sur les données de Timéo, actions gérées par le relais
+**Dernière mise à jour :** 2026-10-10 20:25, par Claude (Romain) — démo Fuji depuis le Mac préparée (mode d'emploi, état lu sans clé) ; bloquée par la phrase de test, décision demandée à Timéo dans le journal
 **Rendu (gel définitif) :** dim. 11/10 **12:00** · **Checkpoint :** sam. **18:30** · **Pitch :** dim. 13:00
 
 ---
@@ -95,6 +95,7 @@ Un **garde antifraude pour les organisations qui gardent des millions dans un po
 | T5+ | Variantes de fraude supplémentaires | Timéo | Node | — | ✅ 19:47 (`shared/donnees/holdout.*` : 39 fraudes, 15 épisodes, 6 formes nouvelles ; règles seules : 49 % arrêtées, 95 % freinées ou arrêtées) |
 | T9 | **Traçage des fonds — données** (bonus, `PLAN.md` §4 ter) : événements `token_transfer` sortants des adresses signalées, scénario « arnaqueur → 3 mules + dusting d'un innocent », `shared/services-connus.json` | Timéo | Node + ethers | La mule est reliée à l'adresse signalée dans `events.jsonl` | ✅ 19:57 (relais : type `token_transfer` ; scénario `npm run tracing:local` testé en local ; exemple dans `shared/echantillons/tracage.*` ; pas encore rejoué sur Fuji) |
 | R9 | **Traçage des fonds — règle** (bonus) : ≥ 10 % des fonds d'une adresse signalée → `step_up` (`TAINTED_FUNDS`), 1 intermédiaire max, services exclus, dusting ignoré | Romain | Python | La mule est ralentie, l'innocent « dusté » ne l'est pas | ✅ 20:15 validé sur la sortie réelle du relais de Timéo (mule 26 % freinée, dusting et plateforme ignorés) ; 6 tests |
+| ★ | **Démo complète sur Fuji depuis le Mac de Romain** (tableau de bord, actions, traçage, R2, Bedrock) : mode d'emploi dans `ia-1/integration/README.md`, état lu sans clé par `ia-1/integration/etat-fuji.js` | Les deux | Relais Fuji + moteur + tableau de bord sur le Mac | 0 mUSD sorti, actions et traçage visibles sur Snowtrace | 🔄 20:25 : prêt côté Mac, **bloqué par la phrase de test** (seulement sur le PC de Timéo) ; décision demandée dans le journal |
 | ⚠️ | **Renouveler la clé Bedrock de Timéo avant 03:28** | Timéo | Workshop Studio | Appel de test réussi | ⬜ |
 
 ---
