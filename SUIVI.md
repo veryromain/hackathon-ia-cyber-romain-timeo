@@ -4,7 +4,7 @@
 > Légende : ✅ fait · 🔄 en cours · ⬜ à faire · ✂️ coupé (manque de temps)
 > Détail du projet : [`PLAN.md`](PLAN.md) · Historique : [`JOURNAL.md`](JOURNAL.md) · Brief : [`CONTEXTE.md`](CONTEXTE.md)
 
-**Dernière mise à jour :** 2026-10-10 20:48, par Claude (Romain) — P5, P6 ; démo Fuji possible depuis le Mac
+**Dernière mise à jour :** 2026-10-10 21:04, par Claude (Timéo) — site vitrine aligné sur la mesure finale et la démo Fuji (dépôt seulement, pas encore republié)
 **Rendu (gel définitif) :** dim. 11/10 **12:00** · **Checkpoint :** sam. **18:30** · **Pitch :** dim. 13:00
 
 ---

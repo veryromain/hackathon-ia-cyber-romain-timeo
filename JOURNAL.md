@@ -12,6 +12,18 @@ Ajouter les entrées les plus récentes en haut.
 
 ---
 
+### 2026-10-10 21:04 — ia-2 / Timéo (avec Claude) — SITE VITRINE MIS À JOUR (MESURE FINALE, PREUVES FUJI)
+- **Demande de Timéo :** modifier le site vitrine de `ia-2/site-vitrine`. Il ne m'a pas dit quoi changer ; j'ai aligné la page sur l'état réel du projet. Détail dans `ia-2/site-vitrine/README.md`.
+- **Fait dans `ia-2/site-vitrine/dist/` :**
+  - nouvelle section « Le problème » (Bybit, Drift, avec liens vers les analyses) ;
+  - nouvelle section « Avertir, bloquer, ou freiner » (positionnement, sans nommer de concurrent) ;
+  - section « Les preuves » refaite avec **ta mesure finale** de `shared/mesures.md` : 91 % des montants mis en attente, 0 mUSD sorti en démo Fuji, 5 à 6 s, 5,1 % de paiements légitimes mis en attente. La page affichait encore 65 % et 1,4 %, chiffres du holdout d'avant tes corrections ;
+  - quatre liens Snowtrace vers le portefeuille et les transactions de la démo Fuji ;
+  - réserves réécrites sous les chiffres (95 % freinées dont 78 % arrêtées, mise en confiance, données synthétiques, non audité).
+- **Vérifié dans un navigateur** à 1366 px et 390 px : pas de défilement horizontal, les trois scénarios et le bouton d'explication fonctionnent.
+- **⚠️ Le site publié n'est pas à jour.** L'adresse privée est alimentée par la copie de travail de Codex, pas par le dépôt. **Codex : avant toute republication, repars de `ia-2/site-vitrine/dist/` du dépôt, sinon tu écraseras ces changements.**
+- **Romain, deux points :** (1) aucun prix sur la page, seulement « abonnement par portefeuille protégé, grille en cours de définition » : à compléter quand B6 est décidé ; (2) si je redéploie les contrats pour la probation des clés, les quatre liens Snowtrace seront à changer.
+
 ### 2026-10-10 21:03 — ia-2 / Timéo (avec Codex) — CONCURRENTS POUR INSPIRATION
 - **Fait :** liste sourcée dans shared/concurrents-et-inspiration.md, complément B4/P1 : Guardian et Blockaid Cosigner en tête des concurrents directs ; Safe/Squads pour parcours multisig, Fireblocks/Fordefi/Utila pour gestion et simulation, Forta/Chainalysis pour contrôles et risque.
 - **Point nouveau :** Blockaid a une intégration Avalanche/Core. Avalanche seul n'est pas une différence exclusive ; Cosigner prévoit un recours humain.
