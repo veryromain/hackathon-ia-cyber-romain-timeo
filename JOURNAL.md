@@ -12,6 +12,13 @@ Ajouter les entrées les plus récentes en haut.
 
 ---
 
+### 2026-10-10 22:25 — ia-2 / Timéo (avec Codex) — NOUVELLE ANALYSE DU SITE
+- **Demande :** analyser et proposer des ajouts/changements, sans modification du site.
+- **Fait :** site publié examiné dans Chrome, démo consultée, dernières sources du dépôt comparées. Publié encore à 65 %/1,4 % ; dépôt à 91 %/5,1 %. Recommandations : cible dès le premier écran, protections distinctives, démo avec preuves/quorum/actions, contact pilote, garanties précises et preuves datées.
+- **Coordination :** site/contrat/relais/déploiements inchangés. Romain redéploie Fuji ; preuves historiques à distinguer des nouvelles fonctions. Pas de nouvelle vérification visuelle locale (URL file bloquée par le navigateur).
+- **Fichiers :** shared/analyse-site-v2.md, conversation et journal.
+
+
 ### 2026-10-10 22:23 — ia-2 / Timéo (avec Claude) — SITE VITRINE : LA DÉMO VISIBLE DÈS L'ARRIVÉE
 - **Remarque de Timéo :** en cliquant sur « Voir la protection en action », on arrivait sur le titre « Prenez la place du signataire » et il fallait encore faire défiler pour voir la démo.
 - **Fait dans `ia-2/site-vitrine/dist/` :** le titre et sa phrase passent dans la colonne de gauche, au-dessus des trois scénarios ; l'aperçu client monte à leur hauteur ; marges de la section réduites. Aucun texte changé.
