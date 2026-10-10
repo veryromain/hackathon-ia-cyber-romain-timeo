@@ -100,6 +100,28 @@
 | Modèle de langage | AWS Bedrock, modèle lu dans `BEDROCK_MODEL_ID` | Romain |
 | Tableau de bord | Streamlit | Romain |
 
+## 4 ter. Traçage des fonds : les adresses qui ont reçu l'argent d'une adresse signalée (ajout de Romain, 16:50)
+
+**Constat :** sur une blockchain publique, personne ne peut bloquer une adresse au niveau du réseau. Mais le **contrat du client** peut ralentir **ses propres paiements** vers une adresse. Et un arnaqueur disperse presque toujours ses fonds vers des adresses relais (« mules ») avant de les encaisser.
+
+**Idée :** quand une adresse est signalée (par l'oracle ou par une fraude déjouée), on regarde **à qui elle a envoyé des fonds**. Ces destinataires héritent d'un risque **plus faible**. Si un client s'apprête à payer une de ces mules, le garde ajoute de la friction, alors qu'aucun forum ne parle d'elle.
+
+**Garde-fous (obligatoires, sinon les faux positifs explosent) :**
+- **1 intermédiaire de distance**, 2 au maximum. Pas d'effet boule de neige.
+- **Risque dégressif :** adresse signalée → `hold` ; adresse qui a reçu ses fonds → `step_up`.
+- **Seuil de montant :** seulement si l'adresse a reçu une part significative des fonds (par exemple ≥ 10 % des sorties de l'adresse signalée). **Le « dusting »** (quelques centimes envoyés à des innocents pour les faire signaler) est ignoré.
+- **Liste d'exclusion** des services partagés : plateformes d'échange, ponts, routeurs de DEX (adresses connues, fichier `shared/services-connus.json`).
+- **Expiration** (plus courte que celle de l'adresse d'origine) et **contestation**, comme pour l'oracle.
+- **Friction seulement, jamais de blocage.**
+
+**Scénario de démo :**
+1. L'oracle signale l'adresse de l'arnaqueur, à partir d'une page Web.
+2. L'arnaqueur a déjà dispersé 40 % de ses fonds vers 3 mules.
+3. Un faux fournisseur demande un paiement vers une mule. **Raison affichée :** `TAINTED_FUNDS` (« a reçu 40 % des fonds d'une adresse signalée pour arnaque il y a 2 h »).
+4. Une adresse innocente qui a reçu 0,01 $ de l'arnaqueur n'est **pas** signalée (garde-fou anti-dusting).
+
+**Tâches :** T9 (Timéo, données et événements de transfert) et R9 (Romain, règle de propagation). **Bonus après la démo de 23:00.**
+
 ## 5. Qui fait quoi
 
 ### Timéo — `ia-2/` : la blockchain et les données
@@ -113,6 +135,7 @@
 | T5 | **Scénarios de fraude**, au moins 5 variantes : signataires trompés, clé volée, rafale, goutte-à-goutte sous le plafond, baisse du seuil avant l'attaque | Un fichier de test étiqueté, produit avec d'autres graines que l'entraînement |
 | T6 | **Déploiement sur Fuji** et rejeu de la démo, avec les liens de l'explorateur | La démo tourne sur Fuji |
 | T7 | **Mesure du gas** des transactions du garde, pour le modèle économique | Tableau dans `shared/` |
+| T9 | **Traçage des fonds** (section 4 ter, bonus) : le relais écrit dans `events.jsonl` les transferts de jetons **sortants des adresses signalées** (nouveau `type` : `token_transfer`, avec `from`, `to`, `token`, `amount`) ; le scénario de fraude disperse les fonds vers 3 mules + un envoi de « dusting » à une adresse innocente ; fichier `shared/services-connus.json` (adresses de services à exclure, factices pour la démo) | Une mule apparaît dans `events.jsonl` avec le transfert qui la relie à l'adresse signalée |
 | T8 | **Registre des adresses signalées** (dans `TreasuryGuard` ou un petit contrat `RiskRegistry`) : adresse → niveau, hash de la preuve, expiration. Le relais l'alimente depuis `flags.jsonl` (sortie de l'oracle) ; un paiement vers une adresse signalée déclenche la friction | Un signalement de l'oracle change le sort d'un paiement sur la chaîne |
 
 ### Romain — `ia-1/` : la détection, l'explication et la présentation
@@ -126,6 +149,7 @@
 | R5 | **Tableau de bord** : paiements en cours, score, raisons, état (normal, signatures en plus, en attente, gelé), chiffres clés | Suffit à filmer la démo |
 | R6 | **Évaluation** : taux de détection, précision, faux positifs, délai de signalement, fonds protégés, sur le fichier de test de T5 | Tableau de chiffres dans `shared/` |
 | R7 | **Livrables écrits** : formulaire du checkpoint, deck, fiche de défense, playbook de réponse, slide conformité | Relus par Timéo |
+| R9 | **Propagation du risque** (section 4 ter, bonus) : dans le moteur de score, une adresse qui a reçu ≥ 10 % des fonds d'une adresse signalée passe en `step_up` (raison `TAINTED_FUNDS`), 1 intermédiaire maximum, services connus exclus, dusting ignoré, expiration | La mule déclenche `step_up` ; l'adresse « dustée » et le service connu ne déclenchent rien |
 | R8 | **Oracle Web2 → Web3** (section 4 bis) : corpus de pages synthétiques avec pièges, extraction Bedrock avec citation vérifiée, croisement des sources, sortie `flags.jsonl` ; le moteur de score en tient compte | Une page Web synthétique fait ralentir un paiement sur la chaîne ; tentative d'empoisonnement rejetée |
 
 ### Ensemble
@@ -181,7 +205,8 @@
 | **Injection de prompt** cachée dans une page lue par Bedrock | Bedrock extrait seulement, sortie au format imposé, citation vérifiée par le code |
 | **Les arnaqueurs changent d'adresse** à chaque fraude | L'oracle est une couche de plus, pas la seule : le comportement on-chain reste le cœur |
 | **Scraping et RGPD** (une adresse peut être une donnée personnelle, une accusation a des conséquences) | Pages synthétiques pour la démo, signalements motivés, contestables et à durée limitée |
-| **Surcharge de travail pour Romain** (R1 à R8) | Ordre de coupe pour l'oracle : réputation des sources, puis croisement. La lecture Bedrock avec citation vérifiée est le cœur |
+| **Propagation abusive du risque** (dusting, services partagés comme les plateformes d'échange, effet boule de neige) | 1 intermédiaire max, seuil de montant, liste d'exclusion, risque dégressif, expiration (section 4 ter) |
+| **Surcharge de travail pour Romain** (R1 à R9) | Ordre de coupe pour l'oracle : réputation des sources, puis croisement. La lecture Bedrock avec citation vérifiée est le cœur |
 
 **À confirmer avec le mentor KPMG :** le cadre de conformité à mettre sur la slide. Si le client est une entité financière régulée, DORA s'applique à ses incidents (notes dans `shared/dora-notes.md`) ; sinon, l'angle est l'AI Act et la traçabilité des décisions.
 

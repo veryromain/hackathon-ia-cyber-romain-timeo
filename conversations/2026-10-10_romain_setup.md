@@ -61,3 +61,15 @@ Un projet compatible avec les deux tracks : la **supervision d'agents IA qui man
   - il les inscrit sur la chaîne ;
   - le garde ajoute de la friction aux paiements vers ces adresses.
 - **Points de vigilance notés :** empoisonnement de l'oracle (fausses accusations), injection de prompt, RGPD et scraping (démo sur pages synthétiques), surcharge de travail de Romain (ordre de coupe défini).
+
+## Mise à jour 16:50 — Traçage des fonds
+- **Question de Romain :** peut-on bloquer une adresse sur la blockchain, voire toutes celles qui ont reçu ses fonds ?
+- **Réponse :** pas au niveau du réseau public. En revanche, le contrat du client peut freiner ses propres paiements vers une adresse.
+- **Ajout au plan (§4 ter, tâches T9 et R9, en bonus) :** propagation du risque aux « mules », avec les garde-fous suivants :
+  - 1 intermédiaire maximum ;
+  - seuil de 10 % des fonds ;
+  - dusting ignoré et services connus exclus ;
+  - expiration ;
+  - friction seulement, jamais de blocage.
+- **Écarté par Romain :** le signalement à l'émetteur du stablecoin.
+- Timéo est prévenu dans le journal (T9 : événement `token_transfer`).
