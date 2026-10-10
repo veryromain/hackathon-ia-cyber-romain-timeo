@@ -12,6 +12,12 @@ Ajouter les entrées les plus récentes en haut.
 
 ---
 
+### 2026-10-10 21:38 — ia-2 / Timéo (avec Codex) — COMPARAISON DES SEPT INNOVATIONS
+- **Fait :** artifact Claude lu dans Chrome ; sept idées comparées aux trois corrections livrées. La vérification avant signature recoupe notre feuille de route ; journal chaîné déjà dans le plan ; les autres sont des propositions complémentaires.
+- **Points à corriger :** probation déjà codée localement (30 tests), pas encore sur Fuji ; gel automatique par moniteur incompatible avec son rôle, annulation ne prouvant pas fraude, gel public non discret. Exclusivités concurrentielles non démontrées.
+- **Fichiers :** shared/comparaison-innovations-artifact.md, conversation et journal. Aucun code changé.
+
+
 ### 2026-10-10 21:45 — ia-2 / Timéo (avec Claude) — SITE VITRINE : NOUVELLE CHARTE, LOGO D'AVANT, HAUT DE PAGE ANIMÉ
 - **Demande de Timéo :** une charte de couleurs qui ne soit plus celle de Safe et qui inspire confiance, le logo d'avant redessiné, un fond interactif, des bulles qui apparaissent et repartent. Boutons d'appel à l'action inchangés ; le reste du site sera revu plus tard.
 - **Fait dans `ia-2/site-vitrine/dist/` :**
