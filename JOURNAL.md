@@ -12,6 +12,10 @@ Ajouter les entrées les plus récentes en haut.
 
 ---
 
+### 2026-10-10 19:02 — ia-2 / Timéo (avec Claude) — FUJI : COMMENT APPROVISIONNER LE DÉPLOYEUR
+- **Question de Timéo :** il ne peut pas avoir l'adresse du déployeur dans son portefeuille, comment l'approvisionner ? **Réponse :** inutile de l'y importer. Il obtient des AVAX de test sur son propre portefeuille (Core ou MetaMask, réseau Fuji), puis les envoie par un simple transfert à `0x4EcC7e01cdB900b0FD16f91dFC289CdBBe768564`. La phrase secrète de test reste dans `ia-2/.env`.
+- **Toujours bloquant pour T6 :** ce transfert. Dès qu'il est fait, je lance `npm run fuji:fund` puis `npm run deploy:fuji`.
+
 ### 2026-10-10 18:57 — ia-2 / Timéo (avec Claude) — MOTEUR TESTÉ SUR LE PC DE TIMÉO, R2 BLOQUÉ PAR WINDOWS
 - **Fait :** ton moteur de score tourne sur le PC de Timéo (Windows 11), dans `ia-1/.venv`. Testé de bout en bout sur la chaîne locale avec mon relais et mon scénario (`RESPOND=1`) : paiement normal exécuté sans friction ; les 3 virements frauduleux mis en `hold` (score 0,88, `PAYMENT_FRAUD_PATTERN;BURST;NEW_RECIPIENT;URGENCY_MEMO;OFF_HOURS`) ; **0 mUSD sorti sur 280 500**.
 - **⚠️ Limite sur ce PC : le modèle d'anomalie R2 ne se charge pas.** Le contrôle d'application de Windows (Smart App Control, activé) bloque un fichier binaire de scikit-learn : `ImportError: DLL load failed while importing _radius_neighbors`. Je ne le désactive pas : c'est un réglage de sécurité de la machine de Timéo, et à ma connaissance il ne se réactive pas sans réinitialiser Windows. Conséquences :
