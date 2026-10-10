@@ -78,6 +78,17 @@ contract TreasuryGuard is ReentrancyGuard {
     mapping(uint256 => mapping(address => bool)) public hasApprovedUnfreeze;
     mapping(uint256 => mapping(address => uint256)) private _unfreezeEpoch;
 
+    // --- Clé de contrainte ---
+    // Un signataire menacé signe avec une seconde clé. À l'écran, tout se passe comme d'habitude ; en réalité,
+    // la proposition devient inexécutable et les paiements s'arrêtent sans qu'aucun événement de gel soit émis.
+    // Rien de tout cela n'est lisible par l'interface du contrat. Sur une chaîne publique, le stockage et le code
+    // restent consultables : la discrétion vaut pour celui qui regarde l'écran de sa victime, pas pour un auditeur.
+    mapping(bytes32 => address) private _duressOwner; // keccak256(clé de contrainte) => signataire
+    mapping(address => bytes32) private _duressHashOf; // signataire => hash de sa clé de contrainte
+    mapping(uint256 => bool) private _underDuress; // proposition touchée par une clé de contrainte
+    mapping(address => bool) private _coerced; // signataire dont la clé de contrainte a servi : exclu du dégel
+    bool private _silentFreeze;
+
     event PaymentProposed(
         uint256 indexed id,
         address indexed proposer,
@@ -162,16 +173,13 @@ contract TreasuryGuard is ReentrancyGuard {
 
     // --- Paiements ---
 
-    function proposePayment(address to, uint256 amount, string calldata memo)
-        external
-        onlyActiveOwner
-        returns (uint256 id)
-    {
+    function proposePayment(address to, uint256 amount, string calldata memo) external returns (uint256 id) {
+        (address owner, bool duress) = _signer();
         if (frozen) revert WalletFrozen();
         if (to == address(0) || amount == 0) revert InvalidParameter();
-        id = _newProposal(Kind.Payment, to, address(0), amount, config.reviewDelay);
-        emit PaymentProposed(id, msg.sender, to, amount, memo, requiredApprovals(id), _proposals[id].executableAfter);
-        _approve(id);
+        id = _newProposal(Kind.Payment, owner, to, address(0), amount, config.reviewDelay);
+        emit PaymentProposed(id, owner, to, amount, memo, requiredApprovals(id), _proposals[id].executableAfter);
+        _approveAs(id, owner, duress);
 
         // Règles appliquées par le portefeuille lui-même, sans attendre le moniteur.
         if (address(registry) != address(0)) {
@@ -183,10 +191,25 @@ contract TreasuryGuard is ReentrancyGuard {
         }
     }
 
-    function approve(uint256 id) external onlyActiveOwner {
+    function approve(uint256 id) external {
+        (address owner, bool duress) = _signer();
         _requirePending(id);
-        if (hasApproved[id][msg.sender] && _approvalEpoch[id][msg.sender] == keyEpoch[msg.sender]) revert AlreadyApproved();
-        _approve(id);
+        if (hasApproved[id][owner] && _approvalEpoch[id][owner] == keyEpoch[owner]) revert AlreadyApproved();
+        _approveAs(id, owner, duress);
+    }
+
+    /// @notice Enregistre (ou retire, avec un hash nul) la clé de contrainte de l'appelant.
+    /// @param duressKeyHash keccak256 de l'adresse de la clé de contrainte, sur 20 octets. Seul le hash est
+    ///        inscrit : l'adresse n'apparaît sur la chaîne que le jour où la clé sert.
+    function setDuressKey(bytes32 duressKeyHash) external onlyActiveOwner {
+        if (duressKeyHash != bytes32(0)) {
+            address holder = _duressOwner[duressKeyHash];
+            if (holder != address(0) && holder != msg.sender) revert InvalidParameter();
+        }
+        bytes32 previous = _duressHashOf[msg.sender];
+        if (previous != bytes32(0)) delete _duressOwner[previous];
+        _duressHashOf[msg.sender] = duressKeyHash;
+        if (duressKeyHash != bytes32(0)) _duressOwner[duressKeyHash] = msg.sender;
     }
 
     /// @notice Seule action du moniteur : relever le niveau de risque d'un paiement en attente.
@@ -198,7 +221,8 @@ contract TreasuryGuard is ReentrancyGuard {
         _raiseRisk(id, level, reason, msg.sender);
     }
 
-    function execute(uint256 id) external onlyActiveOwner nonReentrant {
+    function execute(uint256 id) external nonReentrant {
+        (address owner, bool duress) = _signer();
         _requirePending(id);
         Proposal storage p = _proposals[id];
         // Le gel arrête les paiements, pas le remplacement d'un signataire compromis.
@@ -207,6 +231,11 @@ contract TreasuryGuard is ReentrancyGuard {
         uint256 approvals = validApprovals(id);
         uint256 required = requiredApprovals(id);
         if (approvals < required) revert NotEnoughApprovals(approvals, required);
+
+        // Contrainte : la même erreur qu'une mise en attente en cours, avec une échéance plausible qui recule.
+        if (duress || _underDuress[id] || (_silentFreeze && p.kind == Kind.Payment)) {
+            revert TooEarly(uint64(block.timestamp) + config.holdDelay);
+        }
 
         // Le recours unanime concerne les paiements, jamais la gouvernance.
         // Sur un paiement renforcé, les clés en probation ne peuvent pas fournir cette unanimité.
@@ -221,7 +250,7 @@ contract TreasuryGuard is ReentrancyGuard {
         if (p.kind == Kind.Payment) {
             _spend(p.value);
             asset.safeTransfer(p.target, p.value);
-            emit PaymentExecuted(id, p.target, p.value, msg.sender);
+            emit PaymentExecuted(id, p.target, p.value, owner);
         } else if (p.kind == Kind.ReplaceOwner) {
             _replaceOwner(p.subject, p.target);
         } else {
@@ -239,20 +268,22 @@ contract TreasuryGuard is ReentrancyGuard {
 
     // --- Signataires et seuil : toujours avec signatures supplémentaires et délai d'attente ---
 
-    function proposeReplaceOwner(address previousOwner, address newOwner) external onlyActiveOwner returns (uint256 id) {
+    function proposeReplaceOwner(address previousOwner, address newOwner) external returns (uint256 id) {
+        (address owner, bool duress) = _signer();
         if (keyExpiresAt[previousOwner] == 0 || newOwner == address(0) || keyExpiresAt[newOwner] != 0) {
             revert InvalidParameter();
         }
-        id = _newProposal(Kind.ReplaceOwner, newOwner, previousOwner, 0, config.holdDelay);
+        id = _newProposal(Kind.ReplaceOwner, owner, newOwner, previousOwner, 0, config.holdDelay);
         _emitConfigProposed(id);
-        _approve(id);
+        _approveAs(id, owner, duress);
     }
 
-    function proposeThreshold(uint256 newThreshold) external onlyActiveOwner returns (uint256 id) {
+    function proposeThreshold(uint256 newThreshold) external returns (uint256 id) {
+        (address owner, bool duress) = _signer();
         if (newThreshold == 0 || newThreshold > ownerList.length) revert InvalidParameter();
-        id = _newProposal(Kind.ChangeThreshold, address(0), address(0), newThreshold, config.holdDelay);
+        id = _newProposal(Kind.ChangeThreshold, owner, address(0), address(0), newThreshold, config.holdDelay);
         _emitConfigProposed(id);
-        _approve(id);
+        _approveAs(id, owner, duress);
     }
 
     // --- Gel : un seul signataire suffit pour geler, il en faut davantage pour dégeler ---
@@ -263,8 +294,10 @@ contract TreasuryGuard is ReentrancyGuard {
         emit Frozen(msg.sender, reason);
     }
 
+    /// @dev Lève aussi le gel silencieux d'une clé de contrainte. Le vote du signataire contraint est
+    ///      enregistré comme les autres mais ne compte pas : ce sont ses collègues qui décident de la reprise.
     function approveUnfreeze() external onlyActiveOwner {
-        if (!frozen) revert NotFrozen();
+        if (!frozen && !_silentFreeze) revert NotFrozen();
         if (!isEstablishedOwner(msg.sender)) revert OwnerInProbation(keyTrustedAfter[msg.sender]);
         if (hasApprovedUnfreeze[unfreezeRound][msg.sender] && _unfreezeEpoch[unfreezeRound][msg.sender] == keyEpoch[msg.sender]) {
             revert AlreadyApproved();
@@ -276,12 +309,14 @@ contract TreasuryGuard is ReentrancyGuard {
         for (uint256 i = 0; i < ownerList.length; i++) {
             address owner = ownerList[i];
             if (hasApprovedUnfreeze[unfreezeRound][owner] && isEstablishedOwner(owner)
-                && _unfreezeEpoch[unfreezeRound][owner] == keyEpoch[owner]) approvals++;
+                && _unfreezeEpoch[unfreezeRound][owner] == keyEpoch[owner] && !_coerced[owner]) approvals++;
         }
         uint256 required = _withExtra(threshold);
         emit UnfreezeApproved(msg.sender, approvals, required);
         if (approvals >= required) {
             frozen = false;
+            _silentFreeze = false;
+            for (uint256 i = 0; i < ownerList.length; i++) delete _coerced[ownerList[i]];
             unfreezeRound++;
             emit Unfrozen(msg.sender);
         }
@@ -338,7 +373,16 @@ contract TreasuryGuard is ReentrancyGuard {
 
     // --- Interne ---
 
-    function _newProposal(Kind kind, address target, address subject, uint256 value, uint64 delay)
+    /// @return owner Le signataire au nom duquel l'appel est fait.
+    /// @return duress Vrai si l'appel vient de sa clé de contrainte et non de sa clé habituelle.
+    function _signer() private view returns (address owner, bool duress) {
+        if (isActiveOwner(msg.sender)) return (msg.sender, false);
+        owner = _duressOwner[keccak256(abi.encodePacked(msg.sender))];
+        if (owner == address(0) || !isActiveOwner(owner)) revert NotActiveOwner();
+        duress = true;
+    }
+
+    function _newProposal(Kind kind, address proposer, address target, address subject, uint256 value, uint64 delay)
         private
         returns (uint256 id)
     {
@@ -351,7 +395,7 @@ contract TreasuryGuard is ReentrancyGuard {
                 cancelled: false,
                 proposedAt: uint64(block.timestamp),
                 executableAfter: uint64(block.timestamp) + delay,
-                proposer: msg.sender,
+                proposer: proposer,
                 target: target,
                 subject: subject,
                 value: value
@@ -361,13 +405,20 @@ contract TreasuryGuard is ReentrancyGuard {
 
     function _emitConfigProposed(uint256 id) private {
         Proposal storage p = _proposals[id];
-        emit ConfigProposed(id, p.kind, msg.sender, p.target, p.subject, p.value, requiredApprovals(id), p.executableAfter);
+        emit ConfigProposed(id, p.kind, p.proposer, p.target, p.subject, p.value, requiredApprovals(id), p.executableAfter);
     }
 
-    function _approve(uint256 id) private {
-        hasApproved[id][msg.sender] = true;
-        _approvalEpoch[id][msg.sender] = keyEpoch[msg.sender];
-        emit Approved(id, msg.sender, validApprovals(id), requiredApprovals(id));
+    /// @dev Sous contrainte, l'approbation est enregistrée et annoncée comme n'importe quelle autre.
+    ///      La seule différence est invisible : la proposition ne s'exécutera plus et les paiements s'arrêtent.
+    function _approveAs(uint256 id, address owner, bool duress) private {
+        if (duress) {
+            _underDuress[id] = true;
+            _coerced[owner] = true;
+            _silentFreeze = true;
+        }
+        hasApproved[id][owner] = true;
+        _approvalEpoch[id][owner] = keyEpoch[owner];
+        emit Approved(id, owner, validApprovals(id), requiredApprovals(id));
     }
 
     function _raiseRisk(uint256 id, Risk level, string memory reason, address by) private {

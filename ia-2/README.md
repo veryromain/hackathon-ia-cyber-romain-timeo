@@ -15,6 +15,8 @@ Partie de Timéo dans le projet « Breaker » (voir `PLAN.md` et `SUIVI.md`). **
 | T5 | Scénarios de fraude | Fait : `shared/donnees/test.*`, 54 paiements frauduleux, 6 variantes ; scénario de démo en direct |
 | T9 | Traçage des fonds, côté données | Fait : le relais écrit les transferts sortis des adresses signalées (`token_transfer`) ; scénario `npm run tracing:local` testé en local |
 | — | Actions des signataires depuis le tableau de bord | Fait : le relais lit `shared/actions.jsonl` (voir `shared/format-actions.md`), testé en local |
+| C5 | Clé de contrainte (idée de Romain) | Fait dans le contrat, 14 tests, scénario `npm run duress:local` joué en local ; **pas encore sur Fuji** |
+| — | Probation des clés neuves (par Codex) | Fait dans le contrat, tests dans `test/TreasuryGuard.probation.test.js` ; **pas encore sur Fuji** |
 | T6 | Déploiement sur Avalanche Fuji | **Fait le 10 octobre à 19h30** : contrats déployés, démo rejouée sur Fuji avec le moteur de score, 0 mUSD sorti |
 
 ## Le portefeuille `TreasuryGuard` en bref
@@ -59,7 +61,7 @@ Il faut Node.js 20 ou plus récent.
 ```bash
 cd ia-2
 npm install
-npm test            # compile et lance les 20 tests sur la chaîne locale de Hardhat
+npm test            # compile et lance les 44 tests sur la chaîne locale de Hardhat
 npm run gas         # mesure le gas des transactions
 npm run export-abi  # régénère shared/abi/*.json
 npm run dataset     # régénère shared/donnees/ (90 jours simulés, 15 secondes)
@@ -138,6 +140,34 @@ Sur le PC de Timéo, là où se trouve la phrase secrète. Le moteur de score de
 **Limite sur ce PC : le modèle d'anomalie (R2) ne tourne pas.** Le contrôle d'application de Windows (Smart App Control) bloque un fichier de scikit-learn. Le moteur fonctionne avec ses règles seules, ce qui suffit au scénario de démo. Les mesures avec le modèle se font sur le Mac de Romain.
 
 Sous Windows, les commandes de `ia-1/README.md` s'écrivent avec `.venv/Scripts/python.exe` au lieu de `.venv/bin/python`, et avec la variable `PYTHONUTF8=1`.
+
+## Clé de contrainte (10 octobre, 22h10)
+
+Tous les autres contrôles protègent la clé. Celui-ci protège la personne : un signataire menacé, ou sous forte pression, signera ce qu'on lui demande. Il peut alors signer avec une **seconde clé**, déclarée à l'avance.
+
+| Ce que voit celui qui regarde l'écran | Ce qui se passe réellement |
+|---|---|
+| « Paiement approuvé par Emma, 2 signatures sur 2 » : le même événement `Approved` qu'une approbation normale | La proposition est marquée : elle ne s'exécutera jamais |
+| Le portefeuille n'est pas gelé (`frozen()` reste faux, aucun événement `Frozen`) | Tous les paiements s'arrêtent |
+| À l'exécution : « trop tôt », l'erreur d'une mise en attente, avec une échéance plausible | L'échéance recule à chaque tentative |
+
+- **Déclarer sa clé :** `setDuressKey(hash)`, où le hash est le keccak256 de l'adresse de la seconde clé. Seul le hash est inscrit ; l'adresse n'apparaît sur la chaîne que le jour où la clé sert. Aucun événement n'est émis.
+- **Ce que la clé de contrainte peut faire :** proposer et approuver, au nom de son signataire. Elle ne peut ni exécuter, ni annuler, ni geler, ni dégeler.
+- **Reprise :** trois collègues votent `approveUnfreeze()`, comme pour un gel ordinaire. Le vote du signataire contraint est enregistré mais ne compte pas. Le paiement marqué reste bloqué ; il faut l'annuler.
+- **Comment le moteur de score le voit :** dans `events.jsonl`, une approbation ou une proposition dont `tx_from` n'est pas l'adresse du signataire nommé (`data.owner` ou `data.proposer`) ne peut venir que d'une clé de contrainte.
+
+```bash
+npm run duress:local   # RESPOND=1 pour que trois collègues lèvent le gel et annulent
+```
+
+14 tests dans `test/TreasuryGuard.duress.test.js`. Scénario joué sur la chaîne locale avec le relais : 0 mUSD sorti sur 90 000 tentés.
+
+**Ce que ce mécanisme ne fait pas, à dire tel quel :**
+- **Sur une chaîne publique, rien n'est secret.** Le code du contrat est lisible, son stockage aussi, et la transaction d'approbation porte l'adresse de la clé de contrainte. Un attaquant qui sait lire la chaîne comprend. La discrétion ne vaut que pour celui qui regarde l'écran de sa victime.
+- L'échéance qui recule à chaque tentative finit par se remarquer.
+- Si l'attaquant fait signer la victime avec sa clé habituelle, rien ne se déclenche.
+- La seconde clé doit exister dans le portefeuille du signataire et avoir de quoi payer le gas.
+- Pas encore déployé sur Fuji.
 
 ## Traçage des fonds (T9)
 

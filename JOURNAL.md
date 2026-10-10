@@ -12,6 +12,20 @@ Ajouter les entrées les plus récentes en haut.
 
 ---
 
+### 2026-10-10 22:02 — ia-2 / Timéo (avec Claude) — ✅ CLÉ DE CONTRAINTE TERMINÉE (CONTRAT RENDU), PAS ENCORE SUR FUJI
+- **Clé de contrainte terminée dans le contrat. Je rends `ia-2/contracts/TreasuryGuard.sol` : Codex peut y revenir.**
+- **Fait :** `setDuressKey(hash)`, approbation et proposition par la clé de contrainte au nom du signataire, paiement marqué inexécutable, arrêt silencieux de tous les paiements, reprise par trois collègues (le vote du signataire contraint ne compte pas). **44 tests passent** : les 30 d'avant (dont la probation de Codex) et 14 nouveaux dans `ia-2/test/TreasuryGuard.duress.test.js`. ABI à jour dans `shared/abi/`. Détail et limites : `ia-2/README.md`, section « Clé de contrainte ».
+- **Joué sur la chaîne locale avec le relais** (`npm run duress:local`, `RESPOND=1`) : l'écran affiche « approuvé par Emma, 2 sur 2 », le portefeuille n'est pas gelé officiellement, le fraudeur reçoit « trop tôt » à chaque tentative, trois collègues lèvent le gel et annulent. **0 mUSD sorti sur 90 000.**
+- **Romain, pour ton alerte `DURESS_SIGNATURE` : tu n'as besoin d'aucune liste de clés.** Dans `events.jsonl`, pour `payment_proposed`, `payment_approved` et `config_approved`, si `tx_from` n'est pas le signataire nommé (`data.proposer` ou `data.owner`), c'est une clé de contrainte : le contrat refuse toute autre adresse. Écrit dans `shared/format-evenements.md`. Ne renvoie pas cette alerte au relais : elle s'inscrirait sur la chaîne.
+- **Écarts par rapport à ta spécification :**
+  1. `execute` renvoie `TooEarly` avec une échéance plausible (maintenant + délai d'attente) et non `uint64.max`, qui se serait remarqué.
+  2. La clé de contrainte peut aussi **proposer** (pas seulement approuver), pour le cas où la victime doit tout faire elle-même, et elle bloque aussi un changement de signataire ou de seuil approuvé sous contrainte.
+  3. Elle ne peut ni annuler, ni geler, ni dégeler : ces appels échouent avec « pas un signataire », ce qui la trahirait si l'attaquant les demandait. Limite assumée.
+  4. Pas de gel « silencieux » distinct à lever : `approveUnfreeze()` sert aux deux, et émet `Unfrozen` à la fin.
+- **Limites à dire au jury (elles sont dans le README) :** sur une chaîne publique rien n'est secret, le code, le stockage et l'expéditeur de la transaction sont lisibles ; l'échéance qui recule finit par se voir ; rien ne se passe si la victime signe avec sa clé habituelle.
+- **Pas fait : le déploiement sur Fuji.** Les contrats en ligne sont ceux de 19h29, sans probation ni clé de contrainte. Redéployer change les trois adresses (README, `shared/mesures.md`, liens du site vitrine, `ia-2/deployments/fuji.json`). **Romain : dis ici quand tu n'as plus besoin des contrats actuels, je redéploierai avec l'accord de Timéo.**
+- **Jeux de données :** inchangés et à ne pas régénérer avec ce contrat (les hash changeraient).
+
 ### 2026-10-10 21:58 — ia-2 / Timéo (avec Claude) — CLÉ DE CONTRAINTE : JE PRENDS LE CONTRAT
 - **Décision de Timéo : on tente la clé de contrainte ce soir** (ta proposition `shared/proposition-cle-de-contrainte.md`, Romain).
 - **⚠️ Coordination : je prends `ia-2/contracts/TreasuryGuard.sol` à partir de maintenant.** Codex, ta probation est committée et je pars de ta version (30 tests) ; ne modifie plus ce fichier ni `ia-2/test/` tant que je n'ai pas écrit « clé de contrainte terminée » ici. Aucun redéploiement sur Fuji et aucun relais lancé de mon côté pendant ce travail.

@@ -4,7 +4,7 @@
 > Légende : ✅ fait · 🔄 en cours · ⬜ à faire · ✂️ coupé (manque de temps)
 > Détail du projet : [`PLAN.md`](PLAN.md) · Historique : [`JOURNAL.md`](JOURNAL.md) · Brief : [`CONTEXTE.md`](CONTEXTE.md)
 
-**Dernière mise à jour :** 2026-10-10 21:58, par Claude (Timéo) — clé de contrainte en cours dans TreasuryGuard (Claude côté Timéo)
+**Dernière mise à jour :** 2026-10-10 22:02, par Claude (Timéo) — clé de contrainte faite dans le contrat (44 tests), pas encore déployée sur Fuji
 **Rendu (gel définitif) :** dim. 11/10 **12:00** · **Checkpoint :** sam. **18:30** · **Pitch :** dim. 13:00
 
 ---

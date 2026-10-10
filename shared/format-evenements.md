@@ -60,6 +60,10 @@ Dès qu'une adresse entre au registre (`address_flagged`), le relais écrit une 
 - Le relais ne filtre rien : la poussière et les transferts vers des services partagés sont écrits aussi. C'est au moteur de les écarter, avec la part du montant dans les sorties de l'adresse et la liste `shared/services-connus.json` (adresses factices).
 - Exemple complet : `shared/echantillons/tracage.events.jsonl`, avec `tracage.roles.json` (qui est qui) et `tracage.labels.jsonl` (la vérité sur les trois paiements).
 
+### Reconnaître une signature sous contrainte
+
+Le contrat n'émet aucun événement particulier quand une clé de contrainte sert (voir `ia-2/README.md`). Le signe est dans les champs déjà présents : **pour `payment_proposed`, `payment_approved` et `config_approved`, si `tx_from` diffère du signataire nommé dans `data` (`proposer` ou `owner`), la transaction vient de la clé de contrainte de ce signataire.** C'est le seul cas possible : le contrat refuse toute autre adresse. Aucune liste de clés n'est nécessaire. L'alerte correspondante ne doit pas repartir sur la chaîne, sinon l'attaquant la verrait.
+
 ### Le délai d'examen
 
 Les identifiants de paiement et de proposition de configuration partagent la même numérotation, qui commence à 0.

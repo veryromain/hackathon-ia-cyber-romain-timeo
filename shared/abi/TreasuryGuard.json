@@ -1067,6 +1067,19 @@
     "type": "function"
   },
   {
+    "inputs": [
+      {
+        "internalType": "bytes32",
+        "name": "duressKeyHash",
+        "type": "bytes32"
+      }
+    ],
+    "name": "setDuressKey",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
     "inputs": [],
     "name": "spentInWindow",
     "outputs": [
