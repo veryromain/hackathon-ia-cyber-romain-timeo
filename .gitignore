@@ -34,3 +34,5 @@ shared/listes-publiques.jsonl
 ia-1/oracle/sources_cache/
 shared/alertes-privees.jsonl
 ia-1/oracle/collecte_cache/
+# Accusations écartées par l'oracle : citations de pages réelles, à garder hors du dépôt
+shared/flags-rejetes.jsonl
