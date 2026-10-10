@@ -2,14 +2,17 @@
   "name": "breaker-contracts",
   "version": "0.1.0",
   "private": true,
-  "description": "Coffre de prêt, disjoncteur et scénarios d'attaque simulés (hackathon Secure Horizons)",
+  "description": "Portefeuille de trésorerie gardé, registre des adresses signalées, relais et jeux de données (hackathon Secure Horizons)",
   "scripts": {
     "compile": "hardhat compile",
     "test": "hardhat test",
     "node": "hardhat node",
     "export-abi": "hardhat run scripts/export-abi.js",
     "gas": "hardhat run scripts/gas-estimate.js",
-    "dataset": "node scripts/generate-dataset.js"
+    "dataset": "node scripts/generate-dataset.js",
+    "deploy:local": "hardhat run scripts/deploy.js --network localhost",
+    "relay:local": "hardhat run scripts/relay.js --network localhost",
+    "scenario:local": "hardhat run scripts/demo-scenario.js --network localhost"
   },
   "devDependencies": {
     "@nomicfoundation/hardhat-toolbox": "^5.0.0",

@@ -19,3 +19,8 @@ node_modules/
 
 # Les modèles sans valeur se committent
 !.env.example
+
+# Fichiers vivants du relais (session en cours, jamais dans le dépôt)
+shared/events.jsonl
+shared/alerts.jsonl
+shared/flags.jsonl
