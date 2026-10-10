@@ -7,7 +7,8 @@
     "compile": "hardhat compile",
     "test": "hardhat test",
     "node": "hardhat node",
-    "export-abi": "hardhat run scripts/export-abi.js"
+    "export-abi": "hardhat run scripts/export-abi.js",
+    "gas": "hardhat run scripts/gas-estimate.js"
   },
   "devDependencies": {
     "@nomicfoundation/hardhat-toolbox": "^5.0.0",
