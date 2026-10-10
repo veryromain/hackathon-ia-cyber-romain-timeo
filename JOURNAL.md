@@ -12,6 +12,14 @@ Ajouter les entrées les plus récentes en haut.
 
 ---
 
+### 2026-10-10 21:08 — Romain (avec Claude) — ✅ DÉMO COMPLÈTE SUR FUJI DEPUIS LE MAC — **relais Fuji arrêté**
+- **Timéo : le relais Fuji du Mac est arrêté, tu peux relancer le tien quand tu veux.** Le portefeuille Fuji n'est pas gelé ; paiements 9-11 (traçage) en attente, à annuler ou laisser.
+- **Résultats sur Fuji, moteur complet (règles corrigées + R2, `--expliquer`, R9, listes publiques, réglage « samedi ouvré », notifications) :**
+  1. Scénario de fraude : **0 mUSD perdu sur 280 500**, 3 `hold` inscrits sur la chaîne 10 à 20 s après la proposition (score 0,92), gel et annulation par un signataire, paiement normal exécuté sans friction. Plus d'`OFF_HOURS`.
+  2. **Paiement vers une adresse réellement sanctionnée par l'OFAC** (inscrite au registre depuis la liste publique) : bloqué par le contrat (niveau 2) et par le moteur (0,98, `FLAGGED_ADDRESS`), **0 mUSD sorti**.
+  3. Traçage (ton `tracing:fuji`) : la mule → `hold` avec **`TAINTED_FUNDS`** ; l'innocent et la plateforme n'ont pas `TAINTED_FUNDS` mais sont tout de même en attente par `BURST` + `NEW_RECIPIENT` + `ANOMALY_MODEL` : trois paiements vers trois inconnus en 10 s, c'est une rafale, le moteur a raison. Pour isoler l'effet R9 en démo, mettre l'innocent et la plateforme dans le carnet, comme tu l'avais dit.
+  4. 7 notifications envoyées (bannières macOS), explications Bedrock (Opus 4.8) sur chaque alerte, rapport d'incident généré : `ia-1/rapports/rapport-demo-fuji.md`.
+- **Listes publiques :** 120 adresses OFAC + 2 530 ScamSniffer lues hors chaîne ; 2 inscrites au registre Fuji (0x0330…, 0x0000…2651). Script : `ia-1/oracle/sources_publiques.py`.
 ### 2026-10-10 21:04 — ia-2 / Timéo (avec Claude) — SITE VITRINE MIS À JOUR (MESURE FINALE, PREUVES FUJI)
 - **Demande de Timéo :** modifier le site vitrine de `ia-2/site-vitrine`. Il ne m'a pas dit quoi changer ; j'ai aligné la page sur l'état réel du projet. Détail dans `ia-2/site-vitrine/README.md`.
 - **Fait dans `ia-2/site-vitrine/dist/` :**

@@ -4,7 +4,7 @@
 > Légende : ✅ fait · 🔄 en cours · ⬜ à faire · ✂️ coupé (manque de temps)
 > Détail du projet : [`PLAN.md`](PLAN.md) · Historique : [`JOURNAL.md`](JOURNAL.md) · Brief : [`CONTEXTE.md`](CONTEXTE.md)
 
-**Dernière mise à jour :** 2026-10-10 21:04, par Claude (Timéo) — site vitrine aligné sur la mesure finale et la démo Fuji (dépôt seulement, pas encore republié)
+**Dernière mise à jour :** 2026-10-10 21:08, par Claude (Romain) — démo Fuji complète depuis le Mac, listes publiques OFAC/ScamSniffer
 **Rendu (gel définitif) :** dim. 11/10 **12:00** · **Checkpoint :** sam. **18:30** · **Pitch :** dim. 13:00
 
 ---
@@ -183,7 +183,7 @@ Un **garde antifraude pour les organisations qui gardent des millions dans un po
 |---|---|---|
 | Sam. 18:30 | Checkpoint officiel (formulaire problème / solution / stack) | ⬜ |
 | Sam. 23:00 | Démo de bout en bout en local | ✅ 18:41 (4 h 20 d'avance) |
-| Dim. 03:00 | Démo sur Fuji + clé Bedrock de Timéo renouvelée | ⬜ |
+| Dim. 03:00 | Démo sur Fuji + clé Bedrock de Timéo renouvelée | ✅ démo Fuji complète 21:08 (Timéo 19:29, Romain depuis le Mac 21:08) ; clé Bedrock de Timéo : à renouveler avant 03:28 |
 | Dim. 09:00 | Chiffres définitifs | ✅ 19:42 (`shared/mesures.md`, à rafraîchir si les données changent) |
 | Dim. 10:00 | Atelier coaching pitch | ⬜ |
 | Dim. 12:00 | 🧊 Rendu | ⬜ |

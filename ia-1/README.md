@@ -104,6 +104,9 @@ Sur chaque alerte, 👍 / 👎 par le signataire → `shared/retours.jsonl` ; in
 ```
 `score/rapport.py` : les **faits sont établis par le code** à partir de `events.jsonl` / `alerts.jsonl` / `flags.jsonl` (paiements signalés, délai de signalement, montants tentés / sortis / protégés, gel, annulations, signalements Web), puis Bedrock rédige une **synthèse en 3 paragraphes à partir de ces faits seulement**, vérifiée (aucun montant hors des faits, aucun hash), sinon synthèse écrite par le code. Le rapport contient les preuves (hash de transaction) et la chronologie complète. Exemple généré sur la démo de ce soir : `rapports/rapport-demo-locale.md` (285 300 mUSD protégés, 0 sorti, signalement en ≤ 1 s). 5 tests.
 
+## Sources publiques en lecture seule (décision B1 §3) ✅
+`oracle/sources_publiques.py` : **OFAC** (adresses de la liste SDN, extraction publique 0xB10C, 120 adresses) et **ScamSniffer** (base publique de phishing, 2 530 adresses). Aucun scraping : listes publiées pour être réutilisées, citées, datées, expirées à 30 jours. Lues **hors chaîne** par le moteur (`--listes-publiques ../shared/listes-publiques.jsonl`, sans gas) ; `--publier N` en inscrit N par source au registre on-chain pour la démo. Testé sur Fuji : un paiement vers une adresse réellement sanctionnée est mis en attente, source officielle affichée. 2 tests.
+
 ## R8c — Croisement des sources de l'oracle ✅
 Une adresse n'est publiée dans `flags.jsonl` que si la **somme des réputations des sources distinctes ≥ 0,8** (`oracle/sources.json` ; source inconnue = 0,4 ; identité = hôte de l'URL, ou nom du site dans le `<h1>` d'une page locale). Une source réputée suffit ; deux sites inconnus indépendants aussi ; **la même source répétée compte une fois**. Les accusations insuffisantes vont dans `flags-rejetes.jsonl` (`single_low_reputation_source`), en attente d'autres sources.
 
