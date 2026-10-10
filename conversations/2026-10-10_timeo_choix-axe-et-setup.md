@@ -16,7 +16,7 @@
 - Les modèles passeront par **AWS Bedrock**, avec le compte de crédits du hackathon. Aucun identifiant configuré pour l'instant ; région et modèles activés inconnus.
 - **Sujet : non décidé.**
 
-## Idée sur la table côté Timéo : axe 4 du track 1
+## Idée à l'étude côté Timéo (proposée par Claude) : axe 4 du track 1
 Un « disjoncteur » on-chain relié à la conformité DORA.
 - Nous déployons notre propre contrat (coffre ou pool de prêt) sur le testnet Avalanche Fuji.
 - Un script joue du trafic normal, puis une attaque simulée contre ce contrat.
