@@ -18,9 +18,10 @@ from .regles import REGLES, EtatPortefeuille, Raison
 
 
 class Moteur:
-    def __init__(self, carnet=None, modele=None):
+    def __init__(self, carnet=None, modele=None, expliquer=False):
         self.etat = EtatPortefeuille()
         self.modele = modele  # modèle d'anomalie (R2), facultatif
+        self.expliquer = expliquer  # R3 : explication rédigée par Bedrock, avec repli sur le texte à trous
         # Carnet d'adresses du client (fournisseurs et comptes déjà connus) : évite le démarrage à froid.
         for adresse in carnet or []:
             self.etat.destinataires_connus.add(adresse.lower())
@@ -73,7 +74,7 @@ class Moteur:
         if not niveau:
             return None
         raisons.sort(key=lambda r: -r.poids)
-        return {
+        alerte = {
             "payment_id": p["payment_id"],
             "created_at": int(time.time()),
             "score": score,
@@ -81,6 +82,10 @@ class Moteur:
             "reasons": [{"code": r.code, "detail": r.detail, "evidence": r.preuves} for r in raisons],
             "explanation": explication(niveau, raisons),
         }
+        if self.expliquer:
+            from .explication import expliquer
+            alerte["explanation"] = expliquer(alerte, p, alerte["explanation"])
+        return alerte
 
 
 def explication(niveau, raisons):
@@ -114,6 +119,7 @@ def main(argv=None):
     a.add_argument("--carnet", type=Path, help="JSON : liste des adresses déjà connues du client")
     a.add_argument("--suivre", action="store_true", help="continue de lire le fichier quand il grossit (mode direct)")
     a.add_argument("--modele", type=Path, help="modèle d'anomalie appris (R2), ex. modeles/anomalie.joblib")
+    a.add_argument("--expliquer", action="store_true", help="R3 : explication rédigée par Bedrock (partage de connexion)")
     args = a.parse_args(argv)
 
     carnet = json.loads(args.carnet.read_text()) if args.carnet else []
@@ -121,7 +127,7 @@ def main(argv=None):
     if args.modele:
         import joblib
         modele = joblib.load(args.modele)
-    moteur = Moteur(carnet, modele)
+    moteur = Moteur(carnet, modele, args.expliquer)
     with open(args.out, "a" if args.suivre else "w") as sortie:
         for ev in lire(args.events, args.suivre):
             try:

@@ -12,6 +12,11 @@ Ajouter les entrées les plus récentes en haut.
 
 ---
 
+### 2026-10-10 19:23 — ia-1 / Romain (avec Claude)
+- **R3 codé** (`ia-1/score/explication.py`, option `--expliquer` du moteur) : Bedrock reformule les faits du moteur pour un signataire non expert ; garde-fous (adresses, longueur, repli, pause après panne). 27 tests. **Validation en direct dès que Romain repasse en partage de connexion** (le Wi-Fi de l'école a de nouveau coupé Bedrock).
+- **Lu, Timéo :** Fuji prêt sauf AVAX ; moteur validé sur ton PC ; R2 bloqué par Smart App Control (pas un bug). **Décision en attente de Romain** sur le lieu de la démo Fuji ; avis de Claude côté Romain : **ton PC, règles seules, sans faire circuler la phrase secrète** ; R2 reste un argument chiffré mesuré sur le Mac.
+- **Code commun Bedrock** : `ia-1/commun/bedrock.py` (chaîne de modèles sans Sonnet, repli sans température). L'oracle sera rebranché dessus en R8c.
+
 ### 2026-10-10 19:02 — ia-2 / Timéo (avec Claude) — FUJI : COMMENT APPROVISIONNER LE DÉPLOYEUR
 - **Question de Timéo :** il ne peut pas avoir l'adresse du déployeur dans son portefeuille, comment l'approvisionner ? **Réponse :** inutile de l'y importer. Il obtient des AVAX de test sur son propre portefeuille (Core ou MetaMask, réseau Fuji), puis les envoie par un simple transfert à `0x4EcC7e01cdB900b0FD16f91dFC289CdBBe768564`. La phrase secrète de test reste dans `ia-2/.env`.
 - **Toujours bloquant pour T6 :** ce transfert. Dès qu'il est fait, je lance `npm run fuji:fund` puis `npm run deploy:fuji`.
