@@ -12,6 +12,17 @@ Ajouter les entrées les plus récentes en haut.
 
 ---
 
+### 2026-10-10 17:13 — ia-2 / Timéo (avec Claude)
+- **Fait (T3) :** relais `ia-2/scripts/relay.js` (`npm run relay:local`), déploiement local (`npm run deploy:local`) et scénario de démo en direct (`npm run scenario:local`). Mode d'emploi en quatre terminaux dans `ia-2/README.md`.
+- **Testé de bout en bout sur la chaîne locale, avec un faux moteur de score à la place du tien :** paiement normal exécuté ; trois virements frauduleux de 95 000 mUSD signalés `hold` **2 secondes** après leur proposition, puis bloqués (2 signatures sur 3 exigées) ; adresse inscrite au registre depuis `flags.jsonl` ; gel et annulation par un signataire. 0 mUSD sorti sur 280 500 tentés.
+- **Romain, pour l'intégration de 21h :**
+  1. Le relais et ton moteur doivent tourner **sur la même machine** : ils se parlent par `shared/events.jsonl`, `shared/alerts.jsonl` et `shared/flags.jsonl`, que j'ai mis dans `.gitignore` (ils ne passent pas par Git). Ta commande `--events ../shared/events.jsonl --out ../shared/alerts.jsonl --suivre` correspond telle quelle. Le plus simple : toi sur ton Mac avec Node 20 (`cd ia-2 && npm install`), ou ton moteur sur le PC de Timéo (Python 3.12 y est installé).
+  2. Au démarrage, le relais **réécrit `events.jsonl`** depuis le déploiement et **ignore les alertes déjà présentes** dans `alerts.jsonl` (elles visent des numéros de paiement d'une session précédente). Lance donc le relais avant ton moteur. Les lignes de `flags.jsonl`, elles, sont toutes rejouées.
+  3. Ton verdict doit arriver pendant le délai d'examen : 30 secondes par défaut en démo (`REVIEW_DELAY` au déploiement).
+- **Bien lu :** ta validation de R1 sur mon jeu de test. Les jeux de données n'ont pas changé depuis ; je les ai régénérés pour vérifier, ils sont identiques.
+- **Réglage Hardhat :** `allowBlocksWithSameTimestamp` activé, sinon l'heure de la chaîne locale prenait de l'avance sur l'heure réelle et faussait les délais en démo.
+- **Prochaine étape :** intégration avec ton vrai moteur ; puis T6 (Fuji), pour lequel il me faut l'accord de Timéo pour créer les portefeuilles de test.
+
 ### 2026-10-10 17:10 — ia-1 / Romain (avec Claude)
 - **R1 évalué sur le test indépendant de Timéo** (`ia-1/eval/evaluer_donnees.py`) : **100 % des 54 fraudes freinées ou arrêtées** (63 % en `hold`), **89 % des montants frauduleux mis en attente** (2,29 M sur 2,57 M mUSD ; la ligne de base sans moniteur laissait sortir 0,97 M), **0,9 % de faux `hold`** sur 564 paiements normaux. Détail : `shared/validation-R1.md`.
 - **Merci Timéo, ton jeu a révélé deux défauts**, corrigés sur `train` seulement : `NEW_OWNER_PROPOSES` se déclenchait à chaque renouvellement de clé (14 jours) ; les adresses du carnet passaient pour « récentes ». Friction sur les fournisseurs récurrents en `train` : 45 % → 0 %.

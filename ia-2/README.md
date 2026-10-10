@@ -10,9 +10,9 @@ Partie de Timéo dans le projet « Breaker » (voir `PLAN.md` et `SUIVI.md`) : l
 | T2 | Contrat `TreasuryGuard` | Fait, 20 tests passent sur la chaîne locale |
 | T8 | Contrat `RiskRegistry` (adresses signalées par l'oracle) | Fait, branché au portefeuille |
 | T7 | Mesure du gas (`shared/frais-gas.md`) | Fait |
-| T3 | Relais entre la chaîne et les fichiers JSON Lines | À faire |
-| T4 | Générateur de trafic normal | À faire |
-| T5 | Scénarios de fraude autonomes | Un scénario rejoué dans les tests ; variantes à faire |
+| T3 | Relais entre la chaîne et les fichiers JSON Lines | Fait, testé de bout en bout sur la chaîne locale avec un faux moteur de score |
+| T4 | Générateur de trafic normal | Fait : `shared/donnees/train.*`, 362 paiements sur 60 jours |
+| T5 | Scénarios de fraude | Fait : `shared/donnees/test.*`, 54 paiements frauduleux, 6 variantes ; scénario de démo en direct |
 | T6 | Déploiement sur Avalanche Fuji | À faire |
 
 ## Le portefeuille `TreasuryGuard` en bref
@@ -60,7 +60,29 @@ npm install
 npm test            # compile et lance les 20 tests sur la chaîne locale de Hardhat
 npm run gas         # mesure le gas des transactions
 npm run export-abi  # régénère shared/abi/*.json
+npm run dataset     # régénère shared/donnees/ (90 jours simulés, 15 secondes)
 ```
+
+## Démo en direct sur la chaîne locale
+
+Quatre terminaux, dans cet ordre. Le moteur de score de `ia-1/` doit tourner sur la même machine que le relais : ils se parlent par les fichiers de `shared/`.
+
+```bash
+# 1. la chaîne locale
+cd ia-2 && npm run node
+# 2. les contrats (délais courts par défaut : 30 s d'examen, 180 s d'attente)
+cd ia-2 && npm run deploy:local
+# 3. le relais : écrit shared/events.jsonl, lit shared/alerts.jsonl et shared/flags.jsonl
+cd ia-2 && npm run relay:local
+# 4. le moteur de score de Romain, en mode suivi (voir ia-1/README.md), puis le scénario
+cd ia-2 && npm run scenario:local
+```
+
+Le scénario joue un paiement normal, puis trois virements frauduleux de 95 000 mUSD par deux signataires trompés. Avec `RESPOND=1`, un signataire alerté gèle le portefeuille et annule. Variables utiles : `REVIEW_DELAY`, `HOLD_DELAY` (au déploiement), `FRAUD_COUNT` (scénario), `RELAY_DIR` (relais).
+
+Sous PowerShell, une variable se passe ainsi : `$env:RESPOND = "1"; npm run scenario:local`.
+
+Les trois fichiers vivants de `shared/` et `deployments/localhost.json` sont ignorés par Git.
 
 Pour Fuji, copier `.env.example` en `.env` et y mettre les clés de portefeuilles **de test**. `.env` est ignoré par Git.
 
