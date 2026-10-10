@@ -12,6 +12,19 @@ Ajouter les entrées les plus récentes en haut.
 
 ---
 
+### 2026-10-10 21:23 — ia-2 / Timéo (avec Claude) — ✅ DÉMO REJOUÉE SUR FUJI DEPUIS LE PC — **relais Fuji arrêté**
+- **Romain : le relais Fuji du PC est arrêté (21h21), tu peux relancer le tien.** Le portefeuille n'est pas gelé. Tes paiements 8 à 11 sont toujours en attente, je n'y ai pas touché.
+- **Résultat (`RESPOND=1 scenario:fuji`, moteur en règles seules) : 0 mUSD parti sur 280 500 tentés.**
+  1. Paiement 12, 3 150 mUSD au prestataire habituel : exécuté sans friction, 43 s après la proposition ([exécution](https://testnet.snowtrace.io/tx/0xf3d759f5e37176bbce302cc6383a3c0bafa342a0f1939168c0678da68faad5af)).
+  2. Paiements 13, 14, 15 (95 000, 93 500, 92 000 mUSD vers `0xa3Cd…F126`, adresse jamais vue) : `hold` inscrit sur la chaîne **6 s, 6 s et 5 s** après la proposition, score 0,97, raisons `AMOUNT_OUTLIER;PAYMENT_FRAUD_PATTERN;DAILY_CAP_RECENT;BURST;NEW_RECIPIENT;URGENCY_MEMO` ([13](https://testnet.snowtrace.io/tx/0x6ba9ee155e23464a661770759de9e5f95e79af04836ec1a1b9147aff3c5f21b1), [14](https://testnet.snowtrace.io/tx/0xf75bcfdf2c6a307dc961559bfc6560c10ec668cd2f4a7ae1c9611ff9d8c6f91f), [15](https://testnet.snowtrace.io/tx/0xc1caa927d228e1d611d2ae0a2aa22e877a086ff7374f2e275d6c48542d73c999)). Le contrat avait déjà relevé chacun en `step_up` dès la proposition (`OVER_PERIOD_CAP`).
+  3. Exécution tentée par les deux signataires trompés : bloquée, 2 signatures sur 3. Gel par un signataire ([gel](https://testnet.snowtrace.io/tx/0x6eec9bf5af26cf0228aff1288fdfe11e2cbb2db49bf2db2ce36bacc8b2964d42)), puis trois annulations.
+- **Après la démo :** dégel voté par trois signataires (21h20). État final lu sur la chaîne : non gelé, 990 550 mUSD, 16 paiements.
+- **Différences avec ta démo de 21h08 :** pas d'explication Bedrock (injoignable depuis ce PC ce soir, voir 21h15), pas de R2, pas de notifications. `OFF_HOURS` absent grâce à `--client config/client.demo-samedi.json`.
+- **Petit défaut de `unfreeze.js` sur Fuji :** après le troisième vote, le script a relu `frozen()` trop tôt, a tenté un quatrième vote et s'est terminé en erreur (`estimateGas` refusé), alors que le dégel était bien passé. Sans conséquence. Je n'ai pas modifié le script.
+- **Encore en marche sur le PC :** le tableau de bord seul, `http://127.0.0.1:8599`, limité à ce PC. Sans relais, ses boutons d'action n'écrivent rien sur la chaîne.
+- **Codex :** aucun de tes fichiers touché, aucune recompilation (`--no-compile`). Mêmes contrats sur Fuji, pas de redéploiement.
+- **Détail :** `conversations/2026-10-10_timeo_demo-fuji-21h.md`.
+
 ### 2026-10-10 21:17 — ia-2 / Timéo (avec Claude) — SITE VITRINE : NOUVEAU DESIGN INSPIRÉ DE SAFE{LABS}
 - **Demande de Timéo :** refaire le design du site vitrine en s'inspirant complètement de Safe{Labs}.
 - **Fait :** `ia-2/site-vitrine/dist/` réécrit dans leur langage visuel, relevé sur safe.global ce soir : fond gris très clair, grands titres très fins, vert menthe, cartes blanches arrondies à ombre douce, rangée de chiffres clés, trame de carrés arrondis en haut de page, la démo interactive en section sombre, questions fréquentes. Tableau de correspondance dans `ia-2/site-vitrine/README.md`.
