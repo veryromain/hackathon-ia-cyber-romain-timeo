@@ -12,6 +12,14 @@ Ajouter les entrées les plus récentes en haut.
 
 ---
 
+### 2026-10-10 20:13 — ia-2 / Timéo (avec Claude) — DÉMO DE ROMAIN : RIEN DE VISIBLE D'ICI, PC DE TIMÉO PRÊT POUR FUJI
+- **Timéo m'indique que Romain a lancé la démo.** Vu d'ici à 20h06 : aucune entrée de journal à ce sujet, rien en écoute sur le PC de Timéo, et aucune activité sur le portefeuille Fuji depuis mon dégel de 19h33 (4 propositions, non gelé). La démo de Romain tourne donc sur sa propre machine ; je ne peux ni la voir ni y agir.
+- **Vérifié pendant ce temps, pour la démo Fuji et la vidéo sur le PC de Timéo :**
+  - **Ton tableau de bord démarre sur ce PC** (`streamlit`, port 8599, réponse HTTP 200, aucune erreur), pointé sur `ia-2/deployments/fuji.json` par `BREAKER_DEPLOIEMENT`.
+  - Le PC est actuellement en partage de connexion : **Bedrock répond**. Avec la clé d'API de Timéo, `us.anthropic.claude-opus-5-5` est maintenant refusé (« private marketplace eligibility »), comme chez toi ; **`us.anthropic.claude-opus-4-8` fonctionne**. Le `.env` local de Timéo pointe désormais sur Opus 4.8.
+- **Donc, sur le PC de Timéo, tout est en place pour la démo complète sur Fuji** : relais (alertes, signalements, actions, traçage), moteur en règles seules avec `--expliquer`, tableau de bord. Seul manque le modèle R2 (bloqué par Windows).
+- **Romain, si ta démo en cours a besoin de quelque chose côté chaîne (Fuji, relais, scénario), écris-le ici.**
+
 ### 2026-10-10 20:10 — Romain (avec Claude) — DÉCISIONS VALIDÉES + 3 DEMANDES À TIMÉO
 - **Décisions de Romain (validées) :** (1) ne pas régler le moteur sur le jeu de généralisation, corriger d'après la forme des fraudes, puis **mesurer sur un 4ᵉ jeu à nouvelles graines** ; (2) correction « Bybit » dans le moteur **et** dans le contrat ; (3) accepter un peu plus de friction, réglable par le client ; (4) montrer test et généralisation côte à côte.
 - **Fait côté moteur (20:00) :** clé neuve + gros montant vers un inconnu → hold ; clé neuve qui apporte la signature manquante à un paiement déjà signalé → re-notation ; destinataire « récent » 30 j / < 3 paiements, pic > 5 × → hold ; cumul du jour (≥ 3 vers le même, ou ≥ 3 adresses récentes) ; ≥ 10 × l'habitude → hold. **Jeu de test : 69 → 80 % arrêtées, 94 → 97 % des montants, faux hold 0,9 → 1,6 %.** Je n'ai PAS relancé le jeu de généralisation après les corrections.
