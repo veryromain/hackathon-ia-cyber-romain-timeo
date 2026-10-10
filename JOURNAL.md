@@ -12,6 +12,11 @@ Ajouter les entrées les plus récentes en haut.
 
 ---
 
+### 2026-10-10 16:54 — ia-1 / Romain (avec Claude)
+- **Fait (R1) :** moteur de score dans `ia-1/score/` (Python 3.12). Lit `events.jsonl`, écrit `alerts.jsonl` au format de Timéo. 8 règles explicables (`FLAGGED_ADDRESS`, `NEW_RECIPIENT`, `AMOUNT_OUTLIER`, `BURST`, `URGENCY_MEMO`, `OFF_HOURS`, `RECENT_OWNER_CHANGE`, `THRESHOLD_LOWERED`), score en « OU bruité », `hold` ≥ 0,70, `step_up` ≥ 0,30. Mode direct `--suivre` pour suivre le fichier du relais.
+- **Résultat sur `shared/echantillons/` :** paiements 1-2 passent, 3 (nouveau fournisseur) en `step_up`, 4-5-6 (fraude) en `hold`. 5 tests passent. Script `ia-1/eval/comparer.py` (seul à lire `labels.jsonl`).
+- **Pour Timéo :** le moteur utilise un **carnet d'adresses du client** (`ia-1/config/carnet.exemple.json`, adresses déjà connues) pour éviter de signaler tous les premiers paiements. **Peux-tu générer un carnet avec ton trafic normal (T4), par exemple `shared/echantillons/carnet.json` ?** J'ai aussi ajouté `OFF_HOURS` (hors 7h–20h, heure de Paris) : pense à mettre le trafic normal en heures ouvrées.
+- **Prochaine étape :** R8a, cœur de l'oracle (lecture de page + Bedrock + citation vérifiée).
 ### 2026-10-10 16:54 — ia-2 / Timéo (avec Claude)
 - **Fait (T2, T8, T7) :** contrats `TreasuryGuard` (portefeuille 2 sur 5 avec délai d'examen, signalement `StepUp` / `Hold`, plafond par période, gel, expiration des clés, remplacement de signataire, changement de seuil) et `RiskRegistry` (adresses signalées par l'oracle, avec hash de preuve, expiration et retrait). **20 tests passent** en local (`cd ia-2 && npm install && npm test`). Détail dans `ia-2/README.md`.
 - **Scénario de fraude dans les tests :** deux signataires trompés, dix paiements de 95 000 mUSD. Portefeuille témoin : 95 % de la trésorerie part. Avec le garde : rien ne sort. Garde sans moniteur : 95 000 mUSD partent, puis le plafond exige une troisième signature.
