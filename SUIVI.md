@@ -4,7 +4,7 @@
 > Légende : ✅ fait · 🔄 en cours · ⬜ à faire · ✂️ coupé (manque de temps)
 > Détail du projet : [`PLAN.md`](PLAN.md) · Historique : [`JOURNAL.md`](JOURNAL.md) · Brief : [`CONTEXTE.md`](CONTEXTE.md)
 
-**Dernière mise à jour :** sam. 10/10 16:40, par Claude (Romain)
+**Dernière mise à jour :** sam. 10/10 16:45, par Claude (Romain)
 **Rendu (gel définitif) :** dim. 11/10 **12:00** · **Checkpoint :** sam. **18:30** · **Pitch :** dim. 13:00
 
 ---
@@ -58,7 +58,7 @@ Un **garde antifraude pour la trésorerie crypto des entreprises** (portefeuille
 
 | # | Tâche | Qui | Comment / outil | Fini quand | Statut |
 |---|---|---|---|---|---|
-| T1 | **Format des échanges** : `events.jsonl`, `alerts.jsonl`, **`flags.jsonl`** + fichiers d'exemple dans `shared/echantillons/` | Timéo | Markdown + JSON écrit à la main | Romain peut lancer son code sur les exemples | 🔄 (format axe 4 à adapter) |
+| T1 | **Format des échanges** : `events.jsonl`, `alerts.jsonl`, **`flags.jsonl`** + fichiers d'exemple dans `shared/echantillons/` | Timéo | Markdown + JSON écrit à la main | Romain peut lancer son code sur les exemples | ✅ 16:41 (v2 : `events`, `alerts`, `flags`, `labels` + exemples) |
 | T2 | **Contrat `TreasuryGuard`** : multisig M sur N, proposition, approbation, exécution, signalement de risque (signatures en plus / mise en attente), plafond par période, gel, expiration des clés | Timéo | Solidity + Hardhat + OpenZeppelin, tests en local | Les tests passent, dont le scénario de fraude avec et sans garde | ⬜ |
 | R1 | **Moteur de score** : lit `events.jsonl`, tient l'historique (destinataires connus, montants habituels, rythme), applique les règles, écrit `alerts.jsonl` avec un score et des raisons | Romain | Python + pandas | Tourne sur l'exemple de T1 | ⬜ |
 | R8a | **Oracle, cœur** : lit une page Web locale → repère les adresses `0x…` → Bedrock dit « accusation / mention / démenti » + **citation exacte** → le code vérifie la citation → écrit `flags.jsonl` | Romain | Python + BeautifulSoup + boto3 (Bedrock), **partage de connexion** | Une page synthétique donne un signalement vérifié | ⬜ |
