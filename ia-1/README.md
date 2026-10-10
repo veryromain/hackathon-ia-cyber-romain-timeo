@@ -79,11 +79,11 @@ Rafraîchi toutes les 2 s. Indicateurs (proposés, en attente, signature en plus
 Tests sans navigateur : `tests/test_dashboard.py` (AppTest de Streamlit).
 **v2 à faire (R5b) :** boutons « valider » / « annuler » (il faudra une commande dans le relais de Timéo), rapport d'incident (R4).
 
-## R3 — Explication des alertes par Bedrock 🔄 (code prêt, validation en direct à faire en partage de connexion)
+## R3 — Explication des alertes par Bedrock ✅
 ```bash
 .venv/bin/python -m score.moteur ... --expliquer     # ajoute l'explication Bedrock ; sinon texte à trous
 ```
-`score/explication.py` : le modèle reçoit **uniquement les faits du moteur** (niveau, montant, libellé, destinataire abrégé, raisons) et les reformule en 2 à 4 phrases pour un signataire non expert, avec l'action à faire. **Garde-fous vérifiés par le code** : aucune adresse étrangère ou complète, longueur bornée, sinon repli sur le texte à trous ; après une panne Bedrock, pause de 60 s sans appel pour que les alertes partent sans délai. Appel commun dans `commun/bedrock.py` (Opus 5.5 → Fable 5.1 → Opus 4.8, jamais Sonnet). 6 tests hors ligne.
+`score/explication.py` : le modèle reçoit **uniquement les faits du moteur** (niveau, montant, libellé, destinataire abrégé, raisons) et les reformule en 2 à 4 phrases pour un signataire non expert, avec l'action à faire. **Garde-fous vérifiés par le code** : aucune adresse étrangère ou complète, longueur bornée, sinon repli sur le texte à trous ; après une panne Bedrock, pause de 60 s sans appel pour que les alertes partent sans délai. Appel commun dans `commun/bedrock.py` (Opus 5.5 → Fable 5.1 → Opus 4.8, jamais Sonnet). 6 tests hors ligne. **Validé en direct** (Opus 4.8, ≈ 6 s par alerte, sous les 30 s du délai d'examen) : les 4 alertes de l'exemple reformulées sans fait inventé, avec l'action à faire.
 
 ## À venir
 R8c croisement des sources · R4 rapport · R5 dashboard · R6 évaluation · R9 traçage des fonds

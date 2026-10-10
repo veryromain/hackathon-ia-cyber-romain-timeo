@@ -20,7 +20,8 @@ l'explication d'une alerte émise par un garde antifraude. Règles strictes :
   est signalé sur le Web, auquel cas dis-le clairement.
 Réponds par le texte seul."""
 
-NIVEAU = {"hold": "mise en attente (délai + signature supplémentaire)", "step_up": "une signature supplémentaire est exigée"}
+NIVEAU = {"hold": "mise en attente : délai d'attente, et il faut une signature de plus que d'habitude (pas une « seconde » signature)",
+          "step_up": "il faut une signature de plus que d'habitude (pas une « seconde » signature)"}
 
 
 def faits(alerte: dict, paiement: dict) -> str:

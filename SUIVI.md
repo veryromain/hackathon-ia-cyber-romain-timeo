@@ -4,7 +4,7 @@
 > Légende : ✅ fait · 🔄 en cours · ⬜ à faire · ✂️ coupé (manque de temps)
 > Détail du projet : [`PLAN.md`](PLAN.md) · Historique : [`JOURNAL.md`](JOURNAL.md) · Brief : [`CONTEXTE.md`](CONTEXTE.md)
 
-**Dernière mise à jour :** 2026-10-10 19:23, par Claude (Romain) — R3 codé, validation Bedrock en attente du partage de connexion
+**Dernière mise à jour :** 2026-10-10 19:25, par Claude (Romain) — R3 validé en direct
 **Rendu (gel définitif) :** dim. 11/10 **12:00** · **Checkpoint :** sam. **18:30** · **Pitch :** dim. 13:00
 
 ---
@@ -88,7 +88,7 @@ Un **garde antifraude pour les organisations qui gardent des millions dans un po
 | # | Tâche | Qui | Comment / outil | Fini quand | Statut |
 |---|---|---|---|---|---|
 | T6 | **Déploiement sur Avalanche Fuji** + rejeu de la démo, avec les liens de l'explorateur | Timéo | Hardhat + faucet Fuji, wallets **de test** | La démo tourne sur Fuji | 🔄 18:48 (comptes de test et commandes prêts ; **bloqué : 0 AVAX sur le déployeur, faucet à faire par Timéo**) |
-| R3 | **Explication de l'alerte** par Bedrock : quelques phrases pour un signataire, chaque fait relié à une transaction ; repli sur un texte à trous si Bedrock est injoignable | Romain | boto3, `BEDROCK_MODEL_ID` | Alerte lisible par un non-spécialiste | 🔄 19:23 (code + 6 tests hors ligne ; **à valider en direct dès que Romain repasse en partage de connexion**, le Wi-Fi bloque Bedrock) |
+| R3 | **Explication de l'alerte** par Bedrock : quelques phrases pour un signataire, chaque fait relié à une transaction ; repli sur un texte à trous si Bedrock est injoignable | Romain | boto3, `BEDROCK_MODEL_ID` | Alerte lisible par un non-spécialiste | ✅ 19:25 (validé en direct avec Opus 4.8 : ≈ 6 s par alerte, explications fidèles ; 27 tests) |
 | R4 | **Rapport d'incident** par Bedrock : chronologie, montants, décisions, preuves | Romain | boto3 | Rapport généré sur la fraude de démo | ⬜ |
 | R8c | **Oracle complet** : croisement de plusieurs sources + réputation des sources, expiration des signalements | Romain | Python | **Une tentative d'empoisonnement est rejetée** | ⬜ |
 | R5b | **Dashboard v2** : preuves Web (lien, citation), boutons « valider » / « annuler », chiffres clés | Romain | Streamlit | Suffit à filmer la démo | ⬜ |

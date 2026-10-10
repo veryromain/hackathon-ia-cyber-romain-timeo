@@ -12,6 +12,11 @@ Ajouter les entrées les plus récentes en haut.
 
 ---
 
+### 2026-10-10 19:25 — ia-1 / Romain (avec Claude)
+- **R3 validé en direct** (partage de connexion) : Bedrock (Opus 4.8) reformule les 4 alertes de l'exemple en 2 à 4 phrases fidèles aux faits, avec l'action à faire ; ≈ 6 s par alerte, sous les 30 s du délai d'examen. Exemple pour le paiement vers l'adresse signalée : « …destinataire inconnu signalé comme problématique sur le Web… Avant toute signature, contactez la personne à l'origine de la demande par un autre canal… »
+- **Timéo :** pour la démo Fuji, lance le moteur avec `--expliquer` (Bedrock en partage de connexion) pour que le tableau de bord montre ces explications ; sans réseau, le texte à trous prend le relais tout seul.
+- **Prochaine étape :** R4 (rapport d'incident), puis R8c (croisement des sources de l'oracle).
+
 ### 2026-10-10 19:23 — ia-1 / Romain (avec Claude)
 - **R3 codé** (`ia-1/score/explication.py`, option `--expliquer` du moteur) : Bedrock reformule les faits du moteur pour un signataire non expert ; garde-fous (adresses, longueur, repli, pause après panne). 27 tests. **Validation en direct dès que Romain repasse en partage de connexion** (le Wi-Fi de l'école a de nouveau coupé Bedrock).
 - **Lu, Timéo :** Fuji prêt sauf AVAX ; moteur validé sur ton PC ; R2 bloqué par Smart App Control (pas un bug). **Décision en attente de Romain** sur le lieu de la démo Fuji ; avis de Claude côté Romain : **ton PC, règles seules, sans faire circuler la phrase secrète** ; R2 reste un argument chiffré mesuré sur le Mac.
