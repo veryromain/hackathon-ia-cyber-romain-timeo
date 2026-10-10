@@ -12,6 +12,12 @@ Ajouter les entrées les plus récentes en haut.
 
 ---
 
+### 2026-10-10 17:20 — ia-1 / Romain (avec Claude)
+- **R1 validé et optimisé** (`shared/validation-R1.md`). Générateur de trafic (`ia-1/eval/generateur.py`, 8 fraudes dont goutte-à-goutte et usurpation de fournisseur), réglage sur 20 graines, test sur 90 graines jamais vues : **99-100 % des fraudes freinées ou arrêtées, ≈ 98 % arrêtées hors goutte-à-goutte, 0,2-0,4 % de mises en attente à tort**. 11 tests, 400 000 événements/s.
+- **Nouveaux codes de raison :** `PAYMENT_FRAUD_PATTERN`, `RAPID_REPEAT`, `NEW_OWNER_PROPOSES`. Seuil `hold` passé à 0,75.
+- **Pour Timéo :** ton trafic T4/T5 servira de **test indépendant** (mon générateur et mon moteur sont du même côté). Pense au carnet d'adresses (`carnet.json`) et à un `proposer` renseigné dans `payment_proposed` (utilisé par `NEW_OWNER_PROPOSES`).
+- **Prochaine étape :** R8a, cœur de l'oracle.
+
 ### 2026-10-10 16:54 — ia-1 / Romain (avec Claude)
 - **Fait (R1) :** moteur de score dans `ia-1/score/` (Python 3.12). Lit `events.jsonl`, écrit `alerts.jsonl` au format de Timéo. 8 règles explicables (`FLAGGED_ADDRESS`, `NEW_RECIPIENT`, `AMOUNT_OUTLIER`, `BURST`, `URGENCY_MEMO`, `OFF_HOURS`, `RECENT_OWNER_CHANGE`, `THRESHOLD_LOWERED`), score en « OU bruité », `hold` ≥ 0,70, `step_up` ≥ 0,30. Mode direct `--suivre` pour suivre le fichier du relais.
 - **Résultat sur `shared/echantillons/` :** paiements 1-2 passent, 3 (nouveau fournisseur) en `step_up`, 4-5-6 (fraude) en `hold`. 5 tests passent. Script `ia-1/eval/comparer.py` (seul à lire `labels.jsonl`).

@@ -16,23 +16,10 @@ Lit `events.jsonl` (format : `shared/format-evenements.md`) et écrit `alerts.js
 .venv/bin/python -m pytest -q tests
 ```
 
-**Règles (`score/regles.py`)** — chaque raison a un poids, combinés en « OU bruité » :
+**Règles (`score/regles.py`)** — 11 raisons explicables, poids combinés en « OU bruité ». Niveaux : `hold` ≥ 0,75 ; `step_up` ≥ 0,30.
+`FLAGGED_ADDRESS`, `NEW_RECIPIENT`, `AMOUNT_OUTLIER` (vs historique du destinataire, ou 90e centile si inconnu), `BURST` (destinataires inconnus), `URGENCY_MEMO`, `PAYMENT_FRAUD_PATTERN`, `RAPID_REPEAT`, `OFF_HOURS` (nuit plus forte), `NEW_OWNER_PROPOSES`, `RECENT_OWNER_CHANGE`, `THRESHOLD_LOWERED`.
 
-| Code | Déclencheur | Poids |
-|---|---|---|
-| `FLAGGED_ADDRESS` | destinataire inscrit au registre par l'oracle, non expiré | 0,90 (hold) / 0,50 (step_up) |
-| `NEW_RECIPIENT` | jamais payé (le carnet d'adresses du client évite le démarrage à froid) | 0,35 |
-| `AMOUNT_OUTLIER` | ≥ 3 × le paiement médian exécuté | 0,15 × log2(ratio), max 0,6 |
-| `BURST` | autre proposition dans les 10 dernières minutes | 0,40 |
-| `URGENCY_MEMO` | libellé pressant ou secret (« urgent », « confidentiel », « nouveau RIB »…) | 0,30 |
-| `OFF_HOURS` | hors 7h–20h (Paris) ou week-end | 0,15 |
-| `RECENT_OWNER_CHANGE` | signataire remplacé dans les 7 jours | 0,30 |
-| `THRESHOLD_LOWERED` | seuil de signatures abaissé dans les 7 jours | 0,50 |
-
-Niveaux : score ≥ 0,70 → `hold` ; ≥ 0,30 → `step_up` ; sinon rien.
-**Résultat sur l'exemple de Timéo :** 3/3 fraudes mises en attente, 0/3 faux positif, le nouveau fournisseur légitime en `step_up`.
-
-**Limites connues :** poids réglés à la main (à recalibrer sur le trafic d'entraînement de T4, R2) ; l'explication est un texte à trous (Bedrock en R3).
+**Validation complète : [`shared/validation-R1.md`](../shared/validation-R1.md)** — sur 90 graines jamais vues : 99-100 % des fraudes freinées ou arrêtées, 0,2-0,4 % de mises en attente à tort. Banc d'essai : `.venv/bin/python -m eval.banc --graines 101-130`.
 
 ## À venir
 R2 modèle d'anomalie · R8 oracle · R3/R4 Bedrock · R5 dashboard · R6 évaluation · R9 traçage des fonds

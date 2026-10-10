@@ -13,7 +13,8 @@ import sys
 import time
 from pathlib import Path
 
-from .regles import REGLES, SEUIL_HOLD, SEUIL_STEP_UP, EtatPortefeuille, Raison
+from . import regles
+from .regles import REGLES, EtatPortefeuille, Raison
 
 
 class Moteur:
@@ -27,14 +28,22 @@ class Moteur:
         """Met à jour l'état ; renvoie une alerte (dict) si l'événement est un paiement proposé jugé risqué."""
         t, d, e = ev["type"], ev.get("data", {}), self.etat
         if t == "payment_proposed":
-            p = {**d, "to": d["to"].lower(), "amount": int(d["amount"]),
+            p = {**d, "to": d["to"].lower(), "proposer": d.get("proposer", ev.get("tx_from", "")).lower(),
+                 "amount": int(d["amount"]),
                  "timestamp": ev["timestamp"], "tx_hash": ev["tx_hash"]}
             alerte = self.noter(p)
             e.propositions[p["payment_id"]] = p
+            # Les règles ne regardent que les 3 derniers jours : on oublie le reste (mémoire et vitesse constantes).
+            limite = p["timestamp"] - regles.FENETRE_REPETITION_S
+            for vieux in [k for k, q in e.propositions.items() if q["timestamp"] < limite]:
+                del e.propositions[vieux]
             return alerte
         if t == "payment_executed":
-            e.destinataires_connus.add(d["to"].lower())
-            e.montants_payes.append(int(d["amount"]))
+            to, montant = d["to"].lower(), int(d["amount"])
+            e.destinataires_connus.add(to)
+            e.montants_payes.append(montant)
+            e.montants_par_dest.setdefault(to, []).append(montant)
+            e.premier_paiement.setdefault(to, ev["timestamp"])
         elif t == "address_flagged":
             e.adresses_signalees[d["flagged"].lower()] = {
                 "level": d["level"], "expires_at": d["expires_at"],
@@ -43,6 +52,7 @@ class Moteur:
             e.adresses_signalees.pop(d["flagged"].lower(), None)
         elif t == "owner_replaced":
             e.changements_signataires.append((ev["timestamp"], ev["tx_hash"]))
+            e.nouveaux_signataires[d["new_owner"].lower()] = (ev["timestamp"], ev["tx_hash"])
         elif t == "threshold_changed" and d["new_threshold"] < d["previous_threshold"]:
             e.baisses_seuil.append((ev["timestamp"], ev["tx_hash"], d["previous_threshold"], d["new_threshold"]))
         return None
@@ -53,7 +63,7 @@ class Moteur:
         for r in raisons:
             reste *= 1 - r.poids
         score = round(1 - reste, 2)
-        niveau = "hold" if score >= SEUIL_HOLD else "step_up" if score >= SEUIL_STEP_UP else None
+        niveau = "hold" if score >= regles.SEUIL_HOLD else "step_up" if score >= regles.SEUIL_STEP_UP else None
         if not niveau:
             return None
         raisons.sort(key=lambda r: -r.poids)
@@ -81,7 +91,10 @@ def lire(chemin: Path, suivre: bool):
             ligne = f.readline()
             if ligne:
                 if ligne.strip():
-                    yield json.loads(ligne)
+                    try:
+                        yield json.loads(ligne)
+                    except json.JSONDecodeError:
+                        print(f"ligne ignorée (JSON invalide) : {ligne[:80]!r}", file=sys.stderr)
             elif suivre:
                 time.sleep(0.5)
             else:
@@ -100,7 +113,11 @@ def main(argv=None):
     moteur = Moteur(carnet)
     with open(args.out, "a" if args.suivre else "w") as sortie:
         for ev in lire(args.events, args.suivre):
-            alerte = moteur.traiter(ev)
+            try:
+                alerte = moteur.traiter(ev)
+            except (KeyError, TypeError, ValueError) as err:  # un événement incomplet ne doit jamais arrêter le moteur
+                print(f"événement ignoré (seq {ev.get('seq')}) : {err!r}", file=sys.stderr)
+                continue
             if alerte:
                 sortie.write(json.dumps(alerte, ensure_ascii=False) + "\n")
                 sortie.flush()
