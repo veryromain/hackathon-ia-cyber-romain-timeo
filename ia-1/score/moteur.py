@@ -31,6 +31,19 @@ class Moteur:
         for adresse in carnet or []:
             self.etat.destinataires_connus.add(adresse.lower())
 
+    def charger_listes_publiques(self, chemin: Path) -> int:
+        """OFAC / ScamSniffer : signalées hors chaîne, comme si l'oracle les avait inscrites (la preuve cite la source)."""
+        n = 0
+        for l in chemin.read_text(encoding="utf-8").splitlines():
+            if not l.strip():
+                continue
+            f = json.loads(l)
+            self.etat.adresses_signalees.setdefault(f["address"].lower(), {
+                "level": f.get("level", "hold"), "expires_at": f.get("expires_at", 0),
+                "category": f.get("category", "?"), "tx_hash": f.get("source_url", "")})
+            n += 1
+        return n
+
     def traiter(self, ev: dict):
         """Met à jour l'état ; renvoie une alerte (dict) si l'événement est un paiement proposé jugé risqué."""
         t, d, e = ev["type"], ev.get("data", {}), self.etat
@@ -177,6 +190,7 @@ def main(argv=None):
     a.add_argument("--services", type=Path, help="R9 : JSON des adresses de services connus (plateformes, ponts), jamais teintées")
     a.add_argument("--client", type=Path, help="réglages du client (config/client.json) : heures et jours ouvrés")
     a.add_argument("--notifier", action="store_true", help="P5 : notification à chaque mise en attente (macOS, e-mail, Telegram selon .env)")
+    a.add_argument("--listes-publiques", type=Path, help="listes publiques (OFAC, ScamSniffer) lues hors chaîne : shared/listes-publiques.jsonl")
     args = a.parse_args(argv)
 
     carnet = json.loads(args.carnet.read_text()) if args.carnet else []
@@ -195,6 +209,9 @@ def main(argv=None):
         journal = args.out.with_name("notifications.jsonl")
         notif = lambda a, p: _n(a, p, journal)
     moteur = Moteur(carnet, modele, args.expliquer, services, notif)
+    if args.listes_publiques:
+        n = moteur.charger_listes_publiques(args.listes_publiques)
+        print(f"{n} adresses de listes publiques chargées (hors chaîne)", file=sys.stderr)
     with open(args.out, "a" if args.suivre else "w") as sortie:
         for ev in lire(args.events, args.suivre):
             try:
