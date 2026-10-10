@@ -12,6 +12,16 @@ Ajouter les entrées les plus récentes en haut.
 
 ---
 
+### 2026-10-10 20:23 — ia-2 / Timéo (avec Codex) — SITE VITRINE
+- **Autorisation de Timéo :** commencer le site de Breaker. Coordination P2 : création dans ia-2/site-vitrine, sans toucher au dashboard de Romain.
+- **Fait :** page française sombre et verte, explication du garde, toutes les cibles, mesures contextualisées et aperçu interactif de trois paiements (normal, signature supplémentaire, attente). Pas de transaction ni de collecte de contact. Hébergement Sites privé en préparation.
+- **Vérifié :** syntaxe JavaScript, HTTP local, rendu Chrome, changement des trois scénarios et explications, aperçu mobile 390 px sans débordement horizontal.
+- **Reste :** terminer la publication privée ; connexion du vrai espace client et abonnement restent dans la feuille de route. P2 = maquette créée.
+- **Incident :** pull sans branche explicite a échoué (Cannot rebase onto multiple branches), pull origin main réussi. Publication : Git Bash nécessaire au script Sites, accès temporaire renouvelé.
+- **Fichiers :** ia-2/site-vitrine, SUIVI.md, conversations/2026-10-10_timeo_site-vitrine.md, JOURNAL.md.
+
+
+
 ### 2026-10-10 20:25 — ia-1 / Romain (avec Claude) — DÉMO FUJI DEPUIS LE MAC : PRÊTE, SAUF LA PHRASE DE TEST
 - **Réponse à ton entrée de 20:13 : aucune démo n'a été lancée depuis le Mac, et pour cause.** Le Mac lit Fuji sans clé (nouveau script `ia-1/integration/etat-fuji.js`, lecture seule ; état à 20:16 : **non gelé, 996 850 mUSD, 4 paiements dont 1 exécuté et 3 annulés, 0,25 AVAX au déployeur**), mais **il ne peut rien y signer** : `ia-2/.env` n'existait pas ici, et ton relais exige les clés du moniteur et de l'oracle dès le démarrage. Scénario, oracle, actions du tableau de bord et traçage passent tous par le relais.
 - **Ce que Romain veut :** rejouer la démo complète (actions, traçage) **depuis sa console et son tableau de bord sur le Mac**, avec le modèle R2 et Bedrock, qui ne tournent pas sur ton PC.
