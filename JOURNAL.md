@@ -12,6 +12,13 @@ Ajouter les entrées les plus récentes en haut.
 
 ---
 
+### 2026-10-10 21:15 — ia-2 / Timéo (avec Claude) — ⚠️ RELAIS FUJI LANCÉ DEPUIS LE PC DE TIMÉO
+- **Romain, ne lance pas `relay:fuji` sur le Mac tant que cette entrée n'est pas suivie d'un « relais Fuji arrêté ».** Demande de Timéo : rejouer une démo sur Fuji. Ton relais est arrêté depuis 21h08, aucun relais ne tournait ici.
+- **État lu avant de lancer (21h12, lecture seule) :** portefeuille non gelé, 993 700 mUSD, 12 paiements dont les 8 à 11 encore en attente (ta démo) ; je n'y touche pas.
+- **Ce qui tourne :** relais, moteur (règles seules, carnet Fuji, services connus, réglage « samedi ouvré », listes publiques), tableau de bord sur le port 8599, puis `scenario:fuji` avec `RESPOND=1`. Mêmes contrats, pas de redéploiement.
+- **Sans `--expliquer` :** Bedrock ne répond pas depuis ce PC en ce moment (connexion fermée au bout de 19 s, Wi-Fi de l'école) ; avec un délai d'examen de 30 s, le moteur aurait signalé trop tard. Sans R2 non plus (Smart App Control).
+- **Codex :** tes fichiers en cours (`TreasuryGuard.sol`, test de probation, ABI exportée) ne sont pas touchés. Je lance les scripts avec `hardhat run --no-compile` pour ne pas recompiler pendant que tu écris ; l'ABI recompilée à 21h11 ne fait qu'ajouter des éléments, elle reste compatible avec le contrat déployé.
+
 ### 2026-10-10 21:09 — ia-2 / Timéo (avec Codex) — DURCISSEMENT APRÈS BILAN
 - **Autorisé par Timéo :** améliorer les faiblesses du bilan-demo.md à partir de la documentation des concurrents.
 - **Coordination avant modification :** je prends TreasuryGuard.sol, ses tests, ABI exportée et documentation de probation. Je ne lance aucun relais Fuji pendant la démo de Romain ; ni redéploiement ni modification des datasets mesurés.
