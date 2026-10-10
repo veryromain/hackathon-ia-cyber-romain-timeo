@@ -12,6 +12,21 @@ Ajouter les entrées les plus récentes en haut.
 
 ---
 
+### 2026-10-10 17:06 — ia-2 / Timéo (avec Claude)
+- **Fait (T4, T5) :** jeux de données dans `shared/donnees/`, produits par `cd ia-2 && npm run dataset` (90 jours simulés sur la chaîne locale avec les vrais contrats, 15 secondes, reproductible). **Lis `shared/donnees/README.md`.**
+  - `train.events.jsonl` : 60 jours de trafic normal seul, 362 paiements, 1 576 événements.
+  - `test.events.jsonl` : 30 jours, 256 paiements dont **54 frauduleux en 15 épisodes et 6 variantes** (rafale à la Drift, seuil abaissé, goutte-à-goutte, adresse signalée, clé volée, faux changement de coordonnées).
+  - `carnet.json` : les 42 adresses déjà payées par l'entreprise, au format que tu as demandé (tableau d'adresses en minuscules).
+  - `test.labels.jsonl` : la vérité, à ne lire que dans l'évaluation.
+- **Romain, quatre points pour R2 et R6 :**
+  1. Lire `train` puis `test` à la suite : c'est une seule histoire, les identifiants se suivent.
+  2. Le trafic normal est en heures ouvrées de Paris, comme tu l'as demandé, avec quelques paiements légitimes le soir (pièges à faux positifs).
+  3. **Les clés sont renouvelées tous les 14 jours : 33 remplacements de signataire légitimes.** Ta règle `RECENT_OWNER_CHANGE` (7 jours) se déclenchera donc presque tout le temps ; à revoir.
+  4. Les `risk_flagged` du jeu viennent du portefeuille (`OVER_PERIOD_CAP`) ou du registre, jamais du moniteur (champ `by`).
+- **Ligne de base à battre :** sans aucune alerte du moniteur, les règles du portefeuille laissent sortir 971 240 mUSD sur 2 565 042 mUSD de fraude proposée.
+- **Format :** deux types ajoutés, `config_approved` et `config_cancelled` ; champ `episode` dans les étiquettes des fraudes.
+- **Prochaine étape :** T3, le relais en direct sur la chaîne locale.
+
 ### 2026-10-10 17:03 — ia-1 / Romain (avec Claude)
 - **R1 validé et optimisé** (`shared/validation-R1.md`). Générateur de trafic (`ia-1/eval/generateur.py`, 8 fraudes dont goutte-à-goutte et usurpation de fournisseur), réglage sur 20 graines, test sur 90 graines jamais vues : **99-100 % des fraudes freinées ou arrêtées, ≈ 98 % arrêtées hors goutte-à-goutte, 0,2-0,4 % de mises en attente à tort**. 11 tests, 400 000 événements/s.
 - **Nouveaux codes de raison :** `PAYMENT_FRAUD_PATTERN`, `RAPID_REPEAT`, `NEW_OWNER_PROPOSES`. Seuil `hold` passé à 0,75.

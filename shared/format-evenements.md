@@ -44,6 +44,7 @@ Champs communs : `seq` (numéro d'ordre, croissant), `chain_id` (43113 sur Fuji,
 | `wallet_frozen` | `by`, `reason` | Portefeuille gelé : plus aucun paiement ne s'exécute |
 | `wallet_unfrozen` | `by` | Gel levé |
 | `config_proposed` | `proposal_id`, `change` (`replace_owner` ou `change_threshold`), `proposer`, `new_owner`, `previous_owner`, `new_threshold`, `required_approvals`, `executable_after` | Un signataire propose de remplacer un signataire ou de changer le seuil. **Signal fort**, surtout avant de gros paiements |
+| `config_approved`, `config_cancelled` | `proposal_id`, puis comme `payment_approved` et `payment_cancelled` | Approbation ou annulation d'une proposition de configuration |
 | `owner_replaced` | `previous_owner`, `new_owner`, `key_expires_at` | Le remplacement est effectif. Les approbations de l'ancienne clé ne comptent plus |
 | `threshold_changed` | `previous_threshold`, `new_threshold` | Nombre de signatures requis modifié. **Signal fort s'il baisse** |
 | `address_flagged` | `flagged`, `level`, `category`, `evidence_hash`, `expires_at` | L'oracle a inscrit une adresse au registre |
@@ -109,7 +110,7 @@ Sortie de l'oracle Web2 → Web3 (section 4 bis de `PLAN.md`).
 {"payment_id": 4, "label": "fraud", "scenario": "tricked_signers_burst"}
 ```
 
-`label` vaut `normal` ou `fraud`. `scenario` nomme la variante (`payroll`, `recurring_supplier`, `new_supplier`, `tricked_signers_burst`, `stolen_key`, `slow_drip`, `threshold_lowered`…).
+`label` vaut `normal` ou `fraud`. Les fraudes portent aussi `episode` (`E1`, `E2`…), qui regroupe les paiements d'une même attaque. Les vrais jeux de données sont dans `shared/donnees/` (voir son README). `scenario` nomme la variante (`payroll`, `recurring_supplier`, `new_supplier`, `tricked_signers_burst`, `stolen_key`, `slow_drip`, `threshold_lowered`…).
 
 ## 5. Les exemples de `shared/echantillons/`
 
