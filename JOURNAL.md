@@ -12,6 +12,18 @@ Ajouter les entrées les plus récentes en haut.
 
 ---
 
+### 2026-10-11 00:15 — ia-2 / Timéo (avec Claude) — CONSEIL DU MENTOR : APIFY ET MODÈLES DE DÉCISION (CLEF, JEV)
+- **Conseil d'un mentor, rapporté par Timéo vers 00h10 :** utiliser Apify (apify.com) pour la collecte Web, et regarder deux modèles « de décision » : Jev (typesafe.ai) et Clef (Cloudflare Workers AI). J'ai lu les deux pages ; je ne connaissais aucun de ces deux modèles, tout ce qui suit vient de leurs pages. **Rien n'est décidé ni codé.**
+- **Ce que sont ces modèles :** ils ne rédigent pas de texte. On leur donne un état (texte, JSON) et des questions typées (oui/non, choix, score), ils rendent une probabilité par réponse.
+  - **Clef**, identifiant `@cf/cloudflare/clef` : utilisable tout de suite avec un compte Cloudflare, 0,24 $ par million de tokens d'entrée, jusqu'à 64 questions par appel, contexte de 65 536 tokens.
+  - **Jev** : accès anticipé sur liste d'attente, 0,042 $ par million de tokens, latence annoncée de 70 à 500 ms. **Pas utilisable cette nuit.**
+- **Où ça s'insère, Romain (c'est ton oracle) :**
+  1. **Apify remplace l'étape 1** (aujourd'hui : fichiers locaux ou une URL à la main). Il apporte ce qui manque : aller chercher de vraies pages. Jeton à mettre dans `.env`, jamais dans le dépôt.
+  2. **Clef peut remplacer Bedrock à l'étape 3**, à une condition : il ne peut pas citer. Il faut donc lui soumettre **chaque phrase qui contient une adresse**, avec la question « cette phrase accuse-t-elle cette adresse ? » (accusation / mention / démenti). La citation est alors la phrase elle-même, extraite par le code : ta vérification « mot pour mot » devient vraie par construction, et la confiance est une probabilité au lieu d'un nombre rédigé par un modèle.
+  3. Même usage possible dans le moteur de score pour `URGENCY_MEMO` (libellé pressant ou non), à la place de l'expression régulière.
+- **Réserves :** scraper de vrais forums ramène des pseudonymes et des accusations visant des personnes : règle du hackathon « aucune donnée personnelle réelle », conditions d'utilisation des sites, RGPD. À limiter à une ou deux pages publiques, sans rien enregistrer dans le dépôt. Les chiffres de performance des deux modèles sont ceux de leurs éditeurs, non vérifiés.
+- **Avis donné à Timéo :** il reste moins de douze heures et la vidéo, le deck et la vérification des secrets ne sont pas faits. Je recommande Apify en version minimale (une vraie page collectée, passée dans l'oracle existant) et Clef sur la slide « suite », sauf si tu as une à deux heures devant toi, Romain. **Dis ce que tu prends.**
+
 ### 2026-10-11 00:12 — ia-2 / Timéo (avec Claude) — CE QUE FAIT VRAIMENT L'ORACLE AUJOURD'HUI
 - **Question de Timéo :** comment l'oracle « scrape » le Web aujourd'hui ? **Réponse donnée, après lecture de `ia-1/oracle/` :** il ne parcourt pas le Web. Il lit les pages qu'on lui passe en argument (fichiers HTML synthétiques du corpus, ou une URL donnée à la main via `httpx`), et il charge deux listes publiques (OFAC par le dépôt 0xB10C, ScamSniffer). Il n'y a ni découverte de pages, ni planification, ni suivi de liens.
 - **À dire tel quel au jury et au mentor :** la partie démontrée est la lecture fiable d'une page (texte caché écarté, verdict du modèle, citation vérifiée mot pour mot, croisement des sources). La collecte à grande échelle est sur la feuille de route. Romain, corrige si j'ai mal lu ton code.
