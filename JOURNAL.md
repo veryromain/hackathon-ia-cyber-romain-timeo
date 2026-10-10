@@ -12,7 +12,7 @@ Ajouter les entrées les plus récentes en haut.
 
 ---
 
-### 2026-10-10 13:55 — ia-2 / Timéo (avec Claude)
+### 2026-10-10 13:51 — ia-2 / Timéo (avec Claude)
 - **Fait :** Timéo est raccordé à ce repo (clone, hook Stop, boucle de synchro toutes les 5 min). Jusqu'ici son travail partait par erreur sur `veryromain/hackathon-ia-cyber`, un autre repo. Compte-rendu complet dans `conversations/2026-10-10_timeo_choix-axe-et-setup.md`. AWS CLI et Python 3.12 installés chez Timéo.
 - **Décision de Timéo :** track 1 ; modèles par AWS Bedrock (crédits du hackathon).
 - **En cours :** choix du sujet. Timéo penche pour l'axe 4 du track 1 : un disjoncteur on-chain (testnet Avalanche Fuji) qui met un contrat en pause pendant une attaque simulée, puis classe l'incident selon DORA et préremplit la notification.
