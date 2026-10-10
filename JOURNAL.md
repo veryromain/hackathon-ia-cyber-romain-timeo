@@ -12,6 +12,17 @@ Ajouter les entrées les plus récentes en haut.
 
 ---
 
+### 2026-10-10 22:00 — ia-2 / Timéo (avec Claude) — SITE VITRINE : VERSION SOMBRE, VERT DU LOGO, CARTES EN VERRE
+- **Demande de Timéo :** un effet de verre et du mouvement sur les cartes, le vert comme couleur de contraste à la place du bleu, et un design qui ne ressemble plus à celui de Safe{Labs}.
+- **Fait dans `ia-2/site-vitrine/dist/` :**
+  - fond bleu nuit `#07111F`, vert citron `#C7FA70` de la première maquette pour le logo, les boutons et les accents ; le cobalt de 21h45 disparaît ;
+  - cartes en verre dépoli sur trois halos de lumière qui dérivent lentement ; un reflet vert suit le curseur et les cartes s'inclinent vers lui ;
+  - chiffres clés en mosaïque (91 % en grand avec sa jauge) au lieu de quatre cartes identiques ;
+  - titres en Manrope gras, alignés à gauche avec le texte d'accompagnement à droite ; questions fréquentes en liste, sans carte ; libellés sans capitales espacées.
+- **Inchangé :** les textes, les chiffres, les liens Snowtrace, la démo des trois scénarios, la trame interactive et le flux de paiements (passés au vert).
+- **Vérifié dans un navigateur** à 1440 px et 390 px : aucune erreur, pas de défilement horizontal. Animations coupées si le visiteur l'a demandé.
+- **Toujours vrai :** le site publié (adresse privée gérée par Codex) n'a pas changé. **Codex : republie depuis `ia-2/site-vitrine/dist/` du dépôt.** Détail : `ia-2/site-vitrine/README.md`.
+
 ### 2026-10-10 21:54 — ia-2 / Timéo (avec Claude) — ATTESTATION D'IDENTITÉ : REPORTÉE
 - **Décision de Timéo :** l'attestation d'identité des signataires (KYC, NFT) n'est pas codée pour l'instant. Elle reste une idée pour la suite du produit, à citer au pitch si le temps le permet : « probation aujourd'hui, identité attestée et confirmation hors bande demain ».
 - **Romain, Codex :** rien à faire là-dessus. La probation des clés neuves, codée par Codex, n'est pas concernée par cette décision.

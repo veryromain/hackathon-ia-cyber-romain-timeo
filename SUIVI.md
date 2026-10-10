@@ -4,7 +4,7 @@
 > Légende : ✅ fait · 🔄 en cours · ⬜ à faire · ✂️ coupé (manque de temps)
 > Détail du projet : [`PLAN.md`](PLAN.md) · Historique : [`JOURNAL.md`](JOURNAL.md) · Brief : [`CONTEXTE.md`](CONTEXTE.md)
 
-**Dernière mise à jour :** 2026-10-10 21:51, par Claude (Romain) — contrôles distinctifs C1-C4 faits, C5 spécifié pour Timéo
+**Dernière mise à jour :** 2026-10-10 22:00, par Claude (Timéo) — site vitrine en version sombre, vert du logo, cartes en verre (dépôt seulement, pas encore republié) ; avant, 21:51 par Claude (Romain) : contrôles distinctifs C1-C4 faits, C5 spécifié pour Timéo
 **Rendu (gel définitif) :** dim. 11/10 **12:00** · **Checkpoint :** sam. **18:30** · **Pitch :** dim. 13:00
 
 ---

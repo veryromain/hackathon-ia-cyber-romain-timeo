@@ -84,3 +84,38 @@ Si le visiteur a demandé à réduire les animations, trois paiements fixes s'af
 
 Vérifié dans un navigateur à 1440 px et à 390 px : aucune erreur dans la console, aucune barre de défilement horizontale, survol et clic sur la trame, défilement des paiements, démo des trois scénarios. Le site publié (adresse privée gérée par Codex) n'a pas changé : il faut republier depuis `dist/`.
 
+## Version sombre, vert du logo et cartes en verre, 10 octobre, 22h (Claude, à la demande de Timéo)
+
+Timéo a demandé un effet de verre et du mouvement sur les cartes, le vert comme couleur de contraste à la place du bleu, et un design qui s'éloigne de celui de Safe{Labs}. Le tableau des couleurs de 21h45 ci-dessus est remplacé par celui-ci.
+
+| Rôle | Couleur | Valeur |
+|---|---|---|
+| Fond | Bleu nuit | `#07111F` |
+| Logo, boutons, accents | Vert citron (celui de la première maquette) | `#C7FA70` |
+| Texte posé sur le vert | Vert très sombre | `#142008` |
+| Titres, texte | Blanc cassé | `#F6F9FC`, `#E7EDF4` |
+| Réponse « sans friction » | Vert citron | `#C7FA70` |
+| Réponse « signature supplémentaire » | Bleu clair | `#A8BFFF` |
+| Réponse « en attente », montants perdus | Ambre | `#FFC481` |
+
+### Ce qui éloigne la page de Safe{Labs}
+
+| Avant (inspiré de Safe) | Maintenant |
+|---|---|
+| Fond gris clair, cartes blanches à ombre douce | Fond bleu nuit, cartes en verre dépoli |
+| Titres très fins (Outfit 300), centrés | Titres gras (Manrope 600), à gauche, le texte d'accompagnement à droite |
+| Quatre cartes de chiffres identiques | Une mosaïque : 91 % en grand avec sa jauge, trois chiffres autour |
+| Libellés en capitales espacées | Libellés en minuscules |
+| Questions fréquentes dans une carte blanche | Titre à gauche, liste à droite, sans carte |
+| Appel final sur fond nu | Appel final dans un panneau de verre |
+
+### Verre et mouvement
+
+- **Lumières de fond :** trois halos (vert, turquoise, bleu) fixes derrière la page, qui dérivent en 40 à 50 secondes. Ce sont eux que le verre laisse voir quand on fait défiler.
+- **Verre :** fond translucide, flou de l'arrière-plan (`backdrop-filter`), arête claire en haut. Sans prise en charge du flou par le navigateur, les cartes restent lisibles, simplement translucides.
+- **Au survol :** un reflet vert et un liseré lumineux suivent le curseur ; les cartes de chiffres et de contenu s'inclinent de quelques degrés vers lui. L'inclinaison n'est appliquée que pendant le survol, pour que le texte reste net au repos.
+- **Au repos :** les quatre cartes de chiffres flottent de quelques pixels, en décalé.
+- **Réduction des animations demandée par le visiteur :** plus de dérive, de flottement ni d'inclinaison ; le reflet reste.
+
+Textes, chiffres, liens Snowtrace et démo des trois scénarios inchangés. Vérifié dans un navigateur à 1440 px et à 390 px : aucune erreur, aucune barre de défilement horizontale. Le site publié n'a pas changé : il faut republier depuis `dist/`.
+

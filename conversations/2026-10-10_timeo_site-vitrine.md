@@ -21,3 +21,18 @@ Décisions prises en faisant :
 Fichiers : `ia-2/site-vitrine/dist/` (les trois fichiers) et `ia-2/site-vitrine/README.md` (tableau des couleurs). Vérifié dans un navigateur à 1440 px et 390 px.
 
 Prochaines étapes : republier le site (Codex) ; revoir le reste de la page avec Timéo.
+
+## Version sombre, vert du logo, cartes en verre — 2026-10-10 22:00 (Timéo avec Claude)
+
+Timéo montre les cartes de chiffres de la version claire et le haut de la première maquette (sombre, vert citron). Il demande un effet « liquid glass » et du mouvement sur les cartes, le vert comme couleur de contraste à la place du bleu, et un design qui ne ressemble plus trop à celui de Safe{Labs}.
+
+Décisions prises en faisant :
+
+- **Fond sombre plutôt que clair.** Timéo n'a pas dit de quelle couleur devait être le fond. Un fond clair avec un accent vert aurait ramené la page vers Safe (gris clair et vert menthe), et le verre ne se voit bien que sur un fond coloré. J'ai donc gardé le bleu nuit de la charte de 21h45 comme fond et repris le vert citron de la première maquette. C'est mon interprétation ; à faire confirmer par Timéo.
+- **Verre :** flou de l'arrière-plan, arête claire, reflet et liseré verts qui suivent le curseur, inclinaison des cartes vers le curseur, halos de lumière qui dérivent derrière la page.
+- **Structure :** chiffres en mosaïque, titres gras à gauche, questions en liste. Les textes et les chiffres ne changent pas.
+- **Défauts trouvés au contrôle et corrigés :** deux mots collés dans un titre après suppression d'un retour à la ligne, bouton du haut sur deux lignes sur mobile, texte légèrement flou sur les cartes au repos (l'inclinaison n'est plus appliquée que pendant le survol).
+
+Fichiers : `ia-2/site-vitrine/dist/` (les trois fichiers) et `ia-2/site-vitrine/README.md`.
+
+Prochaines étapes : republier le site (Codex) ; avis de Timéo sur le fond sombre ; revoir le reste de la page.
