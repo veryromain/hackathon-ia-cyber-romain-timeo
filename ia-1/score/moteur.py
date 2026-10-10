@@ -18,8 +18,9 @@ from .regles import REGLES, EtatPortefeuille, Raison
 
 
 class Moteur:
-    def __init__(self, carnet=None):
+    def __init__(self, carnet=None, modele=None):
         self.etat = EtatPortefeuille()
+        self.modele = modele  # modèle d'anomalie (R2), facultatif
         # Carnet d'adresses du client (fournisseurs et comptes déjà connus) : évite le démarrage à froid.
         for adresse in carnet or []:
             self.etat.destinataires_connus.add(adresse.lower())
@@ -60,6 +61,10 @@ class Moteur:
 
     def noter(self, p: dict):
         raisons: list[Raison] = [r for r in (regle(p, self.etat) for regle in REGLES) if r]
+        if self.modele:
+            r = self.modele.raison(p, self.etat)
+            if r:
+                raisons.append(r)
         reste = 1.0
         for r in raisons:
             reste *= 1 - r.poids
@@ -108,10 +113,15 @@ def main(argv=None):
     a.add_argument("--out", required=True, type=Path)
     a.add_argument("--carnet", type=Path, help="JSON : liste des adresses déjà connues du client")
     a.add_argument("--suivre", action="store_true", help="continue de lire le fichier quand il grossit (mode direct)")
+    a.add_argument("--modele", type=Path, help="modèle d'anomalie appris (R2), ex. modeles/anomalie.joblib")
     args = a.parse_args(argv)
 
     carnet = json.loads(args.carnet.read_text()) if args.carnet else []
-    moteur = Moteur(carnet)
+    modele = None
+    if args.modele:
+        import joblib
+        modele = joblib.load(args.modele)
+    moteur = Moteur(carnet, modele)
     with open(args.out, "a" if args.suivre else "w") as sortie:
         for ev in lire(args.events, args.suivre):
             try:

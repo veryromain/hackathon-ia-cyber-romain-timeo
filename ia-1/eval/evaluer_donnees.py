@@ -17,8 +17,13 @@ def lire(p):
     return [json.loads(l) for l in open(p) if l.strip()]
 
 
-def evaluer(dossier: Path, verbeux=True):
-    m = Moteur(json.loads((dossier / "carnet.json").read_text()))
+def evaluer(dossier: Path, verbeux=True, avec_modele=False):
+    carnet = json.loads((dossier / "carnet.json").read_text())
+    modele = None
+    if avec_modele:  # R2 : appris sur train uniquement (trafic normal), jamais sur test
+        from score.anomalie import entrainer
+        modele, _ = entrainer(lire(dossier / "train.events.jsonl"), carnet)
+    m = Moteur(carnet, modele)
     niveaux, montants, raisons = {}, {}, {}
     for f in ("train.events.jsonl", "test.events.jsonl"):
         for ev in lire(dossier / f):
@@ -70,4 +75,6 @@ def evaluer(dossier: Path, verbeux=True):
 if __name__ == "__main__":
     a = argparse.ArgumentParser()
     a.add_argument("--dossier", type=Path, default=Path(__file__).resolve().parents[2] / "shared" / "donnees")
-    evaluer(a.parse_args().dossier)
+    a.add_argument("--modele", action="store_true", help="ajoute le modèle d'anomalie R2 (appris sur train)")
+    args = a.parse_args()
+    evaluer(args.dossier, avec_modele=args.modele)

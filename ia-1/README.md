@@ -21,6 +21,16 @@ Lit `events.jsonl` (format : `shared/format-evenements.md`) et écrit `alerts.js
 
 **Validation complète : [`shared/validation-R1.md`](../shared/validation-R1.md)** — sur 90 graines jamais vues : 99-100 % des fraudes freinées ou arrêtées, 0,2-0,4 % de mises en attente à tort. Banc d'essai : `.venv/bin/python -m eval.banc --graines 101-130`.
 
+## R2 — Modèle d'anomalie ✅
+Isolation Forest appris sur le **trafic normal** de Timéo (`shared/donnees/train`), en complément des règles : raison `ANOMALY_MODEL` (0,25 au-delà du 99e centile de l'entraînement, 0,40 au-delà du maximum).
+```bash
+.venv/bin/python -m score.anomalie --events ../shared/donnees/train.events.jsonl --carnet ../shared/donnees/carnet.json --sortie modeles/anomalie.joblib
+.venv/bin/python -m score.moteur ... --modele modeles/anomalie.joblib
+.venv/bin/python -m eval.evaluer_donnees --modele    # évaluation train → test
+```
+9 caractéristiques (montant, écart à l'habitude du destinataire, heure, week-end, rythme, rafale, changement de signataire, libellé, répétition). **La nouveauté du destinataire est volontairement exclue** (déjà comptée par `NEW_RECIPIENT` ; essai sur train : +50 % de nouveaux fournisseurs mis en attente).
+**Test de Timéo :** fraudes arrêtées 63 % → **69 %**, montants en attente 89 % → **94 %**, faux `hold` **inchangés (0,9 %)**.
+
 ## R8a — Oracle Web2 → Web3 (cœur) ✅
 ```bash
 .venv/bin/python -m oracle.oracle oracle/corpus_demo/*.html --out ../shared/flags.jsonl     # Bedrock (partage de connexion !)

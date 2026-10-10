@@ -19,6 +19,17 @@ Réglage sur `train` (60 jours, trafic normal seul) et sur mon générateur. **�
 
 **Ce que le test indépendant a corrigé** (réglé sur `train`, jamais sur `test`) : Timéo renouvelle les clés tous les 14 jours (conseil du mentor). `NEW_OWNER_PROPOSES` ne vaut donc que vers une adresse inconnue (45 % de friction → 0 % sur les récurrents en `train`). Les adresses du carnet ne sont jamais « récentes » (`RAPID_REPEAT`). Le libellé urgent seul ne suffit plus (0,20), le schéma « inconnu + urgent » pèse 0,55.
 
+### + R2 (modèle d'anomalie, appris sur `train`) — même test
+
+| | Règles seules | Règles + R2 |
+|---|---|---|
+| Fraudes arrêtées (`hold`) | 63 % | **69 %** (clé volée, seuil abaissé, goutte-à-goutte en hausse) |
+| Montants frauduleux mis en attente | 89 % | **94 %** |
+| Fraudes freinées ou arrêtées | 100 % | 100 % |
+| Faux `hold` sur les normaux | 0,9 % | **0,9 %** |
+
+Variante choisie sur `train` seulement (sans les caractéristiques de nouveauté), évaluée une seule fois sur `test`.
+
 ---
 
 Première validation (10/10 vers 17h00) sur des données synthétiques générées par `ia-1/eval/generateur.py`, en attendant le trafic de Timéo (T4/T5) qui servira de **test indépendant**.

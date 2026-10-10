@@ -29,6 +29,8 @@ POIDS = {
     "THRESHOLD_LOWERED": 0.50,
     "PAYMENT_FRAUD_PATTERN": 0.55,   # nouveau destinataire + libellé pressant / changement de coordonnées
     "RAPID_REPEAT": 0.35,            # paiements répétés vers une adresse apparue il y a moins de 7 jours
+    "ANOMALY_MODEL": 0.25,           # R2 : plus étrange que 99 % du trafic normal d'entraînement
+    "ANOMALY_MODEL_FORT": 0.40,      # R2 : plus étrange que tout le trafic normal d'entraînement
 }
 SEUIL_HOLD = 0.75  # choisi par recherche sur les graines 1-20 (faux hold 0,5 % au lieu de 1,1 %)
 SEUIL_STEP_UP = 0.30

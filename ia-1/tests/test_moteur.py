@@ -45,3 +45,19 @@ def test_chaque_raison_a_un_detail_et_des_preuves_liste():
     for a in alertes().values():
         for r in a["reasons"]:
             assert r["detail"] and isinstance(r["evidence"], list)
+
+
+def test_modele_anomalie_s_entraine_et_s_integre():
+    """R2 : appris sur le trafic normal de Timéo, le moteur fonctionne avec et garde ses résultats sur l'exemple."""
+    from score.anomalie import entrainer
+    donnees = ECH.parent / "donnees"
+    events = [json.loads(l) for l in (donnees / "train.events.jsonl").read_text().splitlines() if l.strip()]
+    modele, n = entrainer(events, json.loads((donnees / "carnet.json").read_text()))
+    assert n > 100 and modele.seuil_fort > modele.seuil_alerte
+    m = Moteur(CARNET, modele)
+    niveaux = {}
+    for ligne in (ECH / "events.exemple.jsonl").read_text().splitlines():
+        a = m.traiter(json.loads(ligne))
+        if a:
+            niveaux[a["payment_id"]] = a["level"]
+    assert niveaux.get(4) == niveaux.get(5) == niveaux.get(6) == "hold"

@@ -12,6 +12,11 @@ Ajouter les entrées les plus récentes en haut.
 
 ---
 
+### 2026-10-10 17:46 — ia-1 / Romain (avec Claude)
+- **Fait (R2) : modèle d'anomalie** (`ia-1/score/anomalie.py`, Isolation Forest appris sur `shared/donnees/train`, raison `ANOMALY_MODEL`). Sur le test de Timéo : **fraudes arrêtées 63 → 69 %, montants frauduleux en attente 89 → 94 %, faux `hold` inchangés (0,9 %)**. La nouveauté du destinataire est exclue des caractéristiques (double comptage avec `NEW_RECIPIENT`, décidé sur train). 18 tests.
+- **Pour Timéo :** en démo, lancer le moteur avec `--modele modeles/anomalie.joblib` (à générer : voir `ia-1/README.md`). Si tu régénères le jeu de données, préviens-moi : je réentraîne le modèle.
+- **Prochaine étape :** R8b (corpus de l'oracle), puis R5 (dashboard).
+
 ### 2026-10-10 17:42 — Romain (avec Claude) — ORGANISATION
 - **Décision Romain + Timéo :** cible = petites et moyennes organisations qui détiennent des fonds en crypto (multisig, sans équipe de sécurité). **Nouvelle phase « Business » (B1 à B8) dans `SUIVI.md`**, placée **après la démo et les tests** : bilan de la démo, réalité du problème, étude de marché, concurrence, entretiens de validation du besoin, prix, mise sur le marché, décision go / ajustement.
 - **Répartition :** **Timéo = technique de l'outil**, **Romain = business** (étude de marché, vente, commerce). Mais **maintenant, on se concentre à deux sur la démo** : établir ce qui marche, ce qu'il faut garder, enlever, modifier, améliorer.

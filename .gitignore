@@ -24,3 +24,6 @@ node_modules/
 shared/events.jsonl
 shared/alerts.jsonl
 shared/flags.jsonl
+
+# Modèle d anomalie appris (régénérable : python -m score.anomalie ...)
+ia-1/modeles/
