@@ -73,3 +73,8 @@ Un projet compatible avec les deux tracks : la **supervision d'agents IA qui man
   - friction seulement, jamais de blocage.
 - **Écarté par Romain :** le signalement à l'émetteur du stablecoin.
 - Timéo est prévenu dans le journal (T9 : événement `token_transfer`).
+
+## Mise à jour vers 17:00 — R1 validé, R8a fait
+- **R1 :** générateur de trafic et banc d'essai. Réglage sur 20 graines, test sur 90 graines jamais vues : 99-100 % des fraudes freinées ou arrêtées, 0,2-0,4 % de faux `hold`. Plusieurs bugs corrigés et nouvelles règles ajoutées (voir `shared/validation-R1.md`).
+- **R8a :** oracle Bedrock avec citation vérifiée et défense contre l'injection. 6/6 pages pièges justes.
+- **Incident :** les modèles 5.5 sont refusés par AWS, d'où un repli automatique sur Sonnet 4.5.

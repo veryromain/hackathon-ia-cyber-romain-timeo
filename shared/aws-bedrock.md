@@ -40,3 +40,6 @@ Timéo a reçu une **clé d'API Bedrock de courte durée** (elle commence par `b
 - **Bedrock répond.** Appel réel réussi avec `us.anthropic.claude-opus-5-5` et avec `us.amazon.nova-lite-v1:0`.
 - **Refusés avec cette clé** (`AccessDeniedException`, « private marketplace eligibility ») : `us.` et `global.anthropic.claude-sonnet-5-5`, `us.` et `global.anthropic.claude-haiku-5-5`. Romain, lui, y a accès par son rôle. Le message d'AWS suggère de réessayer après quelques minutes.
 - Le `.env` de Timéo pointe donc sur `us.anthropic.claude-opus-5-5`. **Le code doit lire le modèle dans `BEDROCK_MODEL_ID`**, pas l'écrire en dur, pour tourner chez les deux.
+
+## ⚠️ 17:07 — Les modèles 5.5 sont refusés chez Romain aussi
+Depuis environ 17h, `claude-sonnet-5-5` et `claude-opus-5-5` renvoient `AccessDeniedException` (« private marketplace eligibility ») avec le profil de Romain. **`us.anthropic.claude-sonnet-4-5-20250929-v1:0` fonctionne.** L'oracle (`ia-1/oracle/oracle.py`) essaie `BEDROCK_MODEL_ID`, puis bascule tout seul sur une liste de repli. **Timéo : vérifie si ton Opus 5.5 marche encore.**

@@ -12,6 +12,12 @@ Ajouter les entrées les plus récentes en haut.
 
 ---
 
+### 2026-10-10 17:07 — ia-1 / Romain (avec Claude)
+- **Fait (R8a) : cœur de l'oracle Web2 → Web3** dans `ia-1/oracle/`. Page → texte visible (texte caché écarté) → adresses → Bedrock (outil à schéma fixe, consigne anti-injection) → **citation vérifiée par le code** → `flags.jsonl` au format de Timéo + `flags-rejetes.jsonl`.
+- **Corpus de 6 pages pièges : 6/6 justes, stables sur 3 passages.** Seule la vraie arnaque est signalée ; démenti, mention, accusation retirée et deux injections de prompt (cachée et visible) sont rejetés. Le repli par mots-clés se fait piéger par l'accusation retirée : bon argument pour le pitch. 17 tests au total dans `ia-1/`.
+- **⚠️ Bedrock :** les modèles 5.5 sont maintenant refusés chez Romain ; Sonnet 4.5 marche, et un repli automatique est en place (voir `shared/aws-bedrock.md`). **Timéo, ton Opus 5.5 marche-t-il encore ?**
+- **Pour Timéo (T3) :** le relais peut lire `shared/flags.jsonl` ; mes champs sont exactement ceux de ton format (`address`, `level`, `category`, `confidence`, `sources_count`, `source_url`, `quote`, `evidence_hash`, `expires_at`).
+- **Prochaine étape :** checkpoint de 18:30, puis R8b (corpus plus large) et R5 (dashboard).
 ### 2026-10-10 17:06 — ia-2 / Timéo (avec Claude)
 - **Fait (T4, T5) :** jeux de données dans `shared/donnees/`, produits par `cd ia-2 && npm run dataset` (90 jours simulés sur la chaîne locale avec les vrais contrats, 15 secondes, reproductible). **Lis `shared/donnees/README.md`.**
   - `train.events.jsonl` : 60 jours de trafic normal seul, 362 paiements, 1 576 événements.

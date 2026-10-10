@@ -21,5 +21,27 @@ Lit `events.jsonl` (format : `shared/format-evenements.md`) et écrit `alerts.js
 
 **Validation complète : [`shared/validation-R1.md`](../shared/validation-R1.md)** — sur 90 graines jamais vues : 99-100 % des fraudes freinées ou arrêtées, 0,2-0,4 % de mises en attente à tort. Banc d'essai : `.venv/bin/python -m eval.banc --graines 101-130`.
 
+## R8a — Oracle Web2 → Web3 (cœur) ✅
+```bash
+.venv/bin/python -m oracle.oracle oracle/corpus_demo/*.html --out ../shared/flags.jsonl     # Bedrock (partage de connexion !)
+.venv/bin/python -m oracle.oracle oracle/corpus_demo/*.html --out flags.jsonl --sans-llm      # repli par mots-clés
+```
+Page → texte visible (le **texte caché est écarté** : vecteur d'injection) → adresses `0x…` → Bedrock (sortie forcée par un outil à schéma fixe, température 0, consigne anti-injection) → **citation vérifiée mot pour mot par le code** → `flags.jsonl` (acceptés, format de Timéo) + `flags-rejetes.jsonl` (rejetés, avec la raison : `quote_not_found`, `mention`, `denial`, `low_confidence`, `not_analysed`).
+Seuils : confiance ≥ 0,6 pour signaler, ≥ 0,8 pour `hold`. Expiration 30 jours.
+**Modèles :** `BEDROCK_MODEL_ID`, puis repli automatique (Sonnet 4.5, Opus 4.5…) si l'accès est refusé.
+
+**Corpus de démo (`oracle/corpus_demo/`, 6 pages) — résultat Bedrock, stable sur 3 passages :**
+
+| Page | Piège | Résultat |
+|---|---|---|
+| 01 forum | vraie accusation + adresse de dons sur la même page | arnaque signalée `hold` (0,9-0,95) ; dons rejetés (`mention`) ✅ |
+| 02 démenti | « n'est pas une arnaque » | rejeté (`denial`) ✅ |
+| 03 rapport | adresse de dons | rejeté (`mention`) ✅ |
+| 04 injection cachée | ordre en `display:none` | texte écarté avant lecture ✅ |
+| 05 accusation retirée | « c'était une erreur » | rejeté (`denial`) ✅ — **le repli par mots-clés se fait piéger** |
+| 06 injection visible | « ordre de la police », adresse d'un concurrent | rejeté (`mention`) ✅ |
+
+Tests hors ligne (`tests/test_oracle.py`) : hallucination de citation rejetée, adresse inventée ignorée, confiance faible rejetée, format `flags.jsonl`.
+
 ## À venir
-R2 modèle d'anomalie · R8 oracle · R3/R4 Bedrock · R5 dashboard · R6 évaluation · R9 traçage des fonds
+R2 modèle d'anomalie · R8b corpus · R8c croisement des sources · R3/R4 Bedrock · R5 dashboard · R6 évaluation · R9 traçage des fonds
