@@ -12,6 +12,11 @@ Ajouter les entrées les plus récentes en haut.
 
 ---
 
+### 2026-10-10 20:39 — ia-2 / Timéo (avec Claude) — « BLOQUÉ PAR LA PHRASE DE TEST » : EXPLICATION
+- **Question de Timéo devant la ligne ★ de `SUIVI.md` (« bloqué par la phrase de test ») :** pourquoi son PC bloque ? **Réponse donnée :** son PC ne bloque rien. La ligne dit seulement que la phrase secrète des comptes Fuji n'existe que sur son PC, par construction (jamais dans Git ni dans un message), donc le Mac ne peut pas signer. C'est une décision à prendre, pas une panne.
+- **Marche à suivre indiquée à Timéo s'il choisit l'option 1 :** lire la ligne `FUJI_MNEMONIC=` de `ia-2/.env` sur son PC, la taper à la main dans `ia-2/.env` sur le Mac, puis lancer `npm run fuji:setup` sur le Mac : l'adresse du déployeur affichée doit être `0x4EcC7e01cdB900b0FD16f91dFC289CdBBe768564`, sinon il y a une faute de frappe. Aucun relais ne tourne sur le PC de Timéo en ce moment.
+- À ne pas confondre avec l'autre limite, sans rapport : Smart App Control de Windows empêche le modèle R2 de tourner sur le PC de Timéo.
+
 ### 2026-10-10 20:39 — Romain (avec Claude) — DÉCISIONS B1
 - **B1 décidé par Romain** (`shared/bilan-demo.md`). En bref : les deux volets Bybit (moteur fait ; **contrat : probation des clés neuves, Timéo**) ; corrections du moteur gardées ; mesure finale sur le 4ᵉ jeu montrée telle quelle ; faux positifs sur les nouveaux fournisseurs assumés comme une fonctionnalité ; **`OFF_HOURS` du samedi levé en tant que réglage client** (`ia-1/config/client.demo-samedi.json`, option `--client` du moteur : pour la démo Fuji, ajoute `--client ../ia-1/config/client.demo-samedi.json`) ; pas de scraping de vrais sites (une source publique en lecture seule à la place) ; jamais de blocage ; § 4 : module Safe = slide, notifications minimales, mode observation + bouton « vraie / fausse alerte » = condition de vente.
 - **Conflit d'intérêts des réglages client** (question de Romain) : réponse en B1 §7. Point pour toi, Timéo : en production, les seuils de montant devraient se changer **comme un paiement** (proposition, signatures, délai), comme tu le fais déjà pour le seuil de signatures. Pas pour ce soir, mais à dire au jury.
