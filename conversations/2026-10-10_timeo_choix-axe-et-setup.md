@@ -14,7 +14,15 @@
 ## Décisions de Timéo
 - **Track 1 (Fintech Security)**, décidé vers 12h10. À confirmer ensemble au checkpoint de 18h30.
 - Les modèles passeront par **AWS Bedrock**, avec le compte de crédits du hackathon. Aucun identifiant configuré pour l'instant ; région et modèles activés inconnus.
-- **Sujet : non décidé.**
+- **Sujet : axe 4 du track 1** (détection et réponse DeFi, DORA), confirmé par Timéo à 14h02 ; Timéo indique à 14h05 que Romain est d'accord. Les sections plus bas (« idée à l'étude », « questions ouvertes ») datent d'avant cette décision.
+- **Cadrage :** une seule démo de bout en bout, mais un détecteur conçu pour une classe d'exploits (vidage en plusieurs transactions précédé de signes précurseurs), mesuré sur des variantes qu'il n'a pas vues, mélangées à du trafic normal.
+- **Lieu de travail :** Claude ne travaille plus que dans ce repo, qu'il relit avant chaque réflexion et met à jour après.
+
+## Avancement du code (14h30)
+- `ia-2/` : projet Hardhat, contrats `BreakerVault`, `SimplePool` et `MockToken`, 13 tests qui passent sur la chaîne locale. Détail dans `ia-2/README.md`.
+- Écart assumé par rapport à `PLAN.md` : le coffre est un coffre **de prêt** (dépôts, emprunts contre collatéral) plutôt qu'un simple coffre de dépôts et retraits. C'est ce qui permet de rejouer la séquence de Drift et de donner au moniteur des signes précurseurs avant le premier retrait. La pause, le plafond de sorties et le rôle de gardien borné prévus au plan y sont.
+- `shared/format-evenements.md` : proposition de format des événements et des alertes, à amender par Romain. `shared/abi/` : ABI pour le moniteur Python.
+- `shared/dora-notes.md` : délais et critères DORA, avec ce qui est confirmé et ce qui reste à lire dans les textes.
 
 ## Idée à l'étude côté Timéo (proposée par Claude) : axe 4 du track 1
 Un « disjoncteur » on-chain relié à la conformité DORA.
