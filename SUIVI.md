@@ -4,7 +4,7 @@
 > Légende : ✅ fait · 🔄 en cours · ⬜ à faire · ✂️ coupé (manque de temps)
 > Détail du projet : [`PLAN.md`](PLAN.md) · Historique : [`JOURNAL.md`](JOURNAL.md) · Brief : [`CONTEXTE.md`](CONTEXTE.md)
 
-**Dernière mise à jour :** 2026-10-11 00:45, par Codex (Timéo) — P1 benchmark produit livré ; autres statuts conservés
+**Dernière mise à jour :** 2026-10-11 00:51, par Claude (Romain) — positionnement après l'étude de marché (10 décisions) ; P1 benchmark produit livré par Codex (Timéo) à 00:45
 **Rendu (gel définitif) :** dim. 11/10 **12:00** · **Checkpoint :** sam. **18:30** · **Pitch :** dim. 13:00
 
 ---
@@ -124,7 +124,7 @@ Un **garde antifraude pour les organisations qui gardent des millions dans un po
 | B4 | **Concurrence (produit, rentabilité, mise sur le marché, site et application)** : **Hypernative Guardian en tête** (contrat de contrôle sur Safe qui *bloque* les transactions à risque, vendu aux grandes trésoreries), Safe Shield (*avertit* sans agir, via Blockaid / Tenderly / Hypernative), Fireblocks, Forta… ce qu'ils font, leur prix, leur cible, **ce qu'on fait mieux** (voir `conversations/2026-10-10_timeo_comparaison-safe.md`). **Étudier aussi comment ils abordent le marché : leur site vitrine, leur application, leur parcours d'inscription et d'abonnement, leurs notifications**, pour s'en inspirer en gardant notre différence : **uniquement Avalanche** | Romain | Sites officiels, documentation, tableau comparatif | Tableau comparatif vérifié (pas « de mémoire ») | 🔄 comparaison fonctionnelle sourcée : `shared/comparaison-autres-blockchains.md` ; prix et parcours restent à vérifier |
 | B5 | **Validation du besoin sur le terrain** : interroger 3 à 5 personnes concernées (équipes de protocoles présentes au hackathon, mentors Team1, Kryptosphère, KPMG) : « comment protégez-vous votre trésorerie ? avez-vous déjà eu peur ? paieriez-vous, combien ? » | Romain (+ Timéo s'il est disponible) | Mini-entretiens de 5 minutes, script de questions | Synthèse des réponses, avec citations anonymisées | ⬜ |
 | B6 | **Modèle économique et prix** : abonnement par portefeuille, palier selon la trésorerie, coûts réels (gas 0,002 $/alerte, Bedrock), marge, point mort | Romain | Tableur ; frais mesurés dans `shared/frais-gas.md` | Grille de prix + calcul de rentabilité simple | ⬜ |
-| B7 | **Mise sur le marché** : canal de distribution (module Safe / Squads, partenaires auditeurs), premiers clients visés, feuille de route 6 mois | Romain | — | Slide « go-to-market » | ⬜ |
+| B7 | **Mise sur le marché** : canal de distribution (module Safe / Squads, partenaires auditeurs), premiers clients visés, feuille de route 6 mois | Romain | — | Slide « go-to-market » | 🔄 00:51 positionnement et parcours d'entrée décidés (`shared/business-positionnement.md` §10) ; reste la feuille de route 6 mois |
 | B8 | **Décision go / ajustement** : le besoin est-il confirmé ? Faut-il ajuster la cible, l'offre ou le prix ? | Les deux | À partir de B1 à B7 | Décision écrite dans `JOURNAL.md` | ⬜ |
 
 ## 6 ter. Phase 4 ter — Produit commercial : site vitrine et application client (une fois la démo assurée)
