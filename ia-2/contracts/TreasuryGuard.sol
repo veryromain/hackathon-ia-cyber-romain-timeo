@@ -190,9 +190,10 @@ contract TreasuryGuard is ReentrancyGuard {
     }
 
     function execute(uint256 id) external onlyActiveOwner nonReentrant {
-        if (frozen) revert WalletFrozen();
         _requirePending(id);
         Proposal storage p = _proposals[id];
+        // Le gel arrête les paiements, pas le remplacement d'un signataire compromis.
+        if (frozen && p.kind == Kind.Payment) revert WalletFrozen();
 
         uint256 approvals = validApprovals(id);
         uint256 required = requiredApprovals(id);
