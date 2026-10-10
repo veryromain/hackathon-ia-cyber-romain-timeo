@@ -12,6 +12,12 @@ Ajouter les entrées les plus récentes en haut.
 
 ---
 
+### 2026-10-10 15:33 — ia-2 / Timéo (avec Claude)
+- **Fait :** clé d'API Bedrock de Timéo rangée dans `.env` à la racine du repo (ignoré par Git, vérifié par `git check-ignore`). Modèle `.env.example` ajouté à la racine ; `.gitignore` complété par `!.env.example`, car la règle `.env.*` ignorait aussi les modèles (celui de `ia-2/` n'était jamais parti). Méthode décrite dans `shared/aws-bedrock.md`.
+- **Bloquant :** l'appel de test échoue depuis le Wi-Fi de l'école (« Connection was closed »), comme l'a vu Romain. La clé n'est donc **pas encore validée**. Elle expire vers **03:28 dimanche** : à renouveler avant le rendu.
+- **À savoir :** Timéo a collé cette clé dans sa conversation avec Claude. Elle n'est dans aucun fichier suivi par Git.
+- **Prochaine étape :** retester Bedrock en partage de connexion ; côté code, script de déploiement, trafic normal et attaque autonome.
+
 ### 2026-10-10 14:45 — Romain (avec Claude)
 - **Fait :** accès AWS de l'événement configuré chez Romain (profil local `hackathon`, région us-west-2). **Bedrock fonctionne** : appel réel réussi avec `us.anthropic.claude-sonnet-5-5`. Procédure dans `shared/aws-bedrock.md`.
 - **Bloquant découvert :** le Wi-Fi de l'école bloque `bedrock*.amazonaws.com`. Il faut passer par le partage de connexion du téléphone (ou CloudShell). À signaler aux organisateurs.

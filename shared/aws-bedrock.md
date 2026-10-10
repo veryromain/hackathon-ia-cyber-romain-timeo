@@ -26,3 +26,12 @@ r = br.converse(modelId="us.anthropic.claude-sonnet-5-5",
                 inferenceConfig={"maxTokens": 300})
 print(r["output"]["message"]["content"][0]["text"])
 ```
+
+## Variante : clé d'API Bedrock (méthode de Timéo, ajoutée le 10/10 à 15:35)
+Timéo a reçu une **clé d'API Bedrock de courte durée** (elle commence par `bedrock-api-key-`) au lieu d'identifiants CLI.
+1. Copier `.env.example` en `.env` à la racine du repo et coller la clé après `AWS_BEARER_TOKEN_BEDROCK=`. `.env` est ignoré par Git.
+2. boto3 et l'AWS CLI lisent cette variable d'environnement tout seuls : pas de profil à configurer. En Python, charger `.env` (`python-dotenv`) puis `boto3.client("bedrock-runtime", region_name="us-west-2")`.
+3. Test en ligne de commande (Git Bash) : `set -a; . ./.env; set +a` puis `aws bedrock-runtime converse --region us-west-2 --model-id us.anthropic.claude-sonnet-5-5 --messages '[{"role":"user","content":[{"text":"OK ?"}]}]'`.
+
+- **Durée de vie :** la clé de Timéo a été émise le 10/10 à 15:28 (heure de Paris) pour 12 heures au plus, donc **elle expire vers 03:28 dimanche**, avant le rendu. Il faudra en générer une nouvelle.
+- **Non validée :** testée à 15:33 depuis le Wi-Fi de l'école, l'appel échoue avec « Connection was closed », le blocage réseau décrit plus haut. À retester en partage de connexion.
