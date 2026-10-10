@@ -1,1 +1,10 @@
-["0x23618e81e3f5cdf7f54c3d65f7fbc0abf5b21e8f"]
+{
+  "_commentaire": "Carnet de la d\u00e9mo locale. \u00ab pieges \u00bb : faux fournisseurs (id\u00e9e 2) ; un paiement vers l'un d'eux = compromission probable du carnet.",
+  "adresses": [
+    "0x23618e81e3f5cdf7f54c3d65f7fbc0abf5b21e8f"
+  ],
+  "pieges": [
+    "0x0bee7000000000000000000000000000000c0ffe",
+    "0x0d0bee00000000000000000000000000000ca5e0"
+  ]
+}

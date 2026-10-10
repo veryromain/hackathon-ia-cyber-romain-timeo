@@ -4,7 +4,7 @@
 > Légende : ✅ fait · 🔄 en cours · ⬜ à faire · ✂️ coupé (manque de temps)
 > Détail du projet : [`PLAN.md`](PLAN.md) · Historique : [`JOURNAL.md`](JOURNAL.md) · Brief : [`CONTEXTE.md`](CONTEXTE.md)
 
-**Dernière mise à jour :** 2026-10-10 22:02, par Claude (Timéo) — clé de contrainte faite dans le contrat (44 tests), pas encore déployée sur Fuji
+**Dernière mise à jour :** 2026-10-10 22:05, par Claude (Romain) — adresses pièges activées
 **Rendu (gel définitif) :** dim. 11/10 **12:00** · **Checkpoint :** sam. **18:30** · **Pitch :** dim. 13:00
 
 ---
@@ -143,7 +143,7 @@ Un **garde antifraude pour les organisations qui gardent des millions dans un po
 | P6 | **Bouton « vraie / fausse alerte »** et **rapport mensuel** (alertes, faux positifs, temps de réaction, montants protégés) : la précision mesurée chez le client | Romain | Dashboard + stockage des retours | Rapport généré automatiquement | ✅ 20:48 boutons 👍 / 👎 sur chaque alerte + indicateur « Précision jugée » (`shared/retours.jsonl`) ; le rapport mensuel reste à faire |
 | P7 | **Mode observation** au démarrage d'un client (2 à 4 semaines : l'outil note sans agir) pour prouver son efficacité avant d'activer la friction | Romain + Timéo | Réglage du moniteur | Option activable | ⬜ |
 | C1 | **Adresse sosie** (address poisoning) : même début et même fin qu'un fournisseur connu → mise en attente | Romain | Moteur, règle `LOOKALIKE_ADDRESS` | Test + démo | ✅ 21:51 (3 tests ; non mesurée sur le jeu final) |
-| C2 | **Adresses pièges** dans le carnet (honeypot) → compromission probable | Romain | Moteur, champ `pieges` du carnet | Test | ✅ 21:51 (option client, décision d'usage à prendre) |
+| C2 | **Adresses pièges** dans le carnet (honeypot) → compromission probable | Romain | Moteur, champ `pieges` du carnet | Test | ✅ 22:05 **activée** (2 pièges dans les carnets de démo local et Fuji ; scénario `integration/scenario_piege.js`) |
 | C3 | **« Ce que vous signez vraiment »** : transaction décodée + 4 derniers caractères à retaper avant de signer | Romain | Dashboard | Test | ✅ 21:51 |
 | C4 | **Immunité collective** : une fraude annulée devient un signalement pour tous, preuve on-chain | Romain | Dashboard → `flags.jsonl` | Test | ✅ 21:51 |
 | C5 | **Clé de contrainte** : signer sous menace gèle en silence | Timéo (contrat) + Romain (moteur) | Spécification `shared/proposition-cle-de-contrainte.md` | Décision Timéo : ce soir ou slide | ⬜ spéc. écrite 21:51 |

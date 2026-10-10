@@ -13,7 +13,8 @@ cd ia-2 && npm run deploy:local && npx hardhat run ../ia-1/integration/carnet.js
 cd ia-2 && npm run relay:local
 # 4. moteur de score en direct, avec le modèle d'anomalie
 cd ia-1 && .venv/bin/python -m score.moteur --events ../shared/events.jsonl --out ../shared/alerts.jsonl \
-  --carnet integration/carnet-local.json --modele modeles/anomalie.joblib --suivre --expliquer \
+  --carnet integration/carnet-local.json   # carnet avec 2 adresses pièges (idée 2)
+  --modele modeles/anomalie.joblib --suivre --expliquer \
   --services ../shared/services-connus.json --client config/client.demo-samedi.json --notifier   # Bedrock (R3) ; R9 ; samedi ouvré ; bannière macOS à chaque hold
 # 5. tableau de bord → http://localhost:8599
 cd ia-1 && .venv/bin/streamlit run dashboard/app.py --server.port 8599
@@ -87,3 +88,6 @@ cd ia-1 && .venv/bin/python -m score.rapport --dossier ../shared --sortie rappor
 ## Démo Fuji depuis le Mac (décision de Romain, 20:50)
 La phrase secrète des comptes de test est dans `ia-2/.env` sur le Mac (ignoré par Git ; déployeur vérifié : `0x4EcC…8564`, 0,25 AVAX). Mêmes commandes qu'en local avec `:fuji` (`npm run relay:fuji`, `scenario:fuji`, `tracing:fuji`, `unfreeze:fuji`) et le carnet `ia-2/deployments/fuji-carnet.json`.
 **Règle absolue : un seul relais Fuji à la fois** (Mac *ou* PC de Timéo), sinon chaque alerte et chaque action partent deux fois avec la même clé de moniteur. Se prévenir dans `JOURNAL.md` avant de lancer.
+
+## Adresses pièges (idée 2, activée 10/10 21:55)
+Les carnets `integration/carnet-local.json` et `integration/carnet-fuji.json` contiennent deux faux fournisseurs (`pieges`). Démo : `PIEGE=0x0bee7000000000000000000000000000000c0ffe npx hardhat run ../ia-1/integration/scenario_piege.js --network fuji` (depuis `ia-2`) → mise en attente à 0,99, « compromission probable du carnet ». Sur Fuji, lancer le moteur avec `--carnet ../ia-1/integration/carnet-fuji.json`.

@@ -1,0 +1,11 @@
+{
+  "_commentaire": "Carnet de la d\u00e9mo Fuji c\u00f4t\u00e9 Romain (copie de ia-2/deployments/fuji-carnet.json + pi\u00e8ges). Tim\u00e9o : si tu r\u00e9g\u00e9n\u00e8res ton carnet, je mets celui-ci \u00e0 jour.",
+  "adresses": [
+    "0x3f7955b8895f5140b072276d92a2c8d05fa19438",
+    "0x800764a3dd203476193c6a065183814be5e1a508"
+  ],
+  "pieges": [
+    "0x0bee7000000000000000000000000000000c0ffe",
+    "0x0d0bee00000000000000000000000000000ca5e0"
+  ]
+}

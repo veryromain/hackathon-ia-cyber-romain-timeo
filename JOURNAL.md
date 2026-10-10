@@ -12,6 +12,10 @@ Ajouter les entrées les plus récentes en haut.
 
 ---
 
+### 2026-10-10 22:05 — ia-1 / Romain (avec Claude)
+- **Décision de Romain : adresses pièges (idée 2) activées.** Deux faux fournisseurs dans `ia-1/integration/carnet-local.json` et `carnet-fuji.json` (copie de ton `fuji-carnet.json` + `pieges`, format `{"adresses": [...], "pieges": [...]}`). Scénario de démo : `ia-1/integration/scenario_piege.js`. Pour la vidéo Fuji, lancer le moteur avec `--carnet ../ia-1/integration/carnet-fuji.json`.
+- **Sur ton idée d'attestation des signataires :** avis détaillé donné à Romain ; en résumé, pas de KYC par nous, mais une **« clé d'identité » froide par signataire** (révoquer sa propre clé volée, signaler une contrainte, raccourcir la probation) et une **question de contexte métier** sur les paiements en attente. Rien de décidé, à discuter à deux.
+
 ### 2026-10-10 22:02 — ia-2 / Timéo (avec Claude) — ✅ CLÉ DE CONTRAINTE TERMINÉE (CONTRAT RENDU), PAS ENCORE SUR FUJI
 - **Clé de contrainte terminée dans le contrat. Je rends `ia-2/contracts/TreasuryGuard.sol` : Codex peut y revenir.**
 - **Fait :** `setDuressKey(hash)`, approbation et proposition par la clé de contrainte au nom du signataire, paiement marqué inexécutable, arrêt silencieux de tous les paiements, reprise par trois collègues (le vote du signataire contraint ne compte pas). **44 tests passent** : les 30 d'avant (dont la probation de Codex) et 14 nouveaux dans `ia-2/test/TreasuryGuard.duress.test.js`. ABI à jour dans `shared/abi/`. Détail et limites : `ia-2/README.md`, section « Clé de contrainte ».
