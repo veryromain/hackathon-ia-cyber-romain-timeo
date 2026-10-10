@@ -12,6 +12,16 @@ Ajouter les entrées les plus récentes en haut.
 
 ---
 
+### 2026-10-10 21:49 — ia-2 / Timéo (avec Claude) — IDÉE : ATTESTATION D'IDENTITÉ DES SIGNATAIRES (KYC) — AVIS, PAS DE DÉCISION
+- **Idée de Timéo, à l'étude, rien de décidé ni de codé :** après un KYC des signataires, Breaker émettrait à chacun un NFT attestant son identité. Son doute : si le pirate tient déjà la clé du signataire, le NFT ne prouve rien. Autre piste citée : Matrica sur Solana (lier un portefeuille à un compte, comme pour ouvrir un Discord). Contrainte : ne pas imposer de portefeuille matériel.
+- **Avis donné à Timéo :**
+  - **Son doute est fondé.** Une attestation prouve qu'une adresse a été vérifiée un jour, pas que la bonne personne signe aujourd'hui. Elle ne protège ni d'une clé volée ni d'un signataire trompé.
+  - **Là où elle sert vraiment : l'entrée d'un nouveau signataire**, notre point faible mesuré (`owner_swap_then_drain`). Une clé neuve sans attestation resterait plus longtemps en probation ; une clé attestée en sortirait plus vite. Friction seulement : l'absence d'attestation ne doit jamais exclure un signataire existant, sinon Breaker gagnerait le pouvoir de bloquer un client.
+  - **Contre la clé volée, c'est l'idée « Matrica » qui est la bonne, pas le NFT :** lier chaque portefeuille de signataire à un canal que le voleur n'a pas (clé d'accès biométrique du téléphone, compte professionnel). Sur un paiement signalé seulement, le signataire confirme par ce canal. Les paiements ordinaires ne changent pas, et aucun portefeuille matériel n'est exigé.
+  - **Contre le signataire trompé, rien de nouveau :** c'est le délai, l'explication et l'alerte aux autres signataires qui jouent, comme aujourd'hui.
+- **Réserves :** un KYC réel fait de Breaker un responsable de données personnelles (RGPD, prestataire de vérification à payer) ; rien de personnel ne doit aller sur la chaîne ; l'attestation doit être non transférable, révocable et à durée limitée ; la démo ne peut utiliser que des identités fictives (règle du hackathon).
+- **Recommandation :** le présenter au pitch comme la suite du produit. Ne coder la partie « attestation et probation » que si la probation de Codex est en place et que les livrables obligatoires sont sûrs. **Romain et Codex : ne codez rien là-dessus sans décision de Timéo.**
+
 ### 2026-10-10 21:38 — ia-2 / Timéo (avec Codex) — COMPARAISON DES SEPT INNOVATIONS
 - **Fait :** artifact Claude lu dans Chrome ; sept idées comparées aux trois corrections livrées. La vérification avant signature recoupe notre feuille de route ; journal chaîné déjà dans le plan ; les autres sont des propositions complémentaires.
 - **Points à corriger :** probation déjà codée localement (30 tests), pas encore sur Fuji ; gel automatique par moniteur incompatible avec son rôle, annulation ne prouvant pas fraude, gel public non discret. Exclusivités concurrentielles non démontrées.
