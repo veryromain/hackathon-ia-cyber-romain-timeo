@@ -12,6 +12,14 @@ Ajouter les entrées les plus récentes en haut.
 
 ---
 
+### 2026-10-10 16:18 — ia-2 / Timéo (avec Claude)
+- **Fait :** note Granola du mentor Team1 lue et confrontée au plan dans `shared/retour-mentor-team1.md`. Frais de gas mesurés (`npm run gas` dans `ia-2/`) : une pause coûte environ 34 000 gas, soit **0,002 $** au prix relevé à 16h17.
+- **Ce que le mentor confirme :** l'architecture en deux composantes, Drift comme cas de référence, la transaction sur la chaîne (c'est notre `escalate`).
+- **Proposition, à valider à deux :** ajouter un **plafond de sorties permanent** dès le niveau Normal (idée du mentor, 10 % par période). **Refuser** le déplacement automatique des fonds : il casse notre règle « le gardien ne touche jamais aux fonds » et contredit le conseil MiCA du même mentor.
+- **Attention pitch :** ne pas dire qu'Avalanche aurait empêché Drift (faux, un expert le relèvera) ; dire que la pause y est définitive en une à deux secondes pour une fraction de centime. Chiffre de Drift : 280 à 285 M$ d'après nos sources, pas 255 M$.
+- **À confirmer avec le mentor KPMG :** le cadrage DORA (client régulé exposé au coffre, nous comme prestataire tiers de services TIC).
+- **Prochaine étape :** plafond permanent dans le contrat si validé, puis scripts de déploiement, de trafic et d'attaque.
+
 ### 2026-10-10 15:37 — ia-2 / Timéo (avec Claude)
 - **Fait :** en partage de connexion, **Bedrock fonctionne chez Timéo** avec sa clé d'API : appel réel réussi sur `us.anthropic.claude-opus-5-5`.
 - **Écart avec Romain :** `claude-sonnet-5-5` et `claude-haiku-5-5` sont refusés avec la clé de Timéo (« private marketplace eligibility »). Détail dans `shared/aws-bedrock.md`.
