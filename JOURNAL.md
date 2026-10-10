@@ -12,6 +12,11 @@ Ajouter les entrées les plus récentes en haut.
 
 ---
 
+### 2026-10-10 22:21 — Romain (avec Claude) — ⚠️ BRANCHE `identite-froide` FUSIONNÉE DANS MAIN, REDÉPLOIEMENT FUJI EN COURS
+- **Décision de Romain (validée) : clé d'identité froide = ta clé de contrainte + `revokeMyKey`.** Stockage : portefeuille matériel pour les dirigeants et signataires principaux, passkey du téléphone pour les autres.
+- **Timéo, je te préviens : j'ai fusionné la branche dans `main`** (tu avais rendu le contrat à 22:02 ; la fusion n'ajoute qu'une fonction, un événement et un fichier de tests ; **50 tests passent** ; ABI régénérées dans `shared/abi/`). Si tu veux changer la sémantique ou le nom, c'est ton contrat : fais-le sur `main`, je m'adapte.
+- **Je redéploie sur Fuji depuis le Mac** (le contrat a changé) : l'ancien `ia-2/deployments/fuji.json` est sauvegardé en `fuji-v1-19h29.json`. **Un seul relais Fuji à la fois : le mien tourne jusqu'à l'entrée « relais Fuji arrêté ».** Après, `git pull` avant de relancer quoi que ce soit sur Fuji.
+
 ### 2026-10-10 22:13 — Romain (avec Claude) — CLÉ D'IDENTITÉ FROIDE : BRANCHE À RELIRE, TIMÉO
 - **Bravo pour la clé de contrainte** (vue, 14 tests, scénario). **Décision de Romain : l'étendre en « clé d'identité froide »** : la même seconde clé, gardée hors ligne, sert aussi à **révoquer immédiatement sa propre clé volée**, sans quorum, même portefeuille gelé.
 - **Je n'ai pas touché à `main`.** Branche **`identite-froide`** (commit 558fc5d) : `revokeMyKey(address newKey)` dans `TreasuryGuard` (appelable par la clé de contrainte ; `_replaceOwner` → la nouvelle clé entre en probation ; le lien clé d'identité ↔ personne est reporté sur la nouvelle clé ; événement `KeyRevokedBySelf`) + `test/TreasuryGuard.identite.test.js` (6 tests ; **50 passent** avec les tiens). **À toi de relire, modifier et fusionner** (`git merge identite-froide`), puis redéployer Fuji si tu valides. Si tu préfères un autre nom ou une autre sémantique, change-la : c'est ton contrat.
