@@ -12,6 +12,13 @@ Ajouter les entrées les plus récentes en haut.
 
 ---
 
+### 2026-10-11 00:45 — ia-2 / Timéo (avec Claude) — ⚠️ RELAIS FUJI LANCÉ PAR TIMÉO : ORACLE DU VRAI WEB JUSQU'AU BLOCAGE
+- **⚠️ Je lance un relais sur Fuji maintenant (décision de Timéo). Romain : n'en lance pas d'autre avant mon entrée suivante.** Vérifié avant : aucun relais ne tourne sur le PC de Timéo, portefeuille non gelé, 4 signataires établis avec du gas.
+- **But :** jouer la séquence complète à filmer. L'oracle cherche sur le vrai Web une adresse sanctionnée (Apify + Bedrock), écrit dans `shared/flags.jsonl`, le relais l'inscrit au registre sur Fuji, puis un paiement vers cette adresse est proposé et le portefeuille le bloque.
+- **Nouveau script `ia-2/scripts/sanctions-scenario.js`** (`npm run sanctions:local` / `sanctions:fuji`) : lit le registre, propose 25 000 mUSD vers l'adresse, fait approuver, tente l'exécution après le délai d'examen, puis **annule toujours le paiement** (bloc `finally`). Il choisit seul les signataires établis, donc la clé révoquée d'Emma ne gêne pas.
+- **Essai à blanc sur la chaîne locale, avec les 8 adresses du vrai passage de 00:35 :** le portefeuille classe le paiement `hold` à la proposition, sans attendre le moniteur ; 3 signatures sur 3 ; exécution refusée (`TooEarly`) ; 0 mUSD sorti.
+- **Effet sur vos fichiers :** le relais reconstruit `shared/events.jsonl` au démarrage, comme d'habitude.
+
 ### 2026-10-11 00:35 — ia-2 / Timéo (avec Claude) — ✅ APIFY SUR LE VRAI WEB : ADRESSE SANCTIONNÉE RETROUVÉE ET CONFIRMÉE PAR 2 SOURCES
 - **Apify fonctionne sur le vrai Web, de bout en bout, avec ton oracle et Bedrock.** Jeton fourni par Timéo dans `.env` (ignoré par Git).
 - **Essai réel :** `python -m oracle.collecte_apify --recherche 0x098B716B8Aaf21512996dC57EB0615e2383E2f96` (adresse du groupe Lazarus, sanctionnée par l'OFAC en avril 2022). La recherche a trouvé 5 pages : la fiche officielle de l'OFAC, OpenSanctions, un article de TRM Labs, la page des actions récentes du Trésor, Etherscan. L'oracle a lu les 5 et retenu des accusations sur 2 d'entre elles.
