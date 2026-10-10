@@ -4,7 +4,7 @@
 > Légende : ✅ fait · 🔄 en cours · ⬜ à faire · ✂️ coupé (manque de temps)
 > Détail du projet : [`PLAN.md`](PLAN.md) · Historique : [`JOURNAL.md`](JOURNAL.md) · Brief : [`CONTEXTE.md`](CONTEXTE.md)
 
-**Dernière mise à jour :** 2026-10-10 20:40, par Claude (Romain) — mesure finale publiée
+**Dernière mise à jour :** 2026-10-10 20:48, par Claude (Romain) — P5, P6 ; démo Fuji possible depuis le Mac
 **Rendu (gel définitif) :** dim. 11/10 **12:00** · **Checkpoint :** sam. **18:30** · **Pitch :** dim. 13:00
 
 ---
@@ -139,8 +139,8 @@ Un **garde antifraude pour les organisations qui gardent des millions dans un po
 | P2 | **Site vitrine** : promesse, problème (Drift, Bybit), comment ça marche, preuves (chiffres de la démo), prix, « réserver une démo » | Romain | À choisir (site statique) | Page en ligne ou maquette | ✅ maquette privée publiée et vérifiée ; source `ia-2/site-vitrine`, URL dans son README |
 | P3 | **Espace client et abonnement** : création de compte, choix de l'offre, connexion du portefeuille Avalanche à protéger | Timéo (technique) + Romain (offre) | — | Parcours de bout en bout | ⬜ |
 | P4 | **Actions dans l'application** : boutons **valider / annuler / geler / contester un signalement** (signés par le portefeuille du signataire) | Timéo | Extension du relais (`shared/actions.jsonl`) puis signature dans le navigateur | Une alerte se traite sans quitter l'application | ✅ 20:15 version démo (fichier d'actions lu par le relais de Timéo, local et Fuji ; valider / exécuter / annuler / geler / dégeler / contester). Reste pour la production : signature dans le navigateur |
-| P5 | **Notifications** : connecteur **e-mail** de l'entreprise, puis Slack / Telegram ; alerte immédiate des signataires en cas de mise en attente | Timéo + Romain | Service d'e-mail transactionnel | Un signataire est prévenu en moins d'une minute | ⬜ |
-| P6 | **Bouton « vraie / fausse alerte »** et **rapport mensuel** (alertes, faux positifs, temps de réaction, montants protégés) : la précision mesurée chez le client | Romain | Dashboard + stockage des retours | Rapport généré automatiquement | ⬜ |
+| P5 | **Notifications** : connecteur **e-mail** de l'entreprise, puis Slack / Telegram ; alerte immédiate des signataires en cas de mise en attente | Timéo + Romain | Service d'e-mail transactionnel | Un signataire est prévenu en moins d'une minute | ✅ 20:48 version minimale (bannière macOS pour la démo ; e-mail et Telegram prêts, à configurer dans `.env`) ; trace `shared/notifications.jsonl` |
+| P6 | **Bouton « vraie / fausse alerte »** et **rapport mensuel** (alertes, faux positifs, temps de réaction, montants protégés) : la précision mesurée chez le client | Romain | Dashboard + stockage des retours | Rapport généré automatiquement | ✅ 20:48 boutons 👍 / 👎 sur chaque alerte + indicateur « Précision jugée » (`shared/retours.jsonl`) ; le rapport mensuel reste à faire |
 | P7 | **Mode observation** au démarrage d'un client (2 à 4 semaines : l'outil note sans agir) pour prouver son efficacité avant d'activer la friction | Romain + Timéo | Réglage du moniteur | Option activable | ⬜ |
 | P8 | **Réglages du client** : nombre de signatures en plus (+1 par défaut), durée de la mise en attente, seuils, liste de confiance | Timéo | Paramètres du contrat (`stepUpExtra`, `holdDelay`) | Écran de réglages | 🔄 20:39 (heures et jours ouvrés : `ia-1/config/client*.json`, option `--client` ; principe des planchers et du changement « comme un paiement » écrit en B1 §7) |
 

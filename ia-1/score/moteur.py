@@ -18,11 +18,12 @@ from .regles import REGLES, EtatPortefeuille, Raison
 
 
 class Moteur:
-    def __init__(self, carnet=None, modele=None, expliquer=False, services=None):
+    def __init__(self, carnet=None, modele=None, expliquer=False, services=None, notifier=None):
         self.etat = EtatPortefeuille()
         self.modele = modele  # modèle d'anomalie (R2), facultatif
         self.expliquer = expliquer  # R3 : explication rédigée par Bedrock, avec repli sur le texte à trous
         self.niveaux = {}  # payment_id -> dernier niveau émis (un niveau ne peut que monter)
+        self.notifier = notifier  # P5 : fonction(alerte, paiement) appelée à chaque mise en attente
         self.etat.sorties_signalees, self.etat.recus_de_signalee = {}, {}
         for a in services or []:
             self.etat.services_connus.add(a.lower())
@@ -123,6 +124,11 @@ class Moteur:
             from .explication import expliquer
             alerte["explanation"] = expliquer(alerte, p, alerte["explanation"])
         self.niveaux[p["payment_id"]] = niveau
+        if self.notifier and niveau == "hold":
+            try:
+                self.notifier(alerte, p)
+            except Exception as err:  # jamais bloquant
+                print(f"notification impossible : {err!r}", file=sys.stderr)
         return alerte
 
 
@@ -170,6 +176,7 @@ def main(argv=None):
     a.add_argument("--expliquer", action="store_true", help="R3 : explication rédigée par Bedrock (partage de connexion)")
     a.add_argument("--services", type=Path, help="R9 : JSON des adresses de services connus (plateformes, ponts), jamais teintées")
     a.add_argument("--client", type=Path, help="réglages du client (config/client.json) : heures et jours ouvrés")
+    a.add_argument("--notifier", action="store_true", help="P5 : notification à chaque mise en attente (macOS, e-mail, Telegram selon .env)")
     args = a.parse_args(argv)
 
     carnet = json.loads(args.carnet.read_text()) if args.carnet else []
@@ -180,7 +187,14 @@ def main(argv=None):
     services = charger_services(args.services) if args.services else []
     if args.client:
         regles.charger_reglages_client(args.client)
-    moteur = Moteur(carnet, modele, args.expliquer, services)
+    notif = None
+    if args.notifier:
+        from dotenv import load_dotenv
+        from .notifier import notifier as _n
+        load_dotenv(Path(__file__).resolve().parents[2] / ".env")
+        journal = args.out.with_name("notifications.jsonl")
+        notif = lambda a, p: _n(a, p, journal)
+    moteur = Moteur(carnet, modele, args.expliquer, services, notif)
     with open(args.out, "a" if args.suivre else "w") as sortie:
         for ev in lire(args.events, args.suivre):
             try:

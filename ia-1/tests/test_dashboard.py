@@ -43,3 +43,23 @@ def test_boutons_ecrivent_les_actions(tmp_path):
     assert json.loads((d / "flags.jsonl").read_text().splitlines()[-1]) == {"address": "0x6253540229bdcc8ae009fe075005a3fa5137c352", "remove": True}
     assert not at.exception
     del os.environ["BREAKER_DEPLOIEMENT"]
+
+
+def test_bouton_vraie_fausse_alerte(tmp_path):
+    """P6 : le jugement d'un signataire est enregistré et la précision jugée s'affiche."""
+    import json
+    import shutil
+    d = tmp_path / "live"
+    shutil.copytree(ICI / "dashboard" / "demo", d)
+    dep = tmp_path / "dep.json"
+    dep.write_text(json.dumps({"owners": ["0x" + "a" * 40]}))
+    os.environ["BREAKER_DOSSIER"], os.environ["BREAKER_DEPLOIEMENT"] = str(d), str(dep)
+    at = AppTest.from_file(str(ICI / "dashboard" / "app.py"), default_timeout=30).run()
+    at.button(key="v4").click().run()
+    at.button(key="f3").click().run()
+    at.run()  # l'indicateur se recalcule au rendu suivant (la page se rafraîchit toutes les 2 s)
+    r = [json.loads(l) for l in (d / "retours.jsonl").read_text().splitlines()]
+    assert [(x["payment_id"], x["verdict"]) for x in r] == [(4, "vraie"), (3, "fausse")]
+    assert {m.label: m.value for m in at.metric}["Précision jugée"] == "50%"
+    assert not at.exception
+    del os.environ["BREAKER_DEPLOIEMENT"]

@@ -204,8 +204,9 @@ def r_destinataire_recent(p, etat):
     jours = (p["timestamp"] - premier) // 86400
     recu = etat.recus_par_dest.get(p["to"], 0)
     if recu and p["amount"] >= RATIO_SPIKE * recu:
-        return Raison("RECENT_RECIPIENT_SPIKE", f"destinataire apparu il y a {jours} j ; ce paiement fait {p['amount'] / recu:.0f} fois tout ce qu'il a déjà reçu ({fmt(recu)})",
-                      [p["tx_hash"]], POIDS["RECENT_RECIPIENT_SPIKE"])
+        n = len(etat.montants_par_dest.get(p["to"], ()))
+        return Raison("RECENT_RECIPIENT_SPIKE", f"schéma de mise en confiance : {n} petit(s) paiement(s) ({fmt(recu)} au total) depuis {jours} j, "
+                      f"puis celui-ci, {p['amount'] / recu:.0f} fois plus gros", [p["tx_hash"]], POIDS["RECENT_RECIPIENT_SPIKE"])
     return Raison("RECENT_RECIPIENT", f"destinataire apparu il y a {jours} j", [p["tx_hash"]], POIDS["RECENT_RECIPIENT"])
 
 

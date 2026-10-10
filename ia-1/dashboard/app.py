@@ -83,6 +83,16 @@ def contester(dossier: Path, adresse: str):
         f.write(json.dumps({"address": adresse, "remove": True}) + "\n")
 
 
+def retours(dossier: Path):
+    """Jugement des signataires sur chaque alerte (vraie / fausse) : la matière du rapport mensuel et de la précision mesurée."""
+    return {r["payment_id"]: r for r in lire(dossier / "retours.jsonl")}
+
+
+def juger(dossier: Path, payment_id, verdict, by):
+    with open(dossier / "retours.jsonl", "a", encoding="utf-8") as f:
+        f.write(json.dumps({"payment_id": payment_id, "verdict": verdict, "by": by, "at": int(time.time())}) + "\n")
+
+
 def etats_actions(dossier: Path):
     res = {r["id"]: r for r in lire(dossier / "actions-resultats.jsonl")}
     return [(a, res.get(a["id"])) for a in lire(dossier / "actions.jsonl")]
@@ -146,12 +156,17 @@ def tableau():
 
     risques = [pid for pid in pay if pid in alertes]
     protege = sum(int(pay[p]["amount"]) for p in risques if pay[p]["état"] != "💸 exécuté")
-    c = st.columns(5)
+    juges = retours(DOSSIER)
+    vraies = sum(1 for r in juges.values() if r["verdict"] == "vraie")
+    fausses = sum(1 for r in juges.values() if r["verdict"] == "fausse")
+    c = st.columns(6)
     c[0].metric("Paiements proposés", len(pay))
     c[1].metric("🛑 Mis en attente", sum(1 for a in alertes.values() if a["level"] == "hold"))
     c[2].metric("✋ Signature en plus", sum(1 for a in alertes.values() if a["level"] == "step_up"))
     c[3].metric("Montant protégé", mutd(protege))
     c[4].metric("Adresses signalées (Web)", len({f["address"] for f in flags}))
+    c[5].metric("Précision jugée", f"{vraies / (vraies + fausses):.0%}" if vraies + fausses else "—",
+                help=f"{vraies} alerte(s) jugée(s) vraie(s), {fausses} fausse(s), par les signataires. C'est la mesure chez le client (rapport mensuel).")
 
     gauche, droite = st.columns([3, 2])
     with gauche:
@@ -170,6 +185,17 @@ def tableau():
                 for r in a["reasons"]:
                     preuves = " ".join(lien_tx(h, p["chain"]) for h in r.get("evidence", [])[:3])
                     st.markdown(f"- `{r['code']}` — {r['detail']} {preuves}")
+                j = juges.get(pid)
+                if j:
+                    st.caption(f"Jugée **{'✔ vraie' if j['verdict'] == 'vraie' else '✖ fausse'} alerte** par `{court(j['by'])}` le {heure(j['at'])}")
+                elif MOI_ADR:
+                    v1, v2, _ = st.columns([1, 1, 3])
+                    if v1.button("👍 Vraie alerte", key=f"v{pid}", use_container_width=True):
+                        juger(DOSSIER, pid, "vraie", MOI_ADR)
+                        st.toast("Merci : alerte jugée vraie")
+                    if v2.button("👎 Fausse alerte", key=f"f{pid}", use_container_width=True):
+                        juger(DOSSIER, pid, "fausse", MOI_ADR)
+                        st.toast("Merci : alerte jugée fausse (le réglage s'affinera)")
                 if MOI_ADR and p["état"] == "en cours":
                     b1, b3, b2, _ = st.columns([1, 1, 1, 2])
                     if b1.button("✅ Valider (signer)", key=f"ok{pid}", use_container_width=True):

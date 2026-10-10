@@ -92,6 +92,12 @@ Tests sans navigateur : `tests/test_dashboard.py` (AppTest de Streamlit).
 ```
 `score/explication.py` : le modèle reçoit **uniquement les faits du moteur** (niveau, montant, libellé, destinataire abrégé, raisons) et les reformule en 2 à 4 phrases pour un signataire non expert, avec l'action à faire. **Garde-fous vérifiés par le code** : aucune adresse étrangère ou complète, longueur bornée, sinon repli sur le texte à trous ; après une panne Bedrock, pause de 60 s sans appel pour que les alertes partent sans délai. Appel commun dans `commun/bedrock.py` (Opus 5.5 → Fable 5.1 → Opus 4.8, jamais Sonnet). 6 tests hors ligne. **Validé en direct** (Opus 4.8, ≈ 6 s par alerte, sous les 30 s du délai d'examen) : les 4 alertes de l'exemple reformulées sans fait inventé, avec l'action à faire.
 
+## P6 — Bouton « vraie / fausse alerte » et précision jugée ✅
+Sur chaque alerte, 👍 / 👎 par le signataire → `shared/retours.jsonl` ; indicateur **« Précision jugée »** en tête du tableau de bord. C'est la condition de vente décidée en B1 §4 : la précision se mesure chez le client (mode observation, rapport mensuel), pas sur nos données.
+
+## P5 — Notification à chaque mise en attente (version minimale) ✅
+`score/notifier.py`, option `--notifier` du moteur. Canaux cumulables, configurés dans `.env` (jamais dans Git) : **bannière macOS** (démo, sans réglage), **e-mail** (`SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASSWORD`, `NOTIF_EMAIL_TO`), **Telegram** (`TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_ID`). Trace dans `shared/notifications.jsonl`. Un canal en panne ne bloque jamais le moteur. 2 tests.
+
 ## R4 — Rapport d'incident ✅
 ```bash
 .venv/bin/python -m score.rapport --dossier ../shared --sortie rapports/rapport-incident.md   # [--sans-llm]

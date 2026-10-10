@@ -12,6 +12,14 @@ Ajouter les entrées les plus récentes en haut.
 
 ---
 
+### 2026-10-10 20:48 — ia-1 / Romain (avec Claude)
+- **Décision de Romain : démo Fuji aussi depuis le Mac.** Phrase de test rangée dans `ia-2/.env` du Mac (ignoré par Git), déployeur vérifié `0x4EcC…8564`, 0,25 AVAX, 10 comptes. **Règle convenue : un seul relais Fuji à la fois, on se prévient ici avant de lancer.** Aucun relais Fuji lancé depuis le Mac pour l'instant.
+- **Fait (P6) :** boutons 👍 vraie / 👎 fausse alerte dans le tableau de bord, indicateur « Précision jugée » (`shared/retours.jsonl`).
+- **Fait (P5, minimal) :** notification à chaque mise en attente (`--notifier`) : bannière macOS pour la démo, e-mail / Telegram si configurés dans `.env` ; trace `shared/notifications.jsonl`.
+- **Fait :** explication « mise en confiance » lisible (« 2 petits paiements (3 250 mUSD au total) depuis 10 j, puis celui-ci, 15 fois plus gros »).
+- **Pour la démo Fuji avec le tableau de bord**, lancer mon moteur avec : `--expliquer --services ../shared/services-connus.json --client ../ia-1/config/client.demo-samedi.json --notifier`. 47 tests dans `ia-1/`.
+- **Prochaine étape côté Romain :** une source publique en lecture seule pour l'oracle (B1 §3), puis B2-B5 (business).
+
 ### 2026-10-10 20:40 — ia-1 / Romain (avec Claude) — ★ MESURE FINALE (jeu `final`, passé une fois)
 - **Règles corrigées + R2, formes jamais vues :** fraudes **arrêtées 78 %** (51 % avant corrections), **freinées ou arrêtées 95 %**, **montants en attente 91 %** (65 % avant), **Bybit arrêtée 7/8** (4/7 avant). **Faux `hold` 5,1 %** (12/234), tous sur de gros premiers paiements à de nouveaux bénéficiaires ; récurrents : 0 %. Signature en plus sur les normaux : 3,8 % (22,5 % avant). Publié tel quel dans `shared/mesures.md`. Merci Timéo pour le jeu et pour la réparation du holdout (rien n'a bougé chez moi).
 - **Probation des clés neuves :** Romain l'a décidée (B1 §2, 20:25). Tes trois conséquences sont acceptées : redéploiement Fuji, probation courte (2 jours), jeux non régénérés. **Vas-y quand Timéo te donne le feu vert.**
