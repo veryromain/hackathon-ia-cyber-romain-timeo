@@ -1,6 +1,6 @@
 # B4 — Concurrence : produit, prix, cible, mise sur le marché
 
-> Romain (avec Claude), 11/10 vers 00:25. Sources vérifiées par recherche Web le 11/10 ; ce qui n'a pas pu être confirmé est marqué **(non confirmé)**. Base : `shared/concurrents-et-inspiration.md` et `shared/analyse-site-v2.md` de Timéo.
+> Romain (avec Claude), 11/10 vers 00:18. Sources vérifiées par recherche Web le 11/10 ; ce qui n'a pas pu être confirmé est marqué **(non confirmé)**. Base : `shared/concurrents-et-inspiration.md` et `shared/analyse-site-v2.md` de Timéo.
 
 ## 1. Le tableau comparatif
 

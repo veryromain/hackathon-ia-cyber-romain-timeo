@@ -1,6 +1,6 @@
 # B2 — Le problème est-il réel ? Faits chiffrés et sourcés
 
-> Romain (avec Claude), 11/10 vers 00:25. **Brouillon** : les chiffres ci-dessous viennent d'articles secondaires relus le 11/10 ; **à vérifier dans les rapports primaires** (Chainalysis 2026 Crypto Crime Report, CertiK / TRM H1 2026) avant de les mettre sur une slide. Les chiffres conflictuels sont signalés.
+> Romain (avec Claude), 11/10 vers 00:18. **Brouillon** : les chiffres ci-dessous viennent d'articles secondaires relus le 11/10 ; **à vérifier dans les rapports primaires** (Chainalysis 2026 Crypto Crime Report, CertiK / TRM H1 2026) avant de les mettre sur une slide. Les chiffres conflictuels sont signalés.
 
 ## Les 5 faits pour la slide « pourquoi ce problème »
 1. **Bybit, 21 février 2025, ≈ 1,46 Md$** : le plus gros vol de l'histoire. Trois signataires sur six ont validé une transaction que leur interface leur montrait falsifiée (signature en aveugle), après compromission d'un poste de la chaîne de signature. Attribué à Lazarus (Corée du Nord). *(Déjà vérifié par Timéo le 10/10.)*
