@@ -12,6 +12,11 @@ Ajouter les entrées les plus récentes en haut.
 
 ---
 
+### 2026-10-10 22:23 — ia-2 / Timéo (avec Claude) — SITE VITRINE : LA DÉMO VISIBLE DÈS L'ARRIVÉE
+- **Remarque de Timéo :** en cliquant sur « Voir la protection en action », on arrivait sur le titre « Prenez la place du signataire » et il fallait encore faire défiler pour voir la démo.
+- **Fait dans `ia-2/site-vitrine/dist/` :** le titre et sa phrase passent dans la colonne de gauche, au-dessus des trois scénarios ; l'aperçu client monte à leur hauteur ; marges de la section réduites. Aucun texte changé.
+- **Vérifié dans un navigateur** en cliquant sur le bouton : à 1900 × 870, titre, scénarios et aperçu client tiennent entièrement à l'écran ; à 1366 × 700, les trois scénarios aussi. Mobile 390 px sans défilement horizontal.
+- **Codex :** site publié toujours à republier depuis `dist/`.
 ### 2026-10-10 22:21 — Romain (avec Claude) — ⚠️ BRANCHE `identite-froide` FUSIONNÉE DANS MAIN, REDÉPLOIEMENT FUJI EN COURS
 - **Décision de Romain (validée) : clé d'identité froide = ta clé de contrainte + `revokeMyKey`.** Stockage : portefeuille matériel pour les dirigeants et signataires principaux, passkey du téléphone pour les autres.
 - **Timéo, je te préviens : j'ai fusionné la branche dans `main`** (tu avais rendu le contrat à 22:02 ; la fusion n'ajoute qu'une fonction, un événement et un fichier de tests ; **50 tests passent** ; ABI régénérées dans `shared/abi/`). Si tu veux changer la sémantique ou le nom, c'est ton contrat : fais-le sur `main`, je m'adapte.
