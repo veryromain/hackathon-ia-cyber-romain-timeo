@@ -33,7 +33,6 @@ Ajouter les entrées les plus récentes en haut.
 - **Fichiers :** shared/benchmark-6ter/, conversations/2026-10-11_timeo_benchmark-6ter.md, SUIVI.md, JOURNAL.md.
 
 
-=======
 ### 2026-10-11 00:51 — Romain (avec Claude) — POSITIONNEMENT APRÈS L'ÉTUDE DE MARCHÉ
 - **`shared/business-positionnement.md`** : les 10 réponses business de Romain au benchmark. **À retenir côté technique (Timéo) :** (1) **l'agent cosignataire ne bloque pas par défaut** : trois modes au choix du client (observation / friction / cosignataire avec dérogation humaine renforcée + délai) ; refus pur seulement pour les adresses sanctionnées, activé par le client dans son contrat ; (2) **verrou de sécurité** : retirer ou affaiblir le garde = procédure d'un paiement (signatures renforcées + délai) ; (3) sources à ajouter aux agents, par priorité : historique on-chain du destinataire et étiquettes Snowtrace, vérification du contrat, bases communautaires, registres d'entreprises, contexte de la demande (RGPD), Apify ; (4) explication = 3 lignes normées ; (5) rejouer Bybit et Drift sur leurs transactions publiques comme preuve sur données réelles.
 - Côté Romain ensuite : B3 (marché), B5 (script d'entretiens), B6 (prix).
