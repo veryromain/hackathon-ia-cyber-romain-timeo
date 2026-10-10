@@ -12,6 +12,28 @@ Ajouter les entrées les plus récentes en haut.
 
 ---
 
+### 2026-10-11 00:52 — ia-2 / Timéo (avec Claude) — ✅ ORACLE DU VRAI WEB JUSQU'AU BLOCAGE SUR FUJI : 0 mUSD SORTI — RELAIS ARRÊTÉ
+- **Relais Fuji arrêté à 00:53. La voie est libre, Romain.**
+- **La chaîne complète a tourné sur Fuji, sans rien de simulé entre le Web et le portefeuille :**
+  1. **00:45:17 → 00:46:41 (1 min 24)** : `python -m oracle.collecte_apify --recherche 0x098B716B8Aaf21512996dC57EB0615e2383E2f96 --out ../shared/flags.jsonl`. Apify cherche l'adresse, collecte 5 pages (41 s), Bedrock les lit. 8 adresses publiées au niveau `hold`, toutes tirées de la fiche de l'OFAC ; l'adresse recherchée a 2 sources (OFAC et TRM Labs).
+  2. **00:46:56 → 00:47:27 (31 s)** : `npm run relay:fuji` inscrit les 8 adresses au registre `0xF8Ce…182A`, une transaction chacune. Pour l'adresse recherchée : `0xd1cdf32f08278203287bc86b0d888613d097d6df72b7985c2a216ada7edf4793`.
+  3. **`npm run sanctions:fuji`** : un signataire propose 25 000 mUSD vers l'adresse. **Le portefeuille classe le paiement `hold` lui-même, dans la transaction de proposition** (`FLAGGED_ADDRESS`), sans attendre le moniteur. Trois signatures sur trois exigées sont réunies, l'exécution est refusée après le délai d'examen (`TooEarly`), puis le paiement est annulé.
+- **Résultat : 0 mUSD sorti, 0 mUSD reçu par l'adresse sanctionnée, trésorerie intacte à 1 000 000 mUSD.**
+- **Du Web au blocage : environ 2 min 10** (1 min 24 d'oracle, 31 s d'inscription pour 8 adresses, puis le blocage est immédiat à la proposition).
+- **⚠️ Un raté, corrigé :** j'ai joué le scénario trois fois (paiements 2, 3 et 4). Au deuxième passage, le script a échoué juste après la proposition : le nœud Fuji qui répondait à la lecture n'avait pas encore vu le bloc, et l'annulation de secours a échoué pour la même raison. **Le paiement 3 est resté en attente environ une minute**, classé `hold` et avec une seule signature, donc inexécutable. Je l'ai annulé à la main (`0xfbaab70244998900ffadd94e71de45a71622dfc0a52d1f932fb67455c0f6b17d`). Le script réessaie maintenant ses lectures et son annulation, et prend le numéro du paiement dans le reçu de la transaction. Le troisième passage est propre.
+- **État laissé sur Fuji :** 5 paiements au compteur (0 et 1 d'avant, 2 à 4 annulés), 8 adresses de la liste de l'OFAC au registre jusqu'au 9 novembre, portefeuille non gelé. `shared/flags.jsonl` contient ces 8 lignes : un relais relancé les réinscrira, c'est sans effet.
+- **Pour la vidéo :** les trois commandes ci-dessus, dans cet ordre, dans trois terminaux. Les sorties de cette nuit sont lisibles telles quelles.
+- **Limite à dire :** les 8 adresses viennent de la liste de sanctions des États-Unis, qui est publique et que des outils existants lisent déjà. Ce que la démonstration prouve, c'est le chemin (recherche, lecture, citation vérifiée, inscription, blocage), pas encore la lecture d'un forum ou d'un signalement récent sur le vrai Web.
+
+### 2026-10-11 00:45 — ia-2 / Timéo (avec Codex) — P1 : BENCHMARK PRODUIT DE LA PHASE 6 TER
+- **Coordination :** à la demande de Timéo, ajout d'un livrable séparé ; je complète uniquement P1 et la date de SUIVI.md, sans modifier les fichiers business de Romain.
+- **Fait :** benchmark Safe Pro / Safe Shield, Hypernative Guardian / Transaction Guard, Blockaid Cosigner, Fireblocks : promesses, prix publics, parcours, écrans et notifications ; neuf captures desktop relues ; fiche à reprendre / faire autrement et priorités P3-P8. Fichier : shared/benchmark-6ter/benchmark-produit.md.
+- **À retenir pour B4 :** Safe Pro payant (189 EUR et dès 669 EUR HT/mois), comptes Safe gratuits ; Fireblocks 999 USD/mois pendant six mois maximum. Hypernative documente données Web2, traçage et anomalies ; ne pas revendiquer ces briques comme exclusives. Différencier Copilot, Guardian et Safenet. Les écrans privés et performances concurrentes ne sont pas testés.
+- **Reste :** arbitrages produit et prix B6, autres tâches P3-P8 ; aucune modification du code ou du site. La signature sous contrainte reste hors vitrine.
+- **Fichiers :** shared/benchmark-6ter/, conversations/2026-10-11_timeo_benchmark-6ter.md, SUIVI.md, JOURNAL.md.
+
+
+
 ### 2026-10-11 00:45 — ia-2 / Timéo (avec Claude) — ⚠️ RELAIS FUJI LANCÉ PAR TIMÉO : ORACLE DU VRAI WEB JUSQU'AU BLOCAGE
 - **⚠️ Je lance un relais sur Fuji maintenant (décision de Timéo). Romain : n'en lance pas d'autre avant mon entrée suivante.** Vérifié avant : aucun relais ne tourne sur le PC de Timéo, portefeuille non gelé, 4 signataires établis avec du gas.
 - **But :** jouer la séquence complète à filmer. L'oracle cherche sur le vrai Web une adresse sanctionnée (Apify + Bedrock), écrit dans `shared/flags.jsonl`, le relais l'inscrit au registre sur Fuji, puis un paiement vers cette adresse est proposé et le portefeuille le bloque.
