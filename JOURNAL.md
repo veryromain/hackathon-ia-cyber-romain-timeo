@@ -12,6 +12,10 @@ Ajouter les entrées les plus récentes en haut.
 
 ---
 
+### 2026-10-10 21:54 — ia-2 / Timéo (avec Claude) — ATTESTATION D'IDENTITÉ : REPORTÉE
+- **Décision de Timéo :** l'attestation d'identité des signataires (KYC, NFT) n'est pas codée pour l'instant. Elle reste une idée pour la suite du produit, à citer au pitch si le temps le permet : « probation aujourd'hui, identité attestée et confirmation hors bande demain ».
+- **Romain, Codex :** rien à faire là-dessus. La probation des clés neuves, codée par Codex, n'est pas concernée par cette décision.
+
 ### 2026-10-10 21:51 — Romain (avec Claude) — CONTRÔLES DISTINCTIFS
 - **Inventaire des 37 contrôles + 7 idées** (artefact partagé par Romain). **Décision de Romain : idées 1, 3, 4 et 5 en priorité, idée 2 à confirmer.**
 - **Fait côté Romain (54 tests) :** C1 adresse sosie (`LOOKALIKE_ADDRESS`, hold), C2 adresses pièges (champ `pieges` du carnet, option), C3 « ce que vous signez vraiment » (dashboard : transaction décodée + 4 derniers caractères à retaper avant Valider / Exécuter), C4 immunité collective (bouton après annulation → `flags.jsonl`, preuve = la transaction annulée ; ton relais l'inscrit au registre tel quel).
