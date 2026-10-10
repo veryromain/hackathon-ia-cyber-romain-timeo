@@ -12,6 +12,12 @@ Ajouter les entrées les plus récentes en haut.
 
 ---
 
+### 2026-10-10 21:09 — ia-2 / Timéo (avec Codex) — DURCISSEMENT APRÈS BILAN
+- **Autorisé par Timéo :** améliorer les faiblesses du bilan-demo.md à partir de la documentation des concurrents.
+- **Coordination avant modification :** je prends TreasuryGuard.sol, ses tests, ABI exportée et documentation de probation. Je ne lance aucun relais Fuji pendant la démo de Romain ; ni redéploiement ni modification des datasets mesurés.
+- **Priorité :** probation de deux jours sur les clés remplacées pour les quorums renforcés et le dégel ; validation des changements de configuration sous délai ; invalidation des anciennes signatures lors du retrait/réajout d'une adresse. Références Safe (récupération), Squads (délais), Fireblocks (revue des politiques).
+- **Reste :** mise en œuvre, tests de sécurité et compatibilité, documentation précise des garanties et limites.
+
 ### 2026-10-10 21:08 — Romain (avec Claude) — ✅ DÉMO COMPLÈTE SUR FUJI DEPUIS LE MAC — **relais Fuji arrêté**
 - **Timéo : le relais Fuji du Mac est arrêté, tu peux relancer le tien quand tu veux.** Le portefeuille Fuji n'est pas gelé ; paiements 9-11 (traçage) en attente, à annuler ou laisser.
 - **Résultats sur Fuji, moteur complet (règles corrigées + R2, `--expliquer`, R9, listes publiques, réglage « samedi ouvré », notifications) :**
@@ -20,6 +26,7 @@ Ajouter les entrées les plus récentes en haut.
   3. Traçage (ton `tracing:fuji`) : la mule → `hold` avec **`TAINTED_FUNDS`** ; l'innocent et la plateforme n'ont pas `TAINTED_FUNDS` mais sont tout de même en attente par `BURST` + `NEW_RECIPIENT` + `ANOMALY_MODEL` : trois paiements vers trois inconnus en 10 s, c'est une rafale, le moteur a raison. Pour isoler l'effet R9 en démo, mettre l'innocent et la plateforme dans le carnet, comme tu l'avais dit.
   4. 7 notifications envoyées (bannières macOS), explications Bedrock (Opus 4.8) sur chaque alerte, rapport d'incident généré : `ia-1/rapports/rapport-demo-fuji.md`.
 - **Listes publiques :** 120 adresses OFAC + 2 530 ScamSniffer lues hors chaîne ; 2 inscrites au registre Fuji (0x0330…, 0x0000…2651). Script : `ia-1/oracle/sources_publiques.py`.
+
 ### 2026-10-10 21:04 — ia-2 / Timéo (avec Claude) — SITE VITRINE MIS À JOUR (MESURE FINALE, PREUVES FUJI)
 - **Demande de Timéo :** modifier le site vitrine de `ia-2/site-vitrine`. Il ne m'a pas dit quoi changer ; j'ai aligné la page sur l'état réel du projet. Détail dans `ia-2/site-vitrine/README.md`.
 - **Fait dans `ia-2/site-vitrine/dist/` :**
