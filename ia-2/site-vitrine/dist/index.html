@@ -9,6 +9,9 @@
 </head>
 <body>
 
+<!-- Lumières de fond, fixes derrière la page : ce sont elles que le verre des cartes laisse voir. -->
+<div class="aurora" aria-hidden="true"><i></i><i></i><i></i></div>
+
 <!-- Le logo : un B dans un bloc à pans coupés. Dessiné une fois, repris partout par <use>. -->
 <svg class="sprite" aria-hidden="true">
   <symbol id="mark" viewBox="0 0 34 38">
@@ -75,17 +78,27 @@
 <section class="section wrap" id="chiffres">
   <h2 class="title">Mesuré, avant<br>d’être affirmé</h2>
   <div class="stats">
-    <article class="stat"><strong>91&nbsp;%</strong><span class="label">des montants frauduleux mis en attente</span><p>1,12 million sur 1,23 million de mUSD, sur des fraudes de formes jamais vues.</p></article>
-    <article class="stat"><strong>0</strong><span class="label">mUSD sorti pendant la démo</span><p>Sur 280 500 tentés par deux signataires trompés, sur le testnet Avalanche Fuji.</p></article>
+    <article class="stat main">
+      <strong>91&nbsp;%</strong>
+      <span class="label">des montants frauduleux mis en attente</span>
+      <div class="meter" role="img" aria-label="1,12 million de mUSD mis en attente sur 1,23 million tentés"><span></span></div>
+      <p>1,12 million sur 1,23 million de mUSD, sur des fraudes de formes jamais vues.</p>
+    </article>
+    <article class="stat wide">
+      <strong>0</strong>
+      <div><span class="label">mUSD sorti pendant la démo</span><p>Sur 280 500 tentés par deux signataires trompés, sur le testnet Avalanche Fuji.</p></div>
+    </article>
     <article class="stat"><strong>5–6&nbsp;s</strong><span class="label">pour signaler sur Fuji</span><p>Pour un délai d’examen de 30 secondes dans la démo.</p></article>
     <article class="stat"><strong>5,1&nbsp;%</strong><span class="label">de paiements légitimes mis en attente</span><p>Tous de gros premiers paiements à un nouveau bénéficiaire.</p></article>
   </div>
-  <p class="fineprint center">Données synthétiques, prototype non audité. Le détail et les réserves sont plus bas, dans <a href="#preuves">Les preuves</a>.</p>
+  <p class="fineprint">Données synthétiques, prototype non audité. Le détail et les réserves sont plus bas, dans <a href="#preuves">Les preuves</a>.</p>
 </section>
 
 <section class="section wrap" id="probleme">
-  <h2 class="title center">Les clés étaient valides.<br>Les signataires, trompés.</h2>
-  <p class="subtitle center">Un portefeuille à plusieurs signataires protège contre une clé volée. Il ne protège pas contre des signataires qui valident de bonne foi le mauvais paiement.</p>
+  <div class="head">
+    <h2 class="title">Les clés étaient valides.<br>Les signataires, trompés.</h2>
+    <p class="subtitle">Un portefeuille à plusieurs signataires protège contre une clé volée. Il ne protège pas contre des signataires qui valident de bonne foi le mauvais paiement.</p>
+  </div>
   <div class="cards two">
     <article class="card case">
       <span class="label">Bybit · février 2025</span>
@@ -100,12 +113,14 @@
       <a class="link" href="https://www.halborn.com/blog/post/explained-the-drift-hack-april-2026" target="_blank" rel="noopener">Analyse de Halborn →</a>
     </article>
   </div>
-  <p class="fineprint center">Montants rapportés par les analyses citées. Ces deux organisations ne sont ni clientes ni partenaires de Breaker.</p>
+  <p class="fineprint">Montants rapportés par les analyses citées. Ces deux organisations ne sont ni clientes ni partenaires de Breaker.</p>
 </section>
 
 <section class="section wrap" id="equipes">
-  <h2 class="title center">Pour les équipes compactes<br>aux trésoreries importantes</h2>
-  <p class="subtitle center">Pour les organisations qui détiennent des fonds en crypto, sans équipe de sécurité dédiée.</p>
+  <div class="head">
+    <h2 class="title">Pour les équipes compactes<br>aux trésoreries importantes</h2>
+    <p class="subtitle">Pour les organisations qui détiennent des fonds en crypto, sans équipe de sécurité dédiée.</p>
+  </div>
   <div class="cards three">
     <article class="card">
       <h3>Protocoles, dApps et DAO</h3>
@@ -120,12 +135,14 @@
       <p>Ajouter une vérification indépendante aux décisions sensibles.</p>
     </article>
   </div>
-  <p class="fineprint center"><span class="tag">Plus tard</span> Les entreprises qui paient en stablecoins : le même besoin, dans un marché qui se construit. Le prototype cible aujourd’hui Avalanche.</p>
+  <p class="fineprint"><span class="tag">Plus tard</span> Les entreprises qui paient en stablecoins : le même besoin, dans un marché qui se construit. Le prototype cible aujourd’hui Avalanche.</p>
 </section>
 
 <section class="section wrap" id="protection">
-  <h2 class="title center">Une protection à chaque étape<br>du paiement</h2>
-  <p class="subtitle center">Une clé valide peut signer un mauvais paiement. Breaker croise vos habitudes avec les signaux externes pour ajuster la réponse.</p>
+  <div class="head">
+    <h2 class="title">Une protection à chaque étape<br>du paiement</h2>
+    <p class="subtitle">Une clé valide peut signer un mauvais paiement. Breaker croise vos habitudes avec les signaux externes pour ajuster la réponse.</p>
+  </div>
   <div class="cards three">
     <article class="card step">
       <span class="label">01 · Observer</span>
@@ -144,7 +161,7 @@
     </article>
   </div>
 
-  <h3 class="title small center">Avertir, bloquer, ou freiner</h3>
+  <h3 class="title small">Avertir, bloquer, ou freiner</h3>
   <div class="cards three">
     <article class="card flat">
       <span class="label">Avertir</span>
@@ -194,8 +211,10 @@
 </section>
 
 <section class="section wrap" id="preuves">
-  <h2 class="title center">Conçu pour être vérifié,<br>pas pour être cru</h2>
-  <p class="subtitle center">Mesure finale du 10 octobre 2026, faite une seule fois sur des fraudes dont le garde n’avait jamais vu la forme.</p>
+  <div class="head">
+    <h2 class="title">Conçu pour être vérifié,<br>pas pour être cru</h2>
+    <p class="subtitle">Mesure finale du 10 octobre 2026, faite une seule fois sur des fraudes dont le garde n’avait jamais vu la forme.</p>
+  </div>
   <div class="cards two">
     <article class="card">
       <span class="label">Sur Avalanche Fuji</span>
@@ -222,8 +241,8 @@
   </div>
 </section>
 
-<section class="section wrap narrow" id="questions">
-  <h2 class="title center">Questions fréquentes</h2>
+<section class="section wrap split" id="questions">
+  <h2 class="title">Questions fréquentes</h2>
   <div class="faq">
     <details>
       <summary>Breaker détient-il mes fonds ?</summary>
@@ -255,7 +274,7 @@
 <section class="closing">
   <canvas class="field" aria-hidden="true"></canvas>
   <div class="wrap closing-grid">
-    <div>
+    <div class="closing-panel">
       <svg class="brand-mark big" aria-hidden="true"><use href="#mark"/></svg>
       <h2 class="title">Gardez la main<br>sur votre trésorerie</h2>
       <p class="subtitle">Découvrez le prototype et imaginez le parcours de votre équipe.</p>
