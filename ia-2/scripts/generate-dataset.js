@@ -279,7 +279,9 @@ async function main() {
   addFixed(49, audit); // 20 juillet
 
   let newSupplierCount = 0;
+  let invoiceAtHoldoutEnd = 0; // numéro de facture atteint à la fin du trafic normal du holdout
   for (let day = 0; day < TOTAL_DAYS; day++) {
+    if (day === HOLDOUT_END) invoiceAtHoldoutEnd = invoiceNumber;
     if (!isBusinessDay(day)) continue;
     const rng = rngOfDay(day);
     for (const supplier of fixedDays.get(day) || []) normalPayment(day, supplier, rng, { scenario: "fixed_charge" });
@@ -435,7 +437,8 @@ async function main() {
   //    dans le jeu de généralisation (jours 90 à 119), puis, décalées de 28 jours et avec d'autres graines,
   //    dans le jeu final (jours 120 à 145). Rien ici ne modifie les jours 0 à 89.
   const testEpisodes = episodeCount;
-  function plantNewForms({ shift, h, g, batchDay, bigSupplierDays }) {
+  function plantNewForms({ shift, h, g, batchDay, bigSupplierDays, invoiceStart }) {
+    let batchInvoice = invoiceStart;
 
   // 5a. Remplacement d'un signataire par la clé d'un intrus, maquillé en renouvellement de routine, puis vidage
   //     en fin de journée (la forme de Bybit : on change d'abord les règles du portefeuille).
@@ -573,7 +576,7 @@ async function main() {
     let t = at(batchDay, 16);
     for (const supplier of g.sample(company.recurring, 8)) {
       planPayment({
-        t, to: supplier.address, amount: supplier.mean * g.lognormal(1, supplier.sigma), memo: supplier.memo(MONTHS[monthOf(batchDay)], ++invoiceNumber),
+        t, to: supplier.address, amount: supplier.mean * g.lognormal(1, supplier.sigma), memo: supplier.memo(MONTHS[monthOf(batchDay)], ++batchInvoice),
         slots: batchSlots, pool: allSlots, rng: g, label: "normal", scenario: "legit_month_end_batch",
         approveDelay: (rng) => rng.int(30, 120), executeDelay: normalExecute,
       });
@@ -599,9 +602,9 @@ async function main() {
   }
   // Holdout : les jours 103 et 117 du gros premier paiement légitime sont des samedis (erreur de ma part, conservée
   // pour ne pas modifier un jeu déjà mesuré). Jeu final : un lundi et un vendredi.
-  plantNewForms({ shift: 0, h: rngs.holdoutFraud, g: rngs.holdoutLegit, batchDay: 91, bigSupplierDays: [103, 117] });
+  plantNewForms({ shift: 0, h: rngs.holdoutFraud, g: rngs.holdoutLegit, batchDay: 91, bigSupplierDays: [103, 117], invoiceStart: invoiceAtHoldoutEnd });
   const holdoutEpisodes = episodeCount - testEpisodes;
-  plantNewForms({ shift: 28, h: rngs.finalFraud, g: rngs.finalLegit, batchDay: 121, bigSupplierDays: [133, 144] });
+  plantNewForms({ shift: 28, h: rngs.finalFraud, g: rngs.finalLegit, batchDay: 121, bigSupplierDays: [133, 144], invoiceStart: invoiceNumber });
 
   // Exécution de la file
   console.log(`Simulation de ${TOTAL_DAYS} jours…`);
