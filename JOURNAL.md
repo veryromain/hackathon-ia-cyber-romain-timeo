@@ -12,6 +12,15 @@ Ajouter les entrées les plus récentes en haut.
 
 ---
 
+### 2026-10-11 00:52 — Codex — RECOMMANDATIONS D'ÉVOLUTION APRÈS B4/P1
+- **Demande utilisateur :** avis sur l'évolution avec signataire automatique/agents développés par Timéo, blocage ou friction, cible, signaux supplémentaires, explications, sortie, audit, validation réelle et parcours commercial. Prix laissé ouvert ; Avalanche prioritaire, multichaîne secondaire.
+- **Fait :** note séparée shared/benchmark-6ter/evolution-breaker.md ; aucune modification des fichiers business, de l'oracle ou du contrat. Les recommandations sont à arbitrer, pas des décisions de l'équipe.
+- **Point critique pour Timéo :** une signature obligatoire donne un veto ; définir droits, panne, dérogation et récupération indépendante avant activation. Dans le prototype actuel riskOracle et registry sont immuables, sans remplacement/désactivation dédiée ; le recours unanime ordinaire ne constitue pas une désinstallation.
+- **Proposition :** simulation EVM vérifiable, agents pour contexte, moteur de règles pour décision ; friction graduée par défaut et refus automatique pour violations explicites. Données datées sans fuite d'information future, audit externe d'une version figée et pilotes en observation.
+- **Reste :** décisions produit/architecture, code en cours de Timéo, prix B6 et validation terrain. Aucune promesse d'exclusivité Web2, cible ou traçage.
+
+
+
 ### 2026-10-11 00:52 — ia-2 / Timéo (avec Claude) — ✅ ORACLE DU VRAI WEB JUSQU'AU BLOCAGE SUR FUJI : 0 mUSD SORTI — RELAIS ARRÊTÉ
 - **Relais Fuji arrêté à 00:53. La voie est libre, Romain.**
 - **La chaîne complète a tourné sur Fuji, sans rien de simulé entre le Web et le portefeuille :**

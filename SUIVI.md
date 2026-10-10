@@ -4,7 +4,7 @@
 > Légende : ✅ fait · 🔄 en cours · ⬜ à faire · ✂️ coupé (manque de temps)
 > Détail du projet : [`PLAN.md`](PLAN.md) · Historique : [`JOURNAL.md`](JOURNAL.md) · Brief : [`CONTEXTE.md`](CONTEXTE.md)
 
-**Dernière mise à jour :** 2026-10-11 00:18, par Claude (Romain) — phase business démarrée : B4 fait, B2 en cours
+**Dernière mise à jour :** 2026-10-11 00:45, par Codex (Timéo) — P1 benchmark produit livré ; autres statuts conservés
 **Rendu (gel définitif) :** dim. 11/10 **12:00** · **Checkpoint :** sam. **18:30** · **Pitch :** dim. 13:00
 
 ---
@@ -135,7 +135,7 @@ Un **garde antifraude pour les organisations qui gardent des millions dans un po
 
 | # | Tâche | Qui | Comment / outil | Fini quand | Statut |
 |---|---|---|---|---|---|
-| P1 | **Benchmark des sites et applications concurrents** (Safe, Hypernative, Fireblocks, Blockaid…) : promesse, prix affiché, parcours d'inscription, écrans, notifications | Romain | Visite des sites, captures, tableau (lié à B4) | Fiche « ce qu'on reprend / ce qu'on fait autrement » | ⬜ |
+| P1 | **Benchmark des sites et applications concurrents** (Safe, Hypernative, Fireblocks, Blockaid…) : promesse, prix affiché, parcours d'inscription, écrans, notifications | Romain | Visite des sites, captures, tableau (lié à B4) | Fiche « ce qu'on reprend / ce qu'on fait autrement » | ✅ 2026-10-11 00:45 : benchmark sourcé, neuf captures et fiche produit dans [shared/benchmark-6ter/benchmark-produit.md](shared/benchmark-6ter/benchmark-produit.md) ; applications privées non testées |
 | P2 | **Site vitrine** : promesse, problème (Drift, Bybit), comment ça marche, preuves (chiffres de la démo), prix, « réserver une démo » | Romain | À choisir (site statique) | Page en ligne ou maquette | ✅ maquette privée publiée et vérifiée ; source `ia-2/site-vitrine`, URL dans son README |
 | P3 | **Espace client et abonnement** : création de compte, choix de l'offre, connexion du portefeuille Avalanche à protéger | Timéo (technique) + Romain (offre) | — | Parcours de bout en bout | ⬜ |
 | P4 | **Actions dans l'application** : boutons **valider / annuler / geler / contester un signalement** (signés par le portefeuille du signataire) | Timéo | Extension du relais (`shared/actions.jsonl`) puis signature dans le navigateur | Une alerte se traite sans quitter l'application | ✅ 20:15 version démo (fichier d'actions lu par le relais de Timéo, local et Fuji ; valider / exécuter / annuler / geler / dégeler / contester). Reste pour la production : signature dans le navigateur |
