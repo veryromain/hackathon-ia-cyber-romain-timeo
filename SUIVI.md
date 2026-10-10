@@ -4,7 +4,7 @@
 > Légende : ✅ fait · 🔄 en cours · ⬜ à faire · ✂️ coupé (manque de temps)
 > Détail du projet : [`PLAN.md`](PLAN.md) · Historique : [`JOURNAL.md`](JOURNAL.md) · Brief : [`CONTEXTE.md`](CONTEXTE.md)
 
-**Dernière mise à jour :** sam. 10/10 16:45, par Claude (Romain)
+**Dernière mise à jour :** 2026-10-10 16:43, par Codex (Timéo) — ajout de la source du pitch mentor
 **Rendu (gel définitif) :** dim. 11/10 **12:00** · **Checkpoint :** sam. **18:30** · **Pitch :** dim. 13:00
 
 ---
@@ -46,7 +46,7 @@ Un **garde antifraude pour la trésorerie crypto des entreprises** (portefeuille
 | 0.2 | Brief du hackathon (`CONTEXTE.md`) à partir du guide Notion | Romain | ✅ |
 | 0.3 | Timéo raccordé au bon repo, hook de synchro | Timéo | ✅ |
 | 0.4 | Accès AWS Bedrock validé (Romain : Sonnet 5.5, Timéo : Opus 5.5) | Les deux | ✅ |
-| 0.5 | Rencontre avec le mentor Team1 + analyse du retour | Les deux | ✅ |
+| 0.5 | Rencontre avec le mentor Team1 + analyse du retour ; [source Granola](https://notes.granola.ai/t/7bf42777-eba3-48f0-a9ab-3780744381e7) référencée dans `shared/retour-mentor-team1.md` | Les deux | ✅ |
 | 0.6 | Choix du sujet : **axe 2, trésorerie crypto + oracle Web2 → Web3** | Les deux | ✅ |
 | 0.7 | Plan d'action validé (`PLAN.md`) | Les deux | ✅ |
 | 0.8 | Base Hardhat, jetons de test, mesure du gas (une pause ≈ 0,002 $) | Timéo | ✅ |

@@ -1,5 +1,7 @@
 # Retour du mentor Team1 (Avalanche) et ce qu'on en fait
 
+**Source du pitch avec le mentor :** [Notes Granola](https://notes.granola.ai/t/7bf42777-eba3-48f0-a9ab-3780744381e7), lien transmis par Timéo le 10 octobre 2026.
+
 Échange du 10 octobre vers 16h00. Notes prises par Granola (titre « Avalanche security tool plan », partagées par Romain), relues et confrontées au plan par Claude côté Timéo à 16h20. La première partie rapporte ce qui a été dit ; la seconde est une analyse, à valider par Romain et Timéo.
 
 ## 1. Ce que dit la note

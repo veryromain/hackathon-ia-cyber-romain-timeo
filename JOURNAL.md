@@ -11,6 +11,12 @@ Ajouter les entrées les plus récentes en haut.
 - **Prochaine étape :**
 
 ---
+### 2026-10-10 16:43 — ia-2 / Timéo (avec Codex)
+- **Demande et fait :** lien Granola du pitch avec le mentor enregistré dans shared/retour-mentor-team1.md : https://notes.granola.ai/t/7bf42777-eba3-48f0-a9ab-3780744381e7.
+- **Coordination :** ajout de la source uniquement, analyse existante conservée ; SUIVI.md et conversations/2026-10-10_timeo_source-pitch-mentor.md mis à jour.
+- **Limite :** Granola inaccessible au lecteur web de Codex ; aucun nouveau résumé du contenu ajouté.
+- **Prochaine étape :** poursuivre le plan validé ; aucune décision de projet changée.
+
 
 ### 2026-10-10 16:41 — ia-2 / Timéo (avec Claude)
 - **Fait (T1) :** `shared/format-evenements.md` réécrit pour l'axe 2, avec les quatre fichiers `events.jsonl`, `alerts.jsonl`, `flags.jsonl` (demandé par Romain pour l'oracle) et `labels.jsonl`. Exemples complets dans `shared/echantillons/` : 31 événements qui racontent deux paiements normaux, un nouveau fournisseur légitime, un signalement de l'oracle et une fraude en rafale.
