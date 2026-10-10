@@ -12,6 +12,29 @@ Ajouter les entrées les plus récentes en haut.
 
 ---
 
+### 2026-10-10 19:47 — ia-2 / Timéo (avec Claude) — T5+ : JEU DE GÉNÉRALISATION (FRAUDES DE FORMES NOUVELLES)
+- **Fait (T5+) : un troisième jeu de données, `shared/donnees/holdout.*`**, fait de formes de fraude que le moteur n'a jamais vues. 30 jours de plus (jours 90 à 119), 261 paiements dont **39 frauduleux en 15 épisodes**. Détail et tableau dans `shared/donnees/README.md`.
+  - Six formes nouvelles : `owner_swap_then_drain` (remplacement d'un signataire par la clé d'un intrus, maquillé en renouvellement, puis vidage : la forme de Bybit), `structuring` (fractionnement vers des adresses toutes différentes), `trust_building` (deux petits paiements, puis le gros), `known_recipient_overpay` (bonne adresse, dix à vingt fois le montant), `weekend_single`, `memo_prompt_injection` (consigne cachée dans le libellé, visant Bedrock).
+  - Trois formes du jeu de test rejouées avec d'autres graines, comme repères.
+  - Des cas légitimes trompeurs : lot de fin de mois, gros premier paiement à un nouveau cabinet d'audit, urgence un dimanche.
+- **`train` et `test` n'ont pas changé d'une ligne** (vérifié par le script de comparaison, puis par `git diff`). Tes mesures et ton modèle R2 restent valables ; rien à réentraîner.
+- **⚠️ Romain : ne règle rien en regardant ce jeu.** Le jeu de test a déjà servi plusieurs fois à la mise au point ; le `holdout` est la seule mesure encore propre. Si tu modifies une règle après l'avoir vu, il ne prouve plus rien. Les étiquettes des fraudes en plusieurs temps portent un champ `stage` (`grooming` ou `cashout`).
+- **Première mesure, tes règles seules, sur le PC de Timéo** (`ia-2/scripts/evaluer-holdout.py`, à lancer depuis `ia-1/`) :
+
+  | | Jeu de test | Jeu de généralisation |
+  |---|---|---|
+  | Fraudes mises en attente | 63 % | **49 %** |
+  | Fraudes freinées ou mises en attente | 100 % | **95 %** |
+  | Montants frauduleux mis en attente | 89 % | **57 %** |
+  | Paiements normaux mis en attente à tort | 0,9 % | **1,4 %** |
+  | Paiements normaux avec une signature en plus | 14,2 % | **22,5 %** |
+
+- **Ce que ça dit, sans rien enjoliver :** le moteur généralise, mais moins bien que sur le test. Les deux chiffres sont à donner au jury côte à côte.
+- **Point faible à connaître avant le pitch : `owner_swap_then_drain`.** 3 des 7 paiements ne reçoivent qu'un `step_up`, qui n'arrête rien quand l'attaquant tient déjà trois clés. « Freinée » surestime donc la protection dans ce cas : seule la mise en attente compte. À prendre en compte dans ta façon de présenter « freinées ou arrêtées » (R6).
+- **Autres constats :** les deux gros paiements finaux de la mise en confiance ne sont que freinés (le destinataire est devenu « connu ») ; deux gros premiers paiements légitimes à un cabinet d'audit sont mis en attente à tort.
+- **À faire de ton côté, si tu veux :** relancer avec le modèle R2 sur ton Mac (il ne tourne pas ici) et vérifier que l'explication Bedrock (R3) résiste aux deux libellés piégés, paiements `memo_prompt_injection`.
+- **Vu :** ta demande d'un fichier `shared/actions.jsonl` lu par le relais pour les boutons du tableau de bord (R5b, P4). Je le fais ensuite, sauf si Timéo préfère T9.
+
 ### 2026-10-10 19:42 — ia-1 / Romain (avec Claude)
 - **Fait (R6) : `shared/mesures.md`**, le tableau pour le deck et la fiche de défense. 6 chiffres clés : 100 % des fraudes freinées ou arrêtées, 94 % des montants frauduleux en attente, 0,9 % de faux positifs, signalement en ≤ 1 s (local) / 5-6 s (Fuji), oracle 100 % / 100 % avec 7 injections déjouées, 0,002 $ par alerte. Chaque chiffre a sa commande de reproduction et la section « Limites » est écrite pour le jury.
 - **Timéo :** j'ai repris tes chiffres Fuji (5-6 s, 0,00054 AVAX) et gas. Si tu régénères les données ou refais la démo Fuji, dis-le : je rafraîchis le tableau.

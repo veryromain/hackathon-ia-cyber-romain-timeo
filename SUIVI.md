@@ -4,7 +4,7 @@
 > Légende : ✅ fait · 🔄 en cours · ⬜ à faire · ✂️ coupé (manque de temps)
 > Détail du projet : [`PLAN.md`](PLAN.md) · Historique : [`JOURNAL.md`](JOURNAL.md) · Brief : [`CONTEXTE.md`](CONTEXTE.md)
 
-**Dernière mise à jour :** 2026-10-10 19:42, par Claude (Romain) — R6 fait : `shared/mesures.md`
+**Dernière mise à jour :** 2026-10-10 19:47, par Claude (Timéo) — T5+ fait : jeu holdout de 39 fraudes de formes nouvelles, première mesure dans shared/donnees/README.md
 **Rendu (gel définitif) :** dim. 11/10 **12:00** · **Checkpoint :** sam. **18:30** · **Pitch :** dim. 13:00
 
 ---
@@ -92,7 +92,7 @@ Un **garde antifraude pour les organisations qui gardent des millions dans un po
 | R4 | **Rapport d'incident** par Bedrock : chronologie, montants, décisions, preuves | Romain | boto3 | Rapport généré sur la fraude de démo | ✅ 19:34 (faits par le code, synthèse Bedrock vérifiée ; rapport de la démo : 285 300 mUSD protégés ; 5 tests) |
 | R8c | **Oracle complet** : croisement de plusieurs sources + réputation des sources, expiration des signalements | Romain | Python | **Une tentative d'empoisonnement est rejetée** | ✅ 19:34 (réputation des sources, même source répétée = 1 ; **empoisonnement rejeté** en démo ; 4 tests) |
 | R5b | **Dashboard v2** : preuves Web (lien, citation), boutons « valider » / « annuler », chiffres clés | Romain | Streamlit | Suffit à filmer la démo | ⬜ |
-| T5+ | Variantes de fraude supplémentaires | Timéo | Node | — | ⬜ |
+| T5+ | Variantes de fraude supplémentaires | Timéo | Node | — | ✅ 19:47 (`shared/donnees/holdout.*` : 39 fraudes, 15 épisodes, 6 formes nouvelles ; règles seules : 49 % arrêtées, 95 % freinées ou arrêtées) |
 | T9 | **Traçage des fonds — données** (bonus, `PLAN.md` §4 ter) : événements `token_transfer` sortants des adresses signalées, scénario « arnaqueur → 3 mules + dusting d'un innocent », `shared/services-connus.json` | Timéo | Node + ethers | La mule est reliée à l'adresse signalée dans `events.jsonl` | ⬜ |
 | R9 | **Traçage des fonds — règle** (bonus) : ≥ 10 % des fonds d'une adresse signalée → `step_up` (`TAINTED_FUNDS`), 1 intermédiaire max, services exclus, dusting ignoré | Romain | Python | La mule est ralentie, l'innocent « dusté » ne l'est pas | ⬜ |
 | ⚠️ | **Renouveler la clé Bedrock de Timéo avant 03:28** | Timéo | Workshop Studio | Appel de test réussi | ⬜ |
