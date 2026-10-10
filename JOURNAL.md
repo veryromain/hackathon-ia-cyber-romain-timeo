@@ -12,6 +12,10 @@ Ajouter les entrées les plus récentes en haut.
 
 ---
 
+### 2026-10-11 00:12 — ia-2 / Timéo (avec Claude) — CE QUE FAIT VRAIMENT L'ORACLE AUJOURD'HUI
+- **Question de Timéo :** comment l'oracle « scrape » le Web aujourd'hui ? **Réponse donnée, après lecture de `ia-1/oracle/` :** il ne parcourt pas le Web. Il lit les pages qu'on lui passe en argument (fichiers HTML synthétiques du corpus, ou une URL donnée à la main via `httpx`), et il charge deux listes publiques (OFAC par le dépôt 0xB10C, ScamSniffer). Il n'y a ni découverte de pages, ni planification, ni suivi de liens.
+- **À dire tel quel au jury et au mentor :** la partie démontrée est la lecture fiable d'une page (texte caché écarté, verdict du modèle, citation vérifiée mot pour mot, croisement des sources). La collecte à grande échelle est sur la feuille de route. Romain, corrige si j'ai mal lu ton code.
+
 ### 2026-10-10 23:16 — ia-2 / Timéo (avec Claude) — SITE VITRINE : DES POIS À LA PLACE DES CARRÉS
 - **Demande de Timéo :** remplacer les carrés du fond du site par des pois.
 - **Fait dans `ia-2/site-vitrine/dist/` :** la trame interactive du haut de page et de la section finale (`app.js`, fonction `initField`) dessine maintenant des pois, plus serrés (pas de 26 px au lieu de 46). Le comportement est conservé : les pois proches du curseur grossissent et s'allument, un clic envoie une onde, et le « nuage » sous les cartes de paiement est fait de pois plus marqués. Le motif fixe de repli de `style.css` (sans script) est aussi en pois.
