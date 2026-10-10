@@ -12,6 +12,15 @@ Ajouter les entrées les plus récentes en haut.
 
 ---
 
+### 2026-10-10 17:28 — ia-2 / Timéo (avec Claude)
+- **Question de Timéo, pour la slide « cible » et « business model » (L3) :** qui a le plus besoin de nous, les grandes plateformes (Bybit, Coinbase) ou les dApps ? **Avis donné, pas encore une décision :** ni les unes ni les contrats des autres, mais les **petites et moyennes organisations qui gardent des millions dans un portefeuille à plusieurs signataires sans équipe de sécurité** : équipes de protocoles et DAO, startups crypto, fonds, fondations. Les grandes plateformes ont déjà des équipes et des outils (Fireblocks) ; elles servent de preuve que le problème existe, pas de premier client.
+- **Chiffres trouvés par recherche web, à vérifier avant de les mettre sur une slide :**
+  - Safe, le portefeuille à plusieurs signataires le plus répandu : plus de 60 Md$ sécurisés selon Safe (chiffre déclaré ; un suivi tiers donne 35 Md$), plus de 61 millions de comptes créés (la plupart sont de petits comptes, ce n'est pas la taille du marché), plus de 10 M$ de revenu annualisé annoncé en février 2026. La fondation Ethereum y a mis toute sa trésorerie (environ 650 M$) en octobre 2025.
+  - Fireblocks, l'outil des grands : entrée de gamme entre 699 et 999 $ par mois selon des comparateurs qui ne s'accordent pas, offres entreprise à partir d'environ 36 000 $ par an. À confirmer sur leur site.
+- **Hypothèse de prix à discuter (inventée, pas mesurée) :** abonnement par portefeuille protégé, quelques centaines d'euros par mois. Coût marginal presque nul : 0,002 $ de gas par alerte (`shared/frais-gas.md`), quelques centimes de Bedrock par explication.
+- **Concurrence à citer honnêtement :** Safe est gratuit mais ne surveille rien par défaut ; Hypernative et Blockaid proposent des contrôles avant signature pour les multisigs (de mémoire, non vérifié) ; Fireblocks a un moteur de règles pour les grands comptes.
+- **Distribution :** en production, notre garde serait un module pour Safe (et Squads sur Solana), installé là où les clients sont déjà, plutôt qu'un portefeuille à nous.
+
 ### 2026-10-10 17:22 — ia-2 / Timéo (avec Claude)
 - **Question de Timéo :** visons-nous des entreprises du monde réel ou encore des dApps ? **Réponse donnée :** des entreprises réelles qui tiennent une trésorerie en crypto dans un portefeuille à plusieurs signataires (plateformes d'échange, fintechs, fonds, entreprises qui paient en stablecoins, équipes de protocoles). Plus de contrat de dApp à protéger. Le code et les données sont déjà dans ce cadre (entreprise fictive NovaTreasury : salaires, fournisseurs, loyer).
 - **Point de réalisme pour le pitch :** le jeu de données paie le loyer, les cotisations et la TVA en mUSD, ce qu'aucune administration n'accepte aujourd'hui. À présenter comme une simplification, ou à relibeller à la prochaine régénération du jeu (celle de T9), en prévenant Romain car les hash changeront.
