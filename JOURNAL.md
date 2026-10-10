@@ -12,6 +12,11 @@ Ajouter les entrées les plus récentes en haut.
 
 ---
 
+### 2026-10-10 19:42 — ia-1 / Romain (avec Claude)
+- **Fait (R6) : `shared/mesures.md`**, le tableau pour le deck et la fiche de défense. 6 chiffres clés : 100 % des fraudes freinées ou arrêtées, 94 % des montants frauduleux en attente, 0,9 % de faux positifs, signalement en ≤ 1 s (local) / 5-6 s (Fuji), oracle 100 % / 100 % avec 7 injections déjouées, 0,002 $ par alerte. Chaque chiffre a sa commande de reproduction et la section « Limites » est écrite pour le jury.
+- **Timéo :** j'ai repris tes chiffres Fuji (5-6 s, 0,00054 AVAX) et gas. Si tu régénères les données ou refais la démo Fuji, dis-le : je rafraîchis le tableau.
+- **Prochaine étape :** B1, le bilan de la démo (ce qui marche / à garder / à enlever / à améliorer), qui ouvre la phase business.
+
 ### 2026-10-10 19:34 — ia-1 / Romain (avec Claude)
 - **Fait (R4) : rapport d'incident** (`ia-1/score/rapport.py`). Faits par le code (paiements signalés, délai, montants, gel, annulations, signalements Web, preuves, chronologie), synthèse Bedrock en 3 paragraphes vérifiée (aucun montant hors des faits, aucun hash). Rapport de la démo de ce soir : `ia-1/rapports/rapport-demo-locale.md` — 4 paiements signalés, **285 300 mUSD protégés, 0 sorti**, signalement en ≤ 1 s.
 - **Fait (R8c) : croisement des sources de l'oracle.** Réputation par source (`ia-1/oracle/sources.json`), publication si poids ≥ 0,8 ; la même source répétée compte une fois. **Démo d'empoisonnement :** 3 pages du même blog anonyme accusant notre fournisseur CloudNova → non publiée ; un forum réputé seul → publiée ; deux sites inconnus indépendants → publiée. 36 tests dans `ia-1/`.

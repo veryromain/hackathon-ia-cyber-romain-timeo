@@ -4,7 +4,7 @@
 > Légende : ✅ fait · 🔄 en cours · ⬜ à faire · ✂️ coupé (manque de temps)
 > Détail du projet : [`PLAN.md`](PLAN.md) · Historique : [`JOURNAL.md`](JOURNAL.md) · Brief : [`CONTEXTE.md`](CONTEXTE.md)
 
-**Dernière mise à jour :** 2026-10-10 19:34, par Claude (Romain) — R4 et R8c faits ; côté Romain, phase 3 : reste R5b
+**Dernière mise à jour :** 2026-10-10 19:42, par Claude (Romain) — R6 fait : `shared/mesures.md`
 **Rendu (gel définitif) :** dim. 11/10 **12:00** · **Checkpoint :** sam. **18:30** · **Pitch :** dim. 13:00
 
 ---
@@ -104,7 +104,7 @@ Un **garde antifraude pour les organisations qui gardent des millions dans un po
 | # | Tâche | Qui | Comment / outil | Fini quand | Statut |
 |---|---|---|---|---|---|
 | T7 | **Mesure du gas** des transactions du Guard et du registre (pour le modèle économique) | Timéo | `npm run gas` | Tableau dans `shared/` | ✅ 16:55 (`shared/frais-gas.md` : une alerte ≈ 0,002 $) |
-| R6 | **Évaluation** sur le fichier de test : taux de détection, précision, faux positifs, délai de signalement, fonds protégés + **précision de l'oracle** et **délai Web2 → chaîne** | Romain | Python | Tableau de chiffres dans `shared/mesures.md` | ⬜ |
+| R6 | **Évaluation** sur le fichier de test : taux de détection, précision, faux positifs, délai de signalement, fonds protégés + **précision de l'oracle** et **délai Web2 → chaîne** | Romain | Python | Tableau de chiffres dans `shared/mesures.md` | ✅ 19:42 (`shared/mesures.md` : 6 chiffres clés, détection, réponse local/Fuji, oracle, coûts, limites ; tout reproductible) |
 | — | Rejouer les mesures, corriger | Timéo | — | Chiffres définitifs | ⬜ |
 
 ---
@@ -183,7 +183,7 @@ Un **garde antifraude pour les organisations qui gardent des millions dans un po
 | Sam. 18:30 | Checkpoint officiel (formulaire problème / solution / stack) | ⬜ |
 | Sam. 23:00 | Démo de bout en bout en local | ✅ 18:41 (4 h 20 d'avance) |
 | Dim. 03:00 | Démo sur Fuji + clé Bedrock de Timéo renouvelée | ⬜ |
-| Dim. 09:00 | Chiffres définitifs | ⬜ |
+| Dim. 09:00 | Chiffres définitifs | ✅ 19:42 (`shared/mesures.md`, à rafraîchir si les données changent) |
 | Dim. 10:00 | Atelier coaching pitch | ⬜ |
 | Dim. 12:00 | 🧊 Rendu | ⬜ |
 | Dim. 13:00 | Round 1 | ⬜ |
