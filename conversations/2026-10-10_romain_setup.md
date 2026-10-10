@@ -52,3 +52,12 @@ Un projet compatible avec les deux tracks : la **supervision d'agents IA qui man
   - Les identifiants ont été récupérés via « Get AWS CLI credentials », depuis le presse-papier, sans passer par la conversation.
   - Le Wi-Fi de l'école bloque Bedrock ; ça fonctionne sur le partage de connexion du téléphone.
   - L'appel test à Claude Sonnet 5.5 a réussi.
+
+## Mise à jour 16:45 — Pivot vers l'axe 2 + oracle Web2 → Web3
+- **Retour du mentor Team1 :** ne pas faire nous-mêmes la pause (trop centralisé), alerter les signataires, forcer le renouvellement des clés.
+- **Timéo propose l'axe 2** (SOC antifraude), appliqué à la trésorerie crypto des entreprises, et réécrit `PLAN.md`.
+- **Décision de Romain :** axe 2 validé, **uniquement de la crypto**. **Ajout de l'oracle Web2 → Web3 :**
+  - il lit le Web et repère les adresses accusées de fraude (Bedrock + citation vérifiée) ;
+  - il les inscrit sur la chaîne ;
+  - le garde ajoute de la friction aux paiements vers ces adresses.
+- **Points de vigilance notés :** empoisonnement de l'oracle (fausses accusations), injection de prompt, RGPD et scraping (démo sur pages synthétiques), surcharge de travail de Romain (ordre de coupe défini).

@@ -12,6 +12,13 @@ Ajouter les entrées les plus récentes en haut.
 
 ---
 
+### 2026-10-10 16:45 — Romain (avec Claude) — DÉCISION
+- **Validé par Romain :** passage à l'**axe 2 du track 1**, lecture « **trésorerie crypto** » (portefeuille multisig d'entreprise). **Uniquement de la crypto, la fraude bancaire classique est exclue.** Le `PLAN.md` de Timéo (16:35) est adopté.
+- **Ajout de Romain : l'oracle Web2 → Web3** (section 4 bis de `PLAN.md`). Un oracle IA lit le Web (pages de signalement, listes publiques), repère les adresses accusées de fraude (Bedrock + citation exacte vérifiée par le code), puis les inscrit dans un registre on-chain. Un paiement vers une adresse signalée déclenche la friction. Jamais de blocage, signalements contestables et à durée limitée.
+- **Nouvelles tâches :** **R8** (Romain) oracle + corpus synthétique avec pièges (démentis, empoisonnement) ; **T8** (Timéo) registre des adresses signalées, alimenté par `flags.jsonl` via le relais.
+- **Pour Timéo :** merci de prévoir dans `shared/format-evenements.md` le format de `flags.jsonl` (adresse, niveau, catégorie, url_source, citation, hash_preuve, expiration) et l'événement on-chain du registre.
+- **Prochaine étape :** checkpoint de 18:30 avec le texte de la section 8 (mis à jour avec l'oracle).
+
 ### 2026-10-10 16:31 — ia-2 / Timéo (avec Claude)
 - **Fait :** nouveau `PLAN.md`, rédigé à la demande de Timéo pour l'**axe 2 du track 1** : garde antifraude pour une trésorerie d'entreprise tenue par un portefeuille à plusieurs signataires. **Romain, c'est une proposition : lis-la et dis ce que tu changes.** Ton plan de l'axe 4 est archivé tel quel dans `shared/archive/PLAN-axe4.md`.
 - **Répartition proposée (consigne de Timéo : le plus technique côté blockchain pour lui) :** Timéo → contrat `TreasuryGuard`, relais chaîne/fichiers, trafic normal, scénarios de fraude, Fuji. Romain → moteur de score, explication et rapport par Bedrock, tableau de bord, évaluation, livrables écrits.

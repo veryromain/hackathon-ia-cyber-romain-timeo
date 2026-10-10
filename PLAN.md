@@ -1,12 +1,12 @@
 # Plan d'action — « Breaker », SOC antifraude pour trésoreries sur la blockchain
 
-> **Statut : proposition rédigée par Claude à la demande de Timéo, samedi 16h35. À valider par Romain.**
-> Elle remplace le plan de l'axe 4, archivé dans `shared/archive/PLAN-axe4.md`.
-> Track 1 (Fintech Security), **axe 2** : SOC antifraude à l'ère de l'IA générative.
+> **Statut : VALIDÉ par Romain le samedi à 16h45**, avec un ajout : l'**oracle Web2 → Web3** (section 4 bis, tâches R8 et T8).
+> Rédigé par Claude à la demande de Timéo (16h35). Remplace le plan de l'axe 4, archivé dans `shared/archive/PLAN-axe4.md`.
+> Track 1 (Fintech Security), **axe 2** : SOC antifraude à l'ère de l'IA générative. **Uniquement de la crypto, pas de fraude bancaire classique.**
 
 ## 1. Le projet en une phrase
 
-**Un garde antifraude pour les entreprises qui gèrent leur trésorerie avec un portefeuille à plusieurs signataires.** Chaque paiement proposé est noté avant son exécution ; s'il est suspect, le portefeuille exige des signatures supplémentaires ou le met en attente, et les signataires reçoivent une alerte expliquée en clair.
+**Un garde antifraude pour les entreprises qui gèrent leur trésorerie avec un portefeuille à plusieurs signataires, qui fait le pont entre le Web2 et le Web3.** Chaque paiement proposé est noté avant son exécution, à partir du comportement on-chain **et de ce qui se dit sur le Web à propos du destinataire**. S'il est suspect, le portefeuille exige des signatures supplémentaires ou le met en attente, et les signataires reçoivent une alerte expliquée en clair.
 
 ## 2. Pourquoi ce cadrage
 
@@ -51,6 +51,42 @@
 - **Bedrock :** rédige l'explication destinée aux signataires et le rapport d'incident. Il ne décide jamais du niveau de risque.
 - **Bonus :** Bedrock analyse le texte de justification du paiement pour repérer les marqueurs d'une fraude au président (urgence, secret, changement de coordonnées).
 
+- **Oracle Web2 → Web3 (section 4 bis) :** Bedrock lit des pages Web et distingue une **accusation** de fraude visant une adresse d'une simple mention ou d'un démenti.
+
+## 4 bis. L'oracle Web2 → Web3 (ajout de Romain)
+
+**Idée :** beaucoup d'arnaques sont signalées sur le Web (forums, réseaux sociaux, sites de signalement, listes de sanctions) **avant** que l'argent parte vers l'adresse fautive. L'oracle va chercher ces signaux et les rend utilisables par le garde, sur la chaîne.
+
+```
+ Pages Web (synthétiques pour la démo) + listes publiques
+        │
+        v
+ 1. Collecte          → texte des pages
+ 2. Repérage          → adresses 0x… (expression régulière)
+ 3. Lecture (Bedrock) → pour chaque adresse : accusation de fraude ? oui / non / démenti,
+                        catégorie, confiance, et la PHRASE EXACTE de la source
+ 4. Vérification      → le code contrôle que la phrase est bien dans la page et contient l'adresse
+                        (sinon le signalement est rejeté : pas d'hallucination possible)
+ 5. Croisement        → plusieurs sources indépendantes, réputation de chaque source
+ 6. Publication       → une liste d'adresses signalées sur la chaîne (registre), avec le hash de la preuve
+                        et une date d'expiration
+        │
+        v
+ Le moteur de score (R1) et le TreasuryGuard tiennent compte du registre :
+ un paiement vers une adresse signalée exige des signatures en plus ou une mise en attente.
+```
+
+**Règles :**
+- L'oracle **ne bloque jamais** : il ajoute de la friction, comme le reste de l'outil.
+- Chaque signalement porte sa preuve (lien, citation, hash). Il est **contestable** et **expire**.
+- Démo sur **nos propres pages synthétiques**, en incluant des pièges : démentis (« ce n'est PAS une arnaque »), homonymes, adresses de dons, **tentative d'empoisonnement** (fausses accusations publiées pour faire bloquer une adresse légitime). Scraper de vrais sites relève de la feuille de route : conditions d'utilisation, RGPD.
+- Mesures : précision de l'oracle, faux signalements, et **délai entre la publication sur le Web et l'inscription sur la chaîne**.
+
+**Autres « petites choses » Web2 → Web3 possibles** (si on est en avance) :
+- liste de sanctions publique chargée dans le registre (filtrage LCB-FT) ;
+- domaine d'un lien de paiement comparé aux domaines de phishing connus ;
+- signalement inverse : quand un client annule une fraude, l'adresse est ajoutée au registre et profite à tous les clients.
+
 **Ce que le moniteur a le droit de faire sur la chaîne :** signaler un paiement comme risqué, rien d'autre. Le signalement ajoute des exigences ; les signataires gardent le dernier mot.
 
 **Stack**
@@ -77,6 +113,7 @@
 | T5 | **Scénarios de fraude**, au moins 5 variantes : signataires trompés, clé volée, rafale, goutte-à-goutte sous le plafond, baisse du seuil avant l'attaque | Un fichier de test étiqueté, produit avec d'autres graines que l'entraînement |
 | T6 | **Déploiement sur Fuji** et rejeu de la démo, avec les liens de l'explorateur | La démo tourne sur Fuji |
 | T7 | **Mesure du gas** des transactions du garde, pour le modèle économique | Tableau dans `shared/` |
+| T8 | **Registre des adresses signalées** (dans `TreasuryGuard` ou un petit contrat `RiskRegistry`) : adresse → niveau, hash de la preuve, expiration. Le relais l'alimente depuis `flags.jsonl` (sortie de l'oracle) ; un paiement vers une adresse signalée déclenche la friction | Un signalement de l'oracle change le sort d'un paiement sur la chaîne |
 
 ### Romain — `ia-1/` : la détection, l'explication et la présentation
 
@@ -89,6 +126,7 @@
 | R5 | **Tableau de bord** : paiements en cours, score, raisons, état (normal, signatures en plus, en attente, gelé), chiffres clés | Suffit à filmer la démo |
 | R6 | **Évaluation** : taux de détection, précision, faux positifs, délai de signalement, fonds protégés, sur le fichier de test de T5 | Tableau de chiffres dans `shared/` |
 | R7 | **Livrables écrits** : formulaire du checkpoint, deck, fiche de défense, playbook de réponse, slide conformité | Relus par Timéo |
+| R8 | **Oracle Web2 → Web3** (section 4 bis) : corpus de pages synthétiques avec pièges, extraction Bedrock avec citation vérifiée, croisement des sources, sortie `flags.jsonl` ; le moteur de score en tient compte | Une page Web synthétique fait ralentir un paiement sur la chaîne ; tentative d'empoisonnement rejetée |
 
 ### Ensemble
 
@@ -124,7 +162,7 @@
 ## 8. Texte pour le checkpoint de 18h30 (à ajuster par Romain)
 
 - **Problème.** Les entreprises qui gèrent leur trésorerie sur la blockchain dépendent de quelques signataires. Il suffit d'en tromper deux, par un faux message du dirigeant que l'IA générative rend crédible, pour vider les fonds en quelques minutes, comme chez Drift en avril 2026.
-- **Solution.** Un garde antifraude qui note chaque paiement avant son exécution et déclenche une réponse graduée appliquée par le portefeuille du client : signatures supplémentaires, mise en attente, gel, alerte expliquée. L'outil ne détient jamais les fonds.
+- **Solution.** Un garde antifraude qui note chaque paiement avant son exécution, à partir du comportement on-chain et d'un oracle IA qui lit les signalements de fraude publiés sur le Web (pont Web2 → Web3). Il déclenche une réponse graduée appliquée par le portefeuille du client : signatures supplémentaires, mise en attente, gel, alerte expliquée. L'outil ne détient jamais les fonds.
 - **Stack.** Solidity et Hardhat sur Avalanche Fuji, Python et scikit-learn pour le score, AWS Bedrock pour les explications et le rapport, Streamlit pour le tableau de bord.
 
 ## 9. Limites et risques
@@ -139,6 +177,11 @@
 | **Retard sur le contrat** | Couper dans l'ordre : expiration des clés, puis gel, puis plafond. Le signalement de risque et la mise en attente sont le cœur |
 | **Bedrock injoignable** (réseau, clé expirée) | Texte à trous sans modèle de langage, prévu dans R3 |
 | **Démo en direct qui plante** | Vidéo enregistrée et scénario rejouable en local |
+| **Empoisonnement de l'oracle** : fausses accusations publiées pour faire bloquer une adresse légitime | Plusieurs sources indépendantes, réputation des sources, friction seulement (jamais de blocage), expiration et contestation. À montrer en démo |
+| **Injection de prompt** cachée dans une page lue par Bedrock | Bedrock extrait seulement, sortie au format imposé, citation vérifiée par le code |
+| **Les arnaqueurs changent d'adresse** à chaque fraude | L'oracle est une couche de plus, pas la seule : le comportement on-chain reste le cœur |
+| **Scraping et RGPD** (une adresse peut être une donnée personnelle, une accusation a des conséquences) | Pages synthétiques pour la démo, signalements motivés, contestables et à durée limitée |
+| **Surcharge de travail pour Romain** (R1 à R8) | Ordre de coupe pour l'oracle : réputation des sources, puis croisement. La lecture Bedrock avec citation vérifiée est le cœur |
 
 **À confirmer avec le mentor KPMG :** le cadre de conformité à mettre sur la slide. Si le client est une entité financière régulée, DORA s'applique à ses incidents (notes dans `shared/dora-notes.md`) ; sinon, l'angle est l'AI Act et la traçabilité des décisions.
 
