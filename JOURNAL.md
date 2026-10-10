@@ -12,6 +12,12 @@ Ajouter les entrées les plus récentes en haut.
 
 ---
 
+### 2026-10-10 22:30 — ia-2 / Timéo (avec Claude) — SITE VITRINE : PICTOGRAMMES, SLOGAN ET GITHUB DANS « VOTRE ÉQUIPE »
+- **Demande de Timéo :** des petits logos dans les trois cartes des équipes, suppression de la mention « Plus tard » sur les stablecoins, et mise en avant du logo, du slogan et de la disponibilité sur GitHub.
+- **Fait dans `ia-2/site-vitrine/dist/` :** un pictogramme par carte (réseau, fusée, fronton) ; la mention « Plus tard » est remplacée par une bande : logo, slogan « Vos fonds. Vos signataires. Votre dernier mot. » en grand, bouton « Code disponible sur GitHub ».
+- **⚠️ Romain :** le bouton pointe vers notre dépôt, qui est **privé** : un visiteur sans accès tombera sur une page 404. À rendre public avant de montrer le site, ou à retirer. Le slogan retenu est celui qui figurait déjà sous les boutons du haut de page ; c'est mon interprétation de la demande, Timéo doit confirmer.
+- **Vérifié dans un navigateur** à 1440 px et 390 px. Site publié toujours à republier depuis `dist/` (Codex).
+
 ### 2026-10-10 22:25 — ia-2 / Timéo (avec Codex) — NOUVELLE ANALYSE DU SITE
 - **Demande :** analyser et proposer des ajouts/changements, sans modification du site.
 - **Fait :** site publié examiné dans Chrome, démo consultée, dernières sources du dépôt comparées. Publié encore à 65 %/1,4 % ; dépôt à 91 %/5,1 %. Recommandations : cible dès le premier écran, protections distinctives, démo avec preuves/quorum/actions, contact pilote, garanties précises et preuves datées.

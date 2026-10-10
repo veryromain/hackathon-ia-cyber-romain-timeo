@@ -180,6 +180,13 @@ h1, h2, h3, p { margin: 0; }
 .card p { font-size: 16px; line-height: 1.5; color: var(--muted); }
 .card .label { margin-bottom: 18px; }
 .card .link { margin-top: 20px; }
+.card-icon { display: grid; place-items: center; width: 46px; height: 46px; margin-bottom: 22px; background: var(--accent-soft); color: var(--accent); -webkit-clip-path: var(--facet); clip-path: var(--facet); }
+.card-icon svg { width: 24px; height: 24px; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+/* Bande du slogan, sous les cartes des équipes */
+.motto { display: flex; flex-wrap: wrap; align-items: center; gap: 22px; margin-top: 44px; padding-top: 34px; border-top: 1px solid var(--line); }
+.motto .brand-mark { width: 36px; height: 40px; }
+.motto-line { flex: 1; min-width: 240px; font: 600 30px/1.15 var(--display); letter-spacing: -.8px; color: var(--ink); }
+.gh { width: 18px; height: 18px; fill: currentColor; }
 .card.flat { background: none; -webkit-backdrop-filter: none; backdrop-filter: none; box-shadow: none; border-color: var(--line); }
 .card.accent { background: linear-gradient(150deg, rgba(199, 250, 112, .2), rgba(199, 250, 112, .04) 60%); border-color: rgba(199, 250, 112, .5); }
 .card.accent .label { color: var(--accent); }
