@@ -12,6 +12,14 @@ Ajouter les entrées les plus récentes en haut.
 
 ---
 
+### 2026-10-10 18:35 — ia-2 / Timéo (avec Codex) — COMPARAISON MULTICHAÎNE
+- **Coordination :** recherche demandée par Timéo, complément à B4 de Romain ; ajout d'une note distincte sans modifier le positionnement ni ses analyses. B4 passe en cours pour la comparaison fonctionnelle seulement.
+- **Fait :** sources officielles vérifiées ; résultats dans shared/comparaison-autres-blockchains.md. Guardian propose déjà signatures multiples et revue, Squads dispose de délais, Forta intervient avant exécution ; ces briques ne sont pas exclusives à Breaker.
+- **Attention :** spécialisation Avalanche, prix accessible et oracle Web sont des pistes de différenciation à valider. T9/R9 ne constituent pas une invention du traçage. Ancien oracle Chainalysis non maintenu depuis mars 2026.
+- **Reste B4 :** prix, parcours produit, comparaison commerciale et validation auprès des clients ; tâche non terminée.
+
+
+
 ### 2026-10-10 18:08 — Romain (avec Claude) — VISION PRODUIT
 - **Décision de Romain : positionnement « uniquement Avalanche (AVAX) ».** ⚠️ **Timéo :** `shared/cible-et-modele-economique.md` (ligne 30) parle encore de « Squads sur Solana » comme canal de distribution, à retirer ou à passer en « hors périmètre ».
 - **Nouvelle phase 4 ter « Produit commercial » (P1-P8 dans `SUIVI.md`), une fois la démo assurée :** site vitrine, espace client avec abonnement, boutons valider / annuler / geler / contester, notifications (connecteur e-mail de l'entreprise, puis Slack / Telegram), bouton « vraie / fausse alerte » et rapport mensuel, mode observation au démarrage, réglages du client. S'inspirer de Safe / Hypernative / Fireblocks. Pendant le hackathon : au plus une maquette pour le pitch.
