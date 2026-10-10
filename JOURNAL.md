@@ -12,6 +12,11 @@ Ajouter les entrées les plus récentes en haut.
 
 ---
 
+### 2026-10-10 22:45 — ia-2 / Timéo (avec Claude) — DÉCISION : LA CLÉ DE CONTRAINTE N'EST PAS DÉCRITE SUR LE SITE
+- **Décision de Timéo :** le site ne doit pas expliquer la signature sous contrainte, parce que l'attaquant le lirait aussi. Il dit seulement que la réponse existe, qu'elle est développée en interne et présentée au client une fois l'accord signé.
+- **Fait dans `ia-2/site-vitrine/dist/index.html` :** la carte « On vous force à signer » devient « Nous avons une parade, et nous ne la publions pas », sans mécanisme ni chiffre Fuji ; la phrase d'introduction de la section ne parle plus de contrainte.
+- **⚠️ Romain, la même question se pose ailleurs, à trancher à deux :** le mécanisme est décrit en entier dans `ia-2/README.md`, `shared/mesures.md`, `shared/proposition-cle-de-contrainte.md` et ce journal, et le contrat est lisible sur Fuji. Tant que le dépôt est privé, seul le jury le voit. Si le dépôt devient public, ou si le bouton « Code disponible sur GitHub » du site reste, la discrétion du site ne sert plus à rien. Pour le pitch : dire la parade au jury, ne pas l'écrire sur la vitrine.
+
 ### 2026-10-10 22:38 — ia-2 / Timéo (avec Claude) — SITE VITRINE : SECTION « VOS CLÉS », SLOGAN DE L'IDENTITÉ
 - **Demande de Timéo :** mettre nos sécurités en avant, avec le slogan « Vous pouvez perdre votre clé, vous ne perdez pas votre identité ». Ma bande de 22h30 (ancien slogan) est remplacée.
 - **Fait dans `ia-2/site-vitrine/dist/` :** nouvelle section `#securites` entre « Votre équipe » et « La protection », lien « Vos clés » dans le menu. Le logo et le slogan en titre, puis quatre cartes « menace → réponse → état de la preuve » :
