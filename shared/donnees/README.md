@@ -4,7 +4,7 @@
 
 > **Version du 10 octobre, 17h55.** Le jeu a été relibellé pour coller à la cible décidée à 17h30 (`shared/cible-et-modele-economique.md`) : la première version décrivait une entreprise classique qui payait loyer, cotisations et TVA en stablecoin. **Seuls les libellés, les adresses et les hash ont changé.** Les paiements, montants, heures, identifiants et étiquettes sont identiques, ce qui a été vérifié ligne à ligne.
 
-Pour tout régénérer à l'identique : `cd ia-2 && npm run dataset` (15 secondes).
+Pour tout régénérer : `cd ia-2 && npm run dataset` (moins d'une minute). Le contenu est reproductible ; les fichiers publiés ont été comparés octet pour octet à chaque extension du générateur.
 
 ## Les fichiers
 
@@ -14,12 +14,14 @@ Pour tout régénérer à l'identique : `cd ia-2 && npm run dataset` (15 seconde
 | `test.events.jsonl` | Jours 60 à 89, trafic normal **et fraudes** : 1 151 événements, 256 paiements | Le moteur de score, pour être évalué |
 | `holdout.events.jsonl` | Jours 90 à 119, trafic normal et **fraudes de formes nouvelles** : 1 155 événements, 261 paiements | Le moteur de score, **pour une mesure finale seulement** |
 | `holdout.labels.jsonl`, `holdout.config-labels.jsonl` | La vérité sur le jeu de généralisation | **L'évaluation uniquement** |
+| `final.events.jsonl` | Jours 120 à 145, **les mêmes formes que le holdout avec d'autres graines** : 1 253 événements, 274 paiements | Le moteur de score, **une seule fois, pour la mesure du pitch** |
+| `final.labels.jsonl`, `final.config-labels.jsonl` | La vérité sur le jeu final | **L'évaluation uniquement** |
 | `carnet.json` | Les 42 adresses que l'organisation payait déjà avant le 1er juin | Le moteur de score |
 | `train.labels.jsonl`, `test.labels.jsonl` | La vérité par paiement : `label`, `scenario`, et `episode` pour les fraudes | **L'évaluation uniquement** |
 | `config-labels.jsonl` | La vérité sur les propositions de configuration (renouvellements de clé, changements de seuil) | L'évaluation uniquement |
 | `resume.json` | Graines, adresses des contrats, réglages du portefeuille, comptages | Tout le monde |
 
-**Mode d'emploi :** faire lire `train.events.jsonl`, `test.events.jsonl` puis `holdout.events.jsonl` à la suite, dans cet ordre. C'est une seule histoire : les numéros `seq` et les identifiants de paiement se suivent d'un fichier à l'autre. Les seuils et le modèle se règlent sur `train`, jamais sur `test`.
+**Mode d'emploi :** faire lire `train.events.jsonl`, `test.events.jsonl`, `holdout.events.jsonl` puis `final.events.jsonl` à la suite, dans cet ordre. C'est une seule histoire : les numéros `seq` et les identifiants de paiement se suivent d'un fichier à l'autre. Les seuils et le modèle se règlent sur `train`, jamais sur `test`.
 
 ## Le trafic normal
 
@@ -92,6 +94,18 @@ Ce que cette mesure apprend :
 - **La mise en confiance fonctionne contre nous** : les deux gros paiements finaux ne sont que freinés, parce que le destinataire a déjà été payé deux fois.
 - Les deux gros premiers paiements légitimes à un nouveau cabinet d'audit sont mis en attente : un faux positif assumé, qui coûte une heure et une signature.
 - Les libellés piégés n'ont pas d'effet sur le score, qui ne lit pas le sens du libellé. Leur effet sur l'explication rédigée par Bedrock reste à mesurer.
+
+## Le jeu final (`final`, ajouté le 10 octobre à 20h25)
+
+**Demandé par Romain** après qu'il a corrigé le moteur d'après la forme des fraudes du holdout : le holdout ayant servi à ces corrections, il ne mesure plus la généralisation. Le jeu final reprend les mêmes formes avec d'autres graines, sur 26 jours de plus (du 29 septembre au 24 octobre) : 274 paiements, dont 40 frauduleux en 15 épisodes.
+
+**Aucune mesure n'en a été faite côté Timéo**, ni avec les règles ni autrement : c'est à Romain de le passer, une seule fois, et de publier le résultat tel quel. Y revenir pour corriger une règle lui ferait perdre sa valeur, comme pour le holdout.
+
+Ce qui le distingue du holdout :
+- D'autres graines pour le trafic normal, pour les fraudes et pour les cas légitimes trompeurs : autres signataires trompés, autres montants, autres heures, autres prestataires visés.
+- Les mêmes jours de la semaine pour chaque épisode (décalage de quatre semaines), à une exception près, ci-dessous.
+- **Une erreur du holdout corrigée ici :** dans le holdout, les deux gros premiers paiements légitimes à un cabinet d'audit (`legit_big_new_supplier`) tombent un samedi, ce que je n'avais pas voulu. Ils y ont donc l'air plus suspects que prévu, et les deux « mises en attente à tort » relevées sur ce cas sont en partie dues à cela. Le holdout n'a pas été modifié ; dans le jeu final, ces deux paiements sont un lundi et un vendredi.
+- La période s'arrête au 24 octobre, veille du passage à l'heure d'hiver, pour que les heures restent en UTC+2 comme dans les autres jeux.
 
 ## Ce qu'il faut savoir avant de s'en servir
 

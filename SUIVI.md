@@ -4,7 +4,7 @@
 > Légende : ✅ fait · 🔄 en cours · ⬜ à faire · ✂️ coupé (manque de temps)
 > Détail du projet : [`PLAN.md`](PLAN.md) · Historique : [`JOURNAL.md`](JOURNAL.md) · Brief : [`CONTEXTE.md`](CONTEXTE.md)
 
-**Dernière mise à jour :** 2026-10-10 20:23, par Codex (Timéo) — première maquette P2
+**Dernière mise à jour :** 2026-10-10 20:26, par Claude (Timéo) — jeu final livré (shared/donnees/final.*), non mesuré côté Timéo ; probation des clés en attente de l'accord de Timéo
 **Rendu (gel définitif) :** dim. 11/10 **12:00** · **Checkpoint :** sam. **18:30** · **Pitch :** dim. 13:00
 
 ---
