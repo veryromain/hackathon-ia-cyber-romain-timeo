@@ -42,7 +42,14 @@ POIDS = {
     "TAINTED_FUNDS": 0.50,           # R9 : a reçu une part significative des fonds d'une adresse signalée
     "LOOKALIKE_ADDRESS": 0.90,       # adresse sosie : mêmes premiers et derniers caractères qu'un fournisseur connu → hold
     "HONEYPOT_ADDRESS": 0.99,        # adresse piège du carnet : seul un attaquant qui lit le carnet peut la payer
+    # Historique on-chain du destinataire (11/10, Timéo). Non mesurés : les adresses de nos jeux de données n'ont pas
+    # de passé sur la chaîne. Choisis pour qu'aucun ne mette en attente à lui seul, même ajouté à NEW_RECIPIENT.
+    "FRESH_ADDRESS": 0.30,           # adresse vierge, ou active depuis moins de 7 jours
+    "FRESH_ADDRESS_FAIBLE": 0.15,    # n'a jamais rien signé, ancienneté inconnue (un coffre qui ne fait que recevoir aussi)
+    "NEW_CONTRACT": 0.30,            # contrat déployé il y a moins de 7 jours
+    "NEW_CONTRACT_NON_VERIFIE": 0.45,  # ... et code source non publié
 }
+FENETRE_ADRESSE_NEUVE_S = 7 * 86400
 SOSIE_PREFIXE, SOSIE_SUFFIXE = 4, 4   # caractères comparés après « 0x » et en fin d'adresse (ce que l'œil vérifie)
 RATIO_EXTREME = 10.0
 FENETRE_RECENT_30J_S = 30 * 86400
@@ -252,6 +259,33 @@ def r_adresse_piege(p, etat):
                       [p["tx_hash"]], POIDS["HONEYPOT_ADDRESS"])
 
 
+def r_adresse_sans_passe(p, etat):
+    """Le destinataire est inconnu du client ET de la chaîne : adresse vierge, toute récente, ou contrat déployé cette semaine.
+    L'historique est lu par le moteur (score/historique_chaine.py) ; sans lui, la règle ne dit rien."""
+    h = p.get("historique")
+    if h is None or p["to"] in etat.destinataires_connus or p["to"] in etat.services_connus:
+        return None
+    # Âge à la date du paiement ; une première activité postérieure au paiement vaut « rien avant ».
+    age = p["timestamp"] - h.premiere_activite if h.premiere_activite is not None else None
+    jeune = age is not None and age <= FENETRE_ADRESSE_NEUVE_S
+    jours = max(age, 0) // 86400 if age is not None else None
+    if h.est_contrat:
+        if not jeune:
+            return None
+        if h.code_verifie is False:
+            return Raison("NEW_CONTRACT", f"le destinataire est un contrat déployé il y a {jours} j, au code source non publié",
+                          [p["tx_hash"]], POIDS["NEW_CONTRACT_NON_VERIFIE"])
+        return Raison("NEW_CONTRACT", f"le destinataire est un contrat déployé il y a {jours} j", [p["tx_hash"]], POIDS["NEW_CONTRACT"])
+    if h.jamais_vue or (age is not None and age < 0):
+        return Raison("FRESH_ADDRESS", "adresse vierge : aucune transaction sur la chaîne avant ce paiement", [p["tx_hash"]], POIDS["FRESH_ADDRESS"])
+    if jeune:
+        return Raison("FRESH_ADDRESS", f"adresse active sur la chaîne depuis {jours} j seulement ({h.transactions_emises} transaction(s) émise(s))",
+                      [p["tx_hash"]], POIDS["FRESH_ADDRESS"])
+    if h.transactions_emises == 0 and age is None:
+        return Raison("FRESH_ADDRESS", "adresse qui n'a jamais rien signé sur la chaîne (ancienneté inconnue)", [p["tx_hash"]],
+                      POIDS["FRESH_ADDRESS_FAIBLE"])
+
+
 def r_fonds_teintes(p, etat):
     """R9 : le destinataire a reçu une part significative des fonds d'une adresse signalée (1 intermédiaire, 7 jours)."""
     t = etat.teintees.get(p["to"])
@@ -307,6 +341,6 @@ def r_seuil_abaisse(p, etat):
         return Raison("THRESHOLD_LOWERED", f"seuil de signatures abaissé de {b[2]} à {b[3]}", [b[1]], POIDS["THRESHOLD_LOWERED"])
 
 
-REGLES = [r_adresse_piege, r_adresse_signalee, r_adresse_sosie, r_fonds_teintes, r_nouveau_destinataire, r_destinataire_recent, r_montant_hors_norme,
+REGLES = [r_adresse_piege, r_adresse_signalee, r_adresse_sosie, r_fonds_teintes, r_nouveau_destinataire, r_adresse_sans_passe, r_destinataire_recent, r_montant_hors_norme,
           r_cumul_du_jour, r_rafale, r_libelle_urgent, r_schema_fraude, r_repetition_rapide, r_hors_heures,
           r_changement_recent, r_seuil_abaisse]

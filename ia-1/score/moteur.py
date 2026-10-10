@@ -18,8 +18,9 @@ from .regles import REGLES, EtatPortefeuille, Raison
 
 
 class Moteur:
-    def __init__(self, carnet=None, modele=None, expliquer=False, services=None, notifier=None, pieges=None):
+    def __init__(self, carnet=None, modele=None, expliquer=False, services=None, notifier=None, pieges=None, historique=None):
         self.etat = EtatPortefeuille()
+        self.historique = historique  # fonction(adresse) -> Historique on-chain ou None ; facultatif (score/historique_chaine.py)
         self.modele = modele  # modèle d'anomalie (R2), facultatif
         self.expliquer = expliquer  # R3 : explication rédigée par Bedrock, avec repli sur le texte à trous
         self.niveaux = {}  # payment_id -> dernier niveau émis (un niveau ne peut que monter)
@@ -67,6 +68,9 @@ class Moteur:
             p = {**d, "to": d["to"].lower(), "proposer": d.get("proposer", ev.get("tx_from", "")).lower(),
                  "amount": int(d["amount"]),
                  "timestamp": ev["timestamp"], "tx_hash": ev["tx_hash"]}
+            # Destinataire jamais payé : on demande à la chaîne ce qu'elle en sait. Un appel réseau, seulement dans ce cas.
+            if self.historique and p["to"] not in e.destinataires_connus and p["to"] not in e.services_connus:
+                p["historique"] = self.historique(p["to"])
             alerte = self.noter(p)
             e.propositions[p["payment_id"]] = p
             # Les règles ne regardent que les 3 derniers jours : on oublie le reste (mémoire et vitesse constantes).
@@ -215,6 +219,7 @@ def main(argv=None):
     a.add_argument("--client", type=Path, help="réglages du client (config/client.json) : heures et jours ouvrés")
     a.add_argument("--notifier", action="store_true", help="P5 : notification à chaque mise en attente (macOS, e-mail, Telegram selon .env)")
     a.add_argument("--listes-publiques", type=Path, help="listes publiques (OFAC, ScamSniffer) lues hors chaîne : shared/listes-publiques.jsonl")
+    a.add_argument("--historique", help="historique on-chain des destinataires inconnus : fuji, avalanche, ou l'URL d'un nœud")
     args = a.parse_args(argv)
 
     carnet_brut = json.loads(args.carnet.read_text()) if args.carnet else []
@@ -235,7 +240,11 @@ def main(argv=None):
         load_dotenv(Path(__file__).resolve().parents[2] / ".env")
         journal = args.out.with_name("notifications.jsonl")
         notif = lambda a, p: _n(a, p, journal)
-    moteur = Moteur(carnet, modele, args.expliquer, services, notif, pieges)
+    historique = None
+    if args.historique:
+        from .historique_chaine import lecteur_pour
+        historique = lecteur_pour(args.historique)
+    moteur = Moteur(carnet, modele, args.expliquer, services, notif, pieges, historique)
     if args.listes_publiques:
         n = moteur.charger_listes_publiques(args.listes_publiques)
         print(f"{n} adresses de listes publiques chargées (hors chaîne)", file=sys.stderr)

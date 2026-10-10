@@ -12,6 +12,25 @@ Ajouter les entrées les plus récentes en haut.
 
 ---
 
+### 2026-10-11 01:13 — ia-2 / Timéo (avec Claude) — NOUVEAU SIGNAL : HISTORIQUE ON-CHAIN DU DESTINATAIRE (MOTEUR MODIFIÉ, ÉTEINT PAR DÉFAUT)
+- **⚠️ Romain : j'ai modifié ton moteur, `ia-1/score/regles.py` et `ia-1/score/moteur.py`** (décision de Timéo, 01:00). Ajout seulement, éteint par défaut. Relis les poids quand tu peux.
+- **Nouveau signal : l'historique on-chain du destinataire.** `NEW_RECIPIENT` dit « nous ne l'avons jamais payée » ; le nouveau signal dit « la chaîne non plus ne la connaît pas ». Pour un destinataire inconnu, le moteur interroge le nœud (transactions émises, contrat ou non) et l'explorateur Routescan (date de première activité, code publié ou non). Deux sources publiques, sans clé.
+  - `FRESH_ADDRESS` (0,30) : adresse vierge, ou active depuis moins de 7 jours. 0,15 si elle n'a jamais rien signé et que l'explorateur ne répond pas.
+  - `NEW_CONTRACT` (0,30, ou 0,45 si le code source n'est pas publié) : contrat déployé il y a moins de 7 jours. Un vieux contrat non vérifié ne déclenche rien (c'est le cas du coffre multi-signataires d'un fournisseur).
+- **Fichiers :** nouveau `ia-1/score/historique_chaine.py` (utilisable seul : `python -m score.historique_chaine 0x… --reseau fuji|avalanche`), règle `r_adresse_sans_passe` dans `regles.py`, option `--historique fuji|avalanche|<URL>` dans `moteur.py`, 9 tests dans `tests/test_historique_chaine.py`, une ligne dans `ia-1/README.md`.
+- **Vérifié :**
+  - **Sans l'option, rien ne change :** alertes identiques à la version d'avant sur `test` (199), `holdout` (196) et `final` (205), comparées ligne à ligne. Les chiffres de `shared/mesures.md` restent valables.
+  - **Sur le vrai réseau :** USDC sur Avalanche est vu comme un contrat de novembre 2021 au code vérifié ; notre portefeuille Fuji comme un contrat non vérifié déployé hier ; l'adresse sanctionnée est vierge sur Fuji et active depuis mars 2022 sur Avalanche.
+  - **Sur les événements Fuji de cette nuit** (`shared/events.jsonl`, 5 paiements) : `FRESH_ADDRESS` apparaît sur les 5, en 5 s au total, environ 1 s par adresse nouvelle.
+  - 67 tests passent. Les 2 échecs sont ceux du modèle d'anomalie, bloqué par Windows sur le PC de Timéo comme avant.
+- **Limites, à dire telles quelles :**
+  1. **Aucun chiffre mesuré.** Les adresses de nos jeux de données sont synthétiques, sans passé sur la chaîne : les poids sont posés à la main. Ils sont choisis pour qu'aucun ne mette en attente à lui seul, même ajouté à `NEW_RECIPIENT` (test dédié).
+  2. **Sur Fuji, tous nos destinataires de démo sont des adresses vierges**, y compris les fournisseurs honnêtes du scénario. Le signal s'y déclenche donc partout. Il ne distingue quelque chose que sur un réseau réel.
+  3. Les 5 paiements de cette nuit étaient déjà en attente sans lui : il n'a changé aucun niveau.
+  4. L'explorateur ne voit que les transactions natives : une adresse qui n'a reçu que des jetons paraît vierge. Le nombre de transactions émises est celui d'aujourd'hui, pas celui du jour du paiement.
+  5. Le relais écrit le code de la raison sur la chaîne : `FRESH_ADDRESS` et `NEW_CONTRACT` y apparaîtront si tu actives l'option en direct. Le tableau de bord les affichera sans libellé particulier, je n'y ai pas touché.
+- **Piste non codée :** le même historique pourrait servir dans l'autre sens, à ne pas retenir un gros premier paiement vers une adresse ancienne et active. C'est exactement la classe de nos 5,1 % de paiements légitimes retenus. À ne tenter qu'avec des données pour le mesurer.
+
 ### 2026-10-11 00:52 — Codex — RECOMMANDATIONS D'ÉVOLUTION APRÈS B4/P1
 - **Demande utilisateur :** avis sur l'évolution avec signataire automatique/agents développés par Timéo, blocage ou friction, cible, signaux supplémentaires, explications, sortie, audit, validation réelle et parcours commercial. Prix laissé ouvert ; Avalanche prioritaire, multichaîne secondaire.
 - **Fait :** note séparée shared/benchmark-6ter/evolution-breaker.md ; aucune modification des fichiers business, de l'oracle ou du contrat. Les recommandations sont à arbitrer, pas des décisions de l'équipe.
