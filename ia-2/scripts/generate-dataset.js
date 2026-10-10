@@ -1,5 +1,6 @@
 // Génère les jeux de données synthétiques (tâches T4 et T5) : 90 jours de vie de la trésorerie
-// de l'entreprise fictive NovaTreasury, joués sur la chaîne locale de Hardhat avec les vrais contrats.
+// de NovaTreasury, l'équipe fictive d'un protocole (une vingtaine de personnes), joués sur la chaîne
+// locale de Hardhat avec les vrais contrats. C'est le profil de client visé : voir shared/cible-et-modele-economique.md.
 //   - jours 0 à 59  : trafic normal seul            -> shared/donnees/train.*
 //   - jours 60 à 89 : trafic normal et fraudes      -> shared/donnees/test.*
 // Les graines du trafic de test et des fraudes sont différentes de celle de l'entraînement.
@@ -59,21 +60,21 @@ const isBusinessDay = (day) => weekday(day) < 5;
 const at = (day, hour) => T0 + day * DAY + Math.round(hour * 3600);
 const monthOf = (day) => (day < 30 ? 0 : day < 61 ? 1 : 2);
 
-// --- L'entreprise : fournisseurs récurrents connus avant le début de la période ---
+// --- L'organisation : prestataires récurrents connus avant le début de la période ---
 
 function buildCompany(rng) {
   const fixed = [
-    { name: "Prestataire de paie", memo: (m) => `Salaires ${m} 2026`, mean: 48000, sigma: 0.03 },
-    { name: "URSSAF", memo: (m) => `Cotisations sociales ${m} 2026`, mean: 21000, sigma: 0.04 },
-    { name: "Bailleur", memo: (m) => `Loyer bureaux ${m} 2026`, mean: 9800, sigma: 0 },
-    { name: "Trésor public", memo: () => "Acompte TVA T2 2026", mean: 62000, sigma: 0 },
+    { name: "Prestataire de paie des contributeurs", memo: (m) => `Rémunération des contributeurs ${m} 2026`, mean: 48000, sigma: 0.03 },
+    { name: "Programme de subventions", memo: (m) => `Subventions aux projets de l'écosystème, tranche ${m} 2026`, mean: 21000, sigma: 0.04 },
+    { name: "Fournisseur de nœuds RPC", memo: (m) => `Infrastructure RPC, forfait ${m} 2026`, mean: 9800, sigma: 0 },
+    { name: "Cabinet d'audit de sécurité", memo: () => "Solde audit de sécurité du protocole, T2 2026", mean: 62000, sigma: 0 },
   ];
   const kinds = [
     ["Hébergement cloud", 2800, 4200, 1, 1], ["Licences logicielles", 300, 1500, 1, 3], ["Cabinet comptable", 1800, 3000, 1, 1],
-    ["Cabinet d'avocats", 3000, 9000, 0.5, 1], ["Assurance", 900, 1600, 1, 1], ["Agence marketing", 2500, 6000, 1, 3],
-    ["Développeur indépendant", 1800, 4200, 3, 6], ["Designer indépendant", 1200, 2600, 2, 4], ["Matériel informatique", 1500, 7000, 0.5, 2],
-    ["Télécom", 250, 600, 1, 1], ["Agence de voyages", 400, 1800, 2, 5], ["Traiteur", 200, 900, 1, 3],
-    ["Nettoyage des locaux", 600, 1100, 1, 2], ["Conseil sécurité", 2500, 7000, 0.5, 1], ["Traduction", 300, 1200, 1, 2],
+    ["Cabinet d'avocats", 3000, 9000, 0.5, 1], ["Oracle de prix", 900, 1600, 1, 1], ["Agence marketing", 2500, 6000, 1, 3],
+    ["Contributeur développement", 1800, 4200, 3, 6], ["Contributeur design", 1200, 2600, 2, 4], ["Prime de bug", 1500, 7000, 0.5, 2],
+    ["Indexation de données", 250, 600, 1, 1], ["Événements communautaires", 400, 1800, 2, 5], ["Modération de la communauté", 200, 900, 1, 3],
+    ["Outil d'analyse on-chain", 600, 1100, 1, 2], ["Conseil sécurité", 2500, 7000, 0.5, 1], ["Traduction de la documentation", 300, 1200, 1, 2],
   ];
   const recurring = [];
   for (let i = 0; i < 38; i++) {
@@ -258,15 +259,15 @@ async function main() {
   }
 
   // 1. Trafic normal, jour par jour
-  const [payroll, urssaf, landlord, tax] = company.fixed;
+  const [payroll, grants, rpc, audit] = company.fixed;
   const recurring = [...company.recurring];
   const firstBusinessDayFrom = (day) => { while (!isBusinessDay(day)) day += 1; return day; };
   const fixedDays = new Map();
   const addFixed = (day, supplier) => fixedDays.set(day, [...(fixedDays.get(day) || []), supplier]);
   for (const day of [25, 55, 86]) addFixed(firstBusinessDayFrom(day), payroll); // vers le 26 du mois
-  for (const day of [4, 34, 65]) addFixed(firstBusinessDayFrom(day), urssaf); // vers le 5
-  for (const day of [0, 30, 61]) addFixed(firstBusinessDayFrom(day), landlord); // le 1er
-  addFixed(49, tax); // 20 juillet
+  for (const day of [4, 34, 65]) addFixed(firstBusinessDayFrom(day), grants); // vers le 5
+  for (const day of [0, 30, 61]) addFixed(firstBusinessDayFrom(day), rpc); // le 1er
+  addFixed(49, audit); // 20 juillet
 
   let newSupplierCount = 0;
   for (let day = 0; day < TOTAL_DAYS; day++) {
@@ -277,7 +278,7 @@ async function main() {
       if (supplier.since > day) continue;
       if (rng.chance((supplier.perMonth * 2.2) / 21)) normalPayment(day, supplier, rng);
     }
-    // Un à deux nouveaux fournisseurs légitimes par semaine ; un sur deux devient récurrent.
+    // Un à deux nouveaux prestataires légitimes par semaine ; un sur deux devient récurrent.
     if (rng.chance(0.3)) {
       const name = `Nouveau prestataire ${++newSupplierCount}`;
       const supplier = {
@@ -310,7 +311,7 @@ async function main() {
     }
   }
 
-  // 3. Signalements de l'oracle sans rapport avec l'entreprise (bruit de fond du registre)
+  // 3. Signalements de l'oracle sans rapport avec l'organisation (bruit de fond du registre)
   const noise = makeRng(SEEDS.company + 99);
   const categories = ["scam_report", "phishing", "sanctions", "ransomware"];
   for (let i = 0; i < 18; i++) {
@@ -323,9 +324,9 @@ async function main() {
   const urgentMemos = [
     "URGENT - virement confidentiel, acquisition en cours", "Très urgent : à traiter avant ce soir, ne pas ébruiter",
     "Opération confidentielle validée par la direction", "Règlement immédiat - dossier sensible, merci de ne pas en parler",
-    "Urgent : nouveau RIB du fournisseur, ancien compte clôturé",
+    "Urgent : nouveau portefeuille du prestataire, l'ancienne adresse n'est plus valable",
   ];
-  const plainMemos = ["Acompte fournisseur", "Facture prestation conseil", "Règlement facture en attente", "Solde contrat de service"];
+  const plainMemos = ["Acompte prestataire", "Facture prestation conseil", "Règlement facture en attente", "Solde contrat de service"];
   const fraudApprove = (lo, hi) => (rng) => rng.int(lo, hi);
   const fraudExecute = (rng) => rng.int(5, 30);
   let episodeCount = 0;
