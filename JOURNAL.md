@@ -12,6 +12,13 @@ Ajouter les entrées les plus récentes en haut.
 
 ---
 
+### 2026-10-10 14:10 — Romain (avec Claude)
+- **Fait :** `PLAN.md` (projet « Breaker », étapes jusqu'au rendu, répartition, limites et risques, idées bonus) et `shared/pitch-mentor.md` (pitch oral de 1 min 30 + questions pour le mentor Team1).
+- **Proposition :** partir sur l'idée de Timéo (disjoncteur DeFi, axe 4 du track 1) et y intégrer l'idée de Romain comme vecteur d'attaque (agent IA de trésorerie piégé).
+- **Répartition proposée :** Timéo → contrat Vault, déploiement Fuji, trafic et attaques (`ia-2/`). Romain → moniteur, score de risque, module DORA, dashboard (`ia-1/`).
+- **Bloquant :** validation à deux + avis du mentor ; accès AWS Bedrock.
+- **Prochaine étape :** présenter le pitch au mentor Team1, décider avant 15:30.
+
 ### 2026-10-10 13:51 — ia-2 / Timéo (avec Claude)
 - **Fait :** Timéo est raccordé à ce repo (clone, hook Stop, boucle de synchro toutes les 5 min). Jusqu'ici son travail partait par erreur sur `veryromain/hackathon-ia-cyber`, un autre repo. Compte-rendu complet dans `conversations/2026-10-10_timeo_choix-axe-et-setup.md`. AWS CLI et Python 3.12 installés chez Timéo.
 - **Décision de Timéo :** track 1 ; modèles par AWS Bedrock (crédits du hackathon).

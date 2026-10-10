@@ -29,3 +29,17 @@ Un projet compatible avec les deux tracks : la **supervision d'agents IA qui man
 ## Prochaines étapes
 - Valider l'idée avec Timéo.
 - Créer le squelette de code des deux IA et un `PLAN.md` jusqu'au rendu de dim. 12:00.
+
+---
+
+## Mise à jour 14:10 — Plan d'action et pitch mentor
+- Timéo a rejoint le bon repo (13:51). Son idée : un disjoncteur DeFi (axe 4 du track 1). Voir son compte-rendu.
+- Création de `PLAN.md` :
+  - le scénario de démo et l'architecture ;
+  - la stack : Solidity/Hardhat, Fuji, Python, Bedrock, Streamlit ;
+  - la répartition du travail et le planning heure par heure jusqu'à dim. 12:00 ;
+  - les limites (attaques en une seule transaction, données synthétiques, DORA non applicable à la DeFi pure, centralisation de la pause, accès Bedrock) ;
+  - les idées bonus.
+- Création de `shared/pitch-mentor.md` : pitch oral pour le mentor Team1, questions à lui poser et réponses aux objections.
+- **Proposition clé :** fusionner les deux idées. Le disjoncteur DeFi de Timéo arrête un agent IA de trésorerie piégé, qui reprend l'idée de Romain.
+- **À décider :** valider avec Timéo et le mentor avant 15:30.
