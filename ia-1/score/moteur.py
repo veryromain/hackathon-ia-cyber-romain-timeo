@@ -24,6 +24,7 @@ class Moteur:
         self.expliquer = expliquer  # R3 : explication rédigée par Bedrock, avec repli sur le texte à trous
         self.niveaux = {}  # payment_id -> dernier niveau émis (un niveau ne peut que monter)
         self.notifier = notifier  # P5 : fonction(alerte, paiement) appelée à chaque mise en attente
+        self.alertes_privees = []  # signatures sous contrainte : jamais dans alerts.jsonl
         self.etat.sorties_signalees, self.etat.recus_de_signalee = {}, {}
         for a in services or []:
             self.etat.services_connus.add(a.lower())
@@ -32,6 +33,19 @@ class Moteur:
         # Carnet d'adresses du client (fournisseurs et comptes déjà connus) : évite le démarrage à froid.
         for adresse in carnet or []:
             self.etat.destinataires_connus.add(adresse.lower())
+
+    def contrainte(self, ev: dict, signataire: str):
+        """Signature par une clé d'identité : prévenir les AUTRES signataires, hors chaîne, sans rien afficher à la victime."""
+        pid = ev.get("data", {}).get("payment_id")
+        alerte = {"payment_id": pid, "level": "hold", "score": 1.0, "created_at": int(time.time()), "prive": True,
+                  "reasons": [{"code": "DURESS_SIGNATURE", "detail": f"transaction signée par la clé d'identité de {signataire[:6]}…{signataire[-4:]} : signataire sous contrainte ou clé compromise", "evidence": [ev.get("tx_hash")]}],
+                  "explanation": "ALERTE PRIVÉE : un signataire a utilisé sa clé d'identité. Ne le contactez pas par ses canaux habituels. Gelez le portefeuille et joignez-le par un canal sûr."}
+        self.alertes_privees.append(alerte)
+        if self.notifier:
+            try:
+                self.notifier(alerte, {"amount": ev.get("data", {}).get("amount", "0"), "to": ev.get("data", {}).get("to", "0x" + "0" * 40), "memo": "(contrainte)"})
+            except Exception as err:
+                print(f"notification impossible : {err!r}", file=sys.stderr)
 
     def charger_listes_publiques(self, chemin: Path) -> int:
         """OFAC / ScamSniffer : signalées hors chaîne, comme si l'oracle les avait inscrites (la preuve cite la source)."""
@@ -60,6 +74,14 @@ class Moteur:
             for vieux in [k for k, q in e.propositions.items() if q["timestamp"] < limite]:
                 del e.propositions[vieux]
             return alerte
+        # Clé d'identité / de contrainte : si la transaction n'est pas signée par le signataire nommé, c'est sa seconde clé
+        # (le contrat refuse toute autre adresse). Alerte PRIVÉE : jamais écrite dans alerts.jsonl, sinon le relais l'inscrirait
+        # sur la chaîne et l'attaquant, à côté de sa victime, la verrait.
+        if t in ("payment_proposed", "payment_approved", "config_approved"):
+            nomme = (d.get("proposer") if t == "payment_proposed" else d.get("owner")) or ""
+            signe = ev.get("tx_from") or ""
+            if nomme and signe and nomme.lower() != signe.lower():
+                self.contrainte(ev, nomme)
         if t == "payment_approved":
             # Une clé de moins de 7 jours apporte sa signature à un paiement encore en cours : on re-note, le niveau ne peut que monter.
             nouveau = e.nouveaux_signataires.get((d.get("owner") or "").lower())
@@ -224,6 +246,9 @@ def main(argv=None):
             except (KeyError, TypeError, ValueError) as err:  # un événement incomplet ne doit jamais arrêter le moteur
                 print(f"événement ignoré (seq {ev.get('seq')}) : {err!r}", file=sys.stderr)
                 continue
+            while moteur.alertes_privees:  # alertes privées : fichier à part, jamais lu par le relais
+                with open(args.out.with_name("alertes-privees.jsonl"), "a", encoding="utf-8") as fp:
+                    fp.write(json.dumps(moteur.alertes_privees.pop(0), ensure_ascii=False) + "\n")
             if alerte:
                 sortie.write(json.dumps(alerte, ensure_ascii=False) + "\n")
                 sortie.flush()

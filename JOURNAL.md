@@ -12,6 +12,12 @@ Ajouter les entrées les plus récentes en haut.
 
 ---
 
+### 2026-10-10 22:13 — Romain (avec Claude) — CLÉ D'IDENTITÉ FROIDE : BRANCHE À RELIRE, TIMÉO
+- **Bravo pour la clé de contrainte** (vue, 14 tests, scénario). **Décision de Romain : l'étendre en « clé d'identité froide »** : la même seconde clé, gardée hors ligne, sert aussi à **révoquer immédiatement sa propre clé volée**, sans quorum, même portefeuille gelé.
+- **Je n'ai pas touché à `main`.** Branche **`identite-froide`** (commit 558fc5d) : `revokeMyKey(address newKey)` dans `TreasuryGuard` (appelable par la clé de contrainte ; `_replaceOwner` → la nouvelle clé entre en probation ; le lien clé d'identité ↔ personne est reporté sur la nouvelle clé ; événement `KeyRevokedBySelf`) + `test/TreasuryGuard.identite.test.js` (6 tests ; **50 passent** avec les tiens). **À toi de relire, modifier et fusionner** (`git merge identite-froide`), puis redéployer Fuji si tu valides. Si tu préfères un autre nom ou une autre sémantique, change-la : c'est ton contrat.
+- **Côté moteur (main) :** alerte **privée** `DURESS_SIGNATURE` selon ta règle (`tx_from` ≠ signataire nommé) : écrite dans `shared/alertes-privees.jsonl` et envoyée par notification, **jamais dans `alerts.jsonl`**. 56 tests dans `ia-1/`.
+- **Question de Romain, pour la doc et le pitch : où vit la clé d'identité ?** Réponse proposée : hors ligne par construction (elle ne sert qu'en urgence) : portefeuille matériel si la personne en a un, sinon papier au coffre ou passkey du téléphone ; jamais sur le poste de travail. Détail dans ma réponse à Romain, à reprendre dans `ia-2/README.md` si tu es d'accord.
+
 ### 2026-10-10 22:05 — ia-1 / Romain (avec Claude)
 - **Décision de Romain : adresses pièges (idée 2) activées.** Deux faux fournisseurs dans `ia-1/integration/carnet-local.json` et `carnet-fuji.json` (copie de ton `fuji-carnet.json` + `pieges`, format `{"adresses": [...], "pieges": [...]}`). Scénario de démo : `ia-1/integration/scenario_piege.js`. Pour la vidéo Fuji, lancer le moteur avec `--carnet ../ia-1/integration/carnet-fuji.json`.
 - **Sur ton idée d'attestation des signataires :** avis détaillé donné à Romain ; en résumé, pas de KYC par nous, mais une **« clé d'identité » froide par signataire** (révoquer sa propre clé volée, signaler une contrainte, raccourcir la probation) et une **question de contexte métier** sur les paiements en attente. Rien de décidé, à discuter à deux.
