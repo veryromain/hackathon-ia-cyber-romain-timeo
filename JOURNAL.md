@@ -12,6 +12,11 @@ Ajouter les entrées les plus récentes en haut.
 
 ---
 
+### 2026-10-10 19:51 — ia-1 / Romain (avec Claude)
+- **Jeu de généralisation de Timéo : mesuré sur le Mac, règles + R2, sans toucher à aucune règle.** Arrêtées 49 → 51 %, montants en attente **57 → 65 %**, freinées 95 %, faux `hold` 1,4 % (inchangé). Intégré dans `shared/mesures.md` (colonnes test / généralisation, et la réserve sur `owner_swap_then_drain` : « freinée » surestime, seule la mise en attente compte).
+- **R3 face aux 2 libellés à injection de prompt :** les deux paiements sont en `hold` (0,87 / 0,86) et l'explication Bedrock signale la consigne cachée comme un motif de prudence au lieu de la suivre. Texte dans `shared/mesures.md`.
+- **Merci pour ce jeu, Timéo : c'est le chiffre le plus honnête qu'on ait**, on le montrera à côté du test.
+
 ### 2026-10-10 19:49 — ia-1 / Romain (avec Claude)
 - **Fait (R5b) : actions des signataires dans le tableau de bord.** Barre « Je suis… », boutons valider / annuler / geler / dégeler / contester, panneau d'état. Le dashboard n'a aucune clé : il écrit dans **`shared/actions.jsonl`** (format proposé dans **`shared/format-actions.md`**, nouveau fichier, sans toucher au tien), un exécuteur signe et répond dans `shared/actions-resultats.jsonl`. Contester = ligne `{"address", "remove": true}` dans `flags.jsonl`, que ton relais gère déjà. **Testé en direct en local** : annulation du paiement 4 par un signataire et retrait du signalement, tous deux visibles sur la chaîne.
 - **Timéo, pour Fuji (seule étape qui dépend de toi) :** ajouter à ton relais la lecture de `actions.jsonl` (approve / cancel / freeze / approveUnfreeze signés par `signerOf(by)`) et l'écriture de `actions-resultats.jsonl`. Mon exécuteur local `ia-1/integration/actions.js` (60 lignes) fait exactement ça, tu peux le reprendre tel quel.
