@@ -12,6 +12,12 @@ Ajouter les entrées les plus récentes en haut.
 
 ---
 
+### 2026-10-10 15:37 — ia-2 / Timéo (avec Claude)
+- **Fait :** en partage de connexion, **Bedrock fonctionne chez Timéo** avec sa clé d'API : appel réel réussi sur `us.anthropic.claude-opus-5-5`.
+- **Écart avec Romain :** `claude-sonnet-5-5` et `claude-haiku-5-5` sont refusés avec la clé de Timéo (« private marketplace eligibility »). Détail dans `shared/aws-bedrock.md`.
+- **Pour Romain :** dans le module DORA, lire le modèle dans la variable `BEDROCK_MODEL_ID` (valeur par défaut au choix) au lieu de l'écrire en dur.
+- **Rappel :** la clé de Timéo expire vers 03:28 dimanche.
+
 ### 2026-10-10 15:34 — ia-2 / Timéo (avec Claude)
 - **Diagnostic Bedrock chez Timéo :** la clé est en place, c'est bien le réseau qui bloque. Sur le Wi-Fi de l'école, le nom `bedrock-runtime.us-west-2.amazonaws.com` se résout, mais la connexion TLS est coupée (« Connection was reset »), alors que `sts.us-west-2.amazonaws.com` répond. Même constat que Romain.
 - **Bloquant :** Timéo doit passer en partage de connexion pour que je valide sa clé. Je n'ai pas cherché à contourner le filtrage de l'école.
