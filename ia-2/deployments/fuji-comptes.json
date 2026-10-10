@@ -1,0 +1,57 @@
+{
+  "network": "fuji",
+  "chain_id": 43113,
+  "note": "Adresses publiques de comptes de test. Aucune clé ici.",
+  "accounts": [
+    {
+      "index": 0,
+      "role": "déployeur",
+      "address": "0x4EcC7e01cdB900b0FD16f91dFC289CdBBe768564"
+    },
+    {
+      "index": 1,
+      "role": "signataire 1",
+      "address": "0x59539eF0968B7981d881Bd241103Fc3a7baDcF5a"
+    },
+    {
+      "index": 2,
+      "role": "signataire 2",
+      "address": "0xC129ca0D19F97CED30C1e07c5f65a5415B5c857E"
+    },
+    {
+      "index": 3,
+      "role": "signataire 3",
+      "address": "0xE0B5a7A05dd63A4b1d2Cedfc7dB92ac344Fccdb6"
+    },
+    {
+      "index": 4,
+      "role": "signataire 4",
+      "address": "0x0e4BC17A92c880bBA4E1eb86EC85e42D5e7bE86A"
+    },
+    {
+      "index": 5,
+      "role": "signataire 5",
+      "address": "0x303311225DA6775bf76e1585e93a7eD01998639d"
+    },
+    {
+      "index": 6,
+      "role": "moniteur",
+      "address": "0xF7e450CED36969c27F483D02ea103f4457cf7411"
+    },
+    {
+      "index": 7,
+      "role": "oracle",
+      "address": "0x9a78F68e14B65c898069bBb7B8e2E73CcBb62f5d"
+    },
+    {
+      "index": 8,
+      "role": "prestataire habituel",
+      "address": "0x3f7955b8895f5140b072276d92A2c8D05fA19438"
+    },
+    {
+      "index": 9,
+      "role": "prestataire habituel 2",
+      "address": "0x800764A3dd203476193c6A065183814be5e1A508"
+    }
+  ]
+}

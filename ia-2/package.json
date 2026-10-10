@@ -12,7 +12,12 @@
     "dataset": "node scripts/generate-dataset.js",
     "deploy:local": "hardhat run scripts/deploy.js --network localhost",
     "relay:local": "hardhat run scripts/relay.js --network localhost",
-    "scenario:local": "hardhat run scripts/demo-scenario.js --network localhost"
+    "scenario:local": "hardhat run scripts/demo-scenario.js --network localhost",
+    "fuji:setup": "node scripts/fuji-setup.js",
+    "fuji:fund": "hardhat run scripts/fund-accounts.js --network fuji",
+    "deploy:fuji": "hardhat run scripts/deploy.js --network fuji",
+    "relay:fuji": "hardhat run scripts/relay.js --network fuji",
+    "scenario:fuji": "hardhat run scripts/demo-scenario.js --network fuji"
   },
   "devDependencies": {
     "@nomicfoundation/hardhat-toolbox": "^5.0.0",

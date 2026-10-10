@@ -3,6 +3,7 @@
 // les deux produisent donc exactement les mêmes lignes.
 
 const LEVELS = ["none", "step_up", "hold"];
+const LOG_RANGE = 2000; // blocs par requête de journaux, sous la limite des RPC publics
 const CHANGES = { 1: "replace_owner", 2: "change_threshold" };
 const lower = (address) => address.toLowerCase();
 const num = (value) => Number(value);
@@ -127,7 +128,11 @@ function createNormalizer({ provider, wallet, registry, assetAddress, chainId, s
   async function collect(fromBlock, toBlock) {
     const addresses = [wallet.target];
     if (registry) addresses.push(registry.target);
-    const logs = await provider.getLogs({ address: addresses, fromBlock, toBlock });
+    const logs = [];
+    for (let start = fromBlock; start <= toBlock; start += LOG_RANGE) {
+      const end = Math.min(start + LOG_RANGE - 1, toBlock);
+      logs.push(...(await provider.getLogs({ address: addresses, fromBlock: start, toBlock: end })));
+    }
     logs.sort((x, y) => x.blockNumber - y.blockNumber || x.index - y.index);
     const events = [];
     for (const log of logs) {

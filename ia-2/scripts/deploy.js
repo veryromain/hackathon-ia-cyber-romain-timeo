@@ -49,6 +49,8 @@ async function main() {
     owners: owners.map((o) => o.address),
     monitor: monitor.address,
     oracle: oracle.address,
+    // Prestataires que l'organisation paie déjà : le carnet d'adresses du moteur de score.
+    known_recipients: rest.slice(7, 9).map((s) => s.address),
     config: { ...config, periodCap: config.periodCap.toString() },
   };
   const dir = path.join(__dirname, "..", "deployments");
@@ -59,6 +61,9 @@ async function main() {
   console.log(`  registre     : ${registry.target}`);
   console.log(`  mUSD         : ${musd.target}`);
   console.log(`  délai d'examen ${config.reviewDelay} s, mise en attente ${config.holdDelay} s`);
+  if (deployment.chain_id === 43113) {
+    console.log(`  explorateur  : https://testnet.snowtrace.io/address/${wallet.target}`);
+  }
 }
 
 main().catch((error) => {
