@@ -53,7 +53,7 @@ Un projet compatible avec les deux tracks : la **supervision d'agents IA qui man
   - Le Wi-Fi de l'école bloque Bedrock ; ça fonctionne sur le partage de connexion du téléphone.
   - L'appel test à Claude Sonnet 5.5 a réussi.
 
-## Mise à jour 16:45 — Pivot vers l'axe 2 + oracle Web2 → Web3
+## Mise à jour 16:35 — Pivot vers l'axe 2 + oracle Web2 → Web3
 - **Retour du mentor Team1 :** ne pas faire nous-mêmes la pause (trop centralisé), alerter les signataires, forcer le renouvellement des clés.
 - **Timéo propose l'axe 2** (SOC antifraude), appliqué à la trésorerie crypto des entreprises, et réécrit `PLAN.md`.
 - **Décision de Romain :** axe 2 validé, **uniquement de la crypto**. **Ajout de l'oracle Web2 → Web3 :**

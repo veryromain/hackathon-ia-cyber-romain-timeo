@@ -1,6 +1,6 @@
 # Plan d'action — « Breaker », SOC antifraude pour trésoreries sur la blockchain
 
-> **Statut : VALIDÉ par Romain le samedi à 16h45**, avec un ajout : l'**oracle Web2 → Web3** (section 4 bis, tâches R8 et T8).
+> **Statut : VALIDÉ par Romain le samedi vers 16h35**, avec un ajout : l'**oracle Web2 → Web3** (section 4 bis, tâches R8 et T8).
 > Rédigé par Claude à la demande de Timéo (16h35). Remplace le plan de l'axe 4, archivé dans `shared/archive/PLAN-axe4.md`.
 > Track 1 (Fintech Security), **axe 2** : SOC antifraude à l'ère de l'IA générative. **Uniquement de la crypto, pas de fraude bancaire classique.**
 

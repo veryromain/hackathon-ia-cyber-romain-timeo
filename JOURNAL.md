@@ -12,7 +12,7 @@ Ajouter les entrées les plus récentes en haut.
 
 ---
 
-### 2026-10-10 16:45 — Romain (avec Claude) — DÉCISION
+### 2026-10-10 16:35 — Romain (avec Claude) — DÉCISION
 - **Validé par Romain :** passage à l'**axe 2 du track 1**, lecture « **trésorerie crypto** » (portefeuille multisig d'entreprise). **Uniquement de la crypto, la fraude bancaire classique est exclue.** Le `PLAN.md` de Timéo (16:35) est adopté.
 - **Ajout de Romain : l'oracle Web2 → Web3** (section 4 bis de `PLAN.md`). Un oracle IA lit le Web (pages de signalement, listes publiques), repère les adresses accusées de fraude (Bedrock + citation exacte vérifiée par le code), puis les inscrit dans un registre on-chain. Un paiement vers une adresse signalée déclenche la friction. Jamais de blocage, signalements contestables et à durée limitée.
 - **Nouvelles tâches :** **R8** (Romain) oracle + corpus synthétique avec pièges (démentis, empoisonnement) ; **T8** (Timéo) registre des adresses signalées, alimenté par `flags.jsonl` via le relais.
