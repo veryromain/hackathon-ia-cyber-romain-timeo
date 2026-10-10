@@ -12,6 +12,12 @@ Ajouter les entrées les plus récentes en haut.
 
 ---
 
+### 2026-10-10 16:23 — ia-2 / Timéo (avec Claude)
+- **Correction :** j'avais mal lu la note du mentor. Timéo, présent, précise sa conclusion : **nous ne faisons pas nous-mêmes la transaction de pause** (trop centralisé) ; on **alerte les signataires** du protocole ; on **impose un renouvellement périodique de leurs clés** (quinze jours par exemple).
+- **Proposition de Claude, non décidée** (détail en section 4 de `shared/retour-mentor-team1.md`) : garder la pause mais la laisser aux mains du protocole. Le moniteur alerte et prépare la transaction, les signataires la valident ; le protocole choisit entre alerte seule, pause validée par ses signataires, ou pause automatique qu'il délègue lui-même. Ajouter au contrat une expiration des rôles pour forcer le renouvellement des clés.
+- **Pourquoi ne pas tout enlever :** le guide cite la pause du contrat dans le playbook de l'axe 4, la réponse pèse 20 %, et l'alerte seule existe déjà sur le marché.
+- **Bloquant :** décision de Romain et Timéo sur ce cadrage avant de toucher au contrat. **Romain, ta lecture de l'échange avec le mentor ?**
+
 ### 2026-10-10 16:18 — ia-2 / Timéo (avec Claude)
 - **Fait :** note Granola du mentor Team1 lue et confrontée au plan dans `shared/retour-mentor-team1.md`. Frais de gas mesurés (`npm run gas` dans `ia-2/`) : une pause coûte environ 34 000 gas, soit **0,002 $** au prix relevé à 16h17.
 - **Ce que le mentor confirme :** l'architecture en deux composantes, Drift comme cas de référence, la transaction sur la chaîne (c'est notre `escalate`).

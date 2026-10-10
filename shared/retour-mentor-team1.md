@@ -79,3 +79,23 @@ Gas mesuré sur la chaîne locale (`cd ia-2 && npm run gas`). Prix relevés le 1
 | Déploiement du coffre (une fois) | 1 894 222 | 0,0095 | 0,10 $ |
 
 Conclusion pour le modèle économique : une intervention coûte moins d'un centime, et le moniteur ne paie rien tant qu'il ne fait que lire. Le gas est négligeable dans le prix de l'abonnement, comme le disait le mentor. Le prix du gas varie avec la charge du réseau : même multiplié par cent, une pause resterait sous 0,20 $.
+
+## 4. Correction de Timéo, présent à l'échange (2026-10-10 16:23)
+
+La section 2 a mal lu la note. D'après Timéo, la conclusion du mentor est la suivante :
+- **Nous ne devons pas faire nous-mêmes la transaction de pause** : un tiers qui peut bloquer un protocole, c'est trop centralisé.
+- **Si une anomalie est détectée, on prévient les signataires ou le propriétaire** du protocole (chez Drift, deux signatures sur cinq suffisaient à valider une décision).
+- **On impose un renouvellement des clés des signataires** tous les quinze jours, ou à une période fixée, pour qu'une clé compromise ne reste pas longtemps exploitable.
+
+### Proposition de Claude pour concilier ce retour avec la grille du jury (à valider par Romain et Timéo)
+
+Ne pas supprimer la pause : changer **qui la détient**. Le guide lui-même cite « pause du contrat, alertes, traçage des fonds » dans le playbook de l'axe 4, et la réponse pèse 20 % de la note. Sans aucune réponse, il ne reste qu'un outil d'alerte, ce que Forta, Hypernative et Hexagate font déjà.
+
+1. **L'outil ne détient aucun pouvoir sur le coffre.** Le moniteur détecte, alerte les signataires et **prépare** la transaction de pause ; ce sont les signataires du protocole qui la valident. Le pouvoir reste chez le protocole, pas chez nous.
+2. **Le protocole choisit son mode**, et on chiffre ce que coûte chaque choix (part des fonds sauvés selon le délai de réaction) :
+   - alerte seule ;
+   - pause proposée, validée par un ou plusieurs signataires ;
+   - pause automatique déléguée par le protocole à sa propre clé de garde, s'il l'accepte.
+3. **Expiration des clés inscrite dans le contrat** : un rôle accordé depuis plus de N jours ne peut plus signer tant qu'il n'a pas été renouvelé. La règle est appliquée par le code, pas par nous. Intérêt réel : un changement de signataires rend caduques les signatures récoltées à l'avance auprès des anciennes clés.
+
+Limites à dire au jury : le renouvellement des clés est une mesure de protection, pas de détection, et il n'empêche pas un signataire trompé de signer une transaction malveillante avec sa clé toute neuve. Une attaque comme Drift se joue en minutes : en mode « alerte seule », tout dépend de la vitesse des humains.
