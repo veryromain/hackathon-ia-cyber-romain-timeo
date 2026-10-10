@@ -12,6 +12,11 @@ Ajouter les entrées les plus récentes en haut.
 
 ---
 
+### 2026-10-10 17:22 — ia-2 / Timéo (avec Claude)
+- **Question de Timéo :** visons-nous des entreprises du monde réel ou encore des dApps ? **Réponse donnée :** des entreprises réelles qui tiennent une trésorerie en crypto dans un portefeuille à plusieurs signataires (plateformes d'échange, fintechs, fonds, entreprises qui paient en stablecoins, équipes de protocoles). Plus de contrat de dApp à protéger. Le code et les données sont déjà dans ce cadre (entreprise fictive NovaTreasury : salaires, fournisseurs, loyer).
+- **Point de réalisme pour le pitch :** le jeu de données paie le loyer, les cotisations et la TVA en mUSD, ce qu'aucune administration n'accepte aujourd'hui. À présenter comme une simplification, ou à relibeller à la prochaine régénération du jeu (celle de T9), en prévenant Romain car les hash changeront.
+- **Limite du cadrage à dire au jury :** nous ne traitons pas la fraude sur compte bancaire classique ; la cible est la trésorerie tenue sur la chaîne.
+
 ### 2026-10-10 17:19 — Romain (avec Claude) — CONSIGNE MODÈLES
 - **Décision de Romain : utiliser Opus 5.5, ou Fable 5.1 si besoin. Ne jamais utiliser Sonnet.**
 - **Blocage :** sur le compte de l'événement, Opus 5.5 et Fable 5.1 sont « autorisés » mais leur accord Marketplace est `NOT_AVAILABLE` (marketplace privé des organisateurs). Demande à faire aux organisateurs / au mentor AWS. **Opus 4.8 fonctionne** : c'est le repli actuel de l'oracle (6/6 sur le corpus). Détail : `shared/aws-bedrock.md`.
