@@ -4,7 +4,7 @@
 > Légende : ✅ fait · 🔄 en cours · ⬜ à faire · ✂️ coupé (manque de temps)
 > Détail du projet : [`PLAN.md`](PLAN.md) · Historique : [`JOURNAL.md`](JOURNAL.md) · Brief : [`CONTEXTE.md`](CONTEXTE.md)
 
-**Dernière mise à jour :** 2026-10-10 21:16, par Codex (Timéo) — probation et gouvernance corrigées, 30 tests locaux ; Fuji non redéployé
+**Dernière mise à jour :** 2026-10-10 21:17, par Claude (Timéo) — site vitrine refait dans le langage visuel de Safe{Labs} (dépôt seulement, pas encore republié)
 **Rendu (gel définitif) :** dim. 11/10 **12:00** · **Checkpoint :** sam. **18:30** · **Pitch :** dim. 13:00
 
 ---

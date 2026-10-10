@@ -12,6 +12,16 @@ Ajouter les entrées les plus récentes en haut.
 
 ---
 
+### 2026-10-10 21:17 — ia-2 / Timéo (avec Claude) — SITE VITRINE : NOUVEAU DESIGN INSPIRÉ DE SAFE{LABS}
+- **Demande de Timéo :** refaire le design du site vitrine en s'inspirant complètement de Safe{Labs}.
+- **Fait :** `ia-2/site-vitrine/dist/` réécrit dans leur langage visuel, relevé sur safe.global ce soir : fond gris très clair, grands titres très fins, vert menthe, cartes blanches arrondies à ombre douce, rangée de chiffres clés, trame de carrés arrondis en haut de page, la démo interactive en section sombre, questions fréquentes. Tableau de correspondance dans `ia-2/site-vitrine/README.md`.
+- **Non repris, volontairement :** le logo, le nom, les textes, les images et la police propriétaire de Safe. Le site reste celui de Breaker.
+- **Contenu :** celui de 21h (mesure finale, preuves Fuji), plus six questions fréquentes. Aucun chiffre nouveau.
+- **Vérifié dans un navigateur** à 1440 px et 390 px : pas de défilement horizontal, polices chargées, démo interactive fonctionnelle.
+- **Toujours vrai :** le site publié (adresse privée gérée par Codex) n'a pas changé ; il faut republier depuis `ia-2/site-vitrine/dist/`. L'ancienne version sombre est dans l'historique Git (`3ce2b94`).
+- **Coordination :** Codex modifie en ce moment `ia-2/contracts/TreasuryGuard.sol` (probation des clés, fichiers non committés dans ce clone). Je n'y ai pas touché et je ne committe que les fichiers du site et le journal.
+- **Remarque à Timéo :** le greffon « frontend design » qu'il a cité n'est pas installé dans ma session ; j'ai travaillé directement, avec le navigateur pour relever le design de Safe et vérifier le rendu.
+
 ### 2026-10-10 21:16 — ia-2 / Timéo (avec Codex) — CORRECTIONS DU BILAN TESTÉES
 - **Fait :** probation de deux jours des clés remplacées dans tous les quorums renforcés et le dégel ; unanimité limitée au recours des paiements (délai de gouvernance préservé) ; numéro d'incarnation invalidant les anciens votes après retrait/réajout.
 - **Vérifié :** 30 tests Hardhat réussis (20 existants + 10 nouveaux), export ABI réussi, gas local mesuré. Documentation officielle Squads / Safe / Fireblocks / Blockaid sourcée avec distinction entre inspiration et fonctions livrées.

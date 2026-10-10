@@ -27,3 +27,26 @@ La maquette affichait des chiffres dépassés et ne disait rien du problème. Ce
 - **Les liens Snowtrace pointent vers le déploiement Fuji du 10 octobre à 19h29.** Si les contrats sont redéployés (par exemple pour la probation des clés neuves), il faudra mettre à jour les quatre liens de la section « Les preuves ».
 - **Toujours absents**, par choix : formulaire de contact, « réserver une démo », connexion d'un portefeuille. La page ne collecte rien.
 
+## Refonte visuelle du 10 octobre, 21h20 (Claude, à la demande de Timéo)
+
+Timéo a demandé un design inspiré de celui de Safe{Labs} (safe.global). La page a été réécrite dans ce langage visuel, relevé sur leur site le soir même :
+
+| Élément | Chez Safe{Labs} | Repris ici |
+|---|---|---|
+| Fond et texte | Gris très clair (#F5F5F5), texte presque noir | Identique |
+| Titres | Très grands, très fins (police Citerne, graisse 300), interlignage serré | Police libre Outfit en graisse 300, mêmes proportions |
+| Texte courant | DM Sans | DM Sans |
+| Couleur d'accent | Vert menthe (#7FFAB7) sur les boutons | Identique |
+| Cartes | Blanches, coins de 16 à 24 px, ombre douce | Identique |
+| Chiffres clés | Rangée de cartes, grand chiffre fin, libellé en capitales espacées | Identique, avec une ligne de contexte sous chaque chiffre |
+| Haut de page | Titre à gauche sur une trame de carrés arrondis, aperçu du produit à droite | Identique, avec notre carte de paiement en attente |
+| Rythme | Sections claires, une longue section sombre, questions fréquentes, appel final | La démo interactive est la section sombre ; six questions ajoutées |
+
+**Ce qui n'est pas repris :** leur logo, leur nom, leurs textes, leurs images, leur police propriétaire. Le site reste celui de Breaker ; il ne se fait pas passer pour celui de Safe.
+
+Le contenu est celui de la révision de 21h (problème, positionnement, mesure finale, preuves Fuji), plus une section « Questions fréquentes » : détention des fonds, erreur du garde, panne, blockchains, audit, prix.
+
+`app.js` : une seule ligne changée (couleur de la jauge). `style.css` et `index.html` : réécrits, lisibles, non minifiés. L'ancienne version sombre reste dans l'historique Git (commit `3ce2b94`).
+
+Vérifié dans un navigateur à 1440 px et à 390 px : aucune barre de défilement horizontale, polices chargées, les trois scénarios et le bouton d'explication fonctionnent.
+
