@@ -1,0 +1,70 @@
+{
+  "generated_with": "ia-2/scripts/generate-dataset.js",
+  "seeds": {
+    "company": 1,
+    "train": 20261010,
+    "test": 777,
+    "fraud": 4242
+  },
+  "period": {
+    "start": "2026-05-31T22:00:00Z",
+    "train_days": 60,
+    "test_days": 30,
+    "timezone": "Europe/Paris (UTC+2)"
+  },
+  "contracts": {
+    "wallet": "0xcf7ed3acca5a467e9e704c703e8d87f634fb0fc9",
+    "registry": "0xe7f1725e7734ce288f8367e1bb143e90bb3f0512",
+    "musd": "0x5fbdb2315678afecb367f032d93f642f64180aa3",
+    "monitor": "0x60e8418ab644e52fe164aee658425e2efdbd3ee0",
+    "oracle": "0x2da5202b143bc1466b587153ab9855f3b5b143ec"
+  },
+  "wallet_config": {
+    "threshold": 2,
+    "owners": 5,
+    "review_delay_s": 60,
+    "hold_delay_s": 3600,
+    "key_lifetime_days": 15,
+    "period_cap_musd": 100000,
+    "step_up_extra": 1
+  },
+  "train": {
+    "events": 1576,
+    "payments": 362,
+    "by_scenario": {
+      "fixed_charge": 7,
+      "recurring_supplier": 332,
+      "new_supplier": 11,
+      "legit_off_hours": 5,
+      "legit_large": 1,
+      "legit_urgent_memo": 6
+    }
+  },
+  "test": {
+    "events": 1151,
+    "payments": 256,
+    "fraud_payments": 54,
+    "fraud_episodes": 15,
+    "by_scenario": {
+      "recurring_supplier": 183,
+      "new_supplier": 7,
+      "tricked_signers_burst": 21,
+      "flagged_address": 3,
+      "fixed_charge": 3,
+      "stolen_key": 2,
+      "slow_drip": 16,
+      "legit_off_hours": 4,
+      "invoice_redirect": 3,
+      "threshold_lowered": 9,
+      "legit_urgent_memo": 5
+    }
+  },
+  "address_book_size": 42,
+  "stats": {
+    "reverted": 0,
+    "blockedFraud": 25,
+    "executedFraud": 29,
+    "executedNormal": 564,
+    "extraApprovals": 34
+  }
+}

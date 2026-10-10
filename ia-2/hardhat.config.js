@@ -11,6 +11,8 @@ module.exports = {
     settings: { optimizer: { enabled: true, runs: 200 }, evmVersion: "cancun" },
   },
   networks: {
+    // SIM_START n'est défini que par le générateur de jeux de données, pour simuler des mois passés.
+    hardhat: process.env.SIM_START ? { initialDate: process.env.SIM_START } : {},
     fuji: {
       url: process.env.FUJI_RPC_URL || "https://api.avax-test.network/ext/bc/C/rpc",
       chainId: 43113,

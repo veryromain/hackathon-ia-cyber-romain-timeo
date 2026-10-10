@@ -1,0 +1,62 @@
+# Jeux de données synthétiques (tâches T4 et T5)
+
+90 jours de trésorerie de l'entreprise fictive **NovaTreasury**, du 1er juin au 29 août 2026, joués sur la chaîne locale de Hardhat avec les vrais contrats `TreasuryGuard` et `RiskRegistry`. Les lignes sortent du même traducteur que le relais : le format est exactement celui de `shared/format-evenements.md`.
+
+Pour tout régénérer à l'identique : `cd ia-2 && npm run dataset` (15 secondes).
+
+## Les fichiers
+
+| Fichier | Contenu | Qui le lit |
+|---|---|---|
+| `train.events.jsonl` | Jours 0 à 59, **trafic normal seul** : 1 576 événements, 362 paiements | Le moteur de score, pour apprendre les habitudes |
+| `test.events.jsonl` | Jours 60 à 89, trafic normal **et fraudes** : 1 151 événements, 256 paiements | Le moteur de score, pour être évalué |
+| `carnet.json` | Les 42 adresses que l'entreprise payait déjà avant le 1er juin | Le moteur de score |
+| `train.labels.jsonl`, `test.labels.jsonl` | La vérité par paiement : `label`, `scenario`, et `episode` pour les fraudes | **L'évaluation uniquement** |
+| `config-labels.jsonl` | La vérité sur les propositions de configuration (renouvellements de clé, changements de seuil) | L'évaluation uniquement |
+| `resume.json` | Graines, adresses des contrats, réglages du portefeuille, comptages | Tout le monde |
+
+**Mode d'emploi :** faire lire `train.events.jsonl` puis `test.events.jsonl` à la suite, dans cet ordre. C'est une seule histoire : les numéros `seq` et les identifiants de paiement se suivent d'un fichier à l'autre. Les seuils et le modèle se règlent sur `train`, jamais sur `test`.
+
+## Le trafic normal
+
+- 38 fournisseurs récurrents et 4 charges fixes (salaires vers le 26, cotisations vers le 5, loyer le 1er, un acompte de TVA le 20 juillet).
+- Propositions entre 8h30 et 18h30, heure de Paris, du lundi au vendredi. La période est entièrement en heure d'été (UTC+2).
+- Deuxième signature après 25 minutes en médiane, parfois plusieurs heures.
+- **Les clés des signataires sont renouvelées tous les 14 jours** : 33 remplacements de signataire sur la période. Un remplacement récent n'est donc pas, à lui seul, un signe de fraude.
+- Des cas légitimes qui ressemblent à des fraudes, pour mesurer les faux positifs :
+
+| `scenario` | Ce que c'est | Entraînement | Test |
+|---|---|---|---|
+| `new_supplier` | Premier paiement à un nouveau prestataire | 11 | 7 |
+| `legit_off_hours` | Paiement proposé entre 20h30 et 22h30 | 5 | 4 |
+| `legit_urgent_memo` | Libellé qui commence par « Urgent : régularisation » | 6 | 5 |
+| `legit_large` | Gros solde de projet, 35 000 à 80 000 mUSD | 1 | 0 |
+
+## Les fraudes du fichier de test
+
+54 paiements frauduleux sur 256 (21 %), en 15 épisodes de 6 formes. Les graines des fraudes et du trafic de test sont différentes de celle de l'entraînement, et l'entraînement ne contient aucune fraude.
+
+| `scenario` | Forme | Épisodes | Paiements | Proposé (mUSD) | Sorti sans moniteur (mUSD) |
+|---|---|---|---|---|---|
+| `tricked_signers_burst` | Deux signataires trompés, 5 à 10 gros paiements en quelques minutes vers des adresses neuves. La forme de Drift | 3 | 21 | 1 668 983 | 159 082 |
+| `threshold_lowered` | Trois signataires trompés abaissent le seuil à une signature, puis une seule clé vide le portefeuille | 2 | 9 | 639 782 | 639 782 |
+| `slow_drip` | Petits paiements sous le plafond, étalés sur huit jours, libellé banal | 2 | 16 | 142 722 | 116 533 |
+| `flagged_address` | Paiement vers une adresse que l'oracle a signalée 2 à 30 heures plus tôt | 3 | 3 | 57 712 | 0 |
+| `stolen_key` | Paiement moyen au libellé copié sur un vrai fournisseur, vers une adresse neuve | 2 | 2 | 51 223 | 51 223 |
+| `invoice_redirect` | Montant et libellé d'un fournisseur habituel, vers une nouvelle adresse | 3 | 3 | 4 620 | 4 620 |
+| **Total** | | **15** | **54** | **2 565 042** | **971 240** |
+
+La dernière colonne est la ligne de base : **ce qui sort quand seules les règles du portefeuille jouent** (plafond par jour, registre, délais), sans aucune alerte du moniteur. Le moteur de score doit faire mieux que 971 240 mUSD perdus sur 2 565 042.
+
+## Ce qu'il faut savoir avant de s'en servir
+
+- **Aucune alerte du moniteur n'a été jouée pendant la simulation.** Les 49 événements `risk_flagged` du jeu viennent du portefeuille lui-même (`OVER_PERIOD_CAP`) ou du registre (`FLAGGED_ADDRESS`) : leur champ `by` n'est jamais l'adresse du moniteur.
+- Un paiement frauduleux peut rester en suspens sans jamais s'exécuter : les fraudeurs n'obtiennent pas la signature supplémentaire qu'exige le plafond.
+- 21 adresses sont inscrites au registre ; 18 n'ont aucun rapport avec l'entreprise.
+- Les fraudes les plus dures à voir sont `invoice_redirect`, `stolen_key` et `slow_drip` : heures normales, libellés banals, montants habituels. Il est normal d'en manquer, et il faut le dire dans les mesures.
+
+## Limites
+
+- Tout est fabriqué par nous : les chiffres obtenus sur ce jeu sont favorables par construction.
+- 21 % de fraudes, c'est beaucoup plus que dans la réalité. La précision mesurée ici serait plus basse sur un trafic réel, où les fraudes sont rares.
+- Une seule entreprise, un seul actif, trois mois : la généralisation à d'autres profils n'est pas démontrée.
