@@ -18,10 +18,14 @@ from .regles import REGLES, EtatPortefeuille, Raison
 
 
 class Moteur:
-    def __init__(self, carnet=None, modele=None, expliquer=False):
+    def __init__(self, carnet=None, modele=None, expliquer=False, services=None):
         self.etat = EtatPortefeuille()
         self.modele = modele  # modèle d'anomalie (R2), facultatif
         self.expliquer = expliquer  # R3 : explication rédigée par Bedrock, avec repli sur le texte à trous
+        self.niveaux = {}  # payment_id -> dernier niveau émis (un niveau ne peut que monter)
+        self.etat.sorties_signalees, self.etat.recus_de_signalee = {}, {}
+        for a in services or []:
+            self.etat.services_connus.add(a.lower())
         # Carnet d'adresses du client (fournisseurs et comptes déjà connus) : évite le démarrage à froid.
         for adresse in carnet or []:
             self.etat.destinataires_connus.add(adresse.lower())
@@ -36,10 +40,42 @@ class Moteur:
             alerte = self.noter(p)
             e.propositions[p["payment_id"]] = p
             # Les règles ne regardent que les 3 derniers jours : on oublie le reste (mémoire et vitesse constantes).
-            limite = p["timestamp"] - regles.FENETRE_REPETITION_S
+            limite = p["timestamp"] - max(regles.FENETRE_REPETITION_S, regles.FENETRE_JOUR_S)
             for vieux in [k for k, q in e.propositions.items() if q["timestamp"] < limite]:
                 del e.propositions[vieux]
             return alerte
+        if t == "payment_approved":
+            # Une clé de moins de 7 jours apporte sa signature à un paiement encore en cours : on re-note, le niveau ne peut que monter.
+            nouveau = e.nouveaux_signataires.get((d.get("owner") or "").lower())
+            p = e.propositions.get(pid := d.get("payment_id"))
+            # Seulement si le paiement est DÉJÀ signalé (step_up) : une clé neuve ne doit pas pouvoir apporter la signature manquante.
+            if (p and nouveau and 0 <= ev["timestamp"] - nouveau[0] <= regles.FENETRE_CHANGEMENT_S
+                    and self.niveaux.get(pid) == "step_up" and p["to"] not in e.destinataires_connus):
+                h = (ev["timestamp"] - nouveau[0]) // 3600
+                extra = Raison("NEW_OWNER_APPROVES", f"signature apportée par un signataire ajouté il y a {h} h", [nouveau[1], ev["tx_hash"]],
+                               regles.POIDS["NEW_OWNER_APPROVES"])
+                alerte = self.noter(p, [extra])
+                if alerte and alerte["level"] == "hold":
+                    return alerte
+            return None
+        if t == "token_transfer":
+            # R9 : sorties de fonds d'une adresse signalée → ses destinataires sont « teintés » à hauteur de leur part.
+            src, dst = (d.get("from") or "").lower(), (d.get("to") or "").lower()
+            if src in e.adresses_signalees:
+                e.sorties_signalees[src] = e.sorties_signalees.get(src, 0) + int(d.get("amount", 0))  # toutes les sorties comptent
+                if dst not in e.services_connus:  # ... mais une plateforme n'est jamais teintée
+                    e.recus_de_signalee[(src, dst)] = e.recus_de_signalee.get((src, dst), 0) + int(d.get("amount", 0))
+                # Les parts de TOUS les destinataires de cette adresse sont recalculées (une grosse sortie dilue les autres).
+                for (s_, d_), recu in e.recus_de_signalee.items():
+                    if s_ != src:
+                        continue
+                    part = recu / e.sorties_signalees[src]
+                    if part >= regles.PART_TAINTED_MIN:
+                        prev = e.teintees.get(d_)
+                        e.teintees[d_] = (part, prev[1] if prev else ev["timestamp"], prev[2] if prev else ev["tx_hash"], src)
+                    else:
+                        e.teintees.pop(d_, None)
+            return None
         if t == "payment_executed":
             to, montant = d["to"].lower(), int(d["amount"])
             if to not in e.destinataires_connus:  # les adresses du carnet ne sont jamais « récentes »
@@ -47,6 +83,7 @@ class Moteur:
             e.destinataires_connus.add(to)
             e.montants_payes.append(montant)
             e.montants_par_dest.setdefault(to, []).append(montant)
+            e.recus_par_dest[to] = e.recus_par_dest.get(to, 0) + montant
         elif t == "address_flagged":
             e.adresses_signalees[d["flagged"].lower()] = {
                 "level": d["level"], "expires_at": d["expires_at"],
@@ -60,8 +97,8 @@ class Moteur:
             e.baisses_seuil.append((ev["timestamp"], ev["tx_hash"], d["previous_threshold"], d["new_threshold"]))
         return None
 
-    def noter(self, p: dict):
-        raisons: list[Raison] = [r for r in (regle(p, self.etat) for regle in REGLES) if r]
+    def noter(self, p: dict, extras=()):
+        raisons: list[Raison] = [r for r in (regle(p, self.etat) for regle in REGLES) if r] + list(extras)
         if self.modele:
             r = self.modele.raison(p, self.etat)
             if r:
@@ -85,6 +122,7 @@ class Moteur:
         if self.expliquer:
             from .explication import expliquer
             alerte["explanation"] = expliquer(alerte, p, alerte["explanation"])
+        self.niveaux[p["payment_id"]] = niveau
         return alerte
 
 
@@ -120,6 +158,7 @@ def main(argv=None):
     a.add_argument("--suivre", action="store_true", help="continue de lire le fichier quand il grossit (mode direct)")
     a.add_argument("--modele", type=Path, help="modèle d'anomalie appris (R2), ex. modeles/anomalie.joblib")
     a.add_argument("--expliquer", action="store_true", help="R3 : explication rédigée par Bedrock (partage de connexion)")
+    a.add_argument("--services", type=Path, help="R9 : JSON des adresses de services connus (plateformes, ponts), jamais teintées")
     args = a.parse_args(argv)
 
     carnet = json.loads(args.carnet.read_text()) if args.carnet else []
@@ -127,7 +166,8 @@ def main(argv=None):
     if args.modele:
         import joblib
         modele = joblib.load(args.modele)
-    moteur = Moteur(carnet, modele, args.expliquer)
+    services = json.loads(args.services.read_text()) if args.services else []
+    moteur = Moteur(carnet, modele, args.expliquer, services)
     with open(args.out, "a" if args.suivre else "w") as sortie:
         for ev in lire(args.events, args.suivre):
             try:

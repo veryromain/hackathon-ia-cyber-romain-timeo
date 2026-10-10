@@ -31,7 +31,23 @@ POIDS = {
     "RAPID_REPEAT": 0.35,            # paiements répétés vers une adresse apparue il y a moins de 7 jours
     "ANOMALY_MODEL": 0.25,           # R2 : plus étrange que 99 % du trafic normal d'entraînement
     "ANOMALY_MODEL_FORT": 0.40,      # R2 : plus étrange que tout le trafic normal d'entraînement
+    # Corrections du 10/10 soir, guidées par la FORME des fraudes du jeu de généralisation (pas par ses chiffres) :
+    "NEW_OWNER_LARGE_PAYMENT": 0.65, # clé de moins de 7 jours + montant hors norme : forme de Bybit → hold
+    "NEW_OWNER_APPROVES": 0.45,      # une clé neuve apporte une signature à un paiement en cours
+    "RECENT_RECIPIENT": 0.15,        # destinataire payé pour la 1re fois il y a moins de 30 jours
+    "RECENT_RECIPIENT_SPIKE": 0.60,  # ... et montant > 5 × ce qu'il a déjà reçu : mise en confiance puis gros coup
+    "DAILY_CAP_RECIPIENT": 0.50,     # cumul du jour vers ce destinataire bien au-dessus de son habitude
+    "DAILY_CAP_RECENT": 0.50,        # cumul du jour vers des adresses récentes au-dessus des gros paiements habituels : fractionnement
+    "AMOUNT_OUTLIER_EXTREME": 0.76,  # ≥ 10 × l'habitude d'un destinataire connu → hold à lui seul
+    "TAINTED_FUNDS": 0.50,           # R9 : a reçu une part significative des fonds d'une adresse signalée
 }
+RATIO_EXTREME = 10.0
+FENETRE_RECENT_30J_S = 30 * 86400
+FENETRE_JOUR_S = 86400
+RATIO_SPIKE = 5.0
+RATIO_CUMUL_JOUR = 5.0
+PART_TAINTED_MIN = 0.10          # R9 : part minimale des sorties de l'adresse signalée (ignore le « dusting »)
+FENETRE_TAINTED_S = 7 * 86400
 SEUIL_HOLD = 0.75  # choisi par recherche sur les graines 1-20 (faux hold 0,5 % au lieu de 1,1 %)
 SEUIL_STEP_UP = 0.30
 RATIO_MONTANT_MIN = 3.0          # destinataire connu : montant >= 3 fois SON paiement médian
@@ -65,6 +81,9 @@ class EtatPortefeuille:
     montants_par_dest: dict = field(default_factory=dict)      # destinataire -> montants exécutés
     premier_paiement: dict = field(default_factory=dict)       # destinataire -> date du 1er paiement exécuté
     nouveaux_signataires: dict = field(default_factory=dict)   # adresse -> (date d'ajout, tx_hash)
+    recus_par_dest: dict = field(default_factory=dict)         # destinataire -> total déjà exécuté vers lui
+    teintees: dict = field(default_factory=dict)               # R9 : adresse -> (part des sorties de l'adresse signalée, date, tx_hash, origine)
+    services_connus: set = field(default_factory=set)          # R9 : plateformes, ponts, routeurs : jamais teintés
     propositions: dict = field(default_factory=dict)           # payment_id -> événement de proposition
     adresses_signalees: dict = field(default_factory=dict)     # adresse -> {level, expires_at, tx_hash, category}
     changements_signataires: list = field(default_factory=list)  # (timestamp, tx_hash)
@@ -103,6 +122,9 @@ def r_montant_hors_norme(p, etat):
     else:
         return None  # pas assez d'historique pour juger
     ratio = p["amount"] / ref if ref else math.inf
+    if ratio >= RATIO_EXTREME:
+        return Raison("AMOUNT_OUTLIER_EXTREME", f"{fmt(p['amount'])}, {ratio:.0f} fois {quoi} ({fmt(int(ref))})",
+                      [p["tx_hash"]], POIDS["AMOUNT_OUTLIER_EXTREME"])
     if ratio >= RATIO_MONTANT_MIN:
         poids = min(POIDS["AMOUNT_OUTLIER_MAX"], 0.15 * math.log2(ratio))
         return Raison("AMOUNT_OUTLIER", f"{fmt(p['amount'])}, {ratio:.1f} fois {quoi} ({fmt(int(ref))})",
@@ -140,14 +162,80 @@ def r_adresse_signalee(p, etat):
         return Raison("FLAGGED_ADDRESS", f"destinataire signalé par l'oracle ({s['category']})", [s["tx_hash"]], POIDS[cle])
 
 
+def montant_hors_norme(p, etat) -> bool:
+    """Vrai si le montant dépasse l'habitude du destinataire (× 3) ou, pour un inconnu, les gros paiements habituels."""
+    hist = etat.montants_par_dest.get(p["to"])
+    if hist:
+        return p["amount"] >= RATIO_MONTANT_MIN * median(hist)
+    if len(etat.montants_payes) >= 3:
+        return p["amount"] > centile(etat.montants_payes, CENTILE_NOUVEAU)
+    return False
+
+
+PAIEMENTS_POUR_ETRE_CONNU = 3
+
+
+def est_recent(a, etat, maintenant) -> bool:
+    """Récent = apparu depuis moins de 30 jours ET moins de 3 paiements exécutés (un fournisseur régulier n'est pas « récent »)."""
+    premier = etat.premier_paiement.get(a)
+    if premier is None:
+        return a not in etat.destinataires_connus
+    return maintenant - premier <= FENETRE_RECENT_30J_S and len(etat.montants_par_dest.get(a, ())) < PAIEMENTS_POUR_ETRE_CONNU
+
+
+def r_destinataire_recent(p, etat):
+    """Mise en confiance : un destinataire apparu depuis moins de 30 jours reçoit soudain bien plus que ce qu'il a déjà reçu."""
+    premier = etat.premier_paiement.get(p["to"])
+    if premier is None or not est_recent(p["to"], etat, p["timestamp"]):
+        return None
+    jours = (p["timestamp"] - premier) // 86400
+    recu = etat.recus_par_dest.get(p["to"], 0)
+    if recu and p["amount"] >= RATIO_SPIKE * recu:
+        return Raison("RECENT_RECIPIENT_SPIKE", f"destinataire apparu il y a {jours} j ; ce paiement fait {p['amount'] / recu:.0f} fois tout ce qu'il a déjà reçu ({fmt(recu)})",
+                      [p["tx_hash"]], POIDS["RECENT_RECIPIENT_SPIKE"])
+    return Raison("RECENT_RECIPIENT", f"destinataire apparu il y a {jours} j", [p["tx_hash"]], POIDS["RECENT_RECIPIENT"])
+
+
+def r_cumul_du_jour(p, etat):
+    """Fractionnement : le cumul des propositions du jour, vers ce destinataire ou vers des adresses récentes, dépasse l'habitude."""
+    jour = [q for q in etat.propositions.values() if 0 <= p["timestamp"] - q["timestamp"] <= FENETRE_JOUR_S]
+    meme = sum(q["amount"] for q in jour if q["to"] == p["to"]) + p["amount"]
+    hist = etat.montants_par_dest.get(p["to"])
+    n_meme = sum(1 for q in jour if q["to"] == p["to"])
+    if hist and n_meme >= 2 and meme >= RATIO_CUMUL_JOUR * median(hist):  # ≥ 3 propositions dans la journée vers ce destinataire
+        return Raison("DAILY_CAP_RECIPIENT", f"{fmt(meme)} proposés aujourd'hui vers ce destinataire, {meme / median(hist):.1f} fois son paiement médian",
+                      [q["tx_hash"] for q in jour if q["to"] == p["to"]] + [p["tx_hash"]], POIDS["DAILY_CAP_RECIPIENT"])
+    def recent(a):
+        return est_recent(a, etat, p["timestamp"])
+    if recent(p["to"]) and len(etat.montants_payes) >= 3:
+        vers_recents = [q for q in jour if recent(q["to"]) and q["to"] != p["to"]]
+        total = sum(q["amount"] for q in vers_recents) + p["amount"]
+        if len(vers_recents) >= 2 and total > centile(etat.montants_payes, CENTILE_NOUVEAU):  # ≥ 3 adresses récentes dans la journée
+            return Raison("DAILY_CAP_RECENT", f"{fmt(total)} proposés aujourd'hui vers {len(vers_recents) + 1} adresses récentes, au-dessus des plus gros paiements habituels",
+                          [q["tx_hash"] for q in vers_recents] + [p["tx_hash"]], POIDS["DAILY_CAP_RECENT"])
+
+
+def r_fonds_teintes(p, etat):
+    """R9 : le destinataire a reçu une part significative des fonds d'une adresse signalée (1 intermédiaire, 7 jours)."""
+    t = etat.teintees.get(p["to"])
+    if not t or p["to"] in etat.services_connus or p["timestamp"] - t[1] > FENETRE_TAINTED_S:
+        return None
+    return Raison("TAINTED_FUNDS", f"a reçu {t[0]:.0%} des fonds sortis de l'adresse signalée {t[3][:6]}… il y a {(p['timestamp'] - t[1]) // 3600} h",
+                  [t[2], p["tx_hash"]], POIDS["TAINTED_FUNDS"])
+
+
 def r_changement_recent(p, etat):
     nouveau = etat.nouveaux_signataires.get(p.get("proposer", "").lower())
     # Une clé renouvelée qui paie un fournisseur connu est normal (renouvellement périodique des clés) ;
     # le signal fort, c'est un signataire tout juste ajouté qui paie une adresse inconnue.
-    if nouveau and 0 <= p["timestamp"] - nouveau[0] <= FENETRE_CHANGEMENT_S and p["to"] not in etat.destinataires_connus:
+    if nouveau and 0 <= p["timestamp"] - nouveau[0] <= FENETRE_CHANGEMENT_S:
         h = (p["timestamp"] - nouveau[0]) // 3600
-        return Raison("NEW_OWNER_PROPOSES", f"proposé par un signataire ajouté il y a {h} h", [nouveau[1], p["tx_hash"]],
-                      POIDS["NEW_OWNER_PROPOSES"])
+        if p["to"] not in etat.destinataires_connus and montant_hors_norme(p, etat):  # forme de Bybit : la clé neuve sort un gros montant vers un inconnu
+            return Raison("NEW_OWNER_LARGE_PAYMENT", f"gros montant proposé par un signataire ajouté il y a {h} h",
+                          [nouveau[1], p["tx_hash"]], POIDS["NEW_OWNER_LARGE_PAYMENT"])
+        if p["to"] not in etat.destinataires_connus:
+            return Raison("NEW_OWNER_PROPOSES", f"proposé par un signataire ajouté il y a {h} h", [nouveau[1], p["tx_hash"]],
+                          POIDS["NEW_OWNER_PROPOSES"])
     recents = [c for c in etat.changements_signataires if 0 <= p["timestamp"] - c[0] <= FENETRE_CHANGEMENT_S]
     if recents:
         h = (p["timestamp"] - recents[-1][0]) // 3600
@@ -182,5 +270,6 @@ def r_seuil_abaisse(p, etat):
         return Raison("THRESHOLD_LOWERED", f"seuil de signatures abaissé de {b[2]} à {b[3]}", [b[1]], POIDS["THRESHOLD_LOWERED"])
 
 
-REGLES = [r_adresse_signalee, r_nouveau_destinataire, r_montant_hors_norme, r_rafale, r_libelle_urgent,
-          r_schema_fraude, r_repetition_rapide, r_hors_heures, r_changement_recent, r_seuil_abaisse]
+REGLES = [r_adresse_signalee, r_fonds_teintes, r_nouveau_destinataire, r_destinataire_recent, r_montant_hors_norme,
+          r_cumul_du_jour, r_rafale, r_libelle_urgent, r_schema_fraude, r_repetition_rapide, r_hors_heures,
+          r_changement_recent, r_seuil_abaisse]

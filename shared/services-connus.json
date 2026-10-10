@@ -1,8 +1,7 @@
 {
-  "note": "Adresses FACTICES de services partagés, pour la démo du traçage des fonds (T9, R9). Un service reçoit de l'argent de tout le monde, y compris d'arnaqueurs : avoir reçu des fonds d'une adresse signalée ne dit rien de lui. Le moteur de score ne doit donc jamais propager de risque à ces adresses.",
-  "services": [
-    { "address": "0xd0bfb7c0353ca3b6bf2b72e1dd26d1ee4edbd2c0", "name": "Plateforme d'échange Alpha", "kind": "exchange" },
-    { "address": "0x4bd8e79c4b3d6f0bc81d1a1e1bbbcd9a0d0f7a52", "name": "Pont inter-chaînes Beta", "kind": "bridge" },
-    { "address": "0x9c6e0c1c3b0a8d1e7f2b4a6d8c0e2f4a6b8d0c1e", "name": "Routeur d'échange Gamma", "kind": "dex_router" }
+  "_commentaire": "R9 : adresses de services partagés (plateformes d'échange, ponts, routeurs de DEX) qui ne doivent jamais être « teintées » : elles servent des millions d'utilisateurs. Adresses FACTICES pour la démo ; en production, liste publique (ex. étiquettes Snowtrace) tenue à jour. Format : liste d'adresses en minuscules.",
+  "adresses": [
+    "0x1000000000000000000000000000000000000001",
+    "0x1000000000000000000000000000000000000002"
   ]
 }

@@ -31,6 +31,13 @@ Isolation Forest appris sur le **trafic normal** de Timéo (`shared/donnees/trai
 9 caractéristiques (montant, écart à l'habitude du destinataire, heure, week-end, rythme, rafale, changement de signataire, libellé, répétition). **La nouveauté du destinataire est volontairement exclue** (déjà comptée par `NEW_RECIPIENT` ; essai sur train : +50 % de nouveaux fournisseurs mis en attente).
 **Test de Timéo :** fraudes arrêtées 63 % → **69 %**, montants en attente 89 % → **94 %**, faux `hold` **inchangés (0,9 %)**.
 
+## R1 bis — Corrections après le jeu de généralisation (10/10, 20:00) ✅
+Guidées par la **forme** des fraudes jamais vues, sans regarder leurs chiffres ; mesure finale sur un 4ᵉ jeu de Timéo. Nouvelles raisons : `NEW_OWNER_LARGE_PAYMENT` (clé < 7 j + gros montant vers un inconnu → hold), `NEW_OWNER_APPROVES` (une clé neuve apporte la signature manquante à un paiement déjà signalé vers un inconnu → re-notation), `RECENT_RECIPIENT` / `RECENT_RECIPIENT_SPIKE` (destinataire récent = < 30 j et < 3 paiements ; > 5 × ce qu'il a reçu → hold), `DAILY_CAP_RECIPIENT` / `DAILY_CAP_RECENT` (cumul du jour : ≥ 3 propositions vers le même destinataire à ≥ 5 × sa médiane, ou ≥ 3 adresses récentes au-dessus des gros paiements habituels), `AMOUNT_OUTLIER_EXTREME` (≥ 10 × l'habitude → hold seul).
+**Jeu de test, règles + R2 :** fraudes arrêtées 69 → **80 %**, montants en attente 94 → **97 %**, faux `hold` 0,9 → 1,6 % (gros premiers paiements à de nouveaux fournisseurs : assumé, seuil réglable).
+
+## R9 — Traçage des fonds (règle) ✅
+Événement `token_transfer` (`from`, `to`, `token`, `amount`) : les sorties d'une adresse **signalée** teintent ses destinataires à hauteur de leur **part** des sorties. Raison `TAINTED_FUNDS` (0,50 → `step_up`) si part ≥ 10 %, 1 intermédiaire seulement, 7 jours, jamais pour une adresse de `shared/services-connus.json` (`--services`). Le dusting (0,01 mUSD) est ignoré. 5 tests. **Données réelles : attend T9 de Timéo** (événements `token_transfer` dans le relais et le scénario « arnaqueur → 3 mules + dusting »).
+
 ## R8a — Oracle Web2 → Web3 (cœur) ✅
 ```bash
 .venv/bin/python -m oracle.oracle oracle/corpus_demo/*.html --out ../shared/flags.jsonl     # Bedrock (partage de connexion !)
@@ -103,4 +110,4 @@ Une adresse n'est publiée dans `flags.jsonl` que si la **somme des réputations
 `--sans-croisement` pour l'ancien comportement. 4 tests.
 
 ## À venir
-R9 traçage des fonds (bonus)
+rien côté règles ; mesure finale sur le 4ᵉ jeu de Timéo

@@ -12,6 +12,17 @@ Ajouter les entrées les plus récentes en haut.
 
 ---
 
+### 2026-10-10 20:10 — Romain (avec Claude) — DÉCISIONS VALIDÉES + 3 DEMANDES À TIMÉO
+- **Décisions de Romain (validées) :** (1) ne pas régler le moteur sur le jeu de généralisation, corriger d'après la forme des fraudes, puis **mesurer sur un 4ᵉ jeu à nouvelles graines** ; (2) correction « Bybit » dans le moteur **et** dans le contrat ; (3) accepter un peu plus de friction, réglable par le client ; (4) montrer test et généralisation côte à côte.
+- **Fait côté moteur (20:00) :** clé neuve + gros montant vers un inconnu → hold ; clé neuve qui apporte la signature manquante à un paiement déjà signalé → re-notation ; destinataire « récent » 30 j / < 3 paiements, pic > 5 × → hold ; cumul du jour (≥ 3 vers le même, ou ≥ 3 adresses récentes) ; ≥ 10 × l'habitude → hold. **Jeu de test : 69 → 80 % arrêtées, 94 → 97 % des montants, faux hold 0,9 → 1,6 %.** Je n'ai PAS relancé le jeu de généralisation après les corrections.
+- **Fait (R9, règle) :** `TAINTED_FUNDS` sur événement `token_transfer` (part ≥ 10 % des sorties d'une adresse signalée, 1 saut, 7 j, `shared/services-connus.json` exclus, dusting ignoré), 5 tests.
+- **Fait (B1, brouillon) :** `shared/bilan-demo.md`, à compléter par toi.
+- **Timéo, 3 demandes, dans l'ordre que tu préfères :**
+  1. **4ᵉ jeu de données** (`shared/donnees/final.*`), mêmes formes que le holdout + de nouvelles graines, **sans me dire ses chiffres avant** que je l'aie passé : ce sera la mesure finale du pitch.
+  2. **Probation des clés neuves dans `TreasuryGuard`** : pendant N jours après `owner_replaced`, la nouvelle clé ne compte ni pour les signatures supplémentaires exigées par un signalement, ni pour `approveUnfreeze`. C'est la vraie parade à la forme de Bybit (une signature de plus n'arrête rien si l'intrus tient 3 clés). À ton estimation : 1 à 2 h avec les tests ?
+  3. **T9 :** événements `token_transfer` (`from`, `to`, `token`, `amount`) émis par le relais pour les sorties des adresses signalées, et le scénario « arnaqueur → 3 mules + 0,01 mUSD de dusting vers un innocent ». Ma règle est prête et testée sur des événements synthétiques.
+  Et toujours : `actions.jsonl` dans le relais pour Fuji (R5b). Dis-moi si c'est trop pour ce soir, on coupera.
+
 ### 2026-10-10 19:57 — ia-2 / Timéo (avec Claude) — T9 : TRAÇAGE DES FONDS, CÔTÉ DONNÉES
 - **Fait (T9) : les données du traçage des fonds.** Dès qu'une adresse entre au registre, mon relais remonte tous les transferts de mUSD qu'elle a émis depuis le déploiement et les écrit dans `events.jsonl` sous un nouveau type, `token_transfer` (`from`, `to`, `token`, `amount`, `contract` = `token`). Il continue ensuite de suivre l'adresse. Format : `shared/format-evenements.md`, section « Les transferts des adresses signalées ».
 - **Scénario prêt et testé sur la chaîne locale :** `npm run tracing:local` (ou `tracing:fuji`), relais lancé à côté. Un arnaqueur encaisse 100 000 mUSD, envoie 18 000, 12 000 et 10 000 à trois mules, 30 000 à une plateforme d'échange et 0,01 à un innocent ; l'oracle le signale ; l'organisation propose trois paiements (mule, innocent, plateforme). Le relais a bien écrit les 5 transferts juste après `address_flagged`.

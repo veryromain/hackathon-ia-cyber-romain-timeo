@@ -39,6 +39,8 @@ Reproduire : `cd ia-1 && .venv/bin/python -m eval.evaluer_donnees --modele`
 
 \* Dans le jeu de test, 56 de ces 60 « signatures en plus » tombent **dans les 7 jours qui suivent une baisse du seuil par l'attaquant** : c'est voulu (le garde rétablit une signature pendant une attaque). Hors attaque, les fournisseurs récurrents passent sans friction.
 
+**Après les corrections du 10/10 à 20:00** (formes de Bybit, mise en confiance, fractionnement, surpaiement ; décisions validées par Romain), même jeu de test, règles + R2 : fraudes arrêtées **80 %**, montants en attente **97 %**, faux `hold` **1,6 %** (gros premiers paiements à de nouveaux fournisseurs). **La mesure sur des formes jamais vues sera refaite sur un 4ᵉ jeu à nouvelles graines** : le jeu de généralisation ci-dessous a été regardé avant les corrections, il ne compte plus comme mesure propre.
+
 **Apport du modèle d'anomalie (R2) :** fraudes arrêtées 63 % → 69 %, montants en attente 89 % → 94 %, faux positifs inchangés (0,9 %).
 
 **Généralisation** (générateur interne, 90 graines jamais vues, montants × 0,3 à × 3, 45 à 90 jours) : 99–100 % des fraudes freinées ou arrêtées, 0,2–0,4 % de faux `hold`. Reproduire : `.venv/bin/python -m eval.banc --graines 101-130`.
