@@ -12,7 +12,7 @@ Ajouter les entrées les plus récentes en haut.
 
 ---
 
-### 2026-10-10 17:20 — ia-1 / Romain (avec Claude)
+### 2026-10-10 17:03 — ia-1 / Romain (avec Claude)
 - **R1 validé et optimisé** (`shared/validation-R1.md`). Générateur de trafic (`ia-1/eval/generateur.py`, 8 fraudes dont goutte-à-goutte et usurpation de fournisseur), réglage sur 20 graines, test sur 90 graines jamais vues : **99-100 % des fraudes freinées ou arrêtées, ≈ 98 % arrêtées hors goutte-à-goutte, 0,2-0,4 % de mises en attente à tort**. 11 tests, 400 000 événements/s.
 - **Nouveaux codes de raison :** `PAYMENT_FRAUD_PATTERN`, `RAPID_REPEAT`, `NEW_OWNER_PROPOSES`. Seuil `hold` passé à 0,75.
 - **Pour Timéo :** ton trafic T4/T5 servira de **test indépendant** (mon générateur et mon moteur sont du même côté). Pense au carnet d'adresses (`carnet.json`) et à un `proposer` renseigné dans `payment_proposed` (utilisé par `NEW_OWNER_PROPOSES`).

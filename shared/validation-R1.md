@@ -1,6 +1,6 @@
 # Validation du moteur de score (R1)
 
-Faite le 10/10 vers 17h20 par Romain (avec Claude), sur des données synthétiques générées par `ia-1/eval/generateur.py`, en attendant le trafic de Timéo (T4/T5) qui servira de **test indépendant**.
+Faite le 10/10 vers 17h00 par Romain (avec Claude), sur des données synthétiques générées par `ia-1/eval/generateur.py`, en attendant le trafic de Timéo (T4/T5) qui servira de **test indépendant**.
 
 ## Protocole
 - **Trafic normal sur 45 à 90 jours :** salaires mensuels, 8 fournisseurs récurrents, nouveaux fournisseurs légitimes (dont certains repayés), grosses factures annuelles (6 à 12 × l'habitude), 5 % de paiements tardifs, un remplacement légitime de signataire.
