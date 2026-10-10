@@ -12,6 +12,10 @@ Ajouter les entrées les plus récentes en haut.
 
 ---
 
+### 2026-10-10 17:48 — ia-1 / Romain (avec Claude)
+- **Fait (R8b) : corpus de l'oracle et mesure** (`ia-1/oracle/corpus.py`, `ia-1/eval/evaluer_oracle.py`). 40 pages écrites par gabarits (pas par un LLM), 63 adresses, moitié dev / moitié test. **Test : 100 % de précision, 100 % de rappel, 0 fausse accusation sur 24**, dont 7 injections de prompt (visibles et cachées) et 9 démentis. Le repli par mots-clés tombe à 67 % / 36 % : l'IA fait la différence. Limite : des gabarits sont plus faciles que le vrai Web.
+- **Prochaine étape :** texte du checkpoint (18:30), puis R5 (dashboard).
+
 ### 2026-10-10 17:46 — ia-1 / Romain (avec Claude)
 - **Fait (R2) : modèle d'anomalie** (`ia-1/score/anomalie.py`, Isolation Forest appris sur `shared/donnees/train`, raison `ANOMALY_MODEL`). Sur le test de Timéo : **fraudes arrêtées 63 → 69 %, montants frauduleux en attente 89 → 94 %, faux `hold` inchangés (0,9 %)**. La nouveauté du destinataire est exclue des caractéristiques (double comptage avec `NEW_RECIPIENT`, décidé sur train). 18 tests.
 - **Pour Timéo :** en démo, lancer le moteur avec `--modele modeles/anomalie.joblib` (à générer : voir `ia-1/README.md`). Si tu régénères le jeu de données, préviens-moi : je réentraîne le modèle.

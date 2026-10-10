@@ -53,5 +53,21 @@ Seuils : confiance ≥ 0,6 pour signaler, ≥ 0,8 pour `hold`. Expiration 30 jou
 
 Tests hors ligne (`tests/test_oracle.py`) : hallucination de citation rejetée, adresse inventée ignorée, confiance faible rejetée, format `flags.jsonl`.
 
+## R8b — Corpus de l'oracle et mesure ✅
+```bash
+.venv/bin/python -m oracle.corpus --graine 7 --n 40 --sortie oracle/corpus      # 40 pages, 63 adresses, moitié dev / moitié test
+.venv/bin/python -m eval.evaluer_oracle --jeu test                                # Bedrock (partage de connexion)
+.venv/bin/python -m eval.evaluer_oracle --jeu test --sans-llm                     # repli mots-clés, pour comparer
+```
+Pages écrites par **gabarits** (pas par un LLM, pour ne pas faire juger un corpus par la famille de modèles qui l'a écrit) : accusations FR/EN (arnaque, phishing, fraude au président, rug pull…), mentions (dons, contrats, tutoriels), **questions** (« c'est une arnaque ? »), **démentis et accusations retirées**, **injections visibles et cachées**, 1 à 3 adresses par page.
+
+| Jeu test (20 pages, 35 adresses) | Bedrock (Opus 4.8) | Mots-clés |
+|---|---|---|
+| Précision | **100 %** | 67 % |
+| Rappel | **100 %** | 36 % |
+| Fausses accusations | **0 / 24** | 2 / 24 |
+
+**Limite honnête :** des gabarits sont plus réguliers que le vrai Web (ironie, fautes, captures d'écran, langues variées). Le chiffre réel sera plus bas ; le corpus sert surtout à prouver que les pièges sont déjoués.
+
 ## À venir
-R2 modèle d'anomalie · R8b corpus · R8c croisement des sources · R3/R4 Bedrock · R5 dashboard · R6 évaluation · R9 traçage des fonds
+R8c croisement des sources · R3/R4 Bedrock · R5 dashboard · R6 évaluation · R9 traçage des fonds
