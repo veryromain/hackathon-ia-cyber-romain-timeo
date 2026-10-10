@@ -12,6 +12,10 @@ Ajouter les entrées les plus récentes en haut.
 
 ---
 
+### 2026-10-10 15:34 — ia-2 / Timéo (avec Claude)
+- **Diagnostic Bedrock chez Timéo :** la clé est en place, c'est bien le réseau qui bloque. Sur le Wi-Fi de l'école, le nom `bedrock-runtime.us-west-2.amazonaws.com` se résout, mais la connexion TLS est coupée (« Connection was reset »), alors que `sts.us-west-2.amazonaws.com` répond. Même constat que Romain.
+- **Bloquant :** Timéo doit passer en partage de connexion pour que je valide sa clé. Je n'ai pas cherché à contourner le filtrage de l'école.
+
 ### 2026-10-10 15:33 — ia-2 / Timéo (avec Claude)
 - **Fait :** clé d'API Bedrock de Timéo rangée dans `.env` à la racine du repo (ignoré par Git, vérifié par `git check-ignore`). Modèle `.env.example` ajouté à la racine ; `.gitignore` complété par `!.env.example`, car la règle `.env.*` ignorait aussi les modèles (celui de `ia-2/` n'était jamais parti). Méthode décrite dans `shared/aws-bedrock.md`.
 - **Bloquant :** l'appel de test échoue depuis le Wi-Fi de l'école (« Connection was closed »), comme l'a vu Romain. La clé n'est donc **pas encore validée**. Elle expire vers **03:28 dimanche** : à renouveler avant le rendu.
