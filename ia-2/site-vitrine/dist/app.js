@@ -11,7 +11,7 @@ function initField(canvas) {
   const host = canvas.parentElement;
   const ctx = canvas.getContext('2d');
   const PITCH = 46, SIZE = 38, CUT = 10, OFF = (PITCH - SIZE) / 2, REACH = 130;
-  const LINE = 'rgb(211, 220, 234)', ACCENT = '36, 84, 230', CLOUD = '#e1e8f3'; // mêmes teintes que style.css
+  const LINE = 'rgba(255, 255, 255, .075)', ACCENT = '199, 250, 112', CLOUD = 'rgba(255, 255, 255, .06)'; // mêmes teintes que style.css
   const BLOBS = [[.5, .5, .54, .36], [.76, .2, .34, .24], [.22, .8, .3, .22]]; // centre et rayons, en parts de la zone
   let cols = 0, rows = 0, heat = new Float32Array(0), cloud = new Uint8Array(0);
   let pointer = null, waves = [], frame = 0, last = 0;
@@ -106,7 +106,7 @@ const VERDICTS = {
   hold: { label: 'En attente', sigs: '2/3' },
 };
 const PERSON = '<svg viewBox="0 0 12 12"><circle cx="6" cy="3.6" r="2.3"/><path d="M1.6 11c.3-2.6 2-4 4.4-4s4.1 1.4 4.4 4z"/></svg>';
-const INKS = [['#0a1b33', '#8fb1ff'], ['#2454e6', '#e8eeff'], ['#0b7f5f', '#c4ead9'], ['#f0a73a', '#0a1b33'], ['#8fb1ff', '#0a1b33']];
+const INKS = [['#16283f', '#c7fa70'], ['#c7fa70', '#142008'], ['#1b3557', '#a8bfff'], ['#ffc481', '#1a1206'], ['#a8bfff', '#0b1626']];
 
 // Petit blason tiré de l'adresse : 5 cases sur 5, symétrique, deux teintes de la charte.
 function crest(address) {
@@ -173,3 +173,24 @@ function initStream(list) {
   slots.forEach((slot, i) => later(250 + i * 1900, () => show(slot)));
 }
 document.querySelectorAll('.stream').forEach(initStream);
+
+// --- Cartes en verre : un reflet suit le curseur, et les cartes s'inclinent légèrement vers lui ---
+function initGlass(card) {
+  const tilts = card.matches('.stat, .card'); // les grands panneaux ne s'inclinent pas
+  const reach = Math.min(6, 1900 / card.offsetWidth); // degrés : moins d'angle sur une carte large
+  card.addEventListener('pointermove', e => {
+    const b = card.getBoundingClientRect(), x = (e.clientX - b.left) / b.width, y = (e.clientY - b.top) / b.height;
+    card.style.setProperty('--mx', x * 100 + '%');
+    card.style.setProperty('--my', y * 100 + '%');
+    card.style.setProperty('--lit', 1);
+    if (!tilts || calm || e.pointerType !== 'mouse') return;
+    card.classList.add('tilting');
+    card.style.setProperty('--ry', ((x - .5) * 2 * reach).toFixed(2) + 'deg');
+    card.style.setProperty('--rx', ((.5 - y) * 2 * reach).toFixed(2) + 'deg');
+  });
+  card.addEventListener('pointerleave', () => {
+    for (const name of ['--lit', '--rx', '--ry']) card.style.removeProperty(name);
+    setTimeout(() => { if (!card.matches(':hover')) card.classList.remove('tilting'); }, 400); // une fois la carte revenue à plat
+  });
+}
+document.querySelectorAll('.stat, .card, .dashboard, .closing-panel, .tabs button').forEach(initGlass);
