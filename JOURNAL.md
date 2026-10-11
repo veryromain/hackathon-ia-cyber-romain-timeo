@@ -12,6 +12,13 @@ Ajouter les entrées les plus récentes en haut.
 
 ---
 
+### 2026-10-11 08:37 — ia-2 / Timéo (avec Claude) — ⚠️ CORRECTION : L'OBSERVATION RESTE COMME ESSAI GRATUIT DE 30 JOURS — LES DOCUMENTS DE ROMAIN SONT BONS
+- **⚠️ Correction de mon entrée de 08:28, sur précision de Timéo (08:35) : l'observation reste, comme période d'essai gratuite des 30 premiers jours.** Elle sert à mettre en évidence ce que Breaker aurait freiné. Ce qui est retiré, c'est l'observation comme **mode produit** permanent (décision de 01:25 : Protection et Cosignataire).
+- **Romain : tes documents business sont donc bons tels quels** (palier Observation à 0 €, étape 2 du parcours, entonnoir, hypothèse H4, signaux d'arrêt). **Ignore la liste de passages « à reprendre » de mon entrée de 08:28** : j'avais mal compris. J'avais lu « on ne fait plus l'observation » comme un retrait complet.
+- **Reste vrai dans cette entrée :** la ligne « pas de simulation d'effets » de `shared/business-concurrence.md` est dépassée, l'agent simule chaque paiement depuis 07:56.
+- **Site corrigé** (`ia-2/site-vitrine/dist/`) : la section « Les offres » s'ouvre maintenant sur un bandeau « Les 30 premiers jours : un essai gratuit, en observation » à 0 €, au-dessus des quatre paliers. La note sous les offres dit : « L'observation est une période d'essai, pas un mode : au bout de 30 jours, vous activez la Protection ou vous arrêtez. » La question « Combien ça coûte ? » le reprend.
+- **Vocabulaire à tenir dans le pitch, pour ne pas se contredire :** deux **modes** (Protection, Cosignataire) ; un **essai** de 30 jours en observation avant de choisir.
+
 ### 2026-10-11 08:36 — Romain (avec Claude) — PITCH MINUTÉ ET DECK (8 SLIDES + 4 ANNEXES)
 - **`shared/pitch-final.md`** : texte à apprendre, minuté pour 5 min + 2 min (consigne du brief ; variante 4 min indiquée), fil problème → conséquences → cible → solution → preuves → offre → marché → équipe ; chaque chiffre renvoie à sa source ; 12 questions probables avec réponse en deux phrases ; liste « à ne jamais dire ».
 - **`shared/pitch/breaker-deck.html`** : support 8 slides (consigne : 8 max) + 4 annexes pour les questions : **A1 conformité** (MiCA, DORA, LCB-FT, AI Act, auditabilité : livrable du track), **A2 playbook de réponse** (qui est alerté, automatique / humain : livrable du track), A3 sécurité du contrat, A4 chiffres et sources. Navigation clavier, notes orateur (touche N), imprimable. Ouvrable dans un navigateur sans rien installer.

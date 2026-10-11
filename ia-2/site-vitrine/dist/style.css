@@ -313,3 +313,8 @@ h1, h2, h3, p { margin: 0; }
 .card.offer .limits li { padding: 10px 0; font-size: 14.5px; }
 @media (max-width: 1050px) { .cards.four { grid-template-columns: repeat(2, 1fr); } }
 @media (max-width: 760px) { .cards.four { grid-template-columns: 1fr; } .card .price { font-size: 34px; } }
+.card.trial { display: flex; align-items: center; justify-content: space-between; gap: 40px; margin-top: 54px; }
+.card.trial p { max-width: 720px; }
+.card.trial .price { margin: 0; white-space: nowrap; }
+.cards.after-trial { margin-top: 20px; }
+@media (max-width: 760px) { .card.trial { flex-direction: column; align-items: flex-start; gap: 18px; } }
