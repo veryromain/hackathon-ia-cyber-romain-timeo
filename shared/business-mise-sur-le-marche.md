@@ -23,9 +23,17 @@
 | **Nov.-déc. 2026** | **portage de la garde en Safe Guard** (`checkTransaction`), signature dans le navigateur, sources d'oracle en réputation apprise | observation sur ≥ 20 organisations ; premiers rapports de fin d'observation ; **mesure de H4** (part qui accepte l'essai) et du taux de faux hold réel | **H4 mesurée** ; faux hold réel < 5 % (jeu final : 5,1 %, `shared/mesures.md`) |
 | **Janv. 2027** | gel du contrat ; **audit externe** (ordre de 10 à 25 k$, non devisé, financé par la subvention) ; prime aux bugs ensuite | **premiers clients payants** : 3 à 6 attendus (C : 31 × 8,9-18,5 %, B3 § 3) ; publication du catalogue Safe Apps | **premier client payant après l'audit**, jamais avant (décision `shared/audit-contrat.md`) |
 | **Févr.-mars 2027** | déploiement sur une 2e chaîne EVM (Base ou Arbitrum : même code Solidity) ; mode Cosignataire (Premium) | ouverture EVM : SAM × 6 à 8 (C : 675-895 / 32-121) ; partenariats auditeurs | **10 clients payants** ; taux de conversion observation → payant mesuré (remplace D10) |
-| **Avr. 2027** | — | revue du prix avec les données réelles (B8 bis) | **17 clients Standard = point mort** (C : 7 300 € / 449 €, B6 § 3) visé pour le T2 2027, pas avant |
+| **Avr. 2027** | — | revue du prix avec les données réelles (B8 bis) ; 2e écosystème EVM abordé | 10 clients payants ; **le point mort (17 Standard) n'est pas atteignable au T2 2027 par l'entonnoir sourcé : voir § 3 bis** |
 
-**H9** : la subvention couvre l'audit et six mois de coûts fixes (ordre de 40 à 70 k€ : 10-25 k$ d'audit + 7 300 €/mois × 6 ; montant Retro9000 et Bpifrance **non vérifiés**, à demander aux mentors). **H10** : le portage Safe Guard prend 6 à 8 semaines à un développeur (estimation de Timéo à confirmer ; la doc Safe prévoit le mécanisme, le risque est d'intégration, pas de concept).
+### 3 bis. Quand le point mort est-il atteignable ? (corrigé le 11/10 à la demande de Romain)
+Entonnoir à l'envers, avec les mêmes taux : 17 clients Standard ÷ 8,9-18,5 % (D10) = **92 à 191 organisations en observation** ; ÷ 50 % (H4) = **184 à 382 organisations à contacter**. Avalanche en fournit **62** (B3 § 3). Il manque donc 120 à 320 organisations sur l'EVM, et aucun canal sourcé ne les atteint en un trimestre.
+- **Levier 1, rythme d'écosystèmes (H11)** : si chaque écosystème EVM abordé rapporte comme Avalanche (62 organisations contactables par semestre via sa fondation et son programme de subventions), il faut **3 à 6 écosystèmes**, soit un point mort entre le **T4 2027 et le T2 2028**. C'est ce que la subvention (H9) doit couvrir.
+- **Levier 2, mix de paliers** : point mort à **8 clients Premium** (C : 7 300 / 990), ou **2 Premium + 10 Standard** (C : 1 980 + 4 490 = 6 470 €, 89 %). Un seul client > 10 M$ avance la date d'un trimestre : c'est pourquoi la démo sur demande reste un canal, même en quatrième.
+- **Ce qu'on dit au jury** : « point mort à 17 clients ; par l'entonnoir sourcé, entre fin 2027 et mi-2028 ; plus tôt avec un client Premium ».
+
+**Mesure de H4** : part des organisations présentées qui branchent Breaker en lecture seule dans les 30 jours = connectées ÷ présentées, sur les 62 du canal Avalanche. Précision à 95 % : ± 12 points (C : 1,96 × √(0,5 × 0,5 / 62) = 0,124), suffisante pour distinguer 50 % du signal d'arrêt à 25 %. Se mesure avant tout développement du Guard.
+
+**H9** : la subvention couvre l'audit et douze mois de coûts fixes jusqu'au point mort (ordre de 100 à 115 k€ : 10-25 k$ d'audit + 7 300 €/mois × 12 ; montant Retro9000 et Bpifrance **non vérifiés**, à demander aux mentors). **H10** : le portage Safe Guard prend 6 à 8 semaines à un développeur (estimation de Timéo à confirmer ; la doc Safe prévoit le mécanisme, le risque est d'intégration, pas de concept).
 
 ## 4. B8 — Décision : **GO, avec quatre ajustements**
 **Le besoin est-il confirmé ?** Par les faits, oui : les plus grosses pertes de 2025-2026 viennent de signataires trompés ou de clés compromises dans le processus de signature (Bybit 1,46 Md$, Drift ≈ 280 M$, `shared/business-probleme.md`), et nos cibles n'ont pas d'équipe pour y répondre. Par les clients, **pas encore** : aucun entretien n'a été mené (B5 non fait). La décision est donc un **go d'amorçage** : on investit dans l'observation gratuite, qui est précisément le moyen de confirmer le besoin avec des données, pas avec des avis.
@@ -45,4 +53,4 @@
 ## 5. Les trois phrases pour la slide « go-to-market »
 1. « Le client a déjà le coffre : Breaker se branche dessus en 5 minutes, observe gratuitement 30 jours, puis s'active en un clic. »
 2. « Première année : 62 organisations présentées par l'écosystème Avalanche, 3 à 6 clients payants, l'audit externe avant le premier euro. »
-3. « Point mort à 17 clients, visé au T2 2027 avec l'ouverture EVM : le même code tourne sur toute chaîne compatible. »
+3. « Point mort à 17 clients : par l'entonnoir sourcé, entre fin 2027 et mi-2028 en abordant un écosystème EVM par semestre, le même code tournant sur toute chaîne compatible ; plus tôt avec un seul client Premium. »

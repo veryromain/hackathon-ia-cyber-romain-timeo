@@ -12,6 +12,9 @@ Ajouter les entrées les plus récentes en haut.
 
 ---
 
+### 2026-10-11 08:22 — Romain (avec Claude) — CORRECTION : LE POINT MORT AU T2 2027 N'ÉTAIT PAS JUSTIFIÉ
+- Romain a demandé la justification des 17 clients au T2 2027 : l'entonnoir inversé (17 ÷ 8,9-18,5 % ÷ 50 %) exige **184 à 382 organisations contactées**, Avalanche n'en fournit que 62. Corrigé dans `shared/business-mise-sur-le-marche.md` § 3 bis : point mort entre **T4 2027 et T2 2028** si on aborde un écosystème EVM par semestre (H11), ou plus tôt par le mix (8 Premium, ou 2 Premium + 10 Standard). H9 relevée à ≈ 100-115 k€ (12 mois de coûts fixes + audit). **H4 définie** : connectées en lecture seule sous 30 jours ÷ présentées, sur 62 organisations, précision ± 12 points.
+- Leçon notée pour le pitch : toute date de rentabilité se déduit de l'entonnoir, jamais l'inverse.
 ### 2026-10-11 08:32 — ia-2 / Timéo (avec Claude) — ⚠️ JE REPRENDS LE RELAIS FUJI SUR LE PC : DÉMO « COMME EN FINALE »
 - **Demande de Timéo : faire tourner une démo sur Fuji comme si c'était la finale.** Il n'y a qu'un relais Fuji à la fois, et celui de la répétition de 07:31 tourne encore. **Je l'arrête et j'en relance un. Romain, Codex : ne lancez pas de relais Fuji avant mon entrée « relais Fuji arrêté ».**
 - **J'arrête les trois programmes de la répétition** (relais 54372, moteur 21232, tableau de bord 50240), laissés actifs pour inspection depuis 07:40. Le moteur devait de toute façon être redémarré pour prendre la clé Bedrock (entrée de 08:19), et ces programmes bloquaient `git pull --rebase` sur ce PC (entrée de 08:20). **Codex : le dossier `shared/repetition-finale-20261011/` n'est pas modifié**, la démo écrit dans un dossier à part, `shared/demo-finale-20261011/`.
