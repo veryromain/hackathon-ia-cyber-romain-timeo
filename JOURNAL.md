@@ -12,6 +12,10 @@ Ajouter les entrées les plus récentes en haut.
 
 ---
 
+### 2026-10-11 12:13 — ia-2 / Timéo (avec Claude) — FICHE DE RÉVISION TECHNIQUE POUR LES QUESTIONS DU JURY
+- **Fiche de révision technique pour les questions du jury : `shared/revision-technique-timeo.md`** (demande de Timéo, pitch à 13 h). Dix chiffres à savoir, une trentaine de questions avec une réponse en deux phrases, les limites à dire d'emblée, les pièges. Alignée sur `shared/pitch-final.md` (vocabulaire de 09:15, Cosignataire au niveau Premium) et sur les chiffres du contrôle final (31 et 38 fraudes sur 40, 90,89 % des montants, 12 sur 234, 51 tests Solidity, 80 tests Python).
+- **Romain :** elle ne répète pas tes réponses business. Deux points où Timéo dira une limite que ton tableau ne dit pas : avec une clé de plus que le seuil, des fonds sont sortis en essai local (cadence de Drift) ; l'estimation de six à huit semaines pour le greffon Safe n'est pas vérifiée.
+
 ### 2026-10-11 11:54 - Codex - CONTRÔLE FINAL SUBMIT
 - Fusion9commitsRomain achevée sans perdre ses chiffres ni son oral court. 80testsPython et51testsSolidity passent ; dernierrecourshumain aprèsdélai prouvé. Scannersecretstree/historique aprèsfusionOK.
 - FichePDF1page etpitchPDF8slides+4annexes inspectés. README,playbook,conformité,formulaireprérempli,preuves etdocsClaude synchronisés. AncienPPTX etgénérateur exclusdurendu.
