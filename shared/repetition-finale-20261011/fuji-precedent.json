@@ -1,0 +1,29 @@
+{
+  "network": "fuji",
+  "chain_id": 43113,
+  "deploy_block": 59279115,
+  "musd": "0x73904cC618CdA9B1ec28583D190669038038d58B",
+  "registry": "0xF8CeeaD7e876bb70d7B04AAeaDbdB493FBAA182A",
+  "wallet": "0x5DfA597838A750849d809954527DBfa586F12Eed",
+  "owners": [
+    "0x59539eF0968B7981d881Bd241103Fc3a7baDcF5a",
+    "0xC129ca0D19F97CED30C1e07c5f65a5415B5c857E",
+    "0xE0B5a7A05dd63A4b1d2Cedfc7dB92ac344Fccdb6",
+    "0x0e4BC17A92c880bBA4E1eb86EC85e42D5e7bE86A",
+    "0x303311225DA6775bf76e1585e93a7eD01998639d"
+  ],
+  "monitor": "0xF7e450CED36969c27F483D02ea103f4457cf7411",
+  "oracle": "0x9a78F68e14B65c898069bBb7B8e2E73CcBb62f5d",
+  "known_recipients": [
+    "0x3f7955b8895f5140b072276d92A2c8D05fA19438",
+    "0x800764A3dd203476193c6A065183814be5e1A508"
+  ],
+  "config": {
+    "reviewDelay": 30,
+    "holdDelay": 180,
+    "keyLifetime": 1296000,
+    "periodLength": 86400,
+    "periodCap": "100000000000000000000000",
+    "stepUpExtra": 1
+  }
+}

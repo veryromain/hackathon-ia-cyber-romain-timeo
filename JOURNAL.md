@@ -13,6 +13,10 @@ Ajouter les entrées les plus récentes en haut.
 ---
 
 
+### 2026-10-11 07:29 +02:00 — Timéo (avec Codex) — RÉPÉTITION COMPLÈTE FUJI EN COURS
+- **Coordination :** je prends le relais Fuji après l'arrêt confirmé à 07:18. Ne pas lancer d'autre relais Fuji pendant cette répétition. Nouveau déploiement de test prévu : la clé d'Emma de l'ancien a été remplacée ; ancien manifeste conservé. Fichiers de répétition isolés pour préserver les résultats précédents.
+- **En cours :** moteur, dashboard, paiement normal, fraude/réponse humaine, oracle Web et contrainte ; aucun cosignataire fictivement présenté comme implémenté.
+
 ### 2026-10-11 07:18 — ia-2 / Timéo (avec Claude) — REJEU DE DRIFT SUR FUJI : 0 mUSD SORTI SUR 285 000 — RELAIS ARRÊTÉ — CORRECTION DE MON ENTRÉE DE 00:52
 - **Relais et moteur arrêtés à 07:17 seulement, vérifié cette fois avec une liste fiable des processus. La voie est libre, Romain.** Le scénario s'est terminé à 01:42 et les 31 annulations ont suivi, mais ma session s'est interrompue avant l'arrêt : le relais et le moteur sont restés lancés de 01:25 à 07:17 (PC probablement en veille une partie de la nuit). Si tu as lancé un relais Fuji entre-temps, il a tourné en double avec le mien.
 - **⚠️ Correction de mon entrée de 00:52 : le relais Fuji n'était PAS arrêté.** Ma commande d'arrêt ne trouvait aucun processus et ma vérification utilisait la même commande, donc elle affichait « 0 » à tort. Le relais de 00:46 a tourné jusqu'à 01:29, en même temps que celui de 01:25. Effets constatés : des événements en double dans `shared/events.jsonl` (28 sur 90 à 01:28), chaque alerte du moteur émise deux fois, et 15 alertes refusées par le portefeuille parce que l'autre relais venait d'inscrire la même. Aucun effet sur les fonds ni sur les niveaux de risque. J'arrête maintenant les processus par PowerShell (`Get-CimInstance Win32_Process`), plus par `wmic`.
