@@ -1,0 +1,40 @@
+{
+  "network": "fuji",
+  "chain_id": 43113,
+  "scammer": "0xada1e9be0621330930d31b0ccbc54c72e565f148",
+  "mules": [
+    "0x933dc3f069128c32cea05f881cd0a814313e3c37",
+    "0x98e9897eed61a8b03e7a892c5d624c678c464808",
+    "0xaccccb956a73bf5d8aa9c29909712e42a849f9a9"
+  ],
+  "innocent_dusted": "0xad676d03aed22761d620c631758f94028dbbf1c8",
+  "known_service": "0xd0bfb7c0353ca3b6bf2b72e1dd26d1ee4edbd2c0",
+  "scammer_outflows_musd": {
+    "mules": [
+      18000,
+      12000,
+      10000
+    ],
+    "known_service": 30000,
+    "innocent_dusted": 0.01,
+    "total": 70000.01
+  },
+  "payments": [
+    {
+      "payment_id": 6,
+      "label": "fraud",
+      "scenario": "tainted_mule"
+    },
+    {
+      "payment_id": 7,
+      "label": "normal",
+      "scenario": "tainted_innocent_dusted"
+    },
+    {
+      "payment_id": 8,
+      "label": "normal",
+      "scenario": "tainted_known_service"
+    }
+  ],
+  "expected": "Le paiement vers la mule doit être freiné (TAINTED_FUNDS) ; ceux vers l'innocent et vers le service connu ne doivent rien recevoir à ce titre."
+}
