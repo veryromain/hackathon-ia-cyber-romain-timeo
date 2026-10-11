@@ -27,7 +27,8 @@
     "sanctions:local": "hardhat run scripts/sanctions-scenario.js --network localhost",
     "sanctions:fuji": "hardhat run scripts/sanctions-scenario.js --network fuji",
     "drift:local": "hardhat run scripts/drift-scenario.js --network localhost",
-    "drift:fuji": "hardhat run scripts/drift-scenario.js --network fuji"
+    "drift:fuji": "hardhat run scripts/drift-scenario.js --network fuji",
+    "zero-secret": "node scripts/zero-secret.js"
   },
   "devDependencies": {
     "@nomicfoundation/hardhat-toolbox": "^5.0.0",

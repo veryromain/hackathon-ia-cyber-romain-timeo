@@ -12,6 +12,15 @@ Ajouter les entrées les plus récentes en haut.
 
 ---
 
+### 2026-10-11 07:38 — ia-2 / Timéo (avec Claude) — ✅ ZÉRO SECRET VÉRIFIÉ SUR LE PC DE TIMÉO — ROMAIN : À LANCER SUR LE MAC
+- **Vérification « zéro secret » faite sur le PC de Timéo (livrable L8) : aucun secret dans les fichiers suivis ni dans l'historique complet, toutes branches.** Cherchés par leur vraie valeur, sans jamais l'afficher : la clé Bedrock, le jeton Apify, la phrase secrète Fuji et les clés privées des 20 premiers comptes qui en dérivent. Cherchés aussi par morceaux de 20 caractères (au cas où une transcription les aurait coupés) et par motifs génériques (clés AWS, jetons GitHub, Telegram, Slack, blocs de clé privée, `SMTP_PASSWORD=…`).
+- **Nouveau : `cd ia-2 && npm run zero-secret`** (`ia-2/scripts/zero-secret.js`). Sort avec le code 1 s'il trouve quelque chose. Essayé sur un dépôt d'essai avec un faux jeton ajouté puis supprimé : il le retrouve dans l'historique.
+- **⚠️ Romain, à faire sur le Mac : lance `npm run zero-secret`.** La recherche part des valeurs du `.env` du poste où elle tourne. Tes secrets à toi (Telegram, SMTP, ta clé Bedrock) ne sont couverts ici que par les motifs génériques.
+- **Preuve et marche à suivre pour le jury : `shared/verification-zero-secret.md`.**
+- **Retiré du suivi Git : `shared/flags-rejetes.jsonl`** (citations de pages réelles ; il était ignoré mais avait été ajouté par un commit automatique). Le fichier reste sur le disque. Son contenu était anodin (deux lignes tirées d'OpenSanctions et d'Etherscan).
+- **Laissés tels quels, sans secret ni donnée personnelle :** `shared/actions.jsonl` (vide), `shared/notifications.jsonl` (2 lignes), `shared/listes-publiques.jsonl` (listes publiques). Ils sont dans `.gitignore` mais suivis : à toi de dire si c'est voulu.
+- **Ancien dépôt `veryromain/hackathon-ia-cyber` :** même recherche, rien trouvé. Il est privé.
+- **Décision à prendre à deux avant midi : comment le jury accède au dépôt.** Il est privé. Soit on invite le jury en lecture, soit on le rend public. Public expose aussi `conversations/` et le détail de la clé de contrainte dans le journal, `ia-2/README.md` et `shared/mesures.md`, que Timéo a voulu garder hors du site. Si public : activer « Secret scanning » et « Push protection » dans les réglages GitHub (seul Romain, propriétaire, le peut).
 
 ### 2026-10-11 07:29 +02:00 — Timéo (avec Codex) — RÉPÉTITION COMPLÈTE FUJI EN COURS
 - **Coordination :** je prends le relais Fuji après l'arrêt confirmé à 07:18. Ne pas lancer d'autre relais Fuji pendant cette répétition. Nouveau déploiement de test prévu : la clé d'Emma de l'ancien a été remplacée ; ancien manifeste conservé. Fichiers de répétition isolés pour préserver les résultats précédents.
