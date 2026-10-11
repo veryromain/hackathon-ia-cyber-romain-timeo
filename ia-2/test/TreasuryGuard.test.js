@@ -54,6 +54,20 @@ async function propose(wallet, signer, to, amount, memo = "paiement") {
 }
 
 describe("TreasuryGuard", function () {
+  it("le refus du siège agent reste contournable par trois humains après délai", async function () {
+    const { wallet, musd, alice, bruno, chloe, emma, monitor, supplier } = await loadFixture(deployFixture);
+    // david est le siège agent : aucune de ses signatures n'est utilisée.
+    const id = await propose(wallet, alice, supplier, e18(100), "dérogation humaine");
+    await wallet.connect(monitor).flagRisk(id, Risk.Hold, "AGENT_REFUSAL");
+    await wallet.connect(bruno).approve(id);
+    await wallet.connect(chloe).approve(id);
+    await time.increase(GUARDED.reviewDelay);
+    await expect(wallet.connect(alice).execute(id)).to.be.revertedWithCustomError(wallet, "TooEarly");
+    await time.increase(GUARDED.holdDelay);
+    await expect(wallet.connect(emma).execute(id)).to.emit(wallet, "PaymentExecuted");
+    expect(await musd.balanceOf(supplier.address)).to.equal(e18(100));
+  });
+
   describe("paiement normal", function () {
     it("s'exécute avec 2 signatures sur 5 après le délai d'examen", async function () {
       const { wallet, musd, alice, bruno, supplier } = await loadFixture(deployFixture);

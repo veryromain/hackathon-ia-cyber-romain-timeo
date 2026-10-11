@@ -257,7 +257,7 @@ def tableau():
     with st.expander("Journal de la chaîne (derniers événements)"):
         if events:
             df = pd.DataFrame([{"heure": heure(e["timestamp"]), "type": e["type"],
-                                "paiement": e.get("data", {}).get("payment_id", ""),
+                                "paiement": str(e.get("data", {}).get("payment_id", "")),
                                 "par": court(e.get("tx_from", "")), "tx": e["tx_hash"][:12] + "…"} for e in events[-40:][::-1]])
             st.dataframe(df, hide_index=True, use_container_width=True)
 

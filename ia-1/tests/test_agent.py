@@ -91,3 +91,30 @@ def test_au_demarrage_en_direct_les_vieux_paiements_ne_sont_pas_redecides(tmp_pa
     monkeypatch.setattr(module, "simuler", lambda *a: {"part_de_la_tresorerie": 0.01, "transfert_reussirait": True})
     a = Agent(Moteur([CONNU]), "cosignataire", AGENT, "http://noeud.test", raisonner=False, sortie_actions=tmp_path / "actions.jsonl", fenetre_s=600)
     assert a.traiter(proposition(CONNU)) is None and not (tmp_path / "actions.jsonl").exists()  # T0 est vieux de plusieurs mois
+
+
+def test_cosignataire_ne_signe_pas_si_simulation_indisponible(tmp_path, monkeypatch):
+    def indisponible(*a):
+        raise TimeoutError("faux échec RPC")
+    monkeypatch.setattr(module, "simuler", indisponible)
+    actions, alertes = tmp_path / "actions.jsonl", tmp_path / "alertes.jsonl"
+    agent = Agent(Moteur([CONNU]), "cosignataire", AGENT, "http://noeud.test", raisonner=False,
+                  sortie_actions=actions, sortie_alertes=alertes)
+    try:
+        assert agent.traiter(proposition(CONNU)) == "freiner"
+        assert not actions.exists()
+        assert "SIM_UNAVAILABLE" in alertes.read_text(encoding="utf-8")
+    finally:
+        agent.file_web.shutdown(wait=True)
+
+
+def test_simulation_detecte_un_retour_erc20_false(monkeypatch):
+    class Reponse:
+        def raise_for_status(self): pass
+        def json(self):
+            return [{"id": i, "result": "0x" + format(0 if i == 3 else 100000, "064x")} for i in range(4)]
+    import httpx
+    monkeypatch.setattr(httpx, "post", lambda *a, **k: Reponse())
+    sim = module.simuler("http://noeud.test", PORTEFEUILLE, JETON, CONNU, 100)
+    assert sim["transfert_reussirait"] is False
+    assert plancher(None, sim, None)[0] == "freiner"

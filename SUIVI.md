@@ -7,6 +7,9 @@
 **Dernière mise à jour :** 2026-10-11 09:50, par Claude (Timéo) — L1 : vidéo construite en page animée, reste à l'enregistrer
 **Rendu (gel définitif) :** dim. 11/10 **12:00** · **Checkpoint :** sam. **18:30** · **Pitch :** dim. 13:00
 
+
+**Contrôle final Codex 2026-10-11 11:26 :** 78 tests Python passent ; dossier `shared/submit` ajouté (fiche, playbook, formulaire, métriques). Deck HTML relu, PPTX historique obsolète. Vidéo finale et formulaire en attente de Tim ; dépôt privé, accès jury requis.
+
 ---
 
 ## 0. Le projet en 3 lignes

@@ -1,0 +1,11 @@
+{
+  "commit_sha": "c19efe62fedd4a3522752b5d829155089eda6c18",
+  "version_id": "appgprj_6aca7f497cc48191a08ca98674a99c67~appgver_891ec24fef0c81918443f9b4af8ced37",
+  "version_number": 5,
+  "status": "succeeded",
+  "url": "https://breaker-treasury.espace-de-tr-0859.chatgpt.site",
+  "eur_usd_reference": 1.1206,
+  "reference_date": "2026-10-09",
+  "source": "https://www.ecb.europa.eu/stats/policy_and_exchange_rates/euro_reference_exchange_rates/html/eurofxref-graph-usd.en.html",
+  "usdc_preview_assumption": "1 USDC = 1 USD; indicative, final invoice confirmed"
+}

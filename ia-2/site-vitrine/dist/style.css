@@ -319,6 +319,20 @@ h1, h2, h3, p { margin: 0; }
 .cards.after-trial { margin-top: 20px; }
 @media (max-width: 760px) { .card.trial { flex-direction: column; align-items: flex-start; gap: 18px; } }
 /* Choix annuel / mensuel : boutons radio, sans script */
+.payment-choice { margin: 28px 0 0; padding: 20px; min-width: 0; border: 1px solid var(--glass-edge); border-radius: 20px; background: rgba(255,255,255,.035); }
+.payment-choice legend { padding: 0 8px; color: var(--ink); font-size: 18px; font-weight: 600; }
+.pay-input { position: absolute; opacity: 0; pointer-events: none; }
+.pay-options { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.pay-options label { display: flex; flex-direction: column; gap: 4px; padding: 14px 18px; border: 1px solid var(--glass-edge); border-radius: 13px; color: var(--muted); cursor: pointer; transition: background .2s, color .2s; }
+.pay-options strong { font-size: 17px; font-weight: 600; }
+.pay-options small { font-size: 13px; }
+#pay-usdc:checked ~ .pay-options label[for="pay-usdc"], #pay-eur:checked ~ .pay-options label[for="pay-eur"], #pay-usd:checked ~ .pay-options label[for="pay-usd"] { background: var(--accent); color: var(--on-accent); border-color: var(--accent); }
+#pay-usdc:focus-visible ~ .pay-options label[for="pay-usdc"], #pay-eur:focus-visible ~ .pay-options label[for="pay-eur"], #pay-usd:focus-visible ~ .pay-options label[for="pay-usd"] { outline: 2px solid var(--accent); outline-offset: 3px; }
+.pay-summary { margin: 16px 0 8px; font-size: 15px; color: var(--ink); }
+.pay-summary span { display: none; }
+#pay-usdc:checked ~ .pay-summary .pay-usdc, #pay-eur:checked ~ .pay-summary .pay-eur, #pay-usd:checked ~ .pay-summary .pay-usd { display: inline; }
+.pay-reference { margin: 0; font-size: 13px; line-height: 1.6; color: var(--muted); max-width: 900px; }
+@media (max-width: 600px) { .payment-choice { padding: 16px; } .pay-options { grid-template-columns: 1fr; } .pay-options label { flex-direction: row; align-items: center; justify-content: space-between; gap: 12px; } .payment-choice legend { font-size: 16px; } }
 .bill-input { position: absolute; opacity: 0; pointer-events: none; }
 .bill-switch { display: inline-flex; gap: 4px; margin-top: 34px; padding: 5px; border: 1px solid var(--glass-edge); border-radius: 999px; background: rgba(255, 255, 255, .05); }
 .bill-switch label { cursor: pointer; padding: 9px 20px; border-radius: 999px; font-size: 15px; color: var(--muted); transition: background .2s, color .2s; }
@@ -334,3 +348,11 @@ h1, h2, h3, p { margin: 0; }
 .card .billing { margin: 0 0 4px; font-size: 13.5px; color: var(--accent); }
 .card .billing.monthly { color: var(--muted); }
 .card.offer.flat .price { padding-top: 22px; } /* « Sur devis » aligné sur les prix voisins */
+
+/* Pricing currency: compact units preserve card width in USDC. */
+.price [data-eur] { white-space: nowrap; }
+.price .currency-unit { font-size: .43em; letter-spacing: 0; }
+.price s .currency-unit { font-size: inherit; }
+.pay-conversion { margin: 12px 0 5px; color: var(--accent); font-size: 14px; line-height: 1.6; }
+.pay-rate-source { margin: 0 0 10px; color: var(--muted); font-size: 12px; line-height: 1.6; }
+.pay-rate-source a { color: inherit; text-decoration: underline; }

@@ -73,7 +73,19 @@ def simuler(rpc: str, portefeuille: str, jeton: str, destinataire: str, montant:
         ("eth_call", [{"from": portefeuille, "to": jeton, "data": SELECTEURS["transfer"] + _mot(destinataire) + _mot(montant)}, "latest"]),
     ]
     lot = [{"jsonrpc": "2.0", "id": i, "method": m, "params": p} for i, (m, p) in enumerate(appels)]
-    reponses = sorted(httpx.post(rpc, json=lot, timeout=8).json(), key=lambda r: r["id"])
+    reponse = httpx.post(rpc, json=lot, timeout=8)
+    reponse.raise_for_status()
+    reponses = sorted(reponse.json(), key=lambda r: r["id"])
+    if len(reponses) != 4 or [r["id"] for r in reponses] != list(range(4)):
+        raise ValueError("réponses RPC incomplètes")
+    if any("error" in r or not r.get("result") for r in reponses[:3]):
+        raise ValueError("soldes ou plafond indisponibles")
+    transfert = reponses[3]
+    # ERC-20 : l'absence de revert ne suffit pas ; un retour false est un échec.
+    resultat = transfert.get("result")
+    reussi = "error" not in transfert and resultat == "0x" + "0" * 63 + "1"
+    if "error" not in transfert and resultat not in ("0x" + "0" * 64, "0x" + "0" * 63 + "1"):
+        raise ValueError("résultat du transfert non vérifiable")
     entier = lambda r: int(r["result"], 16) if r.get("result") not in (None, "0x") else None
     tresorerie = entier(reponses[0])
     sim = {
@@ -83,7 +95,7 @@ def simuler(rpc: str, portefeuille: str, jeton: str, destinataire: str, montant:
         "reste_apres_musd": (tresorerie - montant) / regles.UNITE if tresorerie is not None else None,
         "solde_actuel_du_destinataire_musd": (entier(reponses[1]) or 0) / regles.UNITE,
         "deja_sorti_sur_la_fenetre_musd": (entier(reponses[2]) or 0) / regles.UNITE,
-        "transfert_reussirait": "error" not in reponses[3],
+        "transfert_reussirait": reussi,
     }
     if "error" in reponses[3]:
         sim["erreur_du_transfert"] = str(reponses[3]["error"].get("message", ""))[:120]
@@ -173,7 +185,7 @@ class Agent:
             try:
                 sim = simuler(self.rpc, ev["address"], p["token"], p["to"], p["amount"])
             except Exception as err:
-                sim = {"erreur": f"simulation impossible : {str(err)[:100]}"}
+                sim = {"erreur": f"simulation impossible ({type(err).__name__})"}
         h = p.get("historique")
         dossier = {
             "paiement": {"id": pid, "destinataire": p["to"], "montant_musd": p["amount"] / regles.UNITE, "libelle": p.get("memo", ""),
@@ -184,6 +196,9 @@ class Agent:
             "web": web,
         }
         base, raisons_agent = plancher(alerte, sim if sim and "erreur" not in sim else None, web)
+        if self.mode == "cosignataire" and (not sim or "erreur" in sim):
+            base = max(base, "freiner", key=AVIS.index)
+            raisons_agent.append({"code": "SIM_UNAVAILABLE", "detail": "simulation non vérifiable : demander une validation humaine, sans cosigner", "evidence": []})
         modele = self.avis_du_modele(dossier)
         avis = max(base, modele["avis"], key=AVIS.index) if modele else base
         if modele and AVIS.index(modele["avis"]) > AVIS.index(base):

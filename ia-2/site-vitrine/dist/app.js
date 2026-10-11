@@ -1,3 +1,36 @@
+// Pricing preview only. EUR remains the billing reference; no external request.
+(() => {
+  const pricing = document.querySelector('#offres');
+  if (!pricing) return;
+  const usdPerEuro = 1.1206; // ECB reference rate, 2026-10-09. Refresh on publication.
+  function updatePriceCurrency() {
+    const selected = pricing.querySelector('input[name="devise-paiement"]:checked');
+    const currency = selected?.id === 'pay-eur' ? 'EUR' : selected?.id === 'pay-usd' ? 'USD' : 'USDC';
+    const factor = currency === 'EUR' ? 1 : usdPerEuro;
+    const unit = currency === 'EUR' ? '€' : currency === 'USD' ? '$' : 'USDC';
+    const formatter = new Intl.NumberFormat('fr-FR', {
+      minimumFractionDigits: currency === 'EUR' ? 0 : 2,
+      maximumFractionDigits: currency === 'EUR' ? 0 : 2,
+    });
+    pricing.dataset.currency = currency;
+    pricing.querySelectorAll('[data-eur]').forEach(element => {
+      const number = formatter.format(Number(element.dataset.eur) * factor);
+      const currencyUnit = document.createElement('span');
+      currencyUnit.className = 'currency-unit';
+      currencyUnit.textContent = unit;
+      element.replaceChildren(document.createTextNode(number + '\u00a0'), currencyUnit);
+      if (element.tagName === 'S') element.setAttribute('aria-label', 'au lieu de ' + number + ' ' + currency);
+    });
+    pricing.querySelector('[data-quote-currency]').textContent = 'Devis en ' + (currency === 'USDC' ? 'USDC sur Avalanche' : currency === 'EUR' ? 'euros' : 'dollars américains');
+    const note = pricing.querySelector('#conversion-note');
+    note.textContent = currency === 'EUR'
+      ? 'Prix de référence en euros. Le choix annuel ou mensuel reste applicable.'
+      : 'Conversion indicative : 1 € = 1,1206 USD · taux BCE du 09/10/2026.' + (currency === 'USDC' ? ' Hypothèse de l’aperçu : 1 USDC = 1 USD, sur Avalanche.' : '') + ' Montant final confirmé sur la facture avant paiement.';
+  }
+  pricing.querySelectorAll('input[name="devise-paiement"]').forEach(input => input.addEventListener('change', updatePriceCurrency));
+  updatePriceCurrency();
+})();
+
 const scenarios={normal:{recipient:'Infrastructure RPC',amount:'2 400',score:12,verdict:'Sans friction',className:'normal',reason:'Prestataire déjà connu, montant habituel et aucune rafale de paiements.',approvals:'2 signatures sur 5',delay:'Aucun',detail:'Le garde conserve les exigences ordinaires du portefeuille. Ce scénario illustre un paiement normal ; aucune transaction n’est signée ou transmise.'},new:{recipient:'Nouveau prestataire',amount:'12 000',score:56,verdict:'Signature supplémentaire',className:'step-up',reason:'Ce destinataire apparaît pour la première fois. Une validation indépendante permet de vérifier ses coordonnées.',approvals:'3 signatures sur 5',delay:'Aucun délai de risque',detail:'Dans cet exemple, le seuil passe de 2 à 3 signatures. Le troisième signataire vérifie la demande avant de signer dans son propre portefeuille.'},risk:{recipient:'Destinataire signalé',amount:'95 000',score:93,verdict:'En attente',className:'hold',reason:'Une adresse signalée, un montant hors habitudes et plusieurs demandes rapprochées justifient une mise en attente.',approvals:'3 signatures sur 5',delay:'Selon votre politique',detail:'La mise en attente donne aux signataires le temps de vérifier les preuves. Le signalement peut être contesté ; le moniteur ne peut pas transférer vos fonds.'}};
 const tabs=[...document.querySelectorAll('[data-scenario]')];function selectScenario(tab){const s=scenarios[tab.dataset.scenario];tabs.forEach(t=>{const active=t===tab;t.setAttribute('aria-selected',String(active));t.tabIndex=active?0:-1});document.querySelector('#panel').setAttribute('aria-labelledby',tab.id);for(const id of ['recipient','amount','reason','approvals','delay'])document.querySelector('#'+id).textContent=s[id];const verdict=document.querySelector('#verdict');verdict.textContent=s.verdict;verdict.className='status '+s.className;document.querySelector('#score').textContent=s.score+' / 100';document.querySelector('#bar').style.width=s.score+'%';document.querySelector('#bar').style.background=s.className==='hold'?'var(--orange)':s.className==='step-up'?'var(--blue)':'var(--green)';document.querySelector('#detail').textContent=s.detail;document.querySelector('#detail').hidden=true;document.querySelector('#explain').setAttribute('aria-expanded','false');}tabs.forEach((tab,i)=>{tab.addEventListener('click',()=>selectScenario(tab));tab.addEventListener('keydown',e=>{let n;if(e.key==='ArrowRight'||e.key==='ArrowDown')n=(i+1)%tabs.length;if(e.key==='ArrowLeft'||e.key==='ArrowUp')n=(i+tabs.length-1)%tabs.length;if(e.key==='Home')n=0;if(e.key==='End')n=tabs.length-1;if(n!==undefined){e.preventDefault();tabs[n].focus();selectScenario(tabs[n])}})});document.querySelector('#explain').addEventListener('click',()=>{const detail=document.querySelector('#detail');detail.hidden=!detail.hidden;document.querySelector('#explain').setAttribute('aria-expanded',String(!detail.hidden))});selectScenario(tabs[0]);
 

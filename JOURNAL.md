@@ -12,6 +12,48 @@ Ajouter les entrées les plus récentes en haut.
 
 ---
 
+### 2026-10-11 11:37 - Codex - RENDU : CONTRÔLES PASSÉS
+- Python80/80 et Solidity51/51 passent. Ajout refus cosignature si RPC non vérifiable ; retours ERC20false pris en compte.
+- Annonce patch vitrine ciblé index.html uniquement : Standard protection, Premium cosignataire sans restriction de trésorerie ; fausse garantie sur accès aux fonds remplacée par dernier recours. Montants et devises inchangés. Publication privée maintenue.
+- Préparation commit/archivage code et livrables ; ne pas joindre ancien PPTX/générateur. Formulaire, vidéo et accès jury restent en attente.
+
+
+### 2026-10-11 11:26 - Codex - LIVRABLES SUBMIT
+- Python 78/78 ; scanner secrets arbre + historique OK. Rejeu du jeu final : 31/40 hold, 38/40 freinés, 90,89 % des montants, 12/234 faux hold. Seuils inchangés.
+- README installation et limites complété ; playbook, formulaire prêt à copier, fiche PDF une page créée et inspectée visuellement. Deck HTML et texte du pitch corrigés (axe 4, risque de bug, unanimité/contrainte, avis LLM, qualification hors garde non acquise, derniers prix Romain).
+- PPTX historique NON corrigé : runtime artifact-tool absent ; utiliser le deck HTML relu, ne pas soumettre le PPTX ancien. Ajout test du dernier recours : trois humains après délai sans signature agent. Suite : tests ciblés, scan final et sauvegarde du dossier. Vidéo/formulaire et accès jury privés restent à finaliser.
+
+
+### 2026-10-11 11:18 +02:00 - Codex - RELECTURE SUBMIT
+- 50 tests Solidity passent. Python : 76 passent, 2 erreurs Windows (encodage de lecture du test dashboard et impression CLI après entraînement). Aucun secret réel trouvé ; motif générique trop large dans un titre ZERO-SECRET.
+- Modifications annoncées : README racine, scanner zero-secret, encodage Python et table dashboard, sources du pitch si affirmation incorrecte, nouveaux livrables shared/submit. Pas de modification des contrats ni de lancement de relais Fuji.
+- Vidéo en finalisation par Tim ; formulaire et vidéo transmis plus tard. Préparation des autres livrables poursuivie.
+
+
+### 2026-10-11 10:47 — ia-2 / Timéo (avec Codex) — CARTES MULTIDEVISES : V5 PUBLIÉE
+- **Terminé :** le choix EUR/USD/USDC change tous les montants des cartes, les prix barrés, le total annuel, les économies, l’essai et la devise du devis ; les bascules annuel/mensuel restent compatibles. USDC Avalanche par défaut.
+- **Conversion :** base EUR inchangée, calcul sur remise exacte avant arrondi ; 1 EUR = 1,1206 USD, taux BCE du 9 octobre 2026 affiché et sourcé. USDC sous hypothèse explicitement affichée de 1 USDC = 1 USD. Aperçu indicatif, facture finale confirmée. Aucun appel réseau dans le JS et aucune clé ajoutée.
+- **Validation :** test du script de conversion et retour EUR sans cumul OK ; syntaxe JS, archive zéro-secret (318 variantes) et ressources de production OK. Publication privée v5, commit `c19efe62fedd4a3522752b5d829155089eda6c18`. Vérification visuelle non achevée : navigateur HTTPS en timeout, pas de contournement de l’accès file://.
+- **Preuves :** `shared/site-currency-cards-*.json`, `shared/check-currency-cards.mjs`. Patch appliqué aux fichiers actuels de l’équipe puis au checkout Sites, autres modifications conservées.
+
+
+### 2026-10-11 10:42 — ia-2 / Timéo (avec Codex) — DEVISE : LES CARTES CHANGENT AUSSI
+- **Correction demandée par Tim :** bascule EUR/USD/USDC des prix des cartes, prix barrés, facturation annuelle, économies, essai et devise du devis. Base EUR et remise 10 % conservées ; calcul avant arrondi, USD/USDC à deux décimales.
+- **Taux vérifié :** BCE du 9 octobre 2026, 1 EUR = 1,1206 USD. Aperçu USDC sous hypothèse affichée 1 USDC = 1 USD ; montant final confirmé à facturation. Aucun appel réseau, secret ou encaissement ajouté.
+- **En cours :** contrôle de toutes les devises et des deux rythmes, zéro-secret et publication privée. Patch ciblé à partir des fichiers actuels de Claude.
+
+
+### 2026-10-11 09:55 — ia-2 / Timéo (avec Codex) — PAIEMENT USDC / EUR / USD : PUBLIÉ ET CONTRÔLÉ
+- **Terminé :** version privée v4 publiée depuis `487ed468b85e5997bd1533617aa5f6e529b744c9`. Trois devises de règlement prévues, USDC sur Avalanche par défaut, base de prix EUR et conversion au taux de facturation confirmé. Aucun encaissement réel ou wallet ajouté ; annuel/mensuel inchangé.
+- **Contrôles :** structure des boutons radio/FAQ OK, sources et archive sans secret détecté (318 variantes), réponses de production conformes ; aucun fichier sensible exposé par les chemins testés. Preuves `shared/site-payment-{validation,production-validation,deployment}.json`. Contrôle visuel non réalisé : accès navigateur file:// refusé ; aucune tentative de contournement.
+
+
+### 2026-10-11 09:51 — ia-2 / Timéo (avec Codex) — PAIEMENT ABONNEMENT : USDC AVALANCHE, EUR, USD
+- **Décision de Tim :** proposer le règlement en USDC sur Avalanche, euros ou dollars américains ; conserver les prix de référence en euros et convertir USD/USDC au taux de facturation confirmé avant paiement. Pas de taux inventé ni de même montant nominal dans chaque devise.
+- **Site :** choix de devise accessible, USDC par défaut, explication adaptée au choix, nouvelle FAQ. Fonctionne sans JS ; tarifs annuel/mensuel inchangés. Statut de prototype et absence d’encaissement réel explicites. Aucun wallet, clé ou adresse de réception ajouté.
+- **Coordination :** patch ciblé dans index.html/style.css, avec conservation des modifications de Claude ; app.js et offres non refondus. Publication privée et contrôle zéro-secret en cours.
+
+
 ### 2026-10-11 09:50 — ia-2 / Timéo (avec Claude) — VIDÉO DE DÉMONSTRATION CONSTRUITE (PAGE ANIMÉE, 7 PLANS, 2 MIN 28) — À ENREGISTRER PAR TIMÉO
 - **La vidéo de démonstration est construite comme une page animée : `shared/video/video.html`** (copie de `C:\Users\bvtim\breaker-video\video.html`). Sept plans, 2 min 28, aux couleurs du site. Elle se joue seule ; Timéo l'enregistre en plein écran pour obtenir le fichier vidéo final. Je n'ai aucun outil pour exporter une vidéo moi-même.
 - **Les quatre plans filmés ne sont pas dans le dépôt** (71 Mo) : ils sont dans `C:\Users\bvtim\breaker-video\plans\` et la page les lit dans un dossier `plans/` à côté d'elle. Sans eux, les cadres vidéo restent vides et tout le reste s'affiche.

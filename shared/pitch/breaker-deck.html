@@ -67,7 +67,7 @@ ul{margin:0;padding-left:1.1em} li{margin:.2em 0}
 <div class="deck" id="deck" tabindex="0">
 
 <section class="slide" id="s1">
-  <div class="eyebrow"><b>Breaker</b> Secure Horizons · Track 1 Fintech Security · axe 2 SOC antifraude</div>
+  <div class="eyebrow"><b>Breaker</b> Secure Horizons · Track 1 Fintech Security · axe 4 incidents DeFi</div>
   <h1>Le 21 février 2025, trois personnes ont signé le plus gros vol de l'histoire.</h1>
   <p class="lead">Elles pensaient signer un virement de routine. L'écran leur montrait un virement de routine. <b>1,46 milliard de dollars.</b></p>
   <p class="lead">Breaker : la garde antifraude qui se greffe sur le coffre de votre trésorerie et vous dit <b>« attendez »</b> avant que l'argent parte.</p>
@@ -114,12 +114,12 @@ ul{margin:0;padding-left:1.1em} li{margin:.2em 0}
     <span class="arr">↔</span>
     <div class="box me">Moteur Breaker<small>règles apprises sur votre historique · modèle d'anomalie · oracle Web · listes OFAC / ScamSniffer · explication en français</small></div>
     <span class="arr">→</span>
-    <div class="box">Vos signataires<small>décident, toujours ; l'unanimité lève tout</small></div>
+    <div class="box">Vos signataires<small>gardent le dernier recours après délai ; sous contrainte : annuler et reproposer</small></div>
   </div>
   <div class="grid g3">
     <div class="step"><span class="k">1</span><div><h3>Regarde</h3><p>Bénéficiaire nouveau ? Montant 4× vos habitudes ? Trois paiements en dix minutes ? « Urgent » ? Adresse sosie, fonds souillés, sanctions ?</p></div></div>
     <div class="step"><span class="k">2</span><div><h3>Explique</h3><p>En français, pour des non-experts : « premier paiement à cette adresse, montant quatre fois supérieur à vos habitudes ».</p></div></div>
-    <div class="step"><span class="k">3</span><div><h3>Freine</h3><p>Une signature de plus, ou une attente. Jamais un blocage définitif. Le pire bug possible est un faux ralentissement.</p></div></div>
+    <div class="step"><span class="k">3</span><div><h3>Freine</h3><p>Une signature de plus, ou une attente. Deux modes : Protection et Cosignataire. Dérogation humaine après délai ; contrat non audité.</p></div></div>
   </div>
   <p><b>Et protège la personne :</b> clé d'identité (révoquer seul sa clé volée) · clé de contrainte (dit « oui » à l'écran, gèle en silence) · probation des clés neuves.</p>
   <span class="src">shared/ce-que-breaker-est.md · ia-1/score/regles.py · ia-2/contracts/TreasuryGuard.sol</span>
@@ -138,7 +138,7 @@ ul{margin:0;padding-left:1.1em} li{margin:.2em 0}
   </div>
   <div class="grid g3">
     <div class="stat"><span class="v num">100 %</span><span class="l">oracle Web : précision et rappel sur 35 adresses, 7 injections de prompt déjouées</span></div>
-    <div class="stat"><span class="v num">0 · 50 · 7 000</span><span class="l">détection grave (Slither) · tests · appels aléatoires, 0 invariant violé</span></div>
+    <div class="stat"><span class="v num">0 · 51 · 7 000</span><span class="l">détection grave (Slither) · tests · appels aléatoires, 0 invariant violé</span></div>
     <div class="stat"><span class="v hold num">synthétique</span><span class="l">toutes les données sont fabriquées par nous ; le contrat n'est pas encore audité par un tiers</span></div>
   </div>
   <span class="src">shared/mesures.md § 1 · shared/audit-contrat.md · explorateur Fuji (adresses dans ia-2/deployments/fuji.json)</span>
@@ -148,12 +148,12 @@ ul{margin:0;padding-left:1.1em} li{margin:.2em 0}
 
 <section class="slide" id="s6">
   <div class="eyebrow"><b>Offre</b> Safe Pro vend des règles que vous écrivez ; nous détectons ce que vous n'avez pas prévu</div>
-  <h2>Observation gratuite 30 jours, puis un abonnement mensuel sans engagement, selon la trésorerie.</h2>
+  <h2>Essai en lecture seule, puis un abonnement selon la protection déléguée.</h2>
   <div class="grid g4">
-    <div class="tier"><span class="n">Observation</span><span class="p">0 €<small> 30 jours</small></span><span class="d">détection et explications en lecture seule, rapport final</span></div>
-    <div class="tier"><span class="n">Essentiel</span><span class="p">149 €<small> /mois</small></span><span class="d">&lt; 1 M$ · friction, explications, listes publiques, notifications</span></div>
-    <div class="tier star"><span class="n">Standard</span><span class="p">449 €<small> /mois</small></span><span class="d">1–10 M$ · + oracle Web, traçage, sosies, clé d'identité, rapport mensuel</span></div>
-    <div class="tier"><span class="n">Premium</span><span class="p">990 €<small> /mois</small></span><span class="d">&gt; 10 M$ · + mode cosignataire, réglages sur mesure, support · Entreprise sur devis</span></div>
+    <div class="tier"><span class="n">Essai</span><span class="p">0 €<small> 30 jours</small></span><span class="d">détection et explications en lecture seule, rapport final</span></div>
+    <div class="tier"><span class="n">Essentiel</span><span class="p">149 €<small> /mois</small></span><span class="d">+ une signature humaine · explications, listes publiques, notifications</span></div>
+    <div class="tier star"><span class="n">Standard</span><span class="p">449 €<small> /mois</small></span><span class="d">+ délai · oracle Web, traçage, sosies, clé d’identité et contrainte, rapport</span></div>
+    <div class="tier"><span class="n">Premium</span><span class="p">990 €<small> /mois</small></span><span class="d">+ cosignataire · dérogation humaine après délai, réglages, support · Entreprise sur devis</span></div>
   </div>
   <table>
     <tr><th>Pourquoi 449 €</th><th>Calcul</th></tr>
@@ -179,11 +179,11 @@ ul{margin:0;padding-left:1.1em} li{margin:.2em 0}
   </div>
   <table>
     <tr><th>Quand</th><th>Jalon</th></tr>
-    <tr><td class="num">oct. 2026</td><td>dépôt public · ≥ 10 organisations en observation · dossier subvention</td></tr>
+    <tr><td class="num">oct. 2026</td><td>dépôt à ouvrir · objectif ≥ 10 organisations en observation · dossier subvention</td></tr>
     <tr><td class="num">nov.–déc.</td><td>portage en Guard + Module de Safe · mesure de H4 · faux positifs réels &lt; 5 %</td></tr>
     <tr><td class="num">janv. 2027</td><td>contrat gelé, <b>audit externe</b>, puis premiers clients payants</td></tr>
     <tr><td class="num">mars 2027</td><td>même code sur une 2<sup>e</sup> chaîne EVM : marché × 6 à 8</td></tr>
-    <tr><td class="num">fin 2027 – mi-2028</td><td><b>point mort : 17 clients Standard</b> (7 300 €/mois de coûts fixes) ; plus tôt avec un client Premium</td></tr>
+    <tr><td class="num">T3 2027 – mi-2028</td><td><b>point mort : 10 clients Standard</b> (4 300 €/mois de coûts fixes) ; plus tôt avec un client Premium</td></tr>
   </table>
   <span class="src">shared/business-marche.md § 3 · shared/business-mise-sur-le-marche.md § 3, 3 bis</span>
   <div class="notes">Si « pourquoi si peu ? » : parce qu'on ne prend que ce que l'entonnoir sourcé donne ; l'année 1 sert aux références et aux données réelles.</div>
@@ -219,13 +219,13 @@ ul{margin:0;padding-left:1.1em} li{margin:.2em 0}
 
 <section class="slide annex" id="a1">
   <div class="eyebrow"><b>Annexe A1 · Conformité</b> livrable du track : DORA, MiCA, LCB-FT, AI Act, et comment un auditeur vérifie</div>
-  <h2>Nous ne détenons jamais de fonds. Chaque décision est sur la chaîne, avec ses raisons.</h2>
+  <h2>Des preuves vérifiables ; qualification réglementaire à valider.</h2>
   <table>
     <tr><th>Cadre</th><th>Ce que ça implique pour Breaker</th><th>Preuve</th></tr>
-    <tr><td><b>MiCA</b></td><td>Aucune fonction ne peut transférer sans les signatures humaines du client : hors garde d'actifs. Nous sommes éditeur d'un outil, pas dépositaire.</td><td>seul <code>safeTransfer</code> dans <code>execute</code>, quorum requis ; invariant I1</td></tr>
+    <tr><td><b>MiCA</b></td><td>Objectif : service sans garde de fonds. Quorum humain et droits effectifs à examiner ; le contrat de démo détient des jetons fictifs. La qualification reste à valider.</td><td>seul <code>safeTransfer</code> dans <code>execute</code>, quorum requis ; invariant I1</td></tr>
     <tr><td><b>DORA</b></td><td>Pour un client régulé, Breaker est un prestataire tiers de services TIC (à confirmer, mentor KPMG). Le rapport d'incident pré-rempli aide le client à classer et déclarer dans les délais (règlement délégué 2025/301).</td><td><code>ia-1/score/rapport.py</code> · <code>shared/dora-notes.md</code></td></tr>
     <tr><td><b>LCB-FT</b></td><td>Listes OFAC et ScamSniffer consultées ; refus pur des adresses sanctionnées <b>activable par le client</b> dans son contrat : ce n'est pas nous qui bloquons.</td><td><code>ia-1/oracle/sources_publiques.py</code> · code <code>FLAGGED_ADDRESS</code></td></tr>
-    <tr><td><b>AI Act</b></td><td>Le modèle de langage n'explique que : il ne décide rien. Les règles sont lisibles, chaque alerte cite ses codes ; garde-fous contre l'injection ; validation humaine toujours.</td><td><code>ia-1/score/explication.py</code> · <code>regles.py</code></td></tr>
+    <tr><td><b>AI Act</b></td><td>Le LLM explique et contribue à l’avis de l’agent ; il ne peut pas abaisser le risque des règles. Citations contrôlées, garde-fous anti-injection, recours humain. Qualification à examiner.</td><td><code>ia-1/score/explication.py</code> · <code>regles.py</code></td></tr>
     <tr><td><b>Auditabilité</b></td><td>Chaque signalement est un événement on-chain avec ses raisons ; l'oracle ne retient une accusation que s'il retrouve la citation exacte, et en inscrit le hash. Tout se rejoue depuis le dépôt.</td><td><code>RiskRegistry</code> · <code>evidence_hash</code> · scripts <code>scenario_*.js</code></td></tr>
   </table>
   <div class="foot"><span>Breaker · annexe</span><span>A1</span></div>
@@ -238,7 +238,7 @@ ul{margin:0;padding-left:1.1em} li{margin:.2em 0}
     <tr><th>Niveau</th><th>Déclencheur (exemples)</th><th>Automatique</th><th>Humain</th><th>Qui est alerté</th></tr>
     <tr><td><b>Aucun</b></td><td>bénéficiaire connu, montant habituel</td><td>journalisé, score et raisons</td><td>signatures normales</td><td>—</td></tr>
     <tr><td><b>Signature en plus</b> (score ≥ 0,30)</td><td>nouveau bénéficiaire, montant inhabituel, « urgent », hors heures</td><td>exige une signature de plus ; explication en français</td><td>un signataire supplémentaire relit « ce que vous signez »</td><td>tous les signataires (tableau de bord, e-mail / Telegram)</td></tr>
-    <tr><td><b>Mise en attente</b> (score ≥ 0,75)</td><td>rafale, adresse signalée, fonds souillés, sosie, nouveau signataire qui pousse un gros paiement</td><td>attente (180 s en démo, 24 h en réel) + signature en plus ; rapport d'incident pré-rempli</td><td>vérifier, annuler, ou lever à l'unanimité ; juger vraie / fausse alerte</td><td>tous les signataires + responsable désigné</td></tr>
+    <tr><td><b>Mise en attente</b> (score ≥ 0,75)</td><td>rafale, adresse signalée, fonds souillés, sosie, nouveau signataire qui pousse un gros paiement</td><td>attente (180 s en démo, 24 h en réel) + signature en plus ; rapport d'incident pré-rempli</td><td>vérifier, annuler, ou déroger après délai ; sous contrainte : annuler et reproposer</td><td>tous les signataires + responsable désigné</td></tr>
     <tr><td><b>Gel</b></td><td>clé compromise, signature sous contrainte</td><td>clé d'identité : révocation immédiate par la victime seule ; clé de contrainte : gel silencieux, alerte privée</td><td>remplacer la clé, dégeler à la majorité des clés saines</td><td>canal privé aux autres signataires (jamais on-chain)</td></tr>
   </table>
   <p class="src">Codes et seuils : ia-1/score/regles.py · délais : config du contrat · démos : ia-1/integration/scenario_*.js</p>
@@ -250,14 +250,14 @@ ul{margin:0;padding-left:1.1em} li{margin:.2em 0}
   <h2>Pas encore audité par un tiers. Voici ce qu'on a fait à la place, et ce que ça vaut.</h2>
   <div class="grid g4">
     <div class="stat"><span class="v num">0</span><span class="l">détection haute ou moyenne (Slither 0.11, solc 0.8.24)</span></div>
-    <div class="stat"><span class="v num">50</span><span class="l">tests unitaires (<code>npx hardhat test</code>)</span></div>
+    <div class="stat"><span class="v num">51</span><span class="l">tests unitaires (<code>npx hardhat test</code>)</span></div>
     <div class="stat"><span class="v num">6 926</span><span class="l">appels aléatoires, 300 séquences, 8 types d'acteurs</span></div>
     <div class="stat"><span class="v ok num">0</span><span class="l">invariant violé sur les 6 promesses du contrat (I1–I6)</span></div>
   </div>
   <ul>
-    <li><b>L'architecture borne le risque</b> : aucune fonction, pas même la nôtre, ne transfère sans les signatures du client. Le pire bug possible est un faux ralentissement.</li>
-    <li><b>Code public</b>, licence MIT, commandes dans <code>shared/audit-contrat.md</code>.</li>
-    <li><b>Audit externe avant le premier client payant</b> ; surface d'environ 500 lignes, sans garde de fonds.</li>
+    <li><b>L'architecture borne le risque</b> : aucune fonction, pas même la nôtre, ne transfère sans les signatures du client. Des tests ne prouvent pas l’absence de pertes ou d’indisponibilité.</li>
+    <li><b>Code versionné</b>, accès jury à assurer, commandes dans <code>shared/audit-contrat.md</code>.</li>
+    <li><b>Audit externe avant le premier client payant</b> ; prototype de test ; Guard Safe à développer et auditer.</li>
   </ul>
   <div class="foot"><span>Breaker · annexe</span><span>A3</span></div>
 </section>

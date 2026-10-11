@@ -1,0 +1,22 @@
+{
+  "ok": true,
+  "public_files": [
+    "app.js",
+    "index.html",
+    "style.css"
+  ],
+  "archive_files": [
+    "dist/.openai/hosting.json",
+    "dist/app.js",
+    "dist/index.html",
+    "dist/style.css"
+  ],
+  "known_secret_variants": 318,
+  "findings": [],
+  "live": [],
+  "manifest": {
+    "app.js": "fc25187a44d13bb1b7ca7ecc440a5f198402a19f080a0982b47648e8b58e54a6",
+    "index.html": "0f7ee8bf6b909812289f20777b0998d83fb8bfaf151847ac3b4e97ae73c99b3f",
+    "style.css": "cc365e5edec31415bcf7765787c8291aa33bc08650087f4f1a06aa652d20fde8"
+  }
+}

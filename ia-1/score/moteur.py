@@ -192,7 +192,7 @@ def charger_services(chemin: Path) -> list[str]:
 
 
 def lire(chemin: Path, suivre: bool):
-    with open(chemin) as f:
+    with open(chemin, encoding="utf-8") as f:
         while True:
             ligne = f.readline()
             if ligne:
@@ -222,7 +222,7 @@ def main(argv=None):
     a.add_argument("--historique", help="historique on-chain des destinataires inconnus : fuji, avalanche, ou l'URL d'un nœud")
     args = a.parse_args(argv)
 
-    carnet_brut = json.loads(args.carnet.read_text()) if args.carnet else []
+    carnet_brut = json.loads(args.carnet.read_text(encoding="utf-8")) if args.carnet else []
     # Le carnet est une liste d'adresses, ou {"adresses": [...], "pieges": [...]} (idée 2 : adresses pièges).
     carnet = carnet_brut["adresses"] if isinstance(carnet_brut, dict) else carnet_brut
     pieges = carnet_brut.get("pieges", []) if isinstance(carnet_brut, dict) else []
@@ -248,7 +248,7 @@ def main(argv=None):
     if args.listes_publiques:
         n = moteur.charger_listes_publiques(args.listes_publiques)
         print(f"{n} adresses de listes publiques chargées (hors chaîne)", file=sys.stderr)
-    with open(args.out, "a" if args.suivre else "w") as sortie:
+    with open(args.out, "a" if args.suivre else "w", encoding="utf-8") as sortie:
         for ev in lire(args.events, args.suivre):
             try:
                 alerte = moteur.traiter(ev)
@@ -262,7 +262,7 @@ def main(argv=None):
                 sortie.write(json.dumps(alerte, ensure_ascii=False) + "\n")
                 sortie.flush()
                 codes = ",".join(r["code"] for r in alerte["reasons"])
-                print(f"paiement {alerte['payment_id']:>3} → {alerte['level']:<8} score {alerte['score']:.2f}  [{codes}]",
+                print(f"paiement {alerte['payment_id']:>3} -> {alerte['level']:<8} score {alerte['score']:.2f}  [{codes}]",
                       file=sys.stderr)
 
 

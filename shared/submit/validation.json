@@ -1,0 +1,16 @@
+{
+  "date": "2026-10-11T11:37:24.744477",
+  "python_tests": {
+    "passed": 80,
+    "failed": 0
+  },
+  "contract_tests": {
+    "passed": 51,
+    "failed": 0
+  },
+  "human_override": "3 humains, après délai, sans signature agent",
+  "scanner_fixture": "titre accepté / index sensible refusé / historique sensible refusé",
+  "video": "attente Tim",
+  "form": "attente Tim",
+  "github_visibility": "PRIVATE"
+}

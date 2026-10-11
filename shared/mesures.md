@@ -128,7 +128,7 @@ Un client signalé 100 fois par mois nous coûte ≈ 0,24 $ de gas. Bedrock : qu
 ## 7. Limites (à dire au jury)
 
 1. **Tout est synthétique** : trafic, fraudes, pages Web. Les chiffres sont favorables par construction. Le jeu de test a été produit par Timéo indépendamment du moteur, mais par la même équipe.
-2. **Sur des formes de fraude jamais vues**, les chiffres baissent (95 % freinées, 51 % arrêtées, 65 % des montants) : c'est la mesure la plus honnête, à montrer à côté de celle du test.
+2. **Jeu final synthétique** : 95 % freinées ou mises en attente, 78 % mises en attente, 91 % des montants et 5,1 % de faux hold. Les 51 % / 65 % du holdout sont les résultats historiques AVANT corrections, pas la mesure finale. Ces résultats ne prouvent pas une efficacité chez des clients réels.
 3. **Les fraudes discrètes** (goutte-à-goutte, redirection de facture, clé volée avec libellé banal) sont surtout *freinées* (une signature de plus), rarement *arrêtées*. Si les signataires trompés sont aussi ceux qui ajoutent la signature, seule la mise en attente protège.
 4. **Le corpus de l'oracle** est plus régulier que le vrai Web (ironie, fautes, captures d'écran, autres langues). Le chiffre réel sera plus bas.
 5. **Les délais** dépendent du réseau : 5 à 6 s sur Fuji, davantage sur un RPC chargé. Le délai d'examen (réglable) doit rester bien supérieur.

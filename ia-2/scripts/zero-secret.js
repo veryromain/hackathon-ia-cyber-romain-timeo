@@ -9,7 +9,15 @@ const { execFileSync } = require("child_process");
 
 const repo = path.resolve(process.argv[2] || path.join(__dirname, "..", ".."));
 const git = (args, opts = {}) => execFileSync("git", ["-C", repo, ...args], { encoding: "utf8", maxBuffer: 1 << 30, ...opts });
-const tryGit = (args) => { try { return git(args); } catch (e) { return e.stdout || ""; } };
+const tryGit = (args) => {
+  try { return git(args); }
+  catch (e) {
+    if (args[0] === "grep" && e.status === 1) return ""; // absence de résultat
+    console.error("Contrôle interrompu : commande Git en échec (arguments masqués).");
+    process.exit(2); // ne jamais déclarer le scan réussi après un échec de Git
+  }
+};
+let incomplete = 0;
 
 // 1. Les secrets réels, lus dans tous les .env présents sur le disque (suivis ou non).
 const envFiles = tryGit(["ls-files", "--others", "--ignored", "--exclude-standard", "--cached"]).split("\n")
@@ -43,7 +51,7 @@ for (const s of secrets.filter((x) => /MNEMONIC/i.test(x.name))) {
     }
     const words = s.value.split(/\s+/);
     if (words.length >= 12) secrets.push({ name: s.name + " (6 premiers mots)", value: words.slice(0, 6).join(" "), from: s.from });
-  } catch (e) { console.log("dérivation des clés impossible :", e.message.split("\n")[0]); }
+  } catch (e) { incomplete++; console.log("dérivation des clés impossible : contrôle incomplet (détails masqués)."); }
 }
 
 // 2. Chaque valeur : dans les fichiers suivis, puis dans tout l'historique (toutes branches).
@@ -55,7 +63,7 @@ for (const s of secrets) {
   const inHistory = tryGit(["log", "--all", "--oneline", "-S" + s.value]).split("\n").filter(Boolean);
   if (inTree.length || inHistory.length) {
     found++;
-    console.log(`  ⚠️ ${s.name} : fichiers suivis [${inTree.join(", ")}] ; commits [${inHistory.map((l) => l.slice(0, 60)).join(" | ")}]`);
+    console.log(`  ⚠️ ${s.name} : fichiers suivis [${inTree.join(", ")}] ; commits [${inHistory.map((l) => l.split(" ")[0]).join(" | ")}]`);
   }
 }
 console.log(found ? `→ ${found} secret(s) réel(s) retrouvé(s) dans Git.` : "→ Aucune valeur réelle des .env (ni clé privée dérivée) dans les fichiers suivis ni dans l'historique.");
@@ -76,7 +84,7 @@ const PATTERNS = {
   "jeton GitHub": "(ghp|gho|ghs|ghu|github_pat)_[A-Za-z0-9_]{20,}",
   "jeton de bot Telegram": "[0-9]{8,10}:AA[A-Za-z0-9_-]{30,}",
   "clé privée (bloc PEM)": "-----BEGIN [A-Z ]*PRIVATE KEY-----",
-  "variable de clé privée avec valeur": "(PRIVATE_KEY|MNEMONIC|SMTP_PASSWORD|APIFY_TOKEN|TELEGRAM_BOT_TOKEN|CLOUDFLARE_API_TOKEN|API_KEY|SECRET)\\s*[=:]\\s*[\"']?[A-Za-z0-9+/_ -]{12,}",
+  "variable de clé privée avec valeur": "(?<![A-Za-z0-9_-])(PRIVATE_KEY|MNEMONIC|SMTP_PASSWORD|APIFY_TOKEN|TELEGRAM_BOT_TOKEN|CLOUDFLARE_API_TOKEN|API_KEY|SECRET)\\s*[=:]\\s*[\"']?[A-Za-z0-9+/_ -]{12,}",
   "jeton Slack / Stripe / Google": "(xox[baprs]-[A-Za-z0-9-]{10,}|sk_live_[A-Za-z0-9]{16,}|AIza[0-9A-Za-z_-]{35})",
 };
 console.log("\nMotifs génériques dans l'historique complet (lignes ajoutées) :");
@@ -93,13 +101,28 @@ for (const line of history.split("\n")) {
     const key = `${label} — ${file}`;
     (hits[key] = hits[key] || { n: 0, commits: new Set(), sample: "" }).n++;
     hits[key].commits.add(commit.split(" ")[0]);
-    // Aperçu masqué : le début de la ligne sans la valeur trouvée.
-    if (!hits[key].sample) hits[key].sample = line.slice(1, 1 + Math.min(line.indexOf(m[0]) - 1 + 28, 70)).replace(/[A-Za-z0-9+/=_-]{14,}/g, "‹masqué›");
+
+  }
+}
+// Scanner également l'état courant (y compris les fichiers ajoutés à l'index),
+// pas uniquement les anciennes lignes des commits.
+for (const name of tracked) {
+  const full = path.join(repo, name);
+  if (!fs.existsSync(full) || !fs.statSync(full).isFile()) continue;
+  const data = fs.readFileSync(full);
+  if (data.includes(0)) continue; // les valeurs réelles sont aussi recherchées par git grep
+  for (const line of data.toString("utf8").split(/\r?\n/)) {
+    for (const [label, source] of Object.entries(PATTERNS)) {
+      if (!new RegExp(source).test(line)) continue;
+      const key = `${label} — ${name}`;
+      const hit = hits[key] ||= { n: 0, commits: new Set() };
+      hit.n++; hit.commits.add("arbre-courant");
+    }
   }
 }
 const keys = Object.keys(hits);
 if (!keys.length) console.log("  aucun");
-for (const k of keys) console.log(`  ${k} : ${hits[k].n} ligne(s), commits ${[...hits[k].commits].slice(0, 4).join(",")} ; aperçu : ${hits[k].sample}`);
+for (const k of keys) console.log(`  ${k} : ${hits[k].n} ligne(s), commits ${[...hits[k].commits].slice(0, 4).join(",")}`);
 
 // 5. Morceaux de secrets : un secret coupé par un retour à la ligne (transcription, journal) échappe à la
 //    recherche exacte. On cherche donc chaque secret par tranches de 20 caractères (3 mots pour une phrase secrète).
@@ -118,6 +141,6 @@ for (const s of secrets.filter((x) => x.from !== "dérivée" && !/premiers mots/
   console.log(`  ${s.name} : ${chunks.length} morceaux cherchés ; historique ${inHistory} ; fichiers suivis ${inTree}`);
 }
 
-const problems = found + pieces + keys.length + trackedEnv.filter((f) => !f.endsWith(".example")).length;
+const problems = incomplete + found + pieces + keys.length + new Set([...trackedEnv, ...everEnv].filter((f) => !f.endsWith(".example"))).size;
 console.log(problems ? `\n⚠️ ${problems} point(s) à examiner ci-dessus.` : "\n✅ Zéro secret : rien trouvé dans les fichiers suivis ni dans l'historique.");
 process.exitCode = problems ? 1 : 0;

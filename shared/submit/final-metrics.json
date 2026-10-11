@@ -1,0 +1,27 @@
+{
+  "synthetic": true,
+  "training": "train only",
+  "evaluation": "final; after train/test/holdout replay",
+  "counts": {
+    "normal": {
+      "n": 234,
+      "none": 213,
+      "amount": 1285408580000000000000000,
+      "hold": 12,
+      "amount_hold": 292350360000000000000000,
+      "step_up": 9
+    },
+    "fraud": {
+      "n": 40,
+      "hold": 31,
+      "amount": 1231333220000000000000000,
+      "amount_hold": 1119155780000000000000000,
+      "step_up": 7,
+      "none": 2
+    }
+  },
+  "fraud_hold_percent": 77.5,
+  "fraud_friction_percent": 95.0,
+  "fraud_amount_hold_percent": 90.88975768882447,
+  "normal_hold_percent": 5.128205128205129
+}

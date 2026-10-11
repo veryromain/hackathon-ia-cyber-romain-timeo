@@ -219,7 +219,7 @@
     <article class="card accent">
       <span class="label">Freiner · Breaker</span>
       <h3>Une vérification de plus, au bon moment</h3>
-      <p>Une signature supplémentaire, puis un délai d’attente si le risque est élevé. Une fausse alerte coûte une signature et un peu de temps, jamais l’accès à vos fonds.</p>
+      <p>Une signature supplémentaire, puis un délai d’attente si le risque est élevé. Une fausse alerte demande une vérification supplémentaire. Vos signataires peuvent appliquer la procédure de dérogation après délai ; le contrat reste à auditer.</p>
     </article>
   </div>
 
@@ -277,8 +277,27 @@
       <h3>Un essai gratuit, en observation</h3>
       <p>Breaker analyse et explique chacun de vos paiements, sans rien changer à leur exécution. À la fin, un rapport vous montre ce qu’il aurait freiné et ce qui aurait été une fausse alerte.</p>
     </div>
-    <strong class="price">0&nbsp;€<small> pendant 30 jours</small></strong>
+    <strong class="price"><span data-eur="0">0&nbsp;€</span><small> pendant 30 jours</small></strong>
   </article>
+  <fieldset class="payment-choice">
+    <legend>Votre abonnement, votre moyen de paiement</legend>
+    <input class="pay-input" type="radio" name="devise-paiement" id="pay-usdc" checked>
+    <input class="pay-input" type="radio" name="devise-paiement" id="pay-eur">
+    <input class="pay-input" type="radio" name="devise-paiement" id="pay-usd">
+    <div class="pay-options">
+      <label for="pay-usdc"><strong>USDC</strong><small>Sur Avalanche</small></label>
+      <label for="pay-eur"><strong>EUR · €</strong><small>En euros</small></label>
+      <label for="pay-usd"><strong>USD · $</strong><small>En dollars américains</small></label>
+    </div>
+    <p class="pay-summary">
+      <span class="pay-usdc">Règlement prévu en USDC sur Avalanche. Le montant en USDC sera confirmé sur votre facture avant paiement.</span>
+      <span class="pay-eur">Règlement prévu en euros. Les prix affichés ci-dessous sont les prix de référence en EUR.</span>
+      <span class="pay-usd">Règlement prévu en dollars américains. Le montant en USD sera confirmé sur votre facture avant paiement.</span>
+    </p>
+    <p class="pay-conversion" id="conversion-note" role="status" aria-live="polite">Prix de référence en euros. Activez JavaScript pour afficher la conversion indicative.</p>
+    <p class="pay-rate-source">Taux de référence : <a href="https://www.ecb.europa.eu/stats/policy_and_exchange_rates/euro_reference_exchange_rates/html/eurofxref-graph-usd.en.html" target="_blank" rel="noopener noreferrer">BCE, 9 octobre 2026</a>. Les montants en euros sont arrondis à l’euro pour l’affichage ; les montants convertis à deux décimales.</p>
+    <p class="pay-reference">Les tarifs restent fixés en euros. Pour un règlement en USD ou en USDC, la conversion utilise le taux de facturation confirmé avant paiement. Ces moyens de paiement sont prévus au lancement ; aucun encaissement sur cette démonstration.</p>
+  </fieldset>
   <input class="bill-input" type="radio" name="facturation" id="bill-year" checked>
   <input class="bill-input" type="radio" name="facturation" id="bill-month">
   <div class="bill-switch" role="group" aria-label="Rythme de facturation">
@@ -288,8 +307,8 @@
   <div class="cards four after-trial">
     <article class="card offer">
       <span class="label">Essentiel</span>
-      <strong class="price"><s class="annual" aria-label="au lieu de 149 euros">149&nbsp;€</s><span class="annual">134&nbsp;€</span><span class="monthly">149&nbsp;€</span><small> / mois HT</small></strong>
-      <p class="billing annual">Facturé 1&nbsp;609&nbsp;€ par an · 179&nbsp;€ économisés</p>
+      <strong class="price"><s class="annual" data-eur="149" aria-label="au lieu de 149 euros">149&nbsp;€</s><span class="annual" data-eur="134.10">134&nbsp;€</span><span class="monthly" data-eur="149">149&nbsp;€</span><small> / mois HT</small></strong>
+      <p class="billing annual">Facturé <span data-eur="1609.20">1&nbsp;609&nbsp;€</span> par an · <span data-eur="178.80">179&nbsp;€</span> économisés</p>
       <p class="billing monthly">Facturé chaque mois, sans engagement</p>
       <p class="for">1 portefeuille, trésorerie inférieure à 1 M$</p>
       <ul class="limits">
@@ -301,8 +320,8 @@
     </article>
     <article class="card offer accent">
       <span class="label">Standard</span>
-      <strong class="price"><s class="annual" aria-label="au lieu de 449 euros">449&nbsp;€</s><span class="annual">404&nbsp;€</span><span class="monthly">449&nbsp;€</span><small> / mois HT</small></strong>
-      <p class="billing annual">Facturé 4&nbsp;849&nbsp;€ par an · 539&nbsp;€ économisés</p>
+      <strong class="price"><s class="annual" data-eur="449" aria-label="au lieu de 449 euros">449&nbsp;€</s><span class="annual" data-eur="404.10">404&nbsp;€</span><span class="monthly" data-eur="449">449&nbsp;€</span><small> / mois HT</small></strong>
+      <p class="billing annual">Facturé <span data-eur="4849.20">4&nbsp;849&nbsp;€</span> par an · <span data-eur="538.80">539&nbsp;€</span> économisés</p>
       <p class="billing monthly">Facturé chaque mois, sans engagement</p>
       <p class="for">Jusqu’à 5 portefeuilles, de 1 à 10 M$</p>
       <ul class="limits">
@@ -310,18 +329,19 @@
         <li>Oracle qui lit le Web et traçage des fonds</li>
         <li>Adresses sosies et adresses pièges</li>
         <li>Clé d’identité pour chaque signataire</li>
-        <li>Mode Cosignataire, en option</li>
+        <li>Mode Protection : signatures renforcées et délai</li>
         <li>Rapport mensuel</li>
       </ul>
     </article>
     <article class="card offer">
       <span class="label">Premium</span>
-      <strong class="price"><s class="annual" aria-label="au lieu de 990 euros">990&nbsp;€</s><span class="annual">891&nbsp;€</span><span class="monthly">990&nbsp;€</span><small> / mois HT</small></strong>
-      <p class="billing annual">Facturé 10&nbsp;692&nbsp;€ par an · 1&nbsp;188&nbsp;€ économisés</p>
+      <strong class="price"><s class="annual" data-eur="990" aria-label="au lieu de 990 euros">990&nbsp;€</s><span class="annual" data-eur="891.00">891&nbsp;€</span><span class="monthly" data-eur="990">990&nbsp;€</span><small> / mois HT</small></strong>
+      <p class="billing annual">Facturé <span data-eur="10692.00">10&nbsp;692&nbsp;€</span> par an · <span data-eur="1188.00">1&nbsp;188&nbsp;€</span> économisés</p>
       <p class="billing monthly">Facturé chaque mois, sans engagement</p>
-      <p class="for">Plus de 10 M$ ou plus de 5 portefeuilles</p>
+      <p class="for">Mode Cosignataire et protection personnalisée</p>
       <ul class="limits">
         <li>Tout le Standard</li>
+        <li>Agent cosignataire, avec dérogation humaine après délai</li>
         <li>Réglages sur mesure : seuils, délais, profils par entité</li>
         <li>Support prioritaire</li>
         <li>Engagement de disponibilité</li>
@@ -330,6 +350,7 @@
     <article class="card offer flat">
       <span class="label">Entreprise</span>
       <strong class="price">Sur devis</strong>
+      <p class="billing" data-quote-currency>Devis en euros</p>
       <p class="for">Fonds, fondations, plusieurs entités</p>
       <ul class="limits">
         <li>Tout le Premium</li>
@@ -461,6 +482,10 @@
     <details>
       <summary>Combien ça coûte ?</summary>
       <p>Rien pendant les 30 premiers jours : Breaker observe et explique, sans toucher à vos paiements. Ensuite, trois offres selon la taille de la trésorerie : 149 €, 449 € et 990 € par mois hors taxes, ou 10 % de moins en payant à l’année, plus une offre sur devis. Le détail est dans <a href="#offres">Les offres</a>. C’est une grille prévue : rien n’est vendu aujourd’hui.</p>
+    </details>
+    <details>
+      <summary>Peut-on payer en USDC ou en dollars ?</summary>
+      <p>Oui, au lancement, le règlement de l’abonnement sera proposé en USDC sur Avalanche, en euros (EUR) ou en dollars américains (USD). Les tarifs de référence restent en euros : le montant en USD ou en USDC est converti au taux de facturation et confirmé sur la facture avant paiement. Aucun paiement réel n’est disponible dans cette démonstration.</p>
     </details>
     <details>
       <summary>Pourquoi ce prix ?</summary>
