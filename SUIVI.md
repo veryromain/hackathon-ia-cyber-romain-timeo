@@ -4,7 +4,7 @@
 > Légende : ✅ fait · 🔄 en cours · ⬜ à faire · ✂️ coupé (manque de temps)
 > Détail du projet : [`PLAN.md`](PLAN.md) · Historique : [`JOURNAL.md`](JOURNAL.md) · Brief : [`CONTEXTE.md`](CONTEXTE.md)
 
-**Dernière mise à jour :** 2026-10-11 01:26, par Claude (Romain) — B3 marché (brouillon chiffré), argumentaire audit pour le pitch
+**Dernière mise à jour :** 2026-10-11 07:38, par Claude (Timéo) — L8 : vérifié sur le PC de Timéo (npm run zero-secret), reste le Mac et l'accès du jury
 **Rendu (gel définitif) :** dim. 11/10 **12:00** · **Checkpoint :** sam. **18:30** · **Pitch :** dim. 13:00
 
 ---
@@ -161,7 +161,7 @@ Un **garde antifraude pour les organisations qui gardent des millions dans un po
 | L5 | **Playbook de réponse** : automatique vs humain, qui est alerté, documentation | Romain | Markdown | ⬜ |
 | L6 | **Slide conformité** : LCB-FT (filtrage des contreparties), Travel Rule, MiCA, AI Act (supervision humaine) ; à faire valider par le mentor KPMG | Romain | Slides | ⬜ |
 | L7 | **PoC de bout en bout** fonctionnel | Les deux | — | ⬜ |
-| L8 | **Vérification « zéro secret »** dans le repo + **accès du jury** au repo | Timéo | `git log`, GitHub | ⬜ |
+| L8 | **Vérification « zéro secret »** dans le repo + **accès du jury** au repo | Timéo | `git log`, GitHub | 🔄 07:38 vérifié sur le PC de Timéo (`npm run zero-secret`, `shared/verification-zero-secret.md`) ; reste : Mac de Romain, accès du jury |
 | — | Atelier coaching pitch (10:00) | Les deux | — | ⬜ |
 | — | Répétition du pitch (Round 1 : 5 min + 2 min de questions) | Les deux | — | ⬜ |
 | ★ | 🧊 **RENDU 12:00** | Les deux | — | ⬜ |
