@@ -12,5 +12,10 @@
   "scanner_fixture": "titre accepté / index sensible refusé / historique sensible refusé",
   "video": "attente Tim",
   "form": "attente Tim",
-  "github_visibility": "PRIVATE"
+  "github_visibility": "PRIVATE",
+  "merged_romain_commits": 9,
+  "zero_secret_tree_and_history": "PASS",
+  "site_version": 6,
+  "site_live_verified": true,
+  "form_submitted": false
 }

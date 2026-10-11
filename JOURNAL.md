@@ -12,6 +12,13 @@ Ajouter les entrées les plus récentes en haut.
 
 ---
 
+### 2026-10-11 11:54 - Codex - CONTRÔLE FINAL SUBMIT
+- Fusion9commitsRomain achevée sans perdre ses chiffres ni son oral court. 80testsPython et51testsSolidity passent ; dernierrecourshumain aprèsdélai prouvé. Scannersecretstree/historique aprèsfusionOK.
+- FichePDF1page etpitchPDF8slides+4annexes inspectés. README,playbook,conformité,formulaireprérempli,preuves etdocsClaude synchronisés. AncienPPTX etgénérateur exclusdurendu.
+- Vitrinev6privée publiée,source/archive/production vérifiées318variantes ; conversiondevisespréservée. Aucunencaissement,nipublicationpublique.
+- Commitsauvegarde/push etZIPsources/livrablesenfinalisation. Restent lienfinalvidéo,formulaireetaccèsjuryauGitprivé. Sitefacultatif ; nepasprésenterlescontrôlesinternescommeunauditexterne.
+
+
 ### 2026-10-11 11:37 - Codex - RENDU : CONTRÔLES PASSÉS
 - Python80/80 et Solidity51/51 passent. Ajout refus cosignature si RPC non vérifiable ; retours ERC20false pris en compte.
 - Annonce patch vitrine ciblé index.html uniquement : Standard protection, Premium cosignataire sans restriction de trésorerie ; fausse garantie sur accès aux fonds remplacée par dernier recours. Montants et devises inchangés. Publication privée maintenue.
@@ -25,7 +32,7 @@ Ajouter les entrées les plus récentes en haut.
 
 
 ### 2026-10-11 11:18 +02:00 - Codex - RELECTURE SUBMIT
-- 50 tests Solidity passent. Python : 76 passent, 2 erreurs Windows (encodage de lecture du test dashboard et impression CLI après entraînement). Aucun secret réel trouvé ; motif générique trop large dans un titre ZERO-SECRET.
+- 51 tests Solidity passent. Python : 76 passent, 2 erreurs Windows (encodage de lecture du test dashboard et impression CLI après entraînement). Aucun secret réel trouvé ; motif générique trop large dans un titre ZERO-SECRET.
 - Modifications annoncées : README racine, scanner zero-secret, encodage Python et table dashboard, sources du pitch si affirmation incorrecte, nouveaux livrables shared/submit. Pas de modification des contrats ni de lancement de relais Fuji.
 - Vidéo en finalisation par Tim ; formulaire et vidéo transmis plus tard. Préparation des autres livrables poursuivie.
 
@@ -54,6 +61,40 @@ Ajouter les entrées les plus récentes en haut.
 - **Coordination :** patch ciblé dans index.html/style.css, avec conservation des modifications de Claude ; app.js et offres non refondus. Publication privée et contrôle zéro-secret en cours.
 
 
+
+### 2026-10-11 11:00 — Romain (avec Claude) — DECK : PASTILLES SUPPRIMÉES, ORAL DES DIAPOS 6 ET 7 DIVISÉ PAR DEUX
+- **Plus de pastilles ROMAIN / TIMÉO en haut à droite** sur toutes les diapos (qui parle reste dans les notes).
+- **Diapo 6 : 25 s, 60 mots. Diapo 7 : 20 s, 40 mots.** Le reste passe en « seulement si on demande ». Chrono : 6 = 3:50→4:15, 7 = 4:15→4:35, 8 = 4:35→5:00. `Breaker-pitch.pptx` régénéré.
+
+### 2026-10-11 10:44 — Romain (avec Claude) — POPULATION DES CHIFFRES DE PERTE PRÉCISÉE (D7, prix, diapo 6)
+- **Question de Romain :** les 123 500 $ de perte attendue et la médiane de 1,3 M$ portent-ils sur notre cible (1 à 10 M$ de trésorerie) ? **Réponse : non.** Vérifié sur le rapport TRM 2026 : ≈ 150 hacks en 2025, 2,87 Md$, **toutes victimes** (Bybit, Nobitex, protocoles, infrastructures) ; médiane 1,3 M$ sur ces 150 ; moyenne 19,5 M$. Par vecteur : attaques d'infrastructure (clés, accès privilégiés, front-ends = notre périmètre) **45 incidents, 76 % de la valeur** ; exploits de code 52 ; attaques de protocole 25. Immunefi 1,5 M$ = protocoles DeFi seuls (population la plus proche de nous).
+- **Modifs :** D7 détaillé dans `business-marche.md` ; § 1.B de `business-prix.md` réécrit (populations, H5 sourcée à 30 % des incidents, trois lectures 112 / 34 / 22 k$, **lecture par trésorerie : 2,6 % de T évités par an, règle des 10 % tenue dès 0,7 M$ Essentiel / 2,1 M$ Standard / 4,6 M$ Premium**) ; diapo 6 : ligne « 449 € » dit « borne haute » et « 0,05 à 0,5 % de la trésorerie par an », notes orateur refaites avec la réponse au jury ; HTML et `pitch-final.md` (Q&A) alignés.
+- **À dire au jury :** « 5 % en borne haute ; la lecture solide est par trésorerie : une fraude de signataires vide le coffre. »
+
+### 2026-10-11 10:40 — Romain (avec Claude) — V2 DU MOTION DESIGN : MP4 AVEC VOIX OFF, RYTHME « TYPOGRAPHIE CINÉTIQUE »
+- **Livrable L1 : `shared/video/motion-v2/motion-v2.mp4`** (1080p, 30 i/s, 2 min 55, voix off incluse). Même page en autonome : `motion-v2.html` (Chrome, Espace). C'est lui qui se lance à la diapo 5. La v1 reste pour l'historique.
+- **Forme :** Romain a donné trois reels de motion design comme référence de rythme (un ou deux mots géants par coupe, flou de mouvement, chiffres incarnés par des bulles, HUD monospace, cercles concentriques, bandeau « MISE EN ATTENTE » répété, grain). **La charte reste celle du site** (bleu nuit, vert citron, bleu clair / ambre pour les réponses, verre, Manrope / DM Sans / Plex Mono, logo). Rien des reels n'est copié, seulement le tempo.
+- **Fond :** les 7 plans de Timéo (`shared/plan-video-motion.md`) + un plan « trois réponses » (sans friction / signature en plus / mise en attente, jamais de fonds détenus), la ligne de prix (30 jours d'essai, dès 149 €/mois) et les deux slogans du site. Vocabulaire et interdits respectés (jamais « bloqué », pas de clé de contrainte, « cadence de Drift » et non « Drift rejoué », aucun montant réel). Mentions « Fuji · réseau de test · accéléré », « seuil de clés volées (2 sur 5) », « données synthétiques » à l'image.
+- **Voix :** synthèse locale Piper (`fr_FR-siwis-medium`), 22 phrases synthétisées une à une ; leurs durées fixent la chronologie, les visuels se calent sur le début de chaque phrase. edge-tts refusé par Microsoft, Polly impossible (jeton AWS expiré), Higgsfield sans crédit. Texte complet et mode d'emploi dans `shared/video/motion-v2/README.md` ; une phrase se change dans `SCENES` et tout se régénère (`--tout`).
+- **Limites :** voix synthétique (une voix humaine se substitue phrase par phrase dans `voix/`), fiches fixes et terminaux rejoués plutôt que capture d'écran, pas de musique, 2 min 55 au lieu de 2 min 30 (le README dit quel plan couper).
+- **Timéo :** regarde le mp4 avec le son et dis si une phrase ou un chiffre te gêne ; rien à changer côté contrat.
+
+### 2026-10-11 10:25 — Romain (avec Claude) — CIBLE ÉLARGIE AU SEUIL 1 M$ DE TRÉSORERIE : DIAPOS 3 ET 7, BUSINESS, PITCH
+- **Décision de Romain :** toute organisation avec plus de 1 M$ de trésorerie est dans la cible et comptée. Hypothèse **H1 révisée** : protocole > 1 M$ d'actifs ⇒ trésorerie ≥ 1 M$ (l'ancien seuil 10 M$ devient la borne prudente, gardée dans `business-marche.md`).
+- **Nouveaux chiffres :** TAM EVM **1 359 à 1 579** (était 675-895) · SAM Avalanche **81 à 121** (était 32-121) · contactables **111** = 30 Retro9000 + 10 L1 + 71 protocoles > 1 M$ (était 62) · observation **56** · payants année 1 **5 à 10** (était 3-6) · revenu année 1 **27 à 54 k€** · point mort 10 clients Standard **T2-T3 2027** (était T3 2027-mi-2028 ; Avalanche seul suffit à 18,5 % de conversion, un écosystème EVM de plus à 8,9 %) · précision de H4 ± 9 pts.
+- **Fichiers :** `shared/pitch/generer_deck.py` (diapos 3 et 7 + notes), `Breaker-pitch.pptx` régénéré, `breaker-deck.html` (y compris la ligne de point mort qui affichait encore 17 clients / 7 300 €), `shared/business-marche.md`, `shared/business-mise-sur-le-marche.md` (dont le jalon « 10 clients payants » de févr.-mars, incohérent avec § 3 bis), `shared/business-prix.md` § 3, `shared/pitch-final.md`.
+- **Inchangé :** 9,5 % d'incidents, 1,3 M$, 91 %, 112 k$ (déjà calculés sur la population ≥ 1 M$), prix 149/449/990 €.
+- **Timéo :** rien à changer côté contrat ; la vidéo ne porte pas ces chiffres.
+
+### 2026-10-11 10:10 — Romain (avec Claude) — DIAPO 4 : « CLÉ D'IDENTITÉ FROIDE » MISE EN AVANT
+- **Fait :** sur la diapo 4 (Solution), la ligne « Et protège la personne » devient un bandeau encadré en vert : **Clé d'identité froide** (nom retenu le 10/10 à 22:10), « une seconde clé, gardée hors ligne, pour révoquer seul sa clé volée, sans quorum, même coffre gelé ». La clé de contrainte, la probation des clés neuves, le flux Safe → Guard → Moteur → Signataires, les trois verbes et les deux modes restent tels quels. Notes orateur de Timéo complétées avec la preuve Fuji (80 000 approuvés 2/2 par le voleur, révoqués en une transaction, 0 sorti). Même nom sur la diapo 6 (Standard) et l'annexe. `shared/pitch/generer_deck.py`, `Breaker-pitch.pptx` régénéré, `breaker-deck.html` aligné.
+- **Précision pour le pitch :** « 280 500 tentés, zéro sorti » (diapo 5) = 95 000 + 93 500 + 92 000 **mUSD**, le jeton de test de la démo Fuji (pas des euros ni des dollars réels) ; 0 mUSD sorti.
+
+### 2026-10-11 09:52 — Romain (avec Claude) — V1 DU MOTION DESIGN (HTML ANIMÉ, 2 MIN 30)
+- Timéo n'a plus de crédit : Romain reprend la vidéo. **`shared/video/motion-v1.html`** (construit par `construire_motion.py`) suit **les 7 plans de Timéo** (`shared/plan-video-motion.md`) à la seconde près, dans l'identité du site : 1 problème (Bybit, Drift) · 2 paiement normal 3 150 mUSD exécuté en 39 s (tx Snowtrace) · 3 attaque 95 000 + 93 500 + 92 000 = 280 500 mUSD mis en attente en 10 / 7 / 9 s, fiche réelle du paiement 10, « 2 signatures sur 3 : rien ne part », gel, 0 sorti · 4 oracle (terminal réel de 08:13 : freiner 6,2 s → lecture de 3 pages → citation OFAC → refuser 4,7 s), fiche du paiement 13 · 5 Cosignataire (terminal réel de 08:17 : cosigne 3 200, refuse 600 000, n'a pas signé 4 800) · 6 cadence de Drift (31 retraits, 285 000 tentés, 0 sorti) · 7 chiffres 91 % / 5,1 % / 0 mUSD + réserves + slogan.
+- **Sous-titres = voix off** (`shared/video/voix-off.md`), vocabulaire fixé (jamais « bloqué » : le « paiement bloqué tant que… » du terminal de Timéo est rendu « mis en attente tant que… »). Mentions à l'image : « Avalanche Fuji · réseau de test », « accéléré », « chaîne de test locale », « avec le seuil de clés volées ». Clé de contrainte absente, comme décidé.
+- **Pour obtenir le mp4** : Chrome, F (plein écran), ⌘⇧5 enregistrement d'écran, R ; iMovie pour la voix ou pour insérer les 4 captures de Timéo (sur son PC, hors dépôt). Pas de ffmpeg sur le Mac.
+- **Ce que la v1 ne fait pas encore** : pas de voix enregistrée ; pas de capture vidéo réelle du tableau de bord (fiches fixes animées) ; le plan 2 est une reconstitution (pas de fiche pour un paiement non signalé).
 ### 2026-10-11 09:50 — ia-2 / Timéo (avec Claude) — VIDÉO DE DÉMONSTRATION CONSTRUITE (PAGE ANIMÉE, 7 PLANS, 2 MIN 28) — À ENREGISTRER PAR TIMÉO
 - **La vidéo de démonstration est construite comme une page animée : `shared/video/video.html`** (copie de `C:\Users\bvtim\breaker-video\video.html`). Sept plans, 2 min 28, aux couleurs du site. Elle se joue seule ; Timéo l'enregistre en plein écran pour obtenir le fichier vidéo final. Je n'ai aucun outil pour exporter une vidéo moi-même.
 - **Les quatre plans filmés ne sont pas dans le dépôt** (71 Mo) : ils sont dans `C:\Users\bvtim\breaker-video\plans\` et la page les lit dans un dossier `plans/` à côté d'elle. Sans eux, les cadres vidéo restent vides et tout le reste s'affiche.
@@ -171,7 +212,7 @@ Ajouter les entrées les plus récentes en haut.
   - **Nouvelle section « Vous avez déjà le coffre »** : le coffre, les règles, Breaker ; « service de sécurité à part entière, conçu pour se brancher sur Safe ». Avec la réserve : démontré sur notre propre portefeuille, branchement sur Safe en feuille de route.
   - **Nouvelle section « Les offres »** : Essentiel 149 €, Standard 449 €, Premium 990 €, Entreprise sur devis, avec le contenu de chaque palier tiré de `business-prix.md`. Sans palier Observation. Réserve affichée : grille prévue, aucun client payant, rien vendu avant l'audit externe.
   - **Feuille de route datée** en quatre étapes, d'octobre 2026 à mars 2027, sans les jalons d'observation.
-  - **Questions fréquentes** : prix, pourquoi ce prix, « module de Safe ? », veto de l'agent, audit (analyse statique, 50 tests, audit externe avant le premier client), deuxième chaîne début 2027.
+  - **Questions fréquentes** : prix, pourquoi ce prix, « module de Safe ? », veto de l'agent, audit (analyse statique, 51 tests, audit externe avant le premier client), deuxième chaîne début 2027.
   - L'étape « 01 · Observer » de la protection s'appelle maintenant « 01 · Connaître ». Le mot « observation » n'apparaît plus sur la page.
 - **Laissé de côté volontairement :** les prix de Safe et de Fireblocks (je ne les ai pas vérifiés moi-même, et le site ne nomme aucun concurrent hors Safe), les chiffres de marché et de point mort (pour le deck, pas pour un client), la clé de contrainte (décision de Timéo du 10/10).
 - **Vérifié dans un navigateur** à 1366, 1060 et 390 px : aucun défilement horizontal, menu sur une ligne, quatre offres alignées puis empilées sur téléphone.
@@ -442,7 +483,7 @@ Ajouter les entrées les plus récentes en haut.
 ### 2026-10-10 22:58 — ia-2 / Timéo (avec Claude) — PITCH POUR LE MENTOR, VERSION 2
 - **Demande de Timéo :** un pitch pour présenter le projet à un mentor. Écrit dans `shared/pitch-mentor-v2.md` : pitch oral de deux minutes (problème, solution, démo), sept chiffres clés avec la réserve à dire pour chacun, six points qui nous démarquent, ce qui est fragile, quatorze questions à poser au mentor. L'ancien `shared/pitch-mentor.md` date de l'axe 4 et n'est plus à jour.
 - **Romain :** tout vient de `shared/mesures.md` ; corrige si un chiffre a bougé depuis. Deux points que j'y affirme et que tu connais mieux que moi : l'oracle rejette les accusations répétées par une même source, et le signalement prend 10 à 20 s sur Fuji quand l'explication Bedrock est activée.
-- **Vérifié avant d'écrire :** `main` à jour, 50 tests du contrat au vert sur le PC de Timéo, déploiement Fuji courant = le tien de 22h28 (`0x5DfA…2Eed`).
+- **Vérifié avant d'écrire :** `main` à jour, 51 tests du contrat au vert sur le PC de Timéo, déploiement Fuji courant = le tien de 22h28 (`0x5DfA…2Eed`).
 
 ### 2026-10-10 22:45 — ia-2 / Timéo (avec Claude) — DÉCISION : LA CLÉ DE CONTRAINTE N'EST PAS DÉCRITE SUR LE SITE
 - **Décision de Timéo :** le site ne doit pas expliquer la signature sous contrainte, parce que l'attaquant le lirait aussi. Il dit seulement que la réponse existe, qu'elle est développée en interne et présentée au client une fois l'accord signé.
@@ -454,7 +495,7 @@ Ajouter les entrées les plus récentes en haut.
 - **Fait dans `ia-2/site-vitrine/dist/` :** nouvelle section `#securites` entre « Votre équipe » et « La protection », lien « Vos clés » dans le menu. Le logo et le slogan en titre, puis quatre cartes « menace → réponse → état de la preuve » :
   1. clé volée → révocation seul, en une transaction (« Démontré sur Avalanche Fuji : 0 mUSD perdu sur 80 000 ») ;
   2. signature sous contrainte → le paiement ne part pas, collègues prévenus en privé, **avec la limite écrite** (chaîne publique) (« Démontré sur Fuji : 0 mUSD perdu sur 60 000 ») ;
-  3. clé remplacée → deux jours de probation (« Testé : 50 tests du contrat ») ;
+  3. clé remplacée → deux jours de probation (« Testé : 51 tests du contrat ») ;
   4. adresse sosie → mise en attente, derniers caractères à retaper (« Testé dans le moteur de score »).
 - **Romain, à relire :** les chiffres viennent de ton tableau « Clé d'identité froide » de `shared/mesures.md` et de tes entrées de 21:51 et 22:28. Corrige si une formulation dépasse ce qui est démontré. Les adresses pièges et l'immunité collective ne sont pas sur la page.
 - **Toujours ouvert :** le bouton « Code disponible sur GitHub » pointe vers le dépôt privé. Site publié à republier depuis `dist/` (Codex).
@@ -486,7 +527,7 @@ Ajouter les entrées les plus récentes en haut.
 - **Codex :** site publié toujours à republier depuis `dist/`.
 ### 2026-10-10 22:21 — Romain (avec Claude) — ⚠️ BRANCHE `identite-froide` FUSIONNÉE DANS MAIN, REDÉPLOIEMENT FUJI EN COURS
 - **Décision de Romain (validée) : clé d'identité froide = ta clé de contrainte + `revokeMyKey`.** Stockage : portefeuille matériel pour les dirigeants et signataires principaux, passkey du téléphone pour les autres.
-- **Timéo, je te préviens : j'ai fusionné la branche dans `main`** (tu avais rendu le contrat à 22:02 ; la fusion n'ajoute qu'une fonction, un événement et un fichier de tests ; **50 tests passent** ; ABI régénérées dans `shared/abi/`). Si tu veux changer la sémantique ou le nom, c'est ton contrat : fais-le sur `main`, je m'adapte.
+- **Timéo, je te préviens : j'ai fusionné la branche dans `main`** (tu avais rendu le contrat à 22:02 ; la fusion n'ajoute qu'une fonction, un événement et un fichier de tests ; **51 tests passent** ; ABI régénérées dans `shared/abi/`). Si tu veux changer la sémantique ou le nom, c'est ton contrat : fais-le sur `main`, je m'adapte.
 - **Je redéploie sur Fuji depuis le Mac** (le contrat a changé) : l'ancien `ia-2/deployments/fuji.json` est sauvegardé en `fuji-v1-19h29.json`. **Un seul relais Fuji à la fois : le mien tourne jusqu'à l'entrée « relais Fuji arrêté ».** Après, `git pull` avant de relancer quoi que ce soit sur Fuji.
 
 ### 2026-10-10 22:13 — Romain (avec Claude) — CLÉ D'IDENTITÉ FROIDE : BRANCHE À RELIRE, TIMÉO

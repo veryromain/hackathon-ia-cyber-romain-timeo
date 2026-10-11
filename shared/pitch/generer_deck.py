@@ -93,9 +93,7 @@ def base(title_eyebrow, number=None, annex=False, who=None):
     # surtitre
     eyebrow_color = ORANGE if annex else ACCENT
     text(slide, M, Inches(0.55), W - 2 * M, Inches(0.35), [[(title_eyebrow[0].upper() + "  ", {"color": eyebrow_color, "bold": True, "size": 11, "font": BODY}), (title_eyebrow[1], {"color": MUTED, "size": 11, "font": BODY})]])
-    if who:
-        pill = rect(slide, W - M - Inches(1.5), Inches(0.5), Inches(1.5), Inches(0.38), fill=GLASS, line=LINE, shape=MSO_SHAPE.ROUNDED_RECTANGLE, radius=0.5)
-        text(slide, W - M - Inches(1.5), Inches(0.5), Inches(1.5), Inches(0.38), who, size=10, color=ACCENT, bold=True, align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
+    # (who : qui parle, gardé pour les notes ; plus de pastille à l'écran, décision de Romain du 11/10)
     return slide
 
 
@@ -189,18 +187,18 @@ ROMAIN
 « Conséquence : les grandes plateformes se paient des équipes de sécurité et des outils à 36 000 dollars par an. Les autres, l'immense majorité, n'ont rien, à aucun prix. »""")
 
 # 3. Cible — ROMAIN
-s = base(("Cible", "les organisations qui ont une trésorerie et pas d'équipe sécurité"), 3, who="ROMAIN")
+s = base(("Cible", "toute organisation avec plus de 1 M$ de trésorerie et pas d'équipe sécurité"), 3, who="ROMAIN")
 title(s, "Pour les équipes compactes aux trésoreries importantes", size=36)
-tiles(s, [("675", "protocoles > 10 M$ d'actifs gérés, toutes chaînes (API DeFiLlama, 11/10/2026)", INK),
+tiles(s, [("1 359", "protocoles > 1 M$ d'actifs gérés, toutes chaînes, dont 675 > 10 M$ (API DeFiLlama, 11/10/2026)", INK),
           ("≈ 220", "DAO avec plus de 1 M$ de trésorerie (DeepDAO, T1 2026)", INK),
-          ("32 – 121", "organisations adressables sur Avalanche (protocoles > 10 M$, équipes de L1)", ACCENT),
-          ("675 – 895", "sur les chaînes EVM, borne basse (fonds et fondations exclus, faute de source)", INK)], y=Inches(2.6), h=Inches(2.0), value_size=30)
-text(s, M, Inches(4.95), W - 2 * M, Inches(1.1), [[("Protocoles, DAO, startups et fonds crypto : 1 à 10 M$ dans un Safe, zéro personne dont c'est le métier. ", {"color": INK, "bold": True}), ("Tous ont déjà un coffre : Safe sécurise 35 Md$ sur 61 millions de comptes. Aucun ne déplacera sa trésorerie pour un essai.", {})]], size=16, color=MUTED)
+          ("81 – 121", "organisations adressables sur Avalanche (71 protocoles > 1 M$, 10 à 50 équipes de L1)", ACCENT),
+          ("1 359 – 1 579", "sur les chaînes EVM, borne basse (fonds et fondations exclus, faute de source)", INK)], y=Inches(2.6), h=Inches(2.0), value_size=24)
+text(s, M, Inches(4.95), W - 2 * M, Inches(1.1), [[("Protocoles, DAO, startups et fonds crypto : plus de 1 M$ dans un Safe, zéro personne dont c'est le métier. ", {"color": INK, "bold": True}), ("Tous ont déjà un coffre : Safe sécurise 35 Md$ sur 61 millions de comptes. Aucun ne déplacera sa trésorerie pour un essai.", {})]], size=16, color=MUTED)
 notes(s, """[1:20 → 2:00]  ROMAIN
-« Les autres, ce sont les équipes de protocoles, les DAO, les startups et les fonds crypto : une trésorerie de un à dix millions dans un coffre multi-signatures, le plus souvent un Safe, et zéro personne dont c'est le métier. Il y en a au moins 675 à 895 sur les chaînes compatibles Ethereum. Sur Avalanche, où nous sommes nés, entre 32 et 121. Ces chiffres viennent de l'API DeFiLlama lue hier et de DeepDAO ; les calculs sont dans le dépôt. »
+« Les autres, ce sont les équipes de protocoles, les DAO, les startups et les fonds crypto : une trésorerie de plus d'un million dans un coffre multi-signatures, le plus souvent un Safe, et zéro personne dont c'est le métier. Il y en a au moins 1 359 à 1 579 sur les chaînes compatibles Ethereum. Sur Avalanche, où nous sommes nés, entre 81 et 121. Ces chiffres viennent de l'API DeFiLlama lue hier et de DeepDAO ; les calculs sont dans le dépôt. »
 (passer la main : « Timéo, qu'est-ce qu'on leur apporte ? »)
 
-Si question sur la méthode : comptage par seuil de TVL, hypothèse H1 (protocole > 10 M$ ⇒ trésorerie ≥ 1 M$), script reproductible dans shared/business-marche.md § 5.""")
+Si question sur la méthode : comptage par seuil de TVL, hypothèse H1 révisée le 11/10 (protocole > 1 M$ d'actifs ⇒ trésorerie ≥ 1 M$ ; borne prudente > 10 M$ : 675 protocoles, 22 sur Avalanche), script reproductible dans shared/business-marche.md § 5.""")
 
 # 4. Solution — TIMÉO
 s = base(("Solution", "Breaker n'est pas un coffre"), 4, who="TIMÉO")
@@ -208,23 +206,32 @@ title(s, "Vous avez déjà le coffre. Il vous manque quelqu'un qui regarde.", si
 flow(s, [("Votre Safe", "vos signataires, votre adresse, votre historique : rien ne bouge"),
          ("Guard Breaker", "appelé avant chaque paiement : signature en plus, attente, gel, probation des clés"),
          ("Moteur Breaker", "règles sur votre historique · modèle d'anomalie · oracle Web · listes OFAC · explication en français"),
-         ("Vos signataires", "décident, toujours. L'unanimité lève tout.")], y=Inches(2.5), h=Inches(1.7), highlight=(1, 2))
-y3 = Inches(4.4)
+         ("Vos signataires", "décident, toujours. L'unanimité lève tout.")], y=Inches(2.45), h=Inches(1.55), highlight=(1, 2))
+y3 = Inches(4.15)
 for i, (k, t, d, c) in enumerate([("1", "Regarde", "Bénéficiaire nouveau ? Montant 4× vos habitudes ? Trois paiements en dix minutes ? Adresse sosie, fonds souillés, sanctions ?", ACCENT),
                                    ("2", "Explique", "En français, pour des non-experts : « premier paiement à cette adresse, montant quatre fois supérieur à vos habitudes ».", BLUE),
                                    ("3", "Freine", "Une signature de plus, ou une attente. Jamais un blocage définitif : le pire bug possible est un faux ralentissement.", ORANGE)]):
     w = int((W - 2 * M - Inches(0.4)) / 3); x = M + i * (w + Inches(0.2))
     text(s, x, y3, Inches(0.5), Inches(0.6), k, size=30, color=c, font=DISPLAY, bold=True)
     text(s, x + Inches(0.55), y3 + Inches(0.05), w - Inches(0.6), Inches(0.4), t, size=16, color=INK, font=DISPLAY, bold=True)
-    text(s, x + Inches(0.55), y3 + Inches(0.45), w - Inches(0.6), Inches(1.1), d, size=11.5, color=MUTED)
-text(s, M, Inches(5.85), W - 2 * M, Inches(0.4), [[("Et protège la personne : ", {"bold": True, "color": INK}), ("clé d'identité pour révoquer seul sa clé volée · clé de contrainte qui gèle en silence · probation des clés neuves.", {})]], size=13, color=MUTED)
-text(s, M, Inches(6.22), W - 2 * M, Inches(0.5), [[("Deux modes, au choix du client : ", {"bold": True, "color": INK}), ("Protection", {"bold": True, "color": ACCENT}), (" (Essentiel, Standard : signature en plus, mise en attente ; rien n'est jamais bloqué) · ", {}), ("Cosignataire", {"bold": True, "color": ORANGE}), (" (Premium : un agent occupe un siège de signataire et refuse ; dérogation humaine après délai).", {})]], size=13, color=MUTED)
+    text(s, x + Inches(0.55), y3 + Inches(0.45), w - Inches(0.6), Inches(1.05), d, size=11.5, color=MUTED)
+# Bandeau mis en avant : la clé d'identité froide (nom retenu le 10/10 à 22:10), sans retirer la clé de contrainte ni la probation.
+yk = Inches(5.6); hk = Inches(0.58)
+rect(s, M, yk, W - 2 * M, hk, fill=GLASS, line=ACCENT, shape=MSO_SHAPE.ROUNDED_RECTANGLE, radius=0.3)
+rect(s, M, yk, Inches(0.06), hk, fill=ACCENT)
+text(s, M + Inches(0.3), yk, W - 2 * M - Inches(0.5), hk,
+     [[("Et protège la personne  ·  ", {"bold": True, "color": INK, "size": 13}),
+       ("Clé d'identité froide", {"bold": True, "color": ACCENT, "font": DISPLAY, "size": 15}),
+       (" : une seconde clé, gardée hors ligne, pour révoquer seul sa clé volée, sans quorum, même coffre gelé.", {"color": INK, "size": 12.5}),
+       ("  ·  Clé de contrainte : dit « oui » à l'écran, gèle en silence  ·  Probation des clés neuves.", {"size": 12})]],
+     size=12, color=MUTED, anchor=MSO_ANCHOR.MIDDLE)
+text(s, M, Inches(6.26), W - 2 * M, Inches(0.5), [[("Deux modes, au choix du client : ", {"bold": True, "color": INK}), ("Protection", {"bold": True, "color": ACCENT}), (" (Essentiel, Standard : signature en plus, mise en attente ; rien n'est jamais bloqué) · ", {}), ("Cosignataire", {"bold": True, "color": ORANGE}), (" (Premium : un agent occupe un siège de signataire et refuse ; dérogation humaine après délai).", {})]], size=13, color=MUTED)
 notes(s, """[2:00 → 3:00]  TIMÉO
 « Breaker n'est pas un coffre. C'est une garde qui se greffe sur le coffre que vous avez déjà, et qui fait trois choses.
 Un : elle regarde chaque paiement avec ce qu'elle a appris de votre historique. Ce bénéficiaire est-il nouveau ? Ce montant est-il normal ? Pourquoi trois paiements en dix minutes ? Pourquoi “urgent” ? Elle vérifie aussi l'adresse sur le Web et sur les listes de sanctions.
 Deux : elle explique, en français, à des gens qui ne sont pas experts : “premier paiement à cette adresse, montant quatre fois supérieur à vos habitudes”.
 Trois : elle freine. Une signature de plus, ou une mise en attente : un délai pendant lequel rien ne part, même avec toutes les signatures. Jamais un blocage définitif : l'unanimité de vos signataires lève tout. Et si vous voulez qu'elle puisse dire non à votre place, c'est le niveau Premium, le mode Cosignataire : un agent prend un siège de signataire et refuse de signer un paiement à risque ; vos signataires gardent une dérogation après délai.
-Et parce que l'attaque vise la personne, chaque signataire a une clé d'identité, gardée à part, pour révoquer seul sa clé volée ; et une clé de contrainte, qui dit oui à l'écran mais gèle en silence si on le force. »
+Et parce que l'attaque vise la personne, chaque signataire a une clé d'identité froide : une seconde clé, gardée hors ligne, pour révoquer seul sa clé volée, sans quorum, même coffre gelé ; et une clé de contrainte, qui dit oui à l'écran mais gèle en silence si on le force. Démontré sur Fuji : clé volée, 80 000 approuvés 2 sur 2 par le voleur, révoquée par la victime en une transaction, zéro sorti. »
 
 Si question « vous êtes un module de Safe ? » : « Le multisig de la démo tient lieu du Safe du client ; le portage en Guard + Module de Safe est en feuille de route, 6 à 8 semaines. »""")
 
@@ -255,7 +262,7 @@ gap = Inches(0.2); w = int((W - 2 * M - 3 * gap) / 4); y = Inches(2.3); h = Inch
 for i, (n, p, u, grad, gc, d, star) in enumerate([
         ("Observation", "0 €", "30 jours", "Regarde, explique", INK, "rien ne change à vos paiements · alertes et explications en lecture seule · rapport de fin d'observation", False),
         ("Essentiel", "149 €", "/ mois", "+ une personne", BLUE, "signature en plus sur les paiements inhabituels · explications en français · listes OFAC / ScamSniffer · notifications", False),
-        ("Standard", "449 €", "/ mois", "+ du temps", ORANGE, "mise en attente : rien ne part, même avec toutes les signatures · oracle Web, traçage, sosies · clé d'identité, clé de contrainte, gel · rapport d'incident", True),
+        ("Standard", "449 €", "/ mois", "+ du temps", ORANGE, "mise en attente : rien ne part, même avec toutes les signatures · oracle Web, traçage, sosies · clé d'identité froide, clé de contrainte, gel · rapport d'incident", True),
         ("Premium", "990 €", "/ mois", "+ un refus", ACCENT, "mode Cosignataire : un agent occupe un siège de signataire et peut dire non, dérogation humaine après délai · réglages sur mesure · support, disponibilité garantie", False)]):
     x = M + i * (w + gap)
     rect(s, x, y, w, h, fill=GLASS, line=ACCENT if star else LINE, shape=MSO_SHAPE.ROUNDED_RECTANGLE, radius=0.06)
@@ -265,49 +272,41 @@ for i, (n, p, u, grad, gc, d, star) in enumerate([
     text(s, x + Inches(0.3), y + Inches(1.15), w - Inches(0.5), Inches(0.4), grad, size=15, color=gc, font=DISPLAY, bold=True)
     text(s, x + Inches(0.3), y + Inches(1.55), w - Inches(0.5), h - Inches(1.65), d, size=10.5, color=MUTED, spacing=1.12)
 rows(s, [["Pourquoi ces prix", ""],
-         ["449 €", "5 % de la perte annuelle évitée (9,5 % d'incidents × 1,3 M$ médiane × 91 % ≈ 112 k$/an) · repère : Safe Pro Business, 669 €/mois"],
-         ["990 €", "10 % de la perte évitée, le plafond : le seul niveau où quelqu'un dit non à votre place quand tous vos signataires sont trompés · repère : Fireblocks, 999 $/mois"],
+         ["449 €", "5 % de la perte évitée, borne haute (9,5 % × 1,3 M$ × 91 % ≈ 112 k$/an) · 0,05 à 0,5 % de la trésorerie par an · repère : Safe Pro Business 669 €"],
+         ["990 €", "10 % de la perte évitée, le plafond : le seul niveau où quelqu'un dit non à votre place quand tous vos signataires sont trompés · repère : Fireblocks 999 $"],
          ["Entreprise", "sur devis : plusieurs entités, audit, intégrations · coût marginal ≈ 1,2 $/client/mois : la valeur dicte le prix"]],
-     y=Inches(5.25), col_w=[Inches(1.6), W - 2 * M - Inches(1.6)], h_row=Inches(0.34), size=11)
-notes(s, """[3:50 → 4:20]  ROMAIN
-« Safe vient de lancer Safe Pro : 669 euros par mois pour des règles que vous écrivez vous-même. Nous, nous détectons ce que vous n'avez pas prévu, et nous l'expliquons.
-Observation gratuite 30 jours : rien ne change à vos paiements. Puis trois niveaux, selon le pouvoir que vous nous déléguez : Essentiel, 149 euros, une personne de plus sur les paiements inhabituels. Standard, 449 euros, du temps : la mise en attente, et la protection de la personne. Premium, 990 euros, un refus : un agent qui occupe un siège de signataire et peut dire non à votre place. Sans engagement.
-449 euros, c'est 5 % de la perte annuelle que vous évitez, calculée avec les taux d'incidents de TRM et notre efficacité mesurée ; 990 euros, c'est 10 %, le plafond de ce qu'un outil de sécurité peut demander. »
+     y=Inches(5.22), col_w=[Inches(1.4), W - 2 * M - Inches(1.4)], h_row=Inches(0.36), size=10.5)
+notes(s, """[3:50 → 4:15]  ROMAIN · 25 s, 60 mots
+« Safe Pro, 669 euros par mois : des règles que VOUS écrivez. Nous, on détecte ce que vous n'aviez PAS prévu.
+Trente jours gratuits. Puis vous choisissez le pouvoir que vous nous déléguez : UNE PERSONNE de plus, 149 euros. DU TEMPS, 449. UN REFUS, 990.
+449 euros, c'est 5 % de la perte que vous évitez chaque année. »
 
-POURQUOI UN CLIENT PAIE 990 € PLUTÔT QUE 449 € (si on nous le demande) :
-• Ce qu'il achète en plus : le seul niveau où quelqu'un peut dire NON à sa place. La signature en plus et la mise en attente supposent qu'au moins un humain réagisse ; chez Bybit, les trois signataires ont validé ; chez Drift, les signataires ont approuvé. Le Cosignataire couvre le cas où tous les humains sont trompés ou sous pression.
-• Pour qui : les organisations dont les signataires sont dispersés ou peu disponibles (DAO), celles dont la trésorerie dépasse 10 M$, celles qui veulent une disponibilité garantie. Premium n'est PAS réservé aux grandes trésoreries : c'est un niveau de pouvoir délégué, accessible à tous.
-• Valeur : 990 € × 12 = 11,9 k€ = 10 % de 112 k$ de perte annuelle évitée ; c'est le plafond de la règle « ≤ 10 % », là où Standard est à 5 %. Repère de marché pour l'automatisation : Fireblocks Essentials à 999 $/mois.
-• Garde-fou : même en Premium, l'agent n'a jamais de veto définitif : dérogation humaine renforcée après délai (décision Timéo, shared/decisions.md).
+SEULEMENT SI ON DEMANDE :
+• Pourquoi 990 ? Seul niveau où quelqu'un dit non quand TOUS les signataires sont trompés (Bybit, Drift). L'agent n'a jamais de veto définitif.
+• D'où vient la perte évitée ? 9,5 % d'incidents (TRM 2025) × 1,3 M$ de perte médiane × 91 % mis en attente ≈ 112 k$/an. Détail : shared/business-prix.md § 1.B.""")
 
-LE CALCUL DE LA PERTE ANNUELLE ÉVITÉE (shared/business-prix.md § 1.B) :
-• 9,5 % : TRM Labs compte ≈ 150 incidents significatifs en 2025, rapportés aux 1 579 organisations ≥ 1 M$ (1 359 protocoles > 1 M$ d'actifs, API DeFiLlama, + 220 DAO > 1 M$, DeepDAO). Borne haute : on montre aussi le cas « un incident sur cinq dans notre périmètre » (22 k$).
-• 1,3 M$ : perte médiane des incidents significatifs de 2025 selon TRM Labs (la moitié coûtent plus, la moitié moins). Immunefi donne 1,5 M$ en DeFi ; CertiK 104 k$ mais sur plus de 700 incidents dont beaucoup de petits. On prend TRM, dont le périmètre ressemble au nôtre.
-• 91 % : part des montants frauduleux mis en attente sur le jeu final préparé à l'aveugle (shared/mesures.md).
-• 9,5 % × 1,3 M$ × 91 % ≈ 112 k$/an.
-
-Différence en une phrase : « Vous avez déjà le coffre. Il vous manque quelqu'un qui regarde chaque paiement et vous dit, en français, quand quelque chose ne colle pas. »""")
 
 # 7. Marché — ROMAIN
 s = base(("Mise sur le marché", "aucun pourcentage de part de marché : un entonnoir, chaque étape sourcée"), 7, who="ROMAIN")
-title(s, "Première année : 62 organisations présentées, 3 à 6 clients payants.", size=32)
-flow(s, [("62 contactables", "Retro9000 30 + équipes de L1 10 + protocoles > 10 M$ sur Avalanche 22, présentées par l'écosystème"),
-         ("31 en observation", "× 50 % : une équipe sur deux accepte l'essai gratuit ; seule hypothèse non sourcée, mesurée dès octobre"),
-         ("3 à 6 payants", "× 8,9 – 18,5 % : conversion essai → payant du SaaS B2B sans carte bancaire")], y=Inches(2.4), h=Inches(1.5), highlight=(2,))
+title(s, "Première année : 111 organisations présentées, 5 à 10 clients payants.", size=32)
+flow(s, [("111 contactables", "Retro9000 30 + équipes de L1 10 + protocoles > 1 M$ sur Avalanche 71, présentées par l'écosystème"),
+         ("56 en observation", "× 50 % : une équipe sur deux accepte l'essai gratuit ; seule hypothèse non sourcée, mesurée dès octobre"),
+         ("5 à 10 payants", "× 8,9 – 18,5 % : conversion essai → payant du SaaS B2B sans carte bancaire")], y=Inches(2.4), h=Inches(1.5), highlight=(2,))
 rows(s, [["Quand", "Jalon"],
          ["oct. 2026", "dépôt public · ≥ 10 organisations en observation · dossier subvention"],
          ["nov. – déc.", "greffon sur le Safe du client · mesurer la part des équipes qui acceptent l'essai (hypothèse : une sur deux)"],
          ["janv. 2027", "contrat gelé, audit externe, puis premiers clients payants"],
-         ["mars 2027", "même code sur une 2e chaîne EVM : marché × 6 à 8"],
-         ["T3 2027 – mi-2028", "point mort : 10 clients Standard (coûts fixes 4 300 €/mois : 2 fondateurs à 2 000 € + 300 € d'infra) ; plus tôt avec un Premium"]],
+         ["mars 2027", "même code sur une 2e chaîne EVM : marché × 11 à 19"],
+         ["T2 – T3 2027", "point mort : 10 clients Standard (coûts fixes 4 300 €/mois : 2 fondateurs à 2 000 € + 300 € d'infra) ; Avalanche seul suffit à 18,5 % de conversion, un écosystème EVM de plus à 8,9 % ; plus tôt avec un Premium"]],
      y=Inches(4.1), col_w=[Inches(2.6), W - 2 * M - Inches(2.6)], h_row=Inches(0.34), size=11.5)
-notes(s, """[4:20 → 4:45]  ROMAIN
-« Première année : 62 organisations présentées par l'écosystème Avalanche, la moitié en observation, 3 à 6 clients payants selon les taux de conversion du SaaS B2B. L'audit externe avant le premier euro. Puis le même code sur les autres chaînes compatibles. Nos coûts fixes sont de 4 300 euros par mois, deux fondateurs à 2 000 euros : le point mort est à 10 clients Standard, atteignable entre le troisième trimestre 2027 et la mi-2028 selon le taux de conversion, plus tôt avec un seul client Premium. »
+notes(s, """[4:15 → 4:35]  ROMAIN · 20 s, 40 mots
+« Première année : 111 organisations présentées par l'écosystème Avalanche. La moitié en observation, 5 à 10 CLIENTS PAYANTS. Audit externe avant le premier euro. Point mort à 10 clients, MI-2027, plus tôt avec un seul Premium. »
 
-Si on demande « comment vous arrivez à 10 clients ? » : à l'envers. 10 clients ÷ 8,9 à 18,5 % de conversion = 54 à 112 équipes en observation ÷ une sur deux qui accepte = 108 à 225 équipes à contacter. Avalanche en donne 62 d'ici décembre ; chaque nouvel écosystème EVM en donne autant par semestre : un à trois écosystèmes de plus, donc T3 2027 dans le cas favorable, mi-2028 dans le cas défavorable.
+SEULEMENT SI ON DEMANDE :
+• Comment 10 clients ? À l'envers : 10 ÷ 8,9 à 18,5 % de conversion ÷ une équipe sur deux = 108 à 225 équipes à contacter ; Avalanche en donne 111, une 2e chaîne EVM complète.
+• Pourquoi si peu ? On ne prend que ce que l'entonnoir sourcé donne.
+Si on n'a que 4 min : sauter cette slide.""")
 
-Si on a droit à 4 min seulement : sauter cette slide, les chiffres sont en annexe.
-Si « pourquoi si peu ? » : « Parce qu'on ne prend que ce que l'entonnoir sourcé donne. L'année 1 sert aux références et aux données réelles. »""")
 
 # 8. Équipe, limites, suite — TIMÉO (limites), ROMAIN (clôture)
 s = base(("Équipe · limites · suite", "36 heures"), 8, who="TIMÉO · ROMAIN")
@@ -320,7 +319,7 @@ text(s, x2, Inches(2.5), colw, Inches(0.4), "Les 90 prochains jours", size=14, c
 text(s, x2, Inches(2.95), colw, Inches(2.4), ["•  Dès ce mois-ci : 10 organisations en observation gratuite, présentées par l'écosystème Avalanche.", "•  Greffon sur le Safe du client · notifications · rejeu de Bybit et Drift sur données réelles.", "•  Audit externe financé par subvention, avant le premier euro."], size=14, color=TEXT, spacing=1.35)
 rect(s, M, Inches(5.45), Inches(0.08), Inches(0.75), fill=ACCENT)
 text(s, M + Inches(0.3), Inches(5.4), W - 2 * M, Inches(0.9), "Vos fonds. Vos signataires. Votre dernier mot.", size=26, color=INK, font=DISPLAY, bold=True, anchor=MSO_ANCHOR.MIDDLE)
-notes(s, """[4:45 → 5:00]  TIMÉO
+notes(s, """[4:35 → 5:00]  TIMÉO
 « Ce qu'on ne cache pas : données synthétiques, contrat pas encore audité, le multisig de la démo tient lieu du Safe du client. Ce qu'il nous reste : le greffon Safe, l'audit, et surtout de vraies données. »
 
 ROMAIN
@@ -348,7 +347,7 @@ rows(s, [["Niveau", "Déclencheur", "Ce qui se passe, automatiquement", "Ce que 
          ["Gel · Standard", "clé compromise, signature sous contrainte", "clé d'identité : révocation immédiate par la victime seule ; clé de contrainte : gel silencieux et alerte privée", "contre la perte d'une clé ou la menace physique sur une personne", "remplacer la clé ; dégeler à la majorité des clés saines"]],
      y=Inches(2.25), col_w=[Inches(1.75), Inches(2.3), Inches(3.3), Inches(2.6), W - 2 * M - Inches(9.95)], h_row=Inches(0.9), size=10)
 notes(s, """TIMÉO.
-Ce qui diffère vraiment : la signature en plus ajoute une PERSONNE ; la mise en attente ajoute du TEMPS. Une personne de plus ne sert à rien si les attaquants tiennent déjà assez de clés (Bybit) : là, seul le délai protège, parce qu'il laisse le temps de vérifier, d'annuler, de révoquer sa clé avec la clé d'identité, et parce que l'oracle et le traçage tournent pendant ce temps.
+Ce qui diffère vraiment : la signature en plus ajoute une PERSONNE ; la mise en attente ajoute du TEMPS. Une personne de plus ne sert à rien si les attaquants tiennent déjà assez de clés (Bybit) : là, seul le délai protège, parce qu'il laisse le temps de vérifier, d'annuler, de révoquer sa clé avec la clé d'identité froide, et parce que l'oracle et le traçage tournent pendant ce temps.
 Où interviennent les agents : partout pour regarder et expliquer (automatique, toujours). Pour DÉCIDER, seulement au niveau Premium (mode Cosignataire) : l'agent devient un signataire qui peut refuser. En mode Protection, l'agent ne signe jamais et ne refuse jamais : il ajoute une signature à obtenir ou un délai.
 Seuils : ia-1/score/regles.py (SEUIL_STEP_UP 0,30 ; SEUIL_HOLD 0,75). Niveau « Aucun » (bénéficiaire connu, montant habituel) : journalisé avec score et raisons, signatures normales.""")
 

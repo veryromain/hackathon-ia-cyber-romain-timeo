@@ -4,7 +4,7 @@
 
 | Livrable | Fichier / lien | Statut |
 |---|---|---|
-| Dépôt et installation | https://github.com/veryromain/hackathon-ia-cyber et README racine | Dépôt privé : accès jury à assurer avant envoi. |
+| Dépôt et installation | https://github.com/veryromain/hackathon-ia-cyber-romain-timeo et README racine | Dépôt privé : accès jury à assurer avant envoi. |
 | Vidéo 2-3 minutes | Lien fourni par Tim après finalisation | En attente ; ne pas soumettre les quatre clips bruts comme vidéo finale. |
 | Pitch | [Deck PDF relu](breaker-pitch.pdf) et [HTML](../pitch/breaker-deck.html), 8 slides principales + annexes | Source autonome, utilisable hors ligne. Le PPTX historique contient des formulations obsolètes : ne pas joindre cette version. |
 | Fiche de défense 1 page | [PDF](fiche-defense.pdf) | Une page, texte et rendu visuel vérifiés. |

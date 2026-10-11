@@ -36,3 +36,9 @@ shared/alertes-privees.jsonl
 ia-1/oracle/collecte_cache/
 # Accusations écartées par l'oracle : citations de pages réelles, à garder hors du dépôt
 shared/flags-rejetes.jsonl
+
+# Motion design v2 : images du rendu et segments de voix (régénérables : python3 shared/video/motion-v2/construire_motion_v2.py --tout)
+shared/video/motion-v2/_frames/
+shared/video/motion-v2/voix/
+shared/video/motion-v2/_rendre_images.py
+shared/video/motion-v2/voix-off.wav

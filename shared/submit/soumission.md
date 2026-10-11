@@ -6,7 +6,7 @@
 
 **Track :** 1 - Fintech Security, axe 4 - détection et réponse aux incidents DeFi
 
-**Dépôt :** https://github.com/veryromain/hackathon-ia-cyber
+**Dépôt :** https://github.com/veryromain/hackathon-ia-cyber-romain-timeo
 
 **Vidéo :** à compléter dès réception du lien final ; 2-3 minutes.
 

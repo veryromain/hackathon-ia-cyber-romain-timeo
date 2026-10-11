@@ -1,0 +1,82 @@
+{
+  "ok": true,
+  "public_files": [
+    "app.js",
+    "index.html",
+    "style.css"
+  ],
+  "archive_files": [],
+  "known_secret_variants": 318,
+  "findings": [],
+  "live": [
+    {
+      "path": "/",
+      "status": 200,
+      "matches_source": true,
+      "platform_script_added": true,
+      "sha256": "1001a3f89929672fbddfb54cc6d3a1755419456efd449c08e320320c9180398e",
+      "bytes": 36624
+    },
+    {
+      "path": "/app.js",
+      "status": 200,
+      "matches_source": true,
+      "platform_script_added": false,
+      "sha256": "fc25187a44d13bb1b7ca7ecc440a5f198402a19f080a0982b47648e8b58e54a6",
+      "bytes": 14628
+    },
+    {
+      "path": "/style.css",
+      "status": 200,
+      "matches_source": true,
+      "platform_script_added": false,
+      "sha256": "cc365e5edec31415bcf7765787c8291aa33bc08650087f4f1a06aa652d20fde8",
+      "bytes": 27683
+    },
+    {
+      "path": "/.openai/hosting.json",
+      "status": 200,
+      "file_not_exposed": true,
+      "homepage_fallback": true,
+      "sha256": "2d6f636c47d21b0b5dbbd50f3a27062e670d0c2263b106cbd4c3019d1f7d0276",
+      "bytes": 36624
+    },
+    {
+      "path": "/.env",
+      "status": 200,
+      "file_not_exposed": true,
+      "homepage_fallback": true,
+      "sha256": "b916cb6f133ac972dc55df2a6e47c8bfe8fcefcb0c2acbbfec90b71699a9a3f6",
+      "bytes": 36624
+    },
+    {
+      "path": "/.git/config",
+      "status": 200,
+      "file_not_exposed": true,
+      "homepage_fallback": true,
+      "sha256": "dcfce19aec568075729787620fa25c3da9c8339fcaad9ffc00a13949485ba079",
+      "bytes": 36624
+    },
+    {
+      "path": "/scripts/verify-static.py",
+      "status": 200,
+      "file_not_exposed": true,
+      "homepage_fallback": true,
+      "sha256": "f91bc0666e6346712e42cec0f489ab5d578ca63685d1c8775ed0f7140587abf0",
+      "bytes": 36624
+    },
+    {
+      "path": "/README.md",
+      "status": 200,
+      "file_not_exposed": true,
+      "homepage_fallback": true,
+      "sha256": "57f5d792c4062021756dbeb1e01b9ee13dfe27fc9d98ba5e1c97c0b0a21b1d09",
+      "bytes": 36624
+    }
+  ],
+  "manifest": {
+    "app.js": "fc25187a44d13bb1b7ca7ecc440a5f198402a19f080a0982b47648e8b58e54a6",
+    "index.html": "e478969303859d6d38f8ad9513cc30232354a2274bcd824b4d6725d797d9cf2c",
+    "style.css": "cc365e5edec31415bcf7765787c8291aa33bc08650087f4f1a06aa652d20fde8"
+  }
+}

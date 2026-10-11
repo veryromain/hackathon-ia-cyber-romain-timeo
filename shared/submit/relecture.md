@@ -29,3 +29,8 @@ La source historique du générateur PPTX reste obsolète : ne pas la relancer p
 Lien de la vidéo finale 2-3 minutes et formulaire. Dépôt GitHub actuellement PRIVATE : accès jury à assurer ; aucune publication publique ou invitation envoyée. Le formulaire n'a pas été envoyé.
 
 Vitrine alignée sur la gradation Romain : Standard Protection, Premium Cosignataire indépendamment du montant de trésorerie ; conversion monétaire inchangée.
+
+## Fusion finale avant soumission
+- Neuf commits Romain intégrés : chiffres cible et entonnoir actualisés, oral slides6-7 et motion-v2 conservés. Conflits JOURNAL (deux séries d’entrées conservées), pitch oral (marché Romain + correctifs sécurité), HTML (marché Romain + offres gradation) résolus.
+- Vidéo motion-v2 présente comme candidate ; Tim finalise sa vidéo et doit fournir le lien final, aucun choix automatique. Dépôt réel renommé hackathon-ia-cyber-romain-timeo : liens du rendu corrigés.
+- Vitrine v6 privée publiée depuis52474d32ec5dfb3c1daa79eecb5e7a423b7506ec ; source/archive/production sans secret318variantes. URL inchangée,aucun accèspublic ajouté.
