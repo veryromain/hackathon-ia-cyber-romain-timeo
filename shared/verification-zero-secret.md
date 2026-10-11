@@ -50,7 +50,7 @@ Aucune adresse e-mail dans les fichiers suivis. Les jeux de données sont synth�
 
 ## Avant de donner l'accès au jury
 
-1. Romain lance `npm run zero-secret` sur le Mac.
+1. ~~Romain lance `npm run zero-secret` sur le Mac.~~ Fait le 11 octobre à 08:05 : rien trouvé (après correction d'un faux positif sur `AWS_PROFILE`, un nom de profil, pas un secret).
 2. Relancer la commande une dernière fois après le dernier commit, juste avant midi.
 3. Choisir l'accès : inviter le jury comme lecteur du dépôt privé, ou rendre le dépôt public. **Rendre public est irréversible en pratique** (le dépôt peut être copié dans la minute) et expose aussi `conversations/` et le détail de la clé de contrainte, que Timéo a voulu garder hors du site.
 4. Si le dépôt devient public : activer dans GitHub « Secret scanning » et « Push protection » (réglages du dépôt, gratuits pour un dépôt public). Seul le propriétaire du dépôt, Romain, peut le faire.

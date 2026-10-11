@@ -1,44 +1,63 @@
-# B3 — Le marché : combien d'organisations, combien de trésorerie, et Avalanche est-il assez grand ?
+# B3 — Le marché, version 2 : chaque chiffre a une source ou un calcul
 
-> Romain (avec Claude), 11/10 vers 01:26. **Brouillon chiffré avec hypothèses explicites.** Les sources trouvées sont secondaires et se contredisent ; chaque chiffre porte son niveau de confiance. **À vérifier avant la slide sur trois sources primaires :** le tableau de bord DeepDAO, le service de transactions Safe sur Avalanche (nombre de Safe au-dessus d'un seuil), l'annuaire de l'écosystème de la Fondation Avalanche.
+> Romain (avec Claude), 11/10 vers 01:50. Règle fixée par Romain : **aucun chiffre arbitraire**. Chaque nombre porte sa source (S) ou son calcul (C). Les hypothèses sont nommées H1, H2… et chacune dit pourquoi on la fait. Ce qui n'a pas de source est **exclu du calcul**, pas estimé au doigt mouillé.
 
-## 1. Les repères qu'on a (et ce qu'ils valent)
+## 0. Définitions (pour le deck)
+- **Protocole** : une application qui tourne sur la blockchain (échange, prêt, pont, jeu…). Derrière, une **équipe** qui garde une trésorerie, souvent en multisig : notre client.
+- **TVL** (valeur totale bloquée) : l'argent des *utilisateurs* déposé dans un protocole. Indicateur d'activité ; ce n'est pas la trésorerie de l'équipe.
+- **TAM / SAM / SOM** : tout le marché possible / la part que notre produit sert tel qu'il est (Avalanche, libre-service) / ce qu'on peut vraiment gagner en un an avec nos moyens. Seul le SOM engage.
 
-| Repère | Valeur | Confiance |
-|---|---|---|
-| Trésoreries des DAO, toutes chaînes | **≈ 25 à 35 Md$** gérés par **≈ 4 700 à 13 000 DAO** selon les agrégateurs (DeepDAO suit ≈ 5 000 organisations listées, 300 suivies de près) | Faible à moyenne : agrégateurs, chiffres contradictoires |
-| Concentration | Les plus grosses trésoreries sont surtout leur propre jeton : ≈ 88 % pour Arbitrum, 78 % ENS, 70 % Aave ; Optimism et Uniswap ≈ 3 Md$ chacun | Moyenne |
-| Safe (le multisig standard) | > 100 Md$ sécurisés sur plus de 30 réseaux ; environ 68 % des DAO l'utiliseraient (une seule source, non vérifiable) ; **Safe est disponible sur la C-Chain et les L1 Avalanche** ; Ash Wallet (fournisseur Safe) sert plus de 10 équipes de L1 Avalanche pour leur trésorerie depuis 2 ans (annonce Avalanche Developers, juin 2026) | Moyenne (Safe), bonne (annonce Avalanche) |
-| Avalanche : activité | **653 protocoles** référencés (DeFiLlama), TVL native ≈ 0,6 à 0,76 Md$, TVL pontée ≈ 4,9 Md$ ; **> 50 L1 actives** ; ≈ 30 équipes dans la première cohorte Retro9000 ; 134 développeurs à temps plein, 419 actifs mensuels (Electric Capital, août 2026) | Bonne (DeFiLlama, Electric Capital), les TVL varient avec les prix |
-| Marché « logiciels de gestion de trésorerie crypto » | ≈ 1,7 à 1,8 Md$ en 2026 selon des cabinets, avec des périmètres différents | Faible : projections commerciales |
-| Configuration type d'une trésorerie de 1 à 50 M$ | multisig 3-sur-5 ou 4-sur-7 | Moyenne (guides) |
+## 1. Les données (toutes datées du 11/10/2026)
 
-## 2. Taille de marché, par la méthode « nombre d'organisations × prix » (hypothèses visibles)
-
-**Unité :** une organisation = un portefeuille multisig protégé. **Prix retenu pour le calcul :** 500 € / mois (hypothèse B6, à confirmer).
-
-| | Qui | Nombre (hypothèse) | Revenu annuel potentiel à 500 €/mois |
+| # | Donnée | Valeur | Source |
 |---|---|---|---|
-| **TAM** (toutes chaînes EVM) | DAO, équipes de protocoles, startups crypto, fonds et fondations tenant ≥ 1 M$ en multisig | DAO : 10 à 15 % des ≈ 5 000 DAO suivies, soit **500 à 750** ; équipes de protocoles et startups hors DAO : ordre de grandeur comparable, **500 à 1 000** ; fonds et fondations : **200 à 400**. **Total ≈ 1 200 à 2 100 organisations** | **≈ 7 à 13 M€ / an** |
-| **SAM** (Avalanche d'abord) | Les mêmes, dont la trésorerie principale est sur la C-Chain ou une L1 Avalanche | 653 protocoles référencés, 50 L1, cohortes de subventions : **≈ 100 à 300 organisations** avec une trésorerie significative | **≈ 0,6 à 1,8 M€ / an** |
-| **SOM** (12 premiers mois) | Clients atteignables par l'écosystème (Team1, Fondation, Kryptosphère, hackathons) et le catalogue Safe | **10 à 25 clients payants**, après 30 à 60 en mode observation gratuit | **≈ 60 à 150 k€** |
+| D1 | Protocoles référencés, toutes chaînes | **8 694** ; dont TVL > 100 k$ : 2 420 ; > 1 M$ : **1 359** ; > 10 M$ : **675** | S : API DeFiLlama `api.llama.fi/protocols`, lue le 11/10 (C : comptage par seuil, script dans ce document) |
+| D2 | Protocoles présents sur Avalanche | **561** ; dont TVL sur Avalanche > 100 k$ : 126 ; > 1 M$ : **71** ; > 10 M$ : **22** ; uniquement sur Avalanche : 159 | S : même API, champ `chainTvls.Avalanche` |
+| D3 | TVL d'Avalanche | 616 M$ (native) ; 468 chaînes référencées | S : `api.llama.fi/v2/chains` |
+| D4 | DAO suivies / DAO avec trésorerie > 1 M$ / total des trésoreries | ≈ **14 000** / ≈ **220** / ≈ 26 Md$ (T1 2026) | S : DeepDAO, repris par daotimes.com, eco.com et un rapport GitHub (pas lu sur deepdao.io directement : **à confirmer**) |
+| D5 | L1 Avalanche actives / équipes servies par Ash Wallet (Safe) | > 50 L1 (Fondation Avalanche, via eco.com) / > 10 équipes de L1 depuis 2 ans | S : eco.com ; annonce Avalanche Developers (X, juin 2026) |
+| D6 | Cohorte Retro9000 (subventions Avalanche) | ≈ 30 équipes | S : eco.com |
+| D7 | Incidents de sécurité 2025 | CertiK : 3,35 Md$, > 700 incidents, moyenne 5,32 M$, **médiane 104 k$** ; TRM : ≈ 150 incidents significatifs, **médiane 1,3 M$** ; Immunefi (DeFi) : médiane 1,5 M$ | S : CertiK Hack3d 2025 (via PANews, CoinMarketCap), TRM, Immunefi (via deepstrike.io) |
+| D8 | Prix de Safe Pro (lancé les 6-8 oct. 2026) | **Starter 189 €/mois** (2 Safe), **Business dès 669 €/mois** (5 à 20 Safe), Enterprise sur devis ; Safe{Wallet} reste gratuit ; Safe Shield de base gratuit | S : safe.global/pricing (lu le 11/10) |
+| D9 | Prix de Fireblocks | Essentials **999 $/mois** (6 mois max), Pro / Enterprise dès 36 000 $/an | S : fireblocks.com/pricing |
+| D10 | Conversion essai gratuit → payant (SaaS B2B, sans carte bancaire) | **8,9 %** (ChartMogul, 200 produits) à **18,2–18,5 %** (First Page Sage, 86 entreprises ; 1Capture, médiane B2B 2025) | S : shno.co, mailertogo.com (compilations) |
+| D11 | Fonds d'investissement et fondations crypto | **Aucune source de comptage trouvée** | → exclus du calcul (le TAM est donc une borne basse) |
 
-**Lecture honnête :** Avalanche seul est un **marché d'amorçage**, pas un marché final : de l'ordre du million d'euros par an au mieux, à ce prix. C'est suffisant pour un lancement (références, données réelles, écosystème qui aide), **pas pour une entreprise**. D'où deux leviers déjà décidés : **« né sur Avalanche, portable EVM »** (le contrat est en Solidity : l'extension à Ethereum, Base, Arbitrum multiplie le SAM par 10 ou plus) et **un prix par palier de trésorerie** (une fondation à 50 M$ ne paie pas 500 €, voir B6).
+## 2. Le calcul du marché
 
-## 3. Ce que le jury demandera, et la réponse
-- **« Avalanche est-il assez grand ? »** Pour démarrer, oui : 653 protocoles, plus de 50 L1 avec leurs équipes, Safe disponible, un écosystème qui nous présente des clients. Pour croître, non : d'où la portabilité EVM, décidée dès le départ.
-- **« Combien de clients ? »** Entre 100 et 300 organisations adressables sur Avalanche selon nos hypothèses, 1 200 à 2 100 sur l'EVM. Ce sont des ordres de grandeur, pas des comptages : on les affinera avec les données Safe et DeepDAO.
-- **« Pourquoi paieraient-ils ? »** Parce que les pertes se comptent en centaines de millions (Bybit, Drift) et qu'aucune offre n'existe pour les équipes sans équipe de sécurité (B4). La réponse définitive vient des entretiens (B5).
+**Unité** : une organisation = un multisig à protéger, avec une trésorerie d'au moins 1 M$ (en dessous, le prix ne se justifie pas face à Safe Shield gratuit).
 
-## 4. À faire pour durcir ces chiffres (avant la slide, si possible demain matin)
-1. DeepDAO : nombre de DAO avec trésorerie > 1 M$ (filtre direct sur le tableau de bord).
-2. Safe sur Avalanche : nombre de Safe avec solde > 100 k$ (service de transactions Safe ou Dune).
-3. Annuaire de la Fondation Avalanche : nombre d'équipes et de L1 actives.
-4. Demander au mentor Team1 une estimation du nombre d'équipes Avalanche avec trésorerie multisig : c'est la source la plus crédible pour le jury.
+**H1** — *Une équipe dont le protocole gère plus de 10 M$ d'actifs d'utilisateurs détient une trésorerie propre ≥ 1 M$.* Pourquoi : pour opérer à cette échelle, l'équipe a levé des fonds ou perçoit des commissions ; c'est une hypothèse de minimum, pas une mesure. **H2** — *Les DAO ≥ 1 M$ (D4) et les équipes H1 se recouvrent partiellement, de façon inconnue.* On donne donc une fourchette : recouvrement total (borne basse) ou nul (borne haute).
 
-## Sources (secondaires sauf mention)
-- DAO : https://coinlaw.io/decentralized-autonomous-organizations-statistics/ · https://sqmagazine.co.uk/decentralized-autonomous-organizations-statistics/ · https://eco.com/support/en/articles/14799687-dao-treasury-management-onchain-governance-spend
-- Safe sur Avalanche : https://x.com/AvaxDevelopers/status/2066936314247643375 (annonce Ash Wallet, juin 2026) · https://build.avax.network/integrations
-- Avalanche : https://defillama.com/chain/avalanche · https://defillama.com/chains · https://eco.com/support/en/articles/12168599-what-is-avalanche-avax-l1s-and-subnets-in-2026
-- Marché logiciels : https://www.intelmarketresearch.com/crypto-treasury-management-for-corporates-market-44493 · https://www.persistencemarketresearch.com/market-research/crypto-asset-management-market.asp
-- Multisig : https://withernode.com/benefits-of-multisig-for-dao-treasury
+| Cercle | Calcul | Résultat |
+|---|---|---|
+| **TAM** (chaînes EVM, borne basse : fonds et fondations exclus, D11) | C : 675 équipes (D1, H1) + 220 DAO (D4) − recouvrement (H2) | **675 à 895 organisations** |
+| **SAM** (Avalanche, ce que le produit sert aujourd'hui) | C : équipes dont le protocole a > 10 M$ sur Avalanche : 22 (D2, H1) + équipes de L1 avec trésorerie : 10 (D5, prouvées) → borne basse ; borne haute : 71 (D2, seuil 1 M$) + 50 L1 (D5) | **32 à 121 organisations** |
+| **SOM** (12 mois) | voir § 3 | **3 à 6 clients payants** par l'écosystème, jusqu'à ≈ 10 avec les entrées spontanées (non chiffrables aujourd'hui) |
+
+**Ce que ça dit, sans enjoliver** : sur Avalanche seul, on parle de **quelques dizaines à une centaine** d'organisations adressables. C'est un **marché d'amorçage**. La portabilité EVM (le contrat est en Solidity) multiplie le SAM par 6 à 8 (TAM / SAM = 675 / 121 à 895 / 32). Le TAM lui-même est une borne basse : il ignore les fonds, les fondations et les entreprises classiques qui paient en stablecoins, faute de source de comptage.
+
+## 3. Le SOM, par un entonnoir explicite (plus de « 10 à 15 % » posés sans raison)
+
+| Étape | Calcul | Résultat |
+|---|---|---|
+| Organisations contactables la 1re année via l'écosystème | C : cohorte Retro9000 (D6) 30 + équipes de L1 servies par Ash (D5) 10 + équipes > 10 M$ sur Avalanche (D2) 22 = 62 ; **H3** : les présentations par Team1 et la Fondation atteignent ces 62 (c'est leur rôle, et ils sont nos mentors) | **62** |
+| Entrent en mode observation gratuit (sans carte bancaire) | **H4** : la moitié accepte un essai gratuit qui ne change rien à leurs paiements (pas de source : hypothèse à **mesurer en B5** sur les équipes du hackathon) | **31** |
+| Deviennent payants | C : 31 × 8,9 % à 18,5 % (D10, essai sans carte) | **3 à 6** |
+| Revenu année 1 | C : 3 à 6 clients × palier Standard 449 €/mois (B6) × 12 | **16 à 32 k€** |
+
+Ce SOM est petit et c'est normal pour un amorçage : le but de l'année 1 est **les références et les données réelles** (mode observation), pas le chiffre d'affaires. Ce qui le fait monter : le catalogue d'applications Safe (entrées spontanées, non chiffrables), et l'ouverture EVM (× 6 à 8).
+
+## 4. Ce que le jury demandera
+- **« Avalanche est-il assez grand ? »** Pour démarrer : 561 protocoles présents, 22 équipes à plus de 10 M$ d'actifs gérés, plus de 50 L1 avec leurs équipes, Safe disponible, un écosystème qui présente. Pour croître : non, et c'est pourquoi le contrat est portable EVM dès le premier jour.
+- **« Combien de clients ? »** 32 à 121 organisations adressables sur Avalanche, 675 à 895 sur l'EVM en borne basse, 3 à 6 clients payants la première année par l'écosystème. Tous les calculs sont dans le dépôt.
+- **« D'où viennent vos chiffres ? »** API DeFiLlama lue le 11/10, DeepDAO (à confirmer sur leur site), safe.global/pricing, CertiK, TRM. Ce qu'on n'a pas pu sourcer est exclu, pas inventé.
+
+## 5. Reproduire D1-D3
+```bash
+curl -s https://api.llama.fi/protocols -o protocols.json
+python3 -c "import json;P=json.load(open('protocols.json'));print(len(P), sum(1 for p in P if (p.get('tvl') or 0)>1e7), sum(1 for p in P if 'Avalanche' in (p.get('chains') or []) and (p.get('chainTvls') or {}).get('Avalanche',0)>1e7))"
+```
+
+## Sources
+D1-D3 : https://api.llama.fi/protocols · https://api.llama.fi/v2/chains · D4 : https://daotimes.com/deepdao-dao-tool-report-for-2025/ · https://eco.com/support/en/articles/14799687-dao-treasury-management-onchain-governance-spend · https://cointelegraph.com/news/dao-treasuries-top-25-billion-for-the-first-time-deepdao · D5-D6 : https://x.com/AvaxDevelopers/status/2066936314247643375 · https://eco.com/support/en/articles/12168599-what-is-avalanche-avax-l1s-and-subnets-in-2026 · D7 : https://www.certik.com/blog/hack3d-the-web3-security-report-2025 · https://www.panewslab.com/en/articles/13c67393-7171-43fe-841e-172243b67bc6 · https://deepstrike.io/blog/defi-hacks-exploits-statistics · D8 : https://safe.global/pricing · D9 : https://www.fireblocks.com/pricing · D10 : https://www.shno.co/marketing-statistics/free-trial-conversion-statistics · https://resources.mailertogo.com/statistics/trial-to-paid-conversion-email-statistics-2025
