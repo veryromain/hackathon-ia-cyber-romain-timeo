@@ -208,23 +208,32 @@ title(s, "Vous avez déjà le coffre. Il vous manque quelqu'un qui regarde.", si
 flow(s, [("Votre Safe", "vos signataires, votre adresse, votre historique : rien ne bouge"),
          ("Guard Breaker", "appelé avant chaque paiement : signature en plus, attente, gel, probation des clés"),
          ("Moteur Breaker", "règles sur votre historique · modèle d'anomalie · oracle Web · listes OFAC · explication en français"),
-         ("Vos signataires", "décident, toujours. L'unanimité lève tout.")], y=Inches(2.5), h=Inches(1.7), highlight=(1, 2))
-y3 = Inches(4.4)
+         ("Vos signataires", "décident, toujours. L'unanimité lève tout.")], y=Inches(2.45), h=Inches(1.55), highlight=(1, 2))
+y3 = Inches(4.15)
 for i, (k, t, d, c) in enumerate([("1", "Regarde", "Bénéficiaire nouveau ? Montant 4× vos habitudes ? Trois paiements en dix minutes ? Adresse sosie, fonds souillés, sanctions ?", ACCENT),
                                    ("2", "Explique", "En français, pour des non-experts : « premier paiement à cette adresse, montant quatre fois supérieur à vos habitudes ».", BLUE),
                                    ("3", "Freine", "Une signature de plus, ou une attente. Jamais un blocage définitif : le pire bug possible est un faux ralentissement.", ORANGE)]):
     w = int((W - 2 * M - Inches(0.4)) / 3); x = M + i * (w + Inches(0.2))
     text(s, x, y3, Inches(0.5), Inches(0.6), k, size=30, color=c, font=DISPLAY, bold=True)
     text(s, x + Inches(0.55), y3 + Inches(0.05), w - Inches(0.6), Inches(0.4), t, size=16, color=INK, font=DISPLAY, bold=True)
-    text(s, x + Inches(0.55), y3 + Inches(0.45), w - Inches(0.6), Inches(1.1), d, size=11.5, color=MUTED)
-text(s, M, Inches(5.85), W - 2 * M, Inches(0.4), [[("Et protège la personne : ", {"bold": True, "color": INK}), ("clé d'identité pour révoquer seul sa clé volée · clé de contrainte qui gèle en silence · probation des clés neuves.", {})]], size=13, color=MUTED)
-text(s, M, Inches(6.22), W - 2 * M, Inches(0.5), [[("Deux modes, au choix du client : ", {"bold": True, "color": INK}), ("Protection", {"bold": True, "color": ACCENT}), (" (Essentiel, Standard : signature en plus, mise en attente ; rien n'est jamais bloqué) · ", {}), ("Cosignataire", {"bold": True, "color": ORANGE}), (" (Premium : un agent occupe un siège de signataire et refuse ; dérogation humaine après délai).", {})]], size=13, color=MUTED)
+    text(s, x + Inches(0.55), y3 + Inches(0.45), w - Inches(0.6), Inches(1.05), d, size=11.5, color=MUTED)
+# Bandeau mis en avant : la clé d'identité froide (nom retenu le 10/10 à 22:10), sans retirer la clé de contrainte ni la probation.
+yk = Inches(5.6); hk = Inches(0.58)
+rect(s, M, yk, W - 2 * M, hk, fill=GLASS, line=ACCENT, shape=MSO_SHAPE.ROUNDED_RECTANGLE, radius=0.3)
+rect(s, M, yk, Inches(0.06), hk, fill=ACCENT)
+text(s, M + Inches(0.3), yk, W - 2 * M - Inches(0.5), hk,
+     [[("Et protège la personne  ·  ", {"bold": True, "color": INK, "size": 13}),
+       ("Clé d'identité froide", {"bold": True, "color": ACCENT, "font": DISPLAY, "size": 15}),
+       (" : une seconde clé, gardée hors ligne, pour révoquer seul sa clé volée, sans quorum, même coffre gelé.", {"color": INK, "size": 12.5}),
+       ("  ·  Clé de contrainte : dit « oui » à l'écran, gèle en silence  ·  Probation des clés neuves.", {"size": 12})]],
+     size=12, color=MUTED, anchor=MSO_ANCHOR.MIDDLE)
+text(s, M, Inches(6.26), W - 2 * M, Inches(0.5), [[("Deux modes, au choix du client : ", {"bold": True, "color": INK}), ("Protection", {"bold": True, "color": ACCENT}), (" (Essentiel, Standard : signature en plus, mise en attente ; rien n'est jamais bloqué) · ", {}), ("Cosignataire", {"bold": True, "color": ORANGE}), (" (Premium : un agent occupe un siège de signataire et refuse ; dérogation humaine après délai).", {})]], size=13, color=MUTED)
 notes(s, """[2:00 → 3:00]  TIMÉO
 « Breaker n'est pas un coffre. C'est une garde qui se greffe sur le coffre que vous avez déjà, et qui fait trois choses.
 Un : elle regarde chaque paiement avec ce qu'elle a appris de votre historique. Ce bénéficiaire est-il nouveau ? Ce montant est-il normal ? Pourquoi trois paiements en dix minutes ? Pourquoi “urgent” ? Elle vérifie aussi l'adresse sur le Web et sur les listes de sanctions.
 Deux : elle explique, en français, à des gens qui ne sont pas experts : “premier paiement à cette adresse, montant quatre fois supérieur à vos habitudes”.
 Trois : elle freine. Une signature de plus, ou une mise en attente : un délai pendant lequel rien ne part, même avec toutes les signatures. Jamais un blocage définitif : l'unanimité de vos signataires lève tout. Et si vous voulez qu'elle puisse dire non à votre place, c'est le niveau Premium, le mode Cosignataire : un agent prend un siège de signataire et refuse de signer un paiement à risque ; vos signataires gardent une dérogation après délai.
-Et parce que l'attaque vise la personne, chaque signataire a une clé d'identité, gardée à part, pour révoquer seul sa clé volée ; et une clé de contrainte, qui dit oui à l'écran mais gèle en silence si on le force. »
+Et parce que l'attaque vise la personne, chaque signataire a une clé d'identité froide : une seconde clé, gardée hors ligne, pour révoquer seul sa clé volée, sans quorum, même coffre gelé ; et une clé de contrainte, qui dit oui à l'écran mais gèle en silence si on le force. Démontré sur Fuji : clé volée, 80 000 approuvés 2 sur 2 par le voleur, révoquée par la victime en une transaction, zéro sorti. »
 
 Si question « vous êtes un module de Safe ? » : « Le multisig de la démo tient lieu du Safe du client ; le portage en Guard + Module de Safe est en feuille de route, 6 à 8 semaines. »""")
 
@@ -255,7 +264,7 @@ gap = Inches(0.2); w = int((W - 2 * M - 3 * gap) / 4); y = Inches(2.3); h = Inch
 for i, (n, p, u, grad, gc, d, star) in enumerate([
         ("Observation", "0 €", "30 jours", "Regarde, explique", INK, "rien ne change à vos paiements · alertes et explications en lecture seule · rapport de fin d'observation", False),
         ("Essentiel", "149 €", "/ mois", "+ une personne", BLUE, "signature en plus sur les paiements inhabituels · explications en français · listes OFAC / ScamSniffer · notifications", False),
-        ("Standard", "449 €", "/ mois", "+ du temps", ORANGE, "mise en attente : rien ne part, même avec toutes les signatures · oracle Web, traçage, sosies · clé d'identité, clé de contrainte, gel · rapport d'incident", True),
+        ("Standard", "449 €", "/ mois", "+ du temps", ORANGE, "mise en attente : rien ne part, même avec toutes les signatures · oracle Web, traçage, sosies · clé d'identité froide, clé de contrainte, gel · rapport d'incident", True),
         ("Premium", "990 €", "/ mois", "+ un refus", ACCENT, "mode Cosignataire : un agent occupe un siège de signataire et peut dire non, dérogation humaine après délai · réglages sur mesure · support, disponibilité garantie", False)]):
     x = M + i * (w + gap)
     rect(s, x, y, w, h, fill=GLASS, line=ACCENT if star else LINE, shape=MSO_SHAPE.ROUNDED_RECTANGLE, radius=0.06)
@@ -348,7 +357,7 @@ rows(s, [["Niveau", "Déclencheur", "Ce qui se passe, automatiquement", "Ce que 
          ["Gel · Standard", "clé compromise, signature sous contrainte", "clé d'identité : révocation immédiate par la victime seule ; clé de contrainte : gel silencieux et alerte privée", "contre la perte d'une clé ou la menace physique sur une personne", "remplacer la clé ; dégeler à la majorité des clés saines"]],
      y=Inches(2.25), col_w=[Inches(1.75), Inches(2.3), Inches(3.3), Inches(2.6), W - 2 * M - Inches(9.95)], h_row=Inches(0.9), size=10)
 notes(s, """TIMÉO.
-Ce qui diffère vraiment : la signature en plus ajoute une PERSONNE ; la mise en attente ajoute du TEMPS. Une personne de plus ne sert à rien si les attaquants tiennent déjà assez de clés (Bybit) : là, seul le délai protège, parce qu'il laisse le temps de vérifier, d'annuler, de révoquer sa clé avec la clé d'identité, et parce que l'oracle et le traçage tournent pendant ce temps.
+Ce qui diffère vraiment : la signature en plus ajoute une PERSONNE ; la mise en attente ajoute du TEMPS. Une personne de plus ne sert à rien si les attaquants tiennent déjà assez de clés (Bybit) : là, seul le délai protège, parce qu'il laisse le temps de vérifier, d'annuler, de révoquer sa clé avec la clé d'identité froide, et parce que l'oracle et le traçage tournent pendant ce temps.
 Où interviennent les agents : partout pour regarder et expliquer (automatique, toujours). Pour DÉCIDER, seulement au niveau Premium (mode Cosignataire) : l'agent devient un signataire qui peut refuser. En mode Protection, l'agent ne signe jamais et ne refuse jamais : il ajoute une signature à obtenir ou un délai.
 Seuils : ia-1/score/regles.py (SEUIL_STEP_UP 0,30 ; SEUIL_HOLD 0,75). Niveau « Aucun » (bénéficiaire connu, montant habituel) : journalisé avec score et raisons, signatures normales.""")
 

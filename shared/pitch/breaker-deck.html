@@ -62,6 +62,7 @@ ul{margin:0;padding-left:1.1em} li{margin:.2em 0}
 :focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 @media print{.deck{height:auto;overflow:visible}.slide{min-height:0;page-break-after:always;padding:24px}.hint{display:none}.notes{display:block}}
 @media (prefers-reduced-motion:no-preference){.deck{scroll-behavior:smooth}}
+.keyband{border:1px solid var(--accent);border-left:4px solid var(--accent);border-radius:10px;padding:.55rem .9rem;margin-top:.6rem} .keyband strong.acc{color:var(--accent);font-family:Manrope,sans-serif;font-size:1.08em}
 </style>
 
 <div class="deck" id="deck" tabindex="0">
@@ -121,7 +122,7 @@ ul{margin:0;padding-left:1.1em} li{margin:.2em 0}
     <div class="step"><span class="k">2</span><div><h3>Explique</h3><p>En français, pour des non-experts : « premier paiement à cette adresse, montant quatre fois supérieur à vos habitudes ».</p></div></div>
     <div class="step"><span class="k">3</span><div><h3>Freine</h3><p>Une signature de plus, ou une attente. Jamais un blocage définitif. Le pire bug possible est un faux ralentissement.</p></div></div>
   </div>
-  <p><b>Et protège la personne :</b> clé d'identité (révoquer seul sa clé volée) · clé de contrainte (dit « oui » à l'écran, gèle en silence) · probation des clés neuves.</p>
+  <p class="keyband"><b>Et protège la personne :</b> <strong class="acc">Clé d'identité froide</strong> : une seconde clé, gardée hors ligne, pour révoquer seul sa clé volée, sans quorum, même coffre gelé · clé de contrainte (dit « oui » à l'écran, gèle en silence) · probation des clés neuves.</p>
   <span class="src">shared/ce-que-breaker-est.md · ia-1/score/regles.py · ia-2/contracts/TreasuryGuard.sol</span>
   <div class="notes">Honnêteté si demandé : le multisig de la démo tient lieu du Safe du client ; portage Guard + Module en feuille de route (6-8 semaines, à confirmer par Timéo).</div>
   <div class="foot"><span>Breaker</span><span>4 / 8</span></div>
@@ -152,7 +153,7 @@ ul{margin:0;padding-left:1.1em} li{margin:.2em 0}
   <div class="grid g4">
     <div class="tier"><span class="n">Observation</span><span class="p">0 €<small> 30 jours</small></span><span class="d">détection et explications en lecture seule, rapport final</span></div>
     <div class="tier"><span class="n">Essentiel</span><span class="p">149 €<small> /mois</small></span><span class="d">&lt; 1 M$ · friction, explications, listes publiques, notifications</span></div>
-    <div class="tier star"><span class="n">Standard</span><span class="p">449 €<small> /mois</small></span><span class="d">1–10 M$ · + oracle Web, traçage, sosies, clé d'identité, rapport mensuel</span></div>
+    <div class="tier star"><span class="n">Standard</span><span class="p">449 €<small> /mois</small></span><span class="d">1–10 M$ · + oracle Web, traçage, sosies, clé d'identité froide, rapport mensuel</span></div>
     <div class="tier"><span class="n">Premium</span><span class="p">990 €<small> /mois</small></span><span class="d">&gt; 10 M$ · + mode cosignataire, réglages sur mesure, support · Entreprise sur devis</span></div>
   </div>
   <table>

@@ -4,7 +4,7 @@
 > Légende : ✅ fait · 🔄 en cours · ⬜ à faire · ✂️ coupé (manque de temps)
 > Détail du projet : [`PLAN.md`](PLAN.md) · Historique : [`JOURNAL.md`](JOURNAL.md) · Brief : [`CONTEXTE.md`](CONTEXTE.md)
 
-**Dernière mise à jour :** 2026-10-11 09:52, par Claude (Romain) — v1 du motion design (HTML animé) à relire
+**Dernière mise à jour :** 2026-10-11 10:10, par Claude (Romain) — diapo 4 : bandeau « clé d'identité froide » (pptx + HTML régénérés)
 **Rendu (gel définitif) :** dim. 11/10 **12:00** · **Checkpoint :** sam. **18:30** · **Pitch :** dim. 13:00
 
 ---
