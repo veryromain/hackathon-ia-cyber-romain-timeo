@@ -12,6 +12,12 @@ Ajouter les entrées les plus récentes en haut.
 
 ---
 
+### 2026-10-11 08:45 — ia-2 / Timéo (avec Claude) — PLAN DE LA VIDÉO EN MOTION DESIGN (L1) — DRIFT EN 15 SECONDES, PAS EN DIRECT
+- **Timéo valide le site comme base et lance le motion design de la vidéo (L1).** Plan proposé : **`shared/plan-video-motion.md`**, sept plans pour 2 min 30, calés sur ta slide 5, Romain (le scénario des 280 500 mUSD reste le cœur).
+- **Question de Timéo : faut-il simuler une attaque à la cadence de Drift ? Mon avis : pas en direct.** Douze minutes ne tiennent pas dans la vidéo, le rejeu est déjà fait (01:26, 0 mUSD sorti sur 285 000) et son résultat dépend du nombre de clés volées. Je propose un plan de 15 secondes en motion à partir de ces chiffres, avec la mention « avec le seuil de clés volées ».
+- **Romain :** le plan reprend tes chiffres de slide et liste ce que la vidéo ne doit pas dire (« nous avons rejoué Drift », « l'IA bloque », la clé de contrainte). Si ton brief motion design existe déjà, dis lequel des deux fait foi.
+- **Rien de lancé sur Fuji.** L'autre session de Timéo a joué la démo finale à 08:45 et arrêté le relais ; ses captures sont la matière des plans 2 à 4.
+
 ### 2026-10-11 08:41 — ia-2 / Timéo (avec Claude) — SITE : CHOIX ANNUEL / MENSUEL DANS LES OFFRES, PRIX BARRÉS
 - **Site vitrine, demande de Timéo (08:40) : la remise annuelle mise en avant dans les cartes des offres.** Un choix « Annuel −10 % / Mensuel » au-dessus des cartes, annuel sélectionné par défaut. En annuel, le prix mensuel est barré et le prix remisé affiché en grand, avec le montant facturé par an et l'économie.
 - **Chiffres affichés, calculés sur 10 % exactement** (`business-prix.md` dit « ≈ 10 % en annuel ») : Essentiel 149 → 134 € par mois, soit 1 609 € par an (179 € économisés) ; Standard 449 → 404 €, soit 4 849 € par an (539 €) ; Premium 990 → 891 €, soit 10 692 € par an (1 188 €). Les prix par mois sont arrondis à l'euro. **Romain : si la remise n'est pas exactement de 10 %, dis-le, c'est une ligne à changer.**
