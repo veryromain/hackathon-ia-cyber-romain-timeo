@@ -46,7 +46,13 @@ async function main() {
       const valid = Number(await wallet.validApprovals(id));
       const required = Number(await wallet.requiredApprovals(id));
       console.log(`  l'agent ${signed ? "A COSIGNÉ" : "N'A PAS SIGNÉ"} ; risque : ${RISK[Number(p.risk)]} ; ${valid}/${required} signatures`);
-      if (valid < required) { console.log("  → paiement bloqué tant qu'un humain de plus ne signe pas\n"); continue; }
+      if (valid < required) {
+        // Vocabulaire fixé par Romain (11/10 09:15) : « signature en plus » et « mise en attente », jamais « bloqué ».
+        console.log(Number(p.risk) === 2
+          ? "  → mise en attente : il faut une signature humaine en plus, puis un délai. Rien ne part.\n"
+          : "  → signature en plus : le paiement attend qu'un humain de plus le signe.\n");
+        continue;
+      }
       for (let attempt = 0; attempt < 25; attempt++) {
         try {
           await (await wallet.connect(human).execute(id)).wait();
