@@ -38,7 +38,7 @@ Trois reels de motion design « générés par Claude » ont servi de référenc
 
 1. **Voix** : chaque phrase est synthétisée séparément avec [Piper](https://github.com/rhasspy/piper) (voix française `fr_FR-siwis-medium`, hors ligne, gratuite). La durée réelle de chaque phrase fixe la chronologie : les visuels se calent sur le début de chaque phrase, jamais l'inverse. Les phrases sont collées sur une piste silencieuse avec 0,45 s entre elles.
 2. **Page** : `motion-v2.html` est une page 1920 × 1080 dont chaque image est une **fonction pure du temps** (`window.seek(t)`), sans transition CSS ni hasard : le navigateur et le moteur de rendu produisent exactement la même image.
-3. **Rendu** : Playwright pilote le Chrome installé sur le Mac, capture 5 260 images à 30 i/s (environ 5 minutes), puis ffmpeg encode le mp4 et y mixe la voix.
+3. **Rendu** : Playwright pilote le Chrome installé sur le Mac, capture 5 273 images à 30 i/s (environ 5 minutes), puis ffmpeg encode le mp4 et y mixe la voix.
 
 ```bash
 # Outils (une fois) : uv tool install piper-tts playwright ; ffmpeg dans le PATH ; Google Chrome installé.
