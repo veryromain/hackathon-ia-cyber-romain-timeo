@@ -93,9 +93,7 @@ def base(title_eyebrow, number=None, annex=False, who=None):
     # surtitre
     eyebrow_color = ORANGE if annex else ACCENT
     text(slide, M, Inches(0.55), W - 2 * M, Inches(0.35), [[(title_eyebrow[0].upper() + "  ", {"color": eyebrow_color, "bold": True, "size": 11, "font": BODY}), (title_eyebrow[1], {"color": MUTED, "size": 11, "font": BODY})]])
-    if who:
-        pill = rect(slide, W - M - Inches(1.5), Inches(0.5), Inches(1.5), Inches(0.38), fill=GLASS, line=LINE, shape=MSO_SHAPE.ROUNDED_RECTANGLE, radius=0.5)
-        text(slide, W - M - Inches(1.5), Inches(0.5), Inches(1.5), Inches(0.38), who, size=10, color=ACCENT, bold=True, align=PP_ALIGN.CENTER, anchor=MSO_ANCHOR.MIDDLE)
+    # (who : qui parle, gardé pour les notes ; plus de pastille à l'écran, décision de Romain du 11/10)
     return slide
 
 
@@ -278,26 +276,15 @@ rows(s, [["Pourquoi ces prix", ""],
          ["990 €", "10 % de la perte évitée, le plafond : le seul niveau où quelqu'un dit non à votre place quand tous vos signataires sont trompés · repère : Fireblocks 999 $"],
          ["Entreprise", "sur devis : plusieurs entités, audit, intégrations · coût marginal ≈ 1,2 $/client/mois : la valeur dicte le prix"]],
      y=Inches(5.22), col_w=[Inches(1.4), W - 2 * M - Inches(1.4)], h_row=Inches(0.36), size=10.5)
-notes(s, """[3:50 → 4:20]  ROMAIN
-« Safe vient de lancer Safe Pro : 669 euros par mois pour des règles que vous écrivez vous-même. Nous, nous détectons ce que vous n'avez pas prévu, et nous l'expliquons.
-Observation gratuite 30 jours : rien ne change à vos paiements. Puis trois niveaux, selon le pouvoir que vous nous déléguez : Essentiel, 149 euros, une personne de plus sur les paiements inhabituels. Standard, 449 euros, du temps : la mise en attente, et la protection de la personne. Premium, 990 euros, un refus : un agent qui occupe un siège de signataire et peut dire non à votre place. Sans engagement.
-449 euros, c'est 5 % de la perte annuelle que vous évitez, calculée avec les taux d'incidents de TRM et notre efficacité mesurée ; 990 euros, c'est 10 %, le plafond de ce qu'un outil de sécurité peut demander. »
+notes(s, """[3:50 → 4:15]  ROMAIN · 25 s, 60 mots
+« Safe Pro, 669 euros par mois : des règles que VOUS écrivez. Nous, on détecte ce que vous n'aviez PAS prévu.
+Trente jours gratuits. Puis vous choisissez le pouvoir que vous nous déléguez : UNE PERSONNE de plus, 149 euros. DU TEMPS, 449. UN REFUS, 990.
+449 euros, c'est 5 % de la perte que vous évitez chaque année. »
 
-POURQUOI UN CLIENT PAIE 990 € PLUTÔT QUE 449 € (si on nous le demande) :
-• Ce qu'il achète en plus : le seul niveau où quelqu'un peut dire NON à sa place. La signature en plus et la mise en attente supposent qu'au moins un humain réagisse ; chez Bybit, les trois signataires ont validé ; chez Drift, les signataires ont approuvé. Le Cosignataire couvre le cas où tous les humains sont trompés ou sous pression.
-• Pour qui : les organisations dont les signataires sont dispersés ou peu disponibles (DAO), celles dont la trésorerie dépasse 10 M$, celles qui veulent une disponibilité garantie. Premium n'est PAS réservé aux grandes trésoreries : c'est un niveau de pouvoir délégué, accessible à tous.
-• Valeur : 990 € × 12 = 11,9 k€ = 10 % de 112 k$ de perte annuelle évitée ; c'est le plafond de la règle « ≤ 10 % », là où Standard est à 5 %. Repère de marché pour l'automatisation : Fireblocks Essentials à 999 $/mois.
-• Garde-fou : même en Premium, l'agent n'a jamais de veto définitif : dérogation humaine renforcée après délai (décision Timéo, shared/decisions.md).
+SEULEMENT SI ON DEMANDE :
+• Pourquoi 990 ? Seul niveau où quelqu'un dit non quand TOUS les signataires sont trompés (Bybit, Drift). L'agent n'a jamais de veto définitif.
+• D'où vient la perte évitée ? 9,5 % d'incidents (TRM 2025) × 1,3 M$ de perte médiane × 91 % mis en attente ≈ 112 k$/an. Détail : shared/business-prix.md § 1.B.""")
 
-LE CALCUL DE LA PERTE ANNUELLE ÉVITÉE (shared/business-prix.md § 1.B) :
-• 9,5 % : TRM Labs compte ≈ 150 hacks et exploits en 2025 (2,87 Md$), rapportés aux 1 579 organisations ≥ 1 M$ (1 359 protocoles > 1 M$, API DeFiLlama, + 220 DAO > 1 M$, DeepDAO). Borne haute : les 150 incidents couvrent toutes les victimes, plateformes centralisées comprises.
-• 1,3 M$ : perte médiane des 150 incidents TRM, toutes victimes confondues (moyenne 19,5 M$, tirée par Bybit). Pas une médiane « organisations de 1 à 10 M$ » : cette donnée n'existe pas publiquement. Immunefi donne 1,5 M$ sur les seuls protocoles DeFi, la population la plus proche de la nôtre ; CertiK 104 k$ mais en comptant le phishing d'individus. Pour une organisation de 1 à 10 M$, une fraude de signataires vide le coffre : 1,3 M$ est le bas de la fourchette.
-• 91 % : part des montants frauduleux mis en attente sur le jeu final préparé à l'aveugle (shared/mesures.md).
-• 9,5 % × 1,3 M$ × 91 % ≈ 112 k$/an en borne haute. Dans le seul périmètre de Breaker (attaques d'infrastructure TRM : clés, accès, front-ends = 45 incidents sur 150, 76 % de la valeur volée) : 2,9 % × 1,3 M$ × 91 % ≈ 34 k$/an, et Standard représente alors 16 %.
-
-SI « SUR QUELLE POPULATION ? » OU « VOS 5 % TIENNENT-ILS ? » : « Les 5 % sont une borne haute, calculée sur toutes les victimes de 2025. La lecture la plus solide pour notre cible est par trésorerie : si l'incident arrive, vous perdez le coffre. Avec 2,9 % d'incidents dans notre périmètre et 91 % retenus, on vous évite 2,6 % de votre trésorerie par an ; Standard coûte 0,05 à 0,5 % de cette trésorerie. La règle des 10 % est respectée dès 2 M$ pour Standard, dès 5 M$ pour Premium, dès 0,7 M$ pour Essentiel : c'est pour ça que les paliers suivent la taille. »
-
-Différence en une phrase : « Vous avez déjà le coffre. Il vous manque quelqu'un qui regarde chaque paiement et vous dit, en français, quand quelque chose ne colle pas. »""")
 
 # 7. Marché — ROMAIN
 s = base(("Mise sur le marché", "aucun pourcentage de part de marché : un entonnoir, chaque étape sourcée"), 7, who="ROMAIN")
@@ -312,13 +299,14 @@ rows(s, [["Quand", "Jalon"],
          ["mars 2027", "même code sur une 2e chaîne EVM : marché × 11 à 19"],
          ["T2 – T3 2027", "point mort : 10 clients Standard (coûts fixes 4 300 €/mois : 2 fondateurs à 2 000 € + 300 € d'infra) ; Avalanche seul suffit à 18,5 % de conversion, un écosystème EVM de plus à 8,9 % ; plus tôt avec un Premium"]],
      y=Inches(4.1), col_w=[Inches(2.6), W - 2 * M - Inches(2.6)], h_row=Inches(0.34), size=11.5)
-notes(s, """[4:20 → 4:45]  ROMAIN
-« Première année : 111 organisations présentées par l'écosystème Avalanche, la moitié en observation, 5 à 10 clients payants selon les taux de conversion du SaaS B2B. L'audit externe avant le premier euro. Puis le même code sur les autres chaînes compatibles. Nos coûts fixes sont de 4 300 euros par mois, deux fondateurs à 2 000 euros : le point mort est à 10 clients Standard, atteignable entre le deuxième et le troisième trimestre 2027 selon le taux de conversion, plus tôt avec un seul client Premium. »
+notes(s, """[4:15 → 4:35]  ROMAIN · 20 s, 40 mots
+« Première année : 111 organisations présentées par l'écosystème Avalanche. La moitié en observation, 5 à 10 CLIENTS PAYANTS. Audit externe avant le premier euro. Point mort à 10 clients, MI-2027, plus tôt avec un seul Premium. »
 
-Si on demande « comment vous arrivez à 10 clients ? » : à l'envers. 10 clients ÷ 8,9 à 18,5 % de conversion = 54 à 112 équipes en observation ÷ une sur deux qui accepte = 108 à 225 équipes à contacter. Avalanche en donne 111 d'ici décembre : ça suffit dans le cas favorable (18,5 %), point mort au T2 2027 ; dans le cas défavorable (8,9 %), un écosystème EVM de plus au premier semestre 2027, qui en donne autant, point mort au T3 2027.
+SEULEMENT SI ON DEMANDE :
+• Comment 10 clients ? À l'envers : 10 ÷ 8,9 à 18,5 % de conversion ÷ une équipe sur deux = 108 à 225 équipes à contacter ; Avalanche en donne 111, une 2e chaîne EVM complète.
+• Pourquoi si peu ? On ne prend que ce que l'entonnoir sourcé donne.
+Si on n'a que 4 min : sauter cette slide.""")
 
-Si on a droit à 4 min seulement : sauter cette slide, les chiffres sont en annexe.
-Si « pourquoi si peu ? » : « Parce qu'on ne prend que ce que l'entonnoir sourcé donne. L'année 1 sert aux références et aux données réelles. »""")
 
 # 8. Équipe, limites, suite — TIMÉO (limites), ROMAIN (clôture)
 s = base(("Équipe · limites · suite", "36 heures"), 8, who="TIMÉO · ROMAIN")
@@ -331,7 +319,7 @@ text(s, x2, Inches(2.5), colw, Inches(0.4), "Les 90 prochains jours", size=14, c
 text(s, x2, Inches(2.95), colw, Inches(2.4), ["•  Dès ce mois-ci : 10 organisations en observation gratuite, présentées par l'écosystème Avalanche.", "•  Greffon sur le Safe du client · notifications · rejeu de Bybit et Drift sur données réelles.", "•  Audit externe financé par subvention, avant le premier euro."], size=14, color=TEXT, spacing=1.35)
 rect(s, M, Inches(5.45), Inches(0.08), Inches(0.75), fill=ACCENT)
 text(s, M + Inches(0.3), Inches(5.4), W - 2 * M, Inches(0.9), "Vos fonds. Vos signataires. Votre dernier mot.", size=26, color=INK, font=DISPLAY, bold=True, anchor=MSO_ANCHOR.MIDDLE)
-notes(s, """[4:45 → 5:00]  TIMÉO
+notes(s, """[4:35 → 5:00]  TIMÉO
 « Ce qu'on ne cache pas : données synthétiques, contrat pas encore audité, le multisig de la démo tient lieu du Safe du client. Ce qu'il nous reste : le greffon Safe, l'audit, et surtout de vraies données. »
 
 ROMAIN
