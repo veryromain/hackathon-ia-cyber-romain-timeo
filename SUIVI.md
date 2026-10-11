@@ -4,7 +4,7 @@
 > Légende : ✅ fait · 🔄 en cours · ⬜ à faire · ✂️ coupé (manque de temps)
 > Détail du projet : [`PLAN.md`](PLAN.md) · Historique : [`JOURNAL.md`](JOURNAL.md) · Brief : [`CONTEXTE.md`](CONTEXTE.md)
 
-**Dernière mise à jour :** 2026-10-11 08:22, par Claude (Romain) — point mort recalculé, H4 définie
+**Dernière mise à jour :** 2026-10-11 08:27, par Claude (Romain) — « Breaker n'est pas un coffre » fixé partout (README, CONTEXTE, tableau de bord) ; en-tête du contrat → Timéo
 **Rendu (gel définitif) :** dim. 11/10 **12:00** · **Checkpoint :** sam. **18:30** · **Pitch :** dim. 13:00
 
 ---

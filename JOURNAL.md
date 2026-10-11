@@ -12,6 +12,11 @@ Ajouter les entrées les plus récentes en haut.
 
 ---
 
+### 2026-10-11 08:27 — Romain (avec Claude) — « BREAKER N'EST PAS UN COFFRE » : FORMULATION FIXÉE, UN ÉCART CORRIGÉ
+- Question de Romain : avons-nous mis en évidence que nous ne sommes pas un coffre mais un greffon sur le coffre existant ? **Non, pas assez** : l'en-tête du contrat dit « portefeuille de trésorerie… avec garde ». Nouveau `shared/ce-que-breaker-est.md` : la phrase à retenir, ce que la démo montre honnêtement (coffre de démonstration qui tient lieu du Safe du client), l'architecture cible **Guard + Module** de Safe (ce qui se porte directement, ce qui demande une conception : la clé de contrainte), et où la formulation doit apparaître.
+- **Fait (Romain) :** paragraphe « Ce qu'est Breaker » en tête du `README.md`, une ligne dans `CONTEXTE.md`, sous-titre du tableau de bord (`ia-1/dashboard/app.py`, texte seulement).
+- **Pour Timéo (dans tes corrections cosmétiques du contrat) :** remplacer `@title` / `@notice` par : « TreasuryGuard : garde antifraude greffée sur un multisig de trésorerie. Dans ce prototype, le multisig est inclus pour la démonstration ; en production, la garde se greffe sur le Safe du client (Guard + Module). » Et reprendre le § 1 du doc mot pour mot sur le site vitrine. Ton estimation H10 (portage Guard + Module, 6-8 semaines ?) reste attendue.
+
 ### 2026-10-11 08:22 — Romain (avec Claude) — CORRECTION : LE POINT MORT AU T2 2027 N'ÉTAIT PAS JUSTIFIÉ
 - Romain a demandé la justification des 17 clients au T2 2027 : l'entonnoir inversé (17 ÷ 8,9-18,5 % ÷ 50 %) exige **184 à 382 organisations contactées**, Avalanche n'en fournit que 62. Corrigé dans `shared/business-mise-sur-le-marche.md` § 3 bis : point mort entre **T4 2027 et T2 2028** si on aborde un écosystème EVM par semestre (H11), ou plus tôt par le mix (8 Premium, ou 2 Premium + 10 Standard). H9 relevée à ≈ 100-115 k€ (12 mois de coûts fixes + audit). **H4 définie** : connectées en lecture seule sous 30 jours ÷ présentées, sur 62 organisations, précision ± 12 points.
 - Leçon notée pour le pitch : toute date de rentabilité se déduit de l'entonnoir, jamais l'inverse.

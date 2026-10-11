@@ -2,7 +2,10 @@
 
 > À lire par le Claude de Timéo à chaque débrief. Un paragraphe par quart d'heure, le plus récent en haut.
 
-## Dernier quart d'heure — 11/10 08:18
+## Dernier quart d'heure — 11/10 08:27
+Romain a fixé la formulation « **Breaker n'est pas un coffre** : une garde qui se greffe sur le Safe existant du client ; le multisig de la démo tient lieu du Safe » (`shared/ce-que-breaker-est.md`, README, CONTEXTE, sous-titre du tableau de bord). **Deux demandes pour Timéo, à glisser dans tes corrections cosmétiques :** (1) en-tête du contrat `@title`/`@notice` : « TreasuryGuard : garde antifraude greffée sur un multisig de trésorerie. Dans ce prototype, le multisig est inclus pour la démonstration ; en production, la garde se greffe sur le Safe du client (Guard + Module). » ; (2) sur le site vitrine, reprendre le § 1 du doc mot pour mot. Architecture cible décrite : Guard (freiner) + Module (révocation par clé d'identité) ; la clé de contrainte demande une conception. Ton estimation du portage (H10) reste attendue, sans urgence.
+
+## Quart d'heure précédent — 11/10 08:18
 Romain a terminé **B7** (feuille de route datée oct. 2026 → avr. 2027, 4 canaux, parcours client chiffré) et **B8** (décision écrite : GO d'amorçage avec 4 ajustements et 4 signaux d'arrêt chiffrés), dans `shared/business-mise-sur-le-marche.md`. **Pour Timéo, sans urgence :** la feuille de route place le portage de la garde en Safe Guard en nov.-déc. avec une estimation H10 de 6-8 semaines, à confirmer par toi ; et l'ordre des chantiers produit (Guard, signature navigateur, sources d'oracle). Prochaine étape côté Romain : B5 court (5 questions à poser aux équipes présentes), puis le pitch (structure du deck, texte oral, fiche questions du jury), puis le brief motion design de la démo.
 
 ## Quart d'heure précédent — 11/10 08:05

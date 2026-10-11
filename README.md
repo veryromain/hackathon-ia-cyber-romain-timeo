@@ -2,6 +2,9 @@
 
 Repo partagé pour suivre l'avancée de nos deux IA en parallèle.
 
+## Ce qu'est Breaker
+**Breaker ne garde pas vos fonds.** C'est une garde antifraude qui **se greffe sur le coffre multi-signatures que vous avez déjà** (votre Safe) et agit à partir de vos réglages : elle regarde chaque paiement et, quand quelque chose ne colle pas, demande une signature de plus ou impose une attente, jamais plus. Le pire bug possible est un faux ralentissement, pas une perte. Dans ce prototype, le multisig (`ia-2/contracts/TreasuryGuard.sol`) est inclus pour la démonstration et **tient lieu du Safe du client** ; le portage en greffon Safe (Guard + Module) est en feuille de route. Détail : `shared/ce-que-breaker-est.md`.
+
 ## Structure
 
 | Dossier | Contenu |

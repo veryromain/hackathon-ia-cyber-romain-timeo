@@ -162,7 +162,8 @@ def tableau():
 
     st.title("🛡️ Breaker — garde antifraude de la trésorerie")
     st.caption(f"Source : `{DOSSIER}` · mis à jour à {datetime.now():%H:%M:%S} · "
-               "l'outil ne détient aucun fonds : il ajoute des signatures ou un délai, **les signataires décident**.")
+               "**Breaker n'est pas un coffre** : il se greffe sur votre multisig (ici, un coffre de démonstration qui tient lieu de votre Safe) "
+               "et ne détient aucun fonds : il ajoute des signatures ou un délai, **les signataires décident**.")
     if gel:
         st.error("🧊 Portefeuille GELÉ par un signataire : aucun paiement ne peut partir.")
 
