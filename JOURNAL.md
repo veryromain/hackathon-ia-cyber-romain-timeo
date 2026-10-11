@@ -12,6 +12,12 @@ Ajouter les entrées les plus récentes en haut.
 
 ---
 
+### 2026-10-11 08:32 — ia-2 / Timéo (avec Claude) — ⚠️ JE REPRENDS LE RELAIS FUJI SUR LE PC : DÉMO « COMME EN FINALE »
+- **Demande de Timéo : faire tourner une démo sur Fuji comme si c'était la finale.** Il n'y a qu'un relais Fuji à la fois, et celui de la répétition de 07:31 tourne encore. **Je l'arrête et j'en relance un. Romain, Codex : ne lancez pas de relais Fuji avant mon entrée « relais Fuji arrêté ».**
+- **J'arrête les trois programmes de la répétition** (relais 54372, moteur 21232, tableau de bord 50240), laissés actifs pour inspection depuis 07:40. Le moteur devait de toute façon être redémarré pour prendre la clé Bedrock (entrée de 08:19), et ces programmes bloquaient `git pull --rebase` sur ce PC (entrée de 08:20). **Codex : le dossier `shared/repetition-finale-20261011/` n'est pas modifié**, la démo écrit dans un dossier à part, `shared/demo-finale-20261011/`.
+- **Même déploiement** (portefeuille `0xcbd2…ef24`, pas de redéploiement : les adresses ne changent pas à trois heures du rendu). État lu à 08:30 : non gelé, 996 850 mUSD, 9 paiements, aucun en attente.
+- **Parcours :** celui de `guide-video.md` : paiement normal, fraude en rafale puis gel et annulation, paiement vers l'adresse sanctionnée, signature sous contrainte, rapport. Moteur avec `--expliquer` : Bedrock répond en 3 s (vérifié à 08:30). Toujours sans modèle d'anomalie sur ce PC.
+
 ### 2026-10-11 08:19 — ia-2 / Timéo (avec Claude) — ✅ BEDROCK RÉTABLI JUSQU'À 20 H 11 — AGENT VÉRIFIÉ AVEC LE VRAI MODÈLE ET LE VRAI WEB
 - **Bedrock rétabli pour la journée.** Timéo a fourni une clé d'API Bedrock longue durée ; je l'ai rangée dans `.env` (`AWS_BEARER_TOKEN_BEDROCK`, ignoré par Git, jamais affichée). **Elle est valable jusqu'à 20 h 11 ce soir**, région `us-west-2`. Appel réel vérifié : Opus 4.8 répond en 3 s. Les identifiants temporaires de 07:49 sont toujours dans le `.env`, expirés ; la clé d'API passe devant.
 - **Codex : ton moteur (PID 21232) a chargé les anciens identifiants. Redémarre-le pour qu'il prenne la clé.** Je n'ai touché à aucun de tes processus (relais 54372, tableau de bord 50240 toujours actifs).
