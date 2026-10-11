@@ -1,0 +1,287 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Breaker — vidéo de démonstration</title>
+<!--
+  Vidéo de démonstration de Breaker, construite comme une page animée (plan : shared/plan-video-motion.md).
+  Mode d'emploi : ouvrir ce fichier dans Chrome ou Edge, passer en plein écran (F11), lancer l'enregistrement
+  de l'écran, puis appuyer sur Espace. La page joue les sept plans toute seule (environ 2 min 30) et s'arrête
+  sur le dernier écran.
+  Touches : Espace = lancer · flèche droite = plan suivant · R = recommencer. « ?s=4 » dans l'adresse = partir du plan 4.
+  Les quatre plans filmés sont lus dans le dossier plans/, à côté de ce fichier.
+  Tous les chiffres viennent de démonstrations réellement jouées les 10 et 11 octobre 2026 (JOURNAL.md, shared/mesures.md).
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Manrope:wght@500;600;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #07111f; --ink: #f6f9fc; --text: #e7edf4; --muted: rgba(231, 237, 244, .7); --faint: rgba(231, 237, 244, .5);
+    --accent: #c7fa70; --on-accent: #142008; --blue: #a8bfff; --orange: #ffc481; --line: rgba(255, 255, 255, .12);
+    --glass: linear-gradient(135deg, rgba(255, 255, 255, .11), rgba(255, 255, 255, .03) 46%, rgba(255, 255, 255, .07));
+    --display: 'Manrope', 'DM Sans', system-ui, sans-serif; --body: 'DM Sans', system-ui, 'Segoe UI', sans-serif;
+    --mono: 'JetBrains Mono', Consolas, monospace;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; background: #000; overflow: hidden; cursor: none; }
+  body.idle { cursor: default; }
+  #stage { position: absolute; left: 50%; top: 50%; width: 1920px; height: 1080px; transform-origin: 0 0; background: var(--bg);
+    color: var(--text); font: 400 30px/1.4 var(--body); overflow: hidden; -webkit-font-smoothing: antialiased; }
+  /* Lumières de fond, comme sur le site */
+  .aurora i { position: absolute; border-radius: 50%; filter: blur(120px); opacity: .55; animation: drift 26s ease-in-out infinite alternate; }
+  .aurora i:nth-child(1) { width: 900px; height: 900px; left: -260px; top: -320px; background: #14534a; }
+  .aurora i:nth-child(2) { width: 1000px; height: 1000px; right: -340px; top: 120px; background: #1b2f7a; animation-delay: -9s; }
+  .aurora i:nth-child(3) { width: 760px; height: 760px; left: 520px; bottom: -420px; background: #3d5a17; animation-delay: -17s; }
+  @keyframes drift { to { transform: translate(90px, 60px) scale(1.12); } }
+  .dots { position: absolute; inset: 0; background-image: radial-gradient(rgba(255, 255, 255, .09) 1.5px, transparent 1.6px); background-size: 26px 26px;
+    -webkit-mask-image: radial-gradient(ellipse at 50% 40%, #000 20%, transparent 75%); mask-image: radial-gradient(ellipse at 50% 40%, #000 20%, transparent 75%); }
+
+  .scene { position: absolute; inset: 0; padding: 96px 120px 150px; opacity: 0; visibility: hidden; transition: opacity .6s ease, visibility 0s .6s; }
+  .scene.on { opacity: 1; visibility: visible; transition: opacity .6s ease; }
+  /* Chaque élément animé porte .a et son instant d'entrée --t (secondes depuis le début du plan). */
+  .a { opacity: 0; }
+  .scene.on .a { animation: rise .8s cubic-bezier(.2, .8, .2, 1) both; animation-delay: calc(var(--t, 0) * 1s); }
+  .scene.on .a.pop { animation-name: pop; }
+  .scene.on .a.gone { animation: rise .8s cubic-bezier(.2, .8, .2, 1) both, leave .5s ease forwards; animation-delay: calc(var(--t, 0) * 1s), calc(var(--out, 99) * 1s); }
+  @keyframes rise { from { opacity: 0; transform: translateY(34px); } to { opacity: 1; transform: none; } }
+  @keyframes pop { from { opacity: 0; transform: scale(.82); } to { opacity: 1; transform: none; } }
+  @keyframes leave { to { opacity: 0; transform: translateY(-24px); } }
+
+  h1, h2, p { margin: 0; }
+  .kicker { font: 600 24px/1 var(--body); letter-spacing: 3px; text-transform: uppercase; color: var(--accent); }
+  .title { font: 600 76px/1.06 var(--display); letter-spacing: -2.4px; color: var(--ink); margin-top: 22px; }
+  .title.big { font-size: 108px; letter-spacing: -3.6px; }
+  .sub { font-size: 34px; color: var(--muted); margin-top: 26px; max-width: 1250px; }
+  .glass { background: var(--glass); border: 1px solid var(--line); border-radius: 30px; box-shadow: inset 0 1px 0 rgba(255, 255, 255, .22), 0 30px 60px -26px rgba(0, 0, 0, .7); backdrop-filter: blur(22px) saturate(170%); }
+  .mark { width: 68px; height: 76px; --mark: var(--accent); --mark-letter: var(--on-accent); }
+  .brand { display: flex; align-items: center; gap: 22px; font: 800 74px/1 var(--display); letter-spacing: -3.6px; color: var(--ink); }
+  .brand i { color: var(--accent); font-style: normal; }
+  .chip { display: inline-flex; align-items: center; gap: 10px; padding: 8px 20px; border-radius: 999px; font: 500 22px/1.2 var(--body); border: 1px solid var(--line); background: rgba(255, 255, 255, .06); color: var(--muted); }
+  .chip.hold { color: var(--orange); border-color: rgba(255, 196, 129, .5); background: rgba(255, 196, 129, .12); }
+  .chip.ok { color: var(--accent); border-color: rgba(199, 250, 112, .5); background: rgba(199, 250, 112, .12); }
+  .chip.step { color: var(--blue); border-color: rgba(168, 191, 255, .5); background: rgba(168, 191, 255, .12); }
+  /* Sous-titre du plan et mention de contexte, toujours en bas */
+  .caption { position: absolute; left: 120px; right: 120px; bottom: 54px; display: flex; align-items: flex-end; justify-content: space-between; gap: 40px; }
+  .caption p { font: 500 32px/1.35 var(--body); color: var(--ink); max-width: 1250px; }
+  .caption .where { font: 500 21px/1.3 var(--body); color: var(--faint); text-align: right; white-space: nowrap; }
+  /* Cadre d'un plan filmé */
+  .clip { position: absolute; overflow: hidden; border-radius: 26px; border: 1px solid rgba(255, 255, 255, .18); background: #0b1220; box-shadow: 0 40px 90px -30px rgba(0, 0, 0, .85); }
+  .clip video { width: 100%; height: 100%; object-fit: cover; object-position: left top; display: block; }
+  .clip .fast { position: absolute; right: 18px; top: 18px; padding: 7px 16px; border-radius: 999px; background: rgba(7, 17, 31, .82); border: 1px solid rgba(199, 250, 112, .5); color: var(--accent); font: 500 20px/1 var(--body); opacity: 0; transition: opacity .25s; }
+  .clip .fast.show { opacity: 1; }
+
+  /* Plan 1 */
+  .case { display: flex; align-items: baseline; gap: 34px; margin-top: 44px; }
+  .case b { font: 600 120px/1 var(--display); letter-spacing: -4px; color: var(--ink); min-width: 560px; }
+  .case span { font-size: 36px; color: var(--muted); }
+  /* Plan 3 : les trois paiements */
+  .pay { display: grid; grid-template-columns: 250px 1fr auto; align-items: center; gap: 30px; padding: 26px 34px; margin-top: 20px; width: 860px; }
+  .pay b { font: 600 46px/1 var(--display); letter-spacing: -1.4px; color: var(--ink); }
+  .pay b small { font: 400 22px/1 var(--body); color: var(--muted); letter-spacing: 0; }
+  .pay em { font: 400 23px/1.3 var(--body); font-style: normal; color: var(--muted); }
+  .pay .when { display: block; margin-top: 8px; font-size: 19px; color: var(--faint); }
+  .result { position: absolute; inset: 0; display: grid; place-content: center; text-align: center; background: rgba(7, 17, 31, .9); }
+  .result b { display: block; font: 800 250px/1 var(--display); letter-spacing: -10px; color: var(--accent); }
+  .result span { font: 500 46px/1.25 var(--display); color: var(--ink); }
+  .result small { display: block; margin-top: 30px; font-size: 30px; color: var(--muted); }
+  /* Plans 4 et 5 : les étapes à côté du terminal */
+  .steps { position: absolute; right: 120px; top: 250px; width: 560px; display: grid; gap: 20px; }
+  .step { padding: 24px 30px; }
+  .step .chip { margin-bottom: 14px; }
+  .step p { font-size: 26px; line-height: 1.38; color: var(--text); }
+  .step p b { color: var(--ink); font-weight: 600; }
+  /* Plan 6 : la cadence de Drift */
+  .ticks { display: grid; grid-template-columns: repeat(31, 1fr); gap: 10px; margin-top: 70px; height: 190px; align-items: end; }
+  .ticks i { display: block; height: 100%; border-radius: 8px; background: rgba(255, 196, 129, .16); border: 1px solid rgba(255, 196, 129, .55); transform-origin: bottom; transform: scaleY(0); }
+  .scene.on .ticks i { animation: grow .35s cubic-bezier(.2, .8, .2, 1) forwards; animation-delay: calc(1.6s + var(--i) * .16s); }
+  @keyframes grow { to { transform: scaleY(var(--h, 1)); } }
+  .axis { display: flex; justify-content: space-between; margin-top: 14px; font-size: 22px; color: var(--faint); }
+  .triple { display: grid; grid-template-columns: repeat(3, 1fr); gap: 26px; margin-top: 56px; }
+  .fact { padding: 34px 36px; }
+  .fact b { display: block; font: 600 92px/1 var(--display); letter-spacing: -3px; color: var(--ink); }
+  .fact.win b { color: var(--accent); }
+  .fact span { display: block; margin-top: 14px; font-size: 26px; color: var(--muted); line-height: 1.35; }
+  .note { margin-top: 34px; font-size: 24px; color: var(--faint); }
+
+  #start { position: absolute; inset: 0; display: grid; place-content: center; text-align: center; background: var(--bg); z-index: 10; font: 500 34px/1.5 var(--body); color: var(--muted); }
+  #start b { display: block; font: 600 60px/1.2 var(--display); color: var(--ink); margin-bottom: 14px; }
+  body:not(.idle) #start { display: none; }
+</style>
+</head>
+<body class="idle">
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="mark" viewBox="0 0 34 38">
+    <path d="M1 1h22.6L33 10.4V37H10.4L1 27.6z" fill="var(--mark)" stroke="var(--mark)" stroke-width="2" stroke-linejoin="round"/>
+    <path d="M10.5 9h7.25a5.25 5.25 0 0 1 0 10.5H10.5zM10.5 17.5h8.25a5.75 5.75 0 0 1 0 11.5H10.5z" fill="var(--mark-letter)"/>
+    <path d="M14.5 12.6h3.1a1.65 1.65 0 0 1 0 3.3h-3.1zM14.5 21.6h4.1a1.9 1.9 0 0 1 0 3.8h-4.1z" fill="var(--mark)"/>
+  </symbol>
+</svg>
+
+<div id="stage">
+  <div class="aurora" aria-hidden="true"><i></i><i></i><i></i></div>
+  <div class="dots" aria-hidden="true"></div>
+
+  <!-- Plan 1 · le problème · 14 s -->
+  <section class="scene" data-d="14">
+    <p class="kicker a" style="--t:.3">Le problème</p>
+    <div class="case a" style="--t:.9"><b>1,46 Md$</b><span>Bybit, février 2025. Trois signataires ont validé une transaction falsifiée.</span></div>
+    <div class="case a" style="--t:3.2"><b>≈ 280 M$</b><span>Drift, avril 2026. 31 retraits en 12 minutes.</span></div>
+    <h1 class="title a" style="--t:6.2; margin-top:80px">Les clés étaient valides.<br>Les signataires, trompés.</h1>
+    <div class="brand a pop" style="--t:10; position:absolute; right:120px; top:96px"><svg class="mark"><use href="#mark"/></svg><span>breaker<i>.</i></span></div>
+    <div class="caption"><p class="a" style="--t:6.6">Un portefeuille à plusieurs signataires ne protège pas contre des signataires qui valident, de bonne foi, le mauvais paiement.</p><span class="where">Montants rapportés par NCC Group et Halborn</span></div>
+  </section>
+
+  <!-- Plan 2 · ce qu'est Breaker · 16 s · plan filmé : le site -->
+  <section class="scene" data-d="16">
+    <p class="kicker a" style="--t:.2">Breaker</p>
+    <h2 class="title a" style="--t:.5; font-size:60px; max-width:700px">Un garde pour les trésoreries à plusieurs signataires</h2>
+    <p class="sub a" style="--t:1.6; font-size:30px; max-width:640px">Il regarde chaque paiement, l’explique, et ajoute la bonne vérification avant que les fonds partent.</p>
+    <div class="a" style="--t:4; margin-top:40px; display:grid; gap:16px; justify-items:start">
+      <span class="chip ok">Paiement habituel : sans friction</span>
+      <span class="chip step">Doute : une signature en plus</span>
+      <span class="chip hold">Risque élevé : mise en attente</span>
+    </div>
+    <div class="clip a pop" style="--t:.8; right:120px; top:96px; width:1000px; height:790px"><video muted playsinline preload="auto" src="plans/plan1-site.mp4" data-fit="14"></video></div>
+    <div class="caption"><p class="a" style="--t:7">Sur Avalanche Fuji, un paiement habituel de 3 150 mUSD s’exécute en 39 secondes, sans rien changer aux habitudes de l’équipe.</p><span class="where">Site de présentation · prototype</span></div>
+  </section>
+
+  <!-- Plan 3 · l'attaque à 280 500 mUSD · 34 s · plan filmé : le tableau de bord -->
+  <section class="scene" data-d="34">
+    <p class="kicker a" style="--t:.2">L’attaque</p>
+    <h2 class="title a" style="--t:.5; font-size:58px">Deux signataires trompés proposent 280 500 mUSD</h2>
+    <div class="pay glass a" style="--t:2.2"><b>95 000 <small>mUSD</small></b><em>« URGENT – virement confidentiel, acquisition en cours »<span class="when">inscrit sur la chaîne 10 s après la proposition</span></em><span class="chip hold a pop" style="--t:4">Mise en attente</span></div>
+    <div class="pay glass a" style="--t:4.8"><b>93 500 <small>mUSD</small></b><em>« Très urgent : à traiter avant ce soir, ne pas ébruiter »<span class="when">inscrit 7 s après la proposition</span></em><span class="chip hold a pop" style="--t:6.4">Mise en attente</span></div>
+    <div class="pay glass a" style="--t:7.2"><b>92 000 <small>mUSD</small></b><em>« Opération confidentielle validée par la direction »<span class="when">inscrit 9 s après la proposition</span></em><span class="chip hold a pop" style="--t:8.8">Mise en attente</span></div>
+    <div class="clip a pop" style="--t:11; right:120px; top:230px; width:760px; height:640px" data-at="11"><video muted playsinline preload="auto" src="plans/plan4-tableau-de-bord.mp4" data-fit="14" style="width:144%; margin-left:-44%; object-position:right top"></video></div>
+    <div class="result a" style="--t:26"><div><b>0</b><span>mUSD sorti sur 280 500 tentés</span><small>2 signatures sur 3 : il en manque une. Un signataire alerté gèle le portefeuille, puis annule.</small></div></div>
+    <div class="caption"><p class="a gone" style="--t:11.5; --out:25.5">Le garde explique sa décision en français et dit quoi vérifier, au signataire qui s’apprête à signer.</p><span class="where">Avalanche Fuji, réseau de test · démonstration du 11 octobre</span></div>
+  </section>
+
+  <!-- Plan 4 · l'agent lit le Web · 30 s · plan filmé : le terminal -->
+  <section class="scene" data-d="30">
+    <p class="kicker a" style="--t:.2">Du Web à la chaîne</p>
+    <h2 class="title a" style="--t:.5; font-size:58px">L’agent vérifie le destinataire sur le Web</h2>
+    <div class="clip a pop" style="--t:.8; left:120px; top:250px; width:1080px; height:610px"><video muted playsinline preload="auto" src="plans/plan3-agent-web.mp4" data-segments="[[0,4,1],[4,46,16],[46,100,2.4]]"></video><span class="fast">accéléré</span></div>
+    <div class="steps">
+      <div class="step glass a" style="--t:1.4"><span class="chip step">Premier avis, en 7 s</span><p><b>Freiner.</b> Destinataire nouveau : une vérification humaine s’impose.</p></div>
+      <div class="step glass a" style="--t:5"><span class="chip">109 s de recherche</span><p>Trois pages lues, dont la fiche officielle de l’OFAC. Chaque citation est vérifiée mot pour mot.</p></div>
+      <div class="step glass a" style="--t:14"><span class="chip hold">Avis final</span><p><b>Refuser.</b> « L’adresse figure sur la liste de sanctions de l’OFAC : ne pas signer et mettre en attente. »</p></div>
+    </div>
+    <div class="caption"><p class="a" style="--t:16">Une page Web piégée ne peut pas le convaincre de signer : le modèle peut durcir un avis, jamais lever une alerte.</p><span class="where">Paiement de 25 000 mUSD vers une adresse sanctionnée · 2 min en réel</span></div>
+  </section>
+
+  <!-- Plan 5 · l'agent cosignataire · 26 s · plan filmé : deux terminaux -->
+  <section class="scene" data-d="26">
+    <p class="kicker a" style="--t:.2">Mode Cosignataire</p>
+    <h2 class="title a" style="--t:.5; font-size:58px">Un agent tient l’une des signatures</h2>
+    <div class="clip a pop" style="--t:.8; left:120px; top:250px; width:1080px; height:610px"><video muted playsinline preload="auto" src="plans/plan2-agent-cosignataire.mp4" data-fit="23"></video><span class="fast show">accéléré</span></div>
+    <div class="steps">
+      <div class="step glass a" style="--t:2.6"><span class="chip ok">3 200 mUSD · fournisseur connu</span><p><b>Il cosigne.</b> 0,32 % de la trésorerie, aucune règle déclenchée.</p></div>
+      <div class="step glass a" style="--t:8"><span class="chip hold">600 000 mUSD · même fournisseur</span><p><b>Il refuse.</b> 60 % de la trésorerie, 188 fois le montant habituel.</p></div>
+      <div class="step glass a" style="--t:13"><span class="chip step">4 800 mUSD · destinataire inconnu</span><p><b>Il ne signe pas.</b> Une signature humaine en plus est demandée.</p></div>
+    </div>
+    <div class="caption"><p class="a" style="--t:17">Il simule chaque paiement, signe ou s’abstient, et dit pourquoi. Aucun veto définitif : vos signataires gardent le dernier mot.</p><span class="where">Chaîne de test locale · 5 à 8 s par décision</span></div>
+  </section>
+
+  <!-- Plan 6 · la cadence de Drift · 13 s · motion pur -->
+  <section class="scene" data-d="13">
+    <p class="kicker a" style="--t:.2">La cadence de Drift, rejouée</p>
+    <h2 class="title a" style="--t:.5; font-size:58px">31 retraits en 12 minutes, avec des clés de signataires volées</h2>
+    <div class="ticks" id="ticks"></div>
+    <div class="axis a" style="--t:1.4"><span>01:26</span><span>285 000 mUSD tentés</span><span>01:38</span></div>
+    <div class="triple">
+      <div class="fact glass a" style="--t:7.2"><b>31</b><span>retraits proposés et approuvés par l’attaquant</span></div>
+      <div class="fact glass a" style="--t:7.8"><b>30</b><span>mis en attente, 1 en signature en plus</span></div>
+      <div class="fact glass win a pop" style="--t:8.6"><b>0 mUSD</b><span>sorti du portefeuille</span></div>
+    </div>
+    <div class="caption"><p class="a" style="--t:9.4">Résultat valable quand l’attaquant tient le seuil de signatures (2 sur 5). Avec une clé de plus, des fonds sortent : c’est notre limite connue.</p><span class="where">Avalanche Fuji, réseau de test · nuit du 11 octobre</span></div>
+  </section>
+
+  <!-- Plan 7 · les chiffres et les réserves · 15 s · motion pur -->
+  <section class="scene" data-d="15">
+    <p class="kicker a" style="--t:.2">Mesuré, avant d’être affirmé</p>
+    <div class="triple" style="margin-top:50px">
+      <div class="fact glass win a" style="--t:.8"><b>91 %</b><span>des montants frauduleux mis en attente, sur des fraudes de formes jamais vues</span></div>
+      <div class="fact glass a" style="--t:1.8"><b>5,1 %</b><span>de paiements légitimes mis en attente : de gros premiers paiements à un nouveau bénéficiaire</span></div>
+      <div class="fact glass a" style="--t:2.8"><b>0 mUSD</b><span>sorti pendant les démonstrations sur Avalanche Fuji</span></div>
+    </div>
+    <p class="note a" style="--t:4.4">Prototype de hackathon, non audité par un tiers · données synthétiques · réseau de test.</p>
+    <div class="a pop" style="--t:7; position:absolute; left:120px; bottom:170px">
+      <div class="brand"><svg class="mark"><use href="#mark"/></svg><span>breaker<i>.</i></span></div>
+      <p class="title" style="font-size:56px; margin-top:34px">Vos fonds. Vos signataires. Votre dernier mot.</p>
+    </div>
+    <div class="caption"><p></p><span class="where a" style="--t:8">Secure Horizons 2026 · Romain et Timéo</span></div>
+  </section>
+
+  <div id="start"><div><b>Vidéo de démonstration Breaker</b>Plein écran (F11), lancez l’enregistrement, puis appuyez sur Espace.<br>Durée : environ 2 min 30.</div></div>
+</div>
+
+<script>
+// Mise à l'échelle : la scène fait toujours 1920 × 1080, réduite ou agrandie pour tenir dans la fenêtre.
+const stage = document.getElementById("stage");
+function fit() {
+  const k = Math.min(innerWidth / 1920, innerHeight / 1080);
+  stage.style.transform = `scale(${k}) translate(-50%, -50%)`;
+}
+addEventListener("resize", fit); fit();
+
+// Les 31 retraits du plan 6 : hauteurs proportionnelles aux montants réels du rejeu (tirage reproductible du script).
+const ticks = document.getElementById("ticks");
+(function () {
+  let state = 20260401; const random = () => { state = (state * 1664525 + 1013904223) % 4294967296; return state / 4294967296; };
+  for (let i = 0; i < 31; i++) { const el = document.createElement("i"); el.style.setProperty("--i", i); el.style.setProperty("--h", ((0.4 + random() * 1.6) / 2).toFixed(2)); ticks.appendChild(el); }
+})();
+
+const scenes = [...document.querySelectorAll(".scene")];
+let current = -1, timer = null;
+
+// Un plan filmé : soit ramené à une durée donnée (data-fit, en secondes), soit lu par tranches de vitesse
+// (data-segments : [début, fin, vitesse] en secondes du plan filmé). La pastille « accéléré » suit la vitesse.
+function playClip(video, delay) {
+  const badge = video.parentElement.querySelector(".fast");
+  const segments = video.dataset.segments ? JSON.parse(video.dataset.segments) : null;
+  const begin = () => {
+    video.currentTime = 0;
+    if (!segments) video.playbackRate = Math.min(16, Math.max(1, (video.duration || 30) / Number(video.dataset.fit)));
+    video.play().catch(() => {});
+    if (!segments) return;
+    const tick = () => {
+      if (video.paused || video.ended) return;
+      const seg = segments.find(([from, to]) => video.currentTime >= from && video.currentTime < to);
+      const rate = seg ? seg[2] : 1;
+      if (video.playbackRate !== rate) video.playbackRate = rate;
+      if (badge) badge.classList.toggle("show", rate > 1.5);
+      requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+  };
+  video._wait = setTimeout(begin, delay * 1000);
+}
+
+function show(index) {
+  clearTimeout(timer);
+  scenes.forEach((scene, i) => {
+    scene.classList.toggle("on", i === index);
+    scene.querySelectorAll("video").forEach((video) => { clearTimeout(video._wait); if (i !== index) video.pause(); });
+  });
+  current = index;
+  const scene = scenes[index];
+  scene.querySelectorAll("video").forEach((video) => playClip(video, Number(video.parentElement.dataset.at || 0.8)));
+  if (index < scenes.length - 1) timer = setTimeout(() => show(index + 1), Number(scene.dataset.d) * 1000);
+}
+
+function start(from) {
+  document.body.classList.remove("idle");
+  setTimeout(() => show(from), 900); // une seconde de fond seul, pour laisser l'enregistrement démarrer
+}
+addEventListener("keydown", (event) => {
+  if (event.code === "Space" && current < 0) { event.preventDefault(); start(Math.max(0, Number(new URLSearchParams(location.search).get("s") || 1) - 1)); }
+  else if (event.code === "ArrowRight" && current >= 0 && current < scenes.length - 1) show(current + 1);
+  else if (event.code === "KeyR") location.reload();
+});
+// Pour vérifier un plan sans clavier : « ?auto=1 » démarre tout seul.
+if (new URLSearchParams(location.search).get("auto")) start(Math.max(0, Number(new URLSearchParams(location.search).get("s") || 1) - 1));
+</script>
+</body>
+</html>

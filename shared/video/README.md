@@ -4,12 +4,16 @@ Rassemblé par Timéo (avec Claude) le 11 octobre à 9 h. Tout vient de démonst
 
 | Fichier | Plan | Ce que c'est | D'où ça vient |
 |---|---|---|---|
-| `plan3-fiche-paiement-10.png` | 3 | Fiche du tableau de bord : 96 500 mUSD vers une adresse jamais vue, mise en attente, score 0,88, explication rédigée | Démo Fuji de 08:25, paiement 10 |
+| `plan3-fiche-paiement-10.png` | 3 | Fiche du tableau de bord : 95 000 mUSD vers une adresse jamais vue, mise en attente, score 0,88, explication rédigée | Démo Fuji de 08:25, paiement 10 |
 | `plan3-fiche-paiement-12.png` | 3 | Même attaque, troisième paiement : 92 000 mUSD, « Opération confidentielle validée par la direction » | Démo Fuji de 08:25, paiement 12 |
 | `plan4-fiche-paiement-13-sanctions.png` | 4 | Fiche du paiement de 25 000 mUSD vers l'adresse sanctionnée, score 0,97, « signalé par l'oracle (sanctions) » | Démo Fuji de 08:25, paiement 13 |
 | `plan4-terminal-agent-web.txt` | 4 | L'agent lit le Web : avis « freiner » en 6 s, puis « refuser » après lecture de 3 pages, avec la citation retenue | Essai de 08:13, réseau Avalanche pour l'historique |
 | `plan5-terminal-agent-cosignataire.txt` | 5 | L'agent cosignataire : cosigne 3 200 mUSD, refuse 600 000, ne signe pas l'inconnu | Essai de 08:17, chaîne de test locale |
 | `plan6-terminal-drift-fuji.txt` | 6 | Les 31 retraits à la cadence de Drift, un par un, tous bloqués | Rejeu Fuji de 01:26 |
+
+## La vidéo elle-même
+
+`video.html` est la vidéo, construite comme une page animée (sept plans, environ 2 min 30). L'ouvrir dans Chrome ou Edge, plein écran (F11), lancer l'enregistrement de l'écran, puis appuyer sur Espace. Elle lit les quatre plans filmés dans un dossier `plans/` placé à côté d'elle ; ces fichiers (71 Mo) ne sont pas dans le dépôt, ils sont sur le PC de Timéo dans `C:\Users\bvtim\breaker-video\plans\`.
 
 ## À savoir avant de monter
 

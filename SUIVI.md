@@ -4,7 +4,7 @@
 > Légende : ✅ fait · 🔄 en cours · ⬜ à faire · ✂️ coupé (manque de temps)
 > Détail du projet : [`PLAN.md`](PLAN.md) · Historique : [`JOURNAL.md`](JOURNAL.md) · Brief : [`CONTEXTE.md`](CONTEXTE.md)
 
-**Dernière mise à jour :** 2026-10-11 09:27, par Claude (Romain) — offre restructurée : une gradation = une offre (Essentiel + une personne / Standard + du temps / Premium + un refus)
+**Dernière mise à jour :** 2026-10-11 09:50, par Claude (Timéo) — L1 : vidéo construite en page animée, reste à l'enregistrer
 **Rendu (gel définitif) :** dim. 11/10 **12:00** · **Checkpoint :** sam. **18:30** · **Pitch :** dim. 13:00
 
 ---
