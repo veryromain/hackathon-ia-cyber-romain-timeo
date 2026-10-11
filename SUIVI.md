@@ -4,7 +4,7 @@
 > Légende : ✅ fait · 🔄 en cours · ⬜ à faire · ✂️ coupé (manque de temps)
 > Détail du projet : [`PLAN.md`](PLAN.md) · Historique : [`JOURNAL.md`](JOURNAL.md) · Brief : [`CONTEXTE.md`](CONTEXTE.md)
 
-**Dernière mise à jour :** 2026-10-11 09:50, par Claude (Timéo) — L1 : vidéo construite en page animée, reste à l'enregistrer
+**Dernière mise à jour :** 2026-10-11 09:52, par Claude (Romain) — v1 du motion design (HTML animé) à relire
 **Rendu (gel définitif) :** dim. 11/10 **12:00** · **Checkpoint :** sam. **18:30** · **Pitch :** dim. 13:00
 
 ---
@@ -154,7 +154,7 @@ Un **garde antifraude pour les organisations qui gardent des millions dans un po
 
 | # | Livrable obligatoire | Qui | Outil | Statut |
 |---|---|---|---|---|
-| L1 | **Vidéo démo** (2–3 min) | Timéo | Enregistrement d'écran | ⬜ |
+| L1 | **Vidéo démo** (2–3 min) | Timéo | Enregistrement d'écran | 🔄 ; 09:52 Romain : **v1 du motion design** `shared/video/motion-v1.html` (7 plans de Timéo, 2 min 30, images et terminaux réels, sous-titres = voix off `shared/video/voix-off.md`) ; mp4 = enregistrement d'écran ⌘⇧5 |
 | L2 | **README final** : problème, architecture, installation, limites connues | Romain | Markdown | ⬜ |
 | L3 | **Pitch deck** (8 slides max) : problème, cible, solution, démo, business model, équipe | Romain | Slides | ⬜ |
 | L4 | **Fiche défense** (1 page) : scénario, NIST CSF, OWASP/ATLAS, métriques, limites | Romain | Markdown/PDF | ⬜ |

@@ -2,7 +2,10 @@
 
 > À lire par le Claude de Timéo à chaque débrief. Un paragraphe par quart d'heure, le plus récent en haut.
 
-## Dernier quart d'heure — 11/10 09:27
+## Dernier quart d'heure — 11/10 09:52
+Romain a repris la vidéo (Timéo sans crédit) : **v1 du motion design** `shared/video/motion-v1.html`, qui suit les 7 plans de Timéo avec sa matière réelle (fiches 10 et 13, terminaux de 08:13 et 08:17, rejeu Drift), sous-titres = voix off (`shared/video/voix-off.md`). Le mp4 se fait par enregistrement d'écran, puis iMovie pour la voix et, si utile, les 4 captures de Timéo. Rien à faire pour Timéo sauf, s'il peut, déposer ses 4 mp4 dans `shared/video/` (ou un lien) pour le montage.
+
+## Quart d'heure précédent — 11/10 09:27
 **Nouvelle décision de Romain, qui remplace celle de 09:40 :** l'offre suit la gradation des réponses. **Essentiel 149 € = + une personne** (signature en plus) · **Standard 449 € = + du temps** (mise en attente, oracle, traçage, clé d'identité, clé de contrainte, gel) · **Premium 990 € = + un refus** (mode Cosignataire, sur mesure, support, disponibilité). Le Cosignataire est donc en Premium, mais Premium n'est **plus lié à une taille de trésorerie** : c'est un niveau de pouvoir délégué, accessible à tous. **Pour Timéo :** aligner la grille de prix du site sur ces trois mots (une personne / du temps / un refus) et retirer tout « > 10 M$ » comme condition du Premium. Deck régénéré (`shared/pitch/Breaker-pitch.pptx`).
 
 ## Quart d'heure précédent — 11/10 09:15
