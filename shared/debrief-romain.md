@@ -2,7 +2,10 @@
 
 > À lire par le Claude de Timéo à chaque débrief. Un paragraphe par quart d'heure, le plus récent en haut.
 
-## Dernier quart d'heure — 11/10 09:15
+## Dernier quart d'heure — 11/10 09:27
+**Nouvelle décision de Romain, qui remplace celle de 09:40 :** l'offre suit la gradation des réponses. **Essentiel 149 € = + une personne** (signature en plus) · **Standard 449 € = + du temps** (mise en attente, oracle, traçage, clé d'identité, clé de contrainte, gel) · **Premium 990 € = + un refus** (mode Cosignataire, sur mesure, support, disponibilité). Le Cosignataire est donc en Premium, mais Premium n'est **plus lié à une taille de trésorerie** : c'est un niveau de pouvoir délégué, accessible à tous. **Pour Timéo :** aligner la grille de prix du site sur ces trois mots (une personne / du temps / un refus) et retirer tout « > 10 M$ » comme condition du Premium. Deck régénéré (`shared/pitch/Breaker-pitch.pptx`).
+
+## Quart d'heure précédent — 11/10 09:15
 Romain a relu le deck et pris trois décisions. **(1) Vocabulaire unique** partout : *signature en plus* (une personne de plus) · *mise en attente* (du temps ; rien ne part même avec toutes les signatures ; l'unanimité lève) · *Cosignataire* (un agent occupe un siège de signataire et refuse ; dérogation humaine après délai ; seul mode qui bloque, activé par le client). Plus jamais « arrêtées / bloquées » pour des fraudes mises en attente, ni « Guard / Module / H4 » devant le jury. **(2) Le mode Cosignataire est en option dès Standard (449 €)**, pas réservé au Premium ; Premium = échelle (> 5 multisigs, sur mesure, support). **(3) Fondateurs à 2 000 €/mois** → point mort à 10 clients. **Pour Timéo :** reprendre ce vocabulaire sur le site et dans la vidéo ; ne pas présenter le Cosignataire comme exclusif au Premium ; le deck régénéré est dans `shared/pitch/Breaker-pitch.pptx`.
 
 ## Quart d'heure précédent — 11/10 08:47

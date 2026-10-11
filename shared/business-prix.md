@@ -2,11 +2,12 @@
 
 > Romain (avec Claude), 11/10 vers 01:50. Même règle qu'en B3 : chaque chiffre a une source (S), un calcul (C) ou une hypothèse nommée (H). Les données D1-D11 sont celles de `shared/business-marche.md`.
 
-## 0. Vocabulaire fixé (Romain, 11/10 09:40), le même dans le pitch, le site et les documents
-- **Signature en plus** (freiner) : une signature humaine de plus que votre seuil. Ajoute une *personne*.
-- **Mise en attente** (ralentir) : un délai pendant lequel rien ne part, même avec toutes les signatures ; l'unanimité des signataires établis lève l'attente. Ajoute du *temps* : la seule protection quand l'attaquant tient déjà assez de clés (Bybit : 3 sur 6).
-- **Cosignataire** (option, dès Standard) : un agent occupe un siège de signataire et refuse de signer un paiement à risque ; dérogation humaine renforcée après délai. C'est le seul mode qui bloque, et c'est le client qui l'active.
+## 0. Vocabulaire fixé (Romain, 11/10), le même dans le pitch, le site et les documents ; **une gradation = une offre** (Romain, 11/10 10:05)
+- **Signature en plus** (freiner) : une signature humaine de plus que votre seuil. Ajoute une *personne*. → **Essentiel**.
+- **Mise en attente** (ralentir) : un délai pendant lequel rien ne part, même avec toutes les signatures ; l'unanimité des signataires établis lève l'attente. Ajoute du *temps* : la seule protection quand l'attaquant tient déjà assez de clés (Bybit : 3 sur 6). → **Standard**, avec la protection de la personne (clé d'identité, clé de contrainte, gel).
+- **Cosignataire** : un agent occupe un siège de signataire et refuse de signer un paiement à risque ; dérogation humaine renforcée après délai. C'est le seul mode qui bloque. Ajoute un *refus*. → **Premium**, qui n'est **pas** réservé aux grandes trésoreries : c'est un niveau de pouvoir délégué, accessible à toute organisation (ce qui répond à l'objection « on ne sait pas compter les > 10 M$ » sans rendre l'innovation invisible : elle est sur la grille, au niveau le plus haut).
 - On ne dit plus « arrêtées » pour les fraudes mises en attente : on dit « mises en attente ».
+- Historique : à 09:40, Romain avait mis le Cosignataire en option dès Standard ; à 10:05, après relecture du deck, il a préféré « une gradation = une offre », ce qui ramène le Cosignataire en Premium et détache Premium de la taille de trésorerie.
 
 ## 1. Les trois ancrages d'un prix
 
@@ -36,9 +37,9 @@
 | Palier | Pour qui | Ce qui est inclus | Prix / mois HT | Justification |
 |---|---|---|---|---|
 | **Observation** | tout nouveau client, 30 jours | détection et explications en lecture seule, rapport de fin d'observation | **0 €** | D10 : l'essai gratuit sans carte est le parcours qui convertit en B2B ; c'est aussi notre preuve d'efficacité sur les données du client |
-| **Essentiel** | 1 multisig, trésorerie < 1 M$ | friction (signature en plus, mise en attente), explications, listes publiques (OFAC, ScamSniffer), notifications | **149 €** | R1 : au voisinage de Safe Starter (189 €), pour une trésorerie où R2 plafonne bas |
-| **Standard** | jusqu'à 5 multisigs, 1 à 10 M$ | Essentiel + oracle Web, traçage des fonds, adresses sosies et pièges, clé d'identité, **mode Cosignataire en option** (décision Romain 11/10 09:40 : l'agent qui peut refuser est disponible dès Standard, parce qu'on ne sait pas compter les organisations > 10 M$ et que l'innovation doit être visible), rapport mensuel | **449 €** | R2 : 5,4 k€/an = 5 % de la perte évitée à périmètre complet, 25 % à périmètre H5 ; R1 : sous Safe Business (669 €), le repère du client. Option ouverte : 669 € reste dans la fourchette de valeur (170-850 €) |
-| **Premium** | > 10 M$ ou plus de 5 multisigs | Standard + réglages sur mesure (seuils, délais, profils par entité), support prioritaire, engagement de disponibilité : l'offre d'**échelle**, pas d'un pouvoir supplémentaire | **990 €** | D9 : l'alternative à ce niveau est Fireblocks Essentials (999 $) |
+| **Essentiel** | 1 multisig, typiquement < 1 M$ | **+ une personne** : signature en plus sur les paiements inhabituels, explications en français, listes publiques (OFAC, ScamSniffer), notifications | **149 €** | R1 : au voisinage de Safe Starter (189 €) |
+| **Standard** | jusqu'à 5 multisigs, typiquement 1 à 10 M$ | **+ du temps** : mise en attente (rien ne part même avec toutes les signatures), oracle Web, traçage des fonds, adresses sosies et pièges, clé d'identité, clé de contrainte, gel, rapport d'incident et rapport mensuel | **449 €** | R2 : 5,4 k€/an = 5 % de la perte évitée à périmètre complet ; R1 : sous Safe Business (669 €) |
+| **Premium** | toute organisation qui veut qu'on puisse dire non à sa place (signataires dispersés ou peu disponibles, trésorerie > 10 M$, exigence de disponibilité) | **+ un refus** : mode Cosignataire (l'agent occupe un siège de signataire, refuse un paiement à risque, dérogation humaine renforcée après délai), réglages sur mesure, support prioritaire, disponibilité garantie | **990 €** | R2 : 11,9 k€/an = **10 % de la perte évitée, le plafond de la règle** : le seul niveau qui couvre le cas où tous les humains sont trompés (Bybit, Drift) ; D9 : Fireblocks Essentials 999 $/mois |
 | **Entreprise** | fonds, fondations, plusieurs entités | Premium + audit, intégrations, contrat | sur devis | comme Safe Enterprise et Guardian |
 
 Tous les paliers : sans engagement, mensuel, données exportables (décision « aucun verrou commercial »). Remise ≈ 10 % en annuel, comme Safe Pro (D8).

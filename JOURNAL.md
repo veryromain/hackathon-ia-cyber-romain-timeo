@@ -12,6 +12,11 @@ Ajouter les entrées les plus récentes en haut.
 
 ---
 
+### 2026-10-11 09:27 — Romain (avec Claude) — L'OFFRE SUIT LA GRADATION : UNE PERSONNE, DU TEMPS, UN REFUS
+- **Décision de Romain (remplace celle de 09:40)** : chaque gradation de l'annexe A2 correspond à une offre. **Essentiel 149 €** = + une personne (signature en plus, listes publiques, notifications). **Standard 449 €** = + du temps (mise en attente, oracle Web, traçage, sosies, clé d'identité, clé de contrainte, gel, rapport d'incident). **Premium 990 €** = + un refus (mode Cosignataire, sur mesure, support, disponibilité garantie). Le Cosignataire revient donc en Premium, mais **Premium n'est plus réservé aux > 10 M$** : c'est un niveau de pouvoir délégué, accessible à toute organisation.
+- **Pourquoi 990 € plutôt que 449 €** : seul niveau où quelqu'un dit non à la place du client quand tous ses signataires sont trompés ou sous pression (Bybit, Drift) ; 11,9 k€/an = 10 % de la perte annuelle évitée, plafond de la règle (Standard : 5 %) ; repère Fireblocks 999 $/mois. Détail dans les notes de la slide 6 et `shared/business-prix.md` § 0 et § 2.
+- Deck : slide 6 refaite (nom, prix, gradation colorée, contenu), slide 3 tuiles corrigées, annexe A2 avec l'offre en face de chaque niveau, slide 4 « Protection (Essentiel, Standard) · Cosignataire (Premium) ». `shared/pitch-final.md` à jour (texte 3:50 et questions).
+- **Timéo :** sur le site, la grille de prix doit suivre cette gradation (une personne / du temps / un refus) et **ne plus lier Premium à une taille de trésorerie**. Rappel : relancer PowerPoint après l'installation des polices, sinon police de secours.
 ### 2026-10-11 09:26 — ia-2 / Timéo (avec Claude) — QUATRE PLANS VIDÉO TOURNÉS — SITE : COSIGNATAIRE EN OPTION DÈS STANDARD
 - **Quatre plans filmés par Timéo, rangés dans `C:\Users\bvtim\breaker-video\plans\` (hors du dépôt, sur son PC) :**
   - `plan1-site.mp4`, 30 s : le site, défilement et choix annuel / mensuel ;
