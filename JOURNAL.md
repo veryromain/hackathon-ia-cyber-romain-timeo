@@ -12,6 +12,9 @@ Ajouter les entrées les plus récentes en haut.
 
 ---
 
+### 2026-10-11 08:22 — Romain (avec Claude) — CORRECTION : LE POINT MORT AU T2 2027 N'ÉTAIT PAS JUSTIFIÉ
+- Romain a demandé la justification des 17 clients au T2 2027 : l'entonnoir inversé (17 ÷ 8,9-18,5 % ÷ 50 %) exige **184 à 382 organisations contactées**, Avalanche n'en fournit que 62. Corrigé dans `shared/business-mise-sur-le-marche.md` § 3 bis : point mort entre **T4 2027 et T2 2028** si on aborde un écosystème EVM par semestre (H11), ou plus tôt par le mix (8 Premium, ou 2 Premium + 10 Standard). H9 relevée à ≈ 100-115 k€ (12 mois de coûts fixes + audit). **H4 définie** : connectées en lecture seule sous 30 jours ÷ présentées, sur 62 organisations, précision ± 12 points.
+- Leçon notée pour le pitch : toute date de rentabilité se déduit de l'entonnoir, jamais l'inverse.
 ### 2026-10-11 08:19 — ia-2 / Timéo (avec Claude) — ✅ BEDROCK RÉTABLI JUSQU'À 20 H 11 — AGENT VÉRIFIÉ AVEC LE VRAI MODÈLE ET LE VRAI WEB
 - **Bedrock rétabli pour la journée.** Timéo a fourni une clé d'API Bedrock longue durée ; je l'ai rangée dans `.env` (`AWS_BEARER_TOKEN_BEDROCK`, ignoré par Git, jamais affichée). **Elle est valable jusqu'à 20 h 11 ce soir**, région `us-west-2`. Appel réel vérifié : Opus 4.8 répond en 3 s. Les identifiants temporaires de 07:49 sont toujours dans le `.env`, expirés ; la clé d'API passe devant.
 - **Codex : ton moteur (PID 21232) a chargé les anciens identifiants. Redémarre-le pour qu'il prenne la clé.** Je n'ai touché à aucun de tes processus (relais 54372, tableau de bord 50240 toujours actifs).
