@@ -12,6 +12,19 @@ Ajouter les entrées les plus récentes en haut.
 
 ---
 
+### 2026-10-11 08:45 — ia-2 / Timéo (avec Claude) — ✅ DÉMO « COMME EN FINALE » JOUÉE SUR FUJI — **relais Fuji arrêté**
+- **Romain, Codex : le relais Fuji du PC est arrêté** (vérifié par la liste des processus : plus aucun relais ni moteur). Portefeuille non gelé, aucun paiement en attente, 993 700 mUSD. Le tableau de bord reste ouvert sur `http://127.0.0.1:8599` (ce PC seulement), sur les données de cette démo.
+- **Parcours de `guide-video.md`, d'une traite, moteur avec explications Bedrock (Opus 4.8) : 0 mUSD parti sur 395 500 tentés.**
+  1. Paiement 9, 3 150 mUSD au prestataire connu : exécuté sans friction, 39 s après la proposition ([exécution](https://testnet.snowtrace.io/tx/0xf63a43668c943419e8fe0a4ec402a063f17e22413b377dc340aff4fccb5f5219)).
+  2. Paiements 10, 11, 12 (280 500 mUSD vers une adresse jamais vue) : `hold` inscrit **10 s, 7 s et 9 s** après la proposition, score 0,88 ([10](https://testnet.snowtrace.io/tx/0x911c7b5d27ff9e8fc8f7db39017b1ff181048f4a42a7e058c63bfcadcd6bf903), [11](https://testnet.snowtrace.io/tx/0xf5b721b1824f29eb86a17e1075856a038e8ebd3db8a8207d41135a687aff92df), [12](https://testnet.snowtrace.io/tx/0x9d300bb421fc8e71c6fe4618a1fb7143b1e9ba35bf73eab1b1be9fcdf2b052f1)). Exécution bloquée à 2/3, [gel](https://testnet.snowtrace.io/tx/0x94aa3d406cd51d550b3d03f3692ae0bf6a22989a5ff3334d0321ce4025977eab), trois annulations, dégel par trois votes.
+  3. Paiement 13, 25 000 mUSD vers l'adresse sanctionnée `0x098B…2f96` : classé `hold` par le contrat dès la [proposition](https://testnet.snowtrace.io/tx/0x647d14c89cf86e7d8cde77a1d825345866ed78996359c07268085156ad317e63) ; trois signatures réunies, exécution quand même refusée (`TooEarly`), puis annulé. Le moteur : 0,97, `FLAGGED_ADDRESS`.
+  4. Paiement 14, 90 000 mUSD approuvé sous contrainte : « 2 sur 2 » à l'écran, portefeuille non gelé officiellement, deux tentatives d'exécution refusées, alerte privée `DURESS_SIGNATURE` écrite (hors chaîne), trois collègues lèvent le gel et annulent.
+  5. Rapport d'incident généré avec synthèse Bedrock : `shared/demo-finale-20261011/rapport-incident.md`.
+- **Les 10 s au lieu des 5 à 6 s d'hier viennent de l'explication Bedrock**, rédigée avant l'inscription de l'alerte. Avec 30 s de délai d'examen, il reste de la marge ; pour la vidéo, c'est le chiffre à annoncer si le moteur tourne avec `--expliquer`.
+- **Réserves :** règles seules, pas de modèle d'anomalie (Windows) ; `OFF_HOURS` présent dans les raisons parce qu'on est dimanche et que je n'ai pas mis de réglage client ; l'adresse sanctionnée vient de la collecte Web d'hier soir, déjà inscrite au registre, pas d'une nouvelle lecture ; le rapport couvre aussi les 9 paiements de la répétition de 07:31 (même portefeuille), d'où ses 802 800 mUSD « tentés » : **le chiffre de cette démo seule est 395 500.** 108 événements, aucun doublon.
+- **Le dossier `shared/demo-finale-20261011/` n'est pas dans Git** (exclu en local, `.git/info/exclude`), pour ne pas recréer le blocage de 08:20 tant que le tableau de bord le lit. Il contient les événements, alertes, journaux des trois scénarios et le rapport. À committer après l'arrêt du tableau de bord si on veut le garder comme preuve.
+- **Codex :** tes trois programmes de 07:31 sont arrêtés (annoncé à 08:32) ; ton dossier de répétition n'a pas été modifié par cette démo.
+
 ### 2026-10-11 08:28 — ia-2 / Timéo (avec Claude) — PLUS D'OBSERVATION (DÉCISION DE TIMÉO) — SITE MIS À JOUR AVEC LES OFFRES, LES DEUX MODES ET SAFE
 - **Décision de Timéo confirmée à 08:25 : on ne fait plus l'observation.** Ni comme mode produit (déjà retiré à 01:25), ni comme palier ou essai gratuit de 30 jours.
 - **⚠️ Romain, tes documents business reposent encore dessus, à reprendre avant le deck :**
