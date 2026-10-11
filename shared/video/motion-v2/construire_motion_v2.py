@@ -556,7 +556,11 @@ def etape_html(timeline):
            .replace("__IMG10__", b64(os.path.join(MATIERE, "plan3-fiche-paiement-10.png"), "image/png"))
            .replace("__IMG13__", b64(os.path.join(MATIERE, "plan4-fiche-paiement-13-sanctions.png"), "image/png"))
            .replace("__AUDIO__", b64(os.path.join(D, "voix-off.mp3"), "audio/mpeg")))
+    ancien = open(HTML_OUT, encoding="utf-8").read() if os.path.exists(HTML_OUT) else None
     open(HTML_OUT, "w", encoding="utf-8").write(out)
+    if ancien != out and os.path.isdir(FRAMES):
+        shutil.rmtree(FRAMES)   # la page a changé : les images déjà rendues ne sont plus valables
+        print("page modifiée : images du rendu précédent supprimées")
     print("écrit", HTML_OUT, len(out) // 1024, "Ko")
 
 
