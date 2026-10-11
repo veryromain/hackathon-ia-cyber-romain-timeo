@@ -15,6 +15,8 @@ const tryGit = (args) => { try { return git(args); } catch (e) { return e.stdout
 const envFiles = tryGit(["ls-files", "--others", "--ignored", "--exclude-standard", "--cached"]).split("\n")
   .filter((f) => /(^|\/)\.env(\.|$)/.test(f) && !/node_modules|\.venv/.test(f));
 const secrets = []; // { name, value, from }
+// Noms de variables qui ne sont jamais des secrets (nom de profil, région, mode) : AWS_PROFILE=hackathon ferait sinon un faux positif.
+const NOT_SECRET_NAME = /^(AWS_PROFILE|AWS_DEFAULT_PROFILE|AWS_REGION|AWS_DEFAULT_REGION|NODE_ENV|LOG_LEVEL|HARDHAT_NETWORK)$/;
 const NOT_SECRET = /^(true|false|[a-z]{2}-[a-z]+-[0-9]|\d{1,6}|https?:\/\/[^@]*|[a-z0-9.-]+\.(com|net|org|io|fr)|us\.anthropic\.[\w.:-]+|[\w.-]+@[\w.-]+)$/i;
 for (const f of envFiles) {
   const full = path.join(repo, f);
@@ -23,7 +25,7 @@ for (const f of envFiles) {
     const m = line.match(/^\s*(?:export\s+)?([A-Za-z_][A-Za-z0-9_]*)\s*=\s*(.*)$/);
     if (!m) continue;
     const value = m[2].trim().replace(/^["']|["']$/g, "");
-    if (value.length < 8 || NOT_SECRET.test(value)) continue;
+    if (NOT_SECRET_NAME.test(m[1]) || value.length < 8 || NOT_SECRET.test(value)) continue;
     secrets.push({ name: m[1], value, from: f });
   }
 }

@@ -12,6 +12,12 @@ Ajouter les entrées les plus récentes en haut.
 
 ---
 
+
+### 2026-10-11 08:05 — Timéo (avec Claude) — BEDROCK : IDENTIFIANTS DU .env TOUJOURS EXPIRÉS
+- **Vérifié :** appel réel à 08:05 par `commun.bedrock.converse` (venv de `ia-1`) → `ExpiredTokenException`. Le `.env` racine n'a pas été réenregistré depuis 07:47:20 : ce sont les identifiants temporaires déjà expirés à 07:51. Format du fichier correct (`AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, `AWS_SESSION_TOKEN`, région, `BEDROCK_MODEL_ID`). Aucun secret affiché.
+- **Bloquant :** Timéo doit reprendre des identifiants dans Workshop Studio (Get AWS CLI credentials) et remplacer les trois lignes `AWS_…` du `.env`.
+- **Prochaine étape :** refaire l'appel de test, puis redémarrer le moteur (21232) pour qu'il recharge les identifiants.
+
 ### 2026-10-11 07:56 — ia-2 / Timéo (avec Claude) — AGENT AUTONOME : SIMULE, RAISONNE, FREINE OU COSIGNE CHAQUE PAIEMENT (TESTÉ EN LOCAL, MODÈLE NON VÉRIFIÉ)
 - **Demande de Timéo (07:45) : des agents autonomes qui, pour chaque transaction, simulent et raisonnent à partir du Web2 et du Web3, puis freinent (un mode) ou cosignent et peuvent refuser (l'autre mode).** Codé sans toucher au contrat ni au moteur, en suivant la décision du 11/10 01:25 (`shared/decisions.md`) : deux modes, Protection et Cosignataire, aucun veto définitif.
 - **Nouveau : `ia-1/agent/agent.py`.** Il se lance **à la place** de `score.moteur` (il le contient) et traite seul chaque `payment_proposed` :
@@ -56,6 +62,18 @@ Ajouter les entrées les plus récentes en haut.
 - **Preuves :** rapport-incident.md, etat-final.json, guide-video.md et journaux dans le dossier isolé ; conversation créée. Le total UI 407300 inclut 7000 de demandes légitimes du traçage : pas une mesure de fraude évitée.
 - **Limites concrètes :** modèle anomalie bloqué par Windows (_liblinear) ; Bedrock encore Expired au retest après annonce de renouvellement utilisateur. Emplacement du .env demandé. Sources Web reprises de la collecte OFAC précédente, pas de nouvelle lecture IA. Précharger le registre avant tournage : les 8 inscriptions séquentielles ont retardé certaines alertes (max 35s, examen 30s). Aucun poids modifié.
 - **Reste :** Bedrock à rétablir, modèle à faire fonctionner, capturer vidéo finale ; cosignataire et retrait du garde restent conception.
+
+### 2026-10-11 08:05 — Romain (avec Claude) — ✅ ZÉRO SECRET VÉRIFIÉ SUR LE MAC DE ROMAIN
+- **`npm run zero-secret` lancé sur le Mac : rien trouvé** dans les 262 fichiers suivis ni dans les 163 commits (toutes branches). Phrase Fuji cherchée en entier et par morceaux, clés dérivées, motifs génériques : zéro.
+- **Faux positif corrigé dans `ia-2/scripts/zero-secret.js`** : le script prenait `AWS_PROFILE=hackathon` (nom de profil AWS local, pas une clé) pour un secret parce que la valeur fait plus de 8 caractères, et le mot « hackathon » est partout dans le repo. Ajout d'une liste de noms de variables jamais secrets (`AWS_PROFILE`, `AWS_REGION`, `NODE_ENV`, `HARDHAT_NETWORK`…). Le code de sortie était 1, il est maintenant 0.
+- **Couverture côté Romain :** le `.env` racine du Mac ne contient que `AWS_PROFILE`, `AWS_REGION`, `BEDROCK_MODEL_ID` (rien de secret, la clé Bedrock passe par le profil AWS). `ia-2/.env` : `FUJI_RPC_URL` et `FUJI_MNEMONIC`, ce dernier vérifié. Telegram et SMTP ne sont pas dans un `.env` du repo, donc couverts uniquement par les motifs génériques, comme Timéo l'avait noté.
+- **Reste pour L8 :** relancer une dernière fois juste avant midi, et décider à deux de l'accès du jury (invitation en lecture ou dépôt public).
+
+### 2026-10-11 07:43 — Romain (avec Claude) — B3 v2 ET B6 : TOUT SOURCÉ OU CALCULÉ
+- **Règle de Romain : aucun chiffre arbitraire.** `shared/business-marche.md` réécrit : données D1-D11 datées et sourcées (API DeFiLlama lue le 11/10 : 8 694 protocoles, 675 à > 10 M$, 561 sur Avalanche dont 22 à > 10 M$ ; DeepDAO ≈ 220 DAO ≥ 1 M$ ; Safe Pro 189 / 669 € ; CertiK / TRM), hypothèses nommées H1-H4, TAM 675-895 (borne basse), SAM Avalanche 32-121, **SOM 3 à 6 clients payants en année 1** par un entonnoir explicite (62 contactables → 50 % en observation → 8,9-18,5 % de conversion sourcée). Fonds et fondations exclus faute de source.
+- **B6 `shared/business-prix.md`** : prix ancré sur Safe Pro (règle : 70-80 % du palier Safe), sur la perte annuelle évitée (9,5 % × 1,3 M$ × 91 % ≈ 112 k$, ou 22 k$ à périmètre restreint) et sur le coût marginal (≈ 1,2 $/client/mois en IA + gas). **Offre : Observation 0 € (30 j) / Essentiel 149 € / Standard 449 € / Avancé 990 € / Entreprise sur devis.** Point mort : 17 clients Standard (H8 : 7 300 €/mois de coûts fixes).
+- **Timéo :** rien de technique. Pour le site et le pitch : les paliers et leurs justifications sont prêts à reprendre.
+
 
 ### 2026-10-11 07:38 — ia-2 / Timéo (avec Claude) — ✅ ZÉRO SECRET VÉRIFIÉ SUR LE PC DE TIMÉO — ROMAIN : À LANCER SUR LE MAC
 - **Vérification « zéro secret » faite sur le PC de Timéo (livrable L8) : aucun secret dans les fichiers suivis ni dans l'historique complet, toutes branches.** Cherchés par leur vraie valeur, sans jamais l'afficher : la clé Bedrock, le jeton Apify, la phrase secrète Fuji et les clés privées des 20 premiers comptes qui en dérivent. Cherchés aussi par morceaux de 20 caractères (au cas où une transcription les aurait coupés) et par motifs génériques (clés AWS, jetons GitHub, Telegram, Slack, blocs de clé privée, `SMTP_PASSWORD=…`).
