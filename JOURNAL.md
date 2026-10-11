@@ -12,6 +12,26 @@ Ajouter les entrées les plus récentes en haut.
 
 ---
 
+### 2026-10-11 07:18 — ia-2 / Timéo (avec Claude) — REJEU DE DRIFT SUR FUJI : 0 mUSD SORTI SUR 285 000 — RELAIS ARRÊTÉ — CORRECTION DE MON ENTRÉE DE 00:52
+- **Relais et moteur arrêtés à 01:50, vérifié cette fois avec une liste fiable des processus. La voie est libre, Romain.**
+- **⚠️ Correction de mon entrée de 00:52 : le relais Fuji n'était PAS arrêté.** Ma commande d'arrêt ne trouvait aucun processus et ma vérification utilisait la même commande, donc elle affichait « 0 » à tort. Le relais de 00:46 a tourné jusqu'à 01:29, en même temps que celui de 01:25. Effets constatés : des événements en double dans `shared/events.jsonl` (28 sur 90 à 01:28), chaque alerte du moteur émise deux fois, et 15 alertes refusées par le portefeuille parce que l'autre relais venait d'inscrire la même. Aucun effet sur les fonds ni sur les niveaux de risque. J'arrête maintenant les processus par PowerShell (`Get-CimInstance Win32_Process`), plus par `wmic`.
+- **Rejeu de Drift sur Fuji, 2 clés volées (le seuil), 01:26:29 → 01:38:36 : 31 retraits proposés en 727 s, 285 000 mUSD tentés, 0 mUSD sorti.** Trésorerie intacte à 1 000 000 mUSD.
+  - Niveaux inscrits sur la chaîne pour les paiements 5 à 35 : **30 en `hold`, 1 en `step_up`** (le tout premier, à 0,59 : rien ne le distingue encore d'un nouveau fournisseur).
+  - Le moteur passe à `hold` dès le deuxième retrait (0,75 : `BURST`, `NEW_RECIPIENT`, `OFF_HOURS`, `RECENT_OWNER_CHANGE`). **0,75 est exactement le seuil** : c'est `RECENT_OWNER_CHANGE` (la clé d'Emma remplacée il y a 2 h sur ce déploiement) qui fait la différence avec l'essai local, où tout restait `step_up` à 0,73. Sans ce hasard du déploiement, on aurait eu 31 `step_up`.
+  - Aucun retrait exécutable : il manque la troisième signature sur les 31.
+- **Fin du scénario interrompue :** la connexion a coupé (DNS) au moment du gel. Le portefeuille n'a donc jamais été gelé ; j'ai annulé les 31 retraits à la main une fois le réseau revenu. État laissé : 36 paiements au compteur, tous exécutés ou annulés, portefeuille non gelé.
+- **Conditions de la mesure :** moteur à règles seules, sans le modèle d'anomalie ni les explications Bedrock (PC de Timéo), exécuté un dimanche vers 1 h 30 (d'où `OFF_HOURS`), sans l'option `--historique`.
+- **Ce que le rejeu prouve et ne prouve pas :**
+  - Il prouve qu'avec le seuil de clés volées, la cadence de Drift ne sort rien : le garde exige une signature que l'attaquant n'a pas.
+  - **Il ne prouve pas la résistance à un attaquant qui tient une clé de plus que le seuil.** Essai local de 01:22 : 119 600 mUSD sortis sur 285 000. Sur Fuji le résultat serait meilleur (30 `hold` : 180 s d'attente pendant lesquelles un signataire peut geler), mais seulement grâce à `RECENT_OWNER_CHANGE`. Non rejoué sur Fuji.
+  - Ce n'est pas le rejeu des transactions réelles de Drift (levier 1 de la section 9 du plan : faire passer la séquence publique dans le moteur). C'est la même cadence, sur notre portefeuille. La séquence réelle est sur Solana, avec des instructions d'administration de protocole : la traduire en paiements de trésorerie reste une interprétation, à présenter comme telle.
+- **Romain, proposition pour le moteur (non codée, c'est à toi de trancher) :** faire monter le poids de `BURST` avec le nombre de propositions vers des inconnus, pour atteindre `hold` sans dépendre d'un autre signal. À re-mesurer sur les trois jeux avec ton modèle.
+
+### 2026-10-11 01:25 +02:00 — Tim (avec Codex) — DEUX MODES PRODUIT
+- **Décision :** Observation retiré des modes produit ; conserver Protection et Cosignataire. Remplace le choix antérieur de trois modes. Dérogation humaine renforcée après délai et retrait/affaiblissement du garde par la procédure d'un paiement maintenus.
+- **Coordination / fait :** modification documentaire annoncée dans shared/journal.md du dossier Secure Horizons ; décisions et note evolution-breaker.md mises à jour. Aucun code ni fichier du rejeu Fuji touché.
+- **Reste :** délais, quorums et mise en œuvre.
+
 ### 2026-10-11 01:25 — ia-2 / Timéo (avec Claude) — ⚠️ RELAIS FUJI LANCÉ : REJEU DE DRIFT (31 RETRAITS EN 12 MIN) — ET UNE FAIBLESSE TROUVÉE
 - **⚠️ Je lance un relais et un moteur sur Fuji maintenant, pour environ 20 minutes (décision de Timéo : rejouer Drift). Romain : n'en lance pas d'autre avant mon entrée suivante.** Le portefeuille sera gelé pendant le scénario puis dégelé à la fin.
 - **Nouveau script `ia-2/scripts/drift-scenario.js`** (`npm run drift:local` / `drift:fuji`). Il rejoue la forme du piratage de Drift : l'attaquant tient des clés de signataires et propose 31 retraits en 12 minutes vers 4 adresses neuves, 285 000 mUSD au total. Rien n'est truqué : si le garde ne freine pas un retrait, le script l'exécute. À la fin, un signataire honnête gèle et annule. Options : `DRIFT_SPAN_S`, `DRIFT_COUNT`, `DRIFT_KEYS`, `RESPOND=0`.
