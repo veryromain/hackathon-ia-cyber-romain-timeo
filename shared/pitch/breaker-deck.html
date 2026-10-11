@@ -1,0 +1,300 @@
+<title>Breaker</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap">
+<style>
+/* Layout : une slide par écran (scroll-snap), 8 slides + 4 annexes ; touches ← → ; N affiche les notes ; impression = toutes les slides. */
+:root{
+  --paper:#F5F7FA; --panel:#FFFFFF; --ink:#0F1B2D; --muted:#5B6779; --line:#D6DCE5;
+  --accent:#E84142; --hold:#B45309; --ok:#1F7A4D; --soft:#EEF2F7;
+  --display:"Archivo",system-ui,sans-serif; --body:"IBM Plex Sans",system-ui,sans-serif; --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){ color-scheme:dark; --paper:#0E1420; --panel:#151D2C; --ink:#E8ECF2; --muted:#9AA6B8; --line:#2A3446; --accent:#FF5A5B; --hold:#F0A435; --ok:#4FC186; --soft:#1B2536; } }
+:root[data-theme="dark"]{ color-scheme:dark; --paper:#0E1420; --panel:#151D2C; --ink:#E8ECF2; --muted:#9AA6B8; --line:#2A3446; --accent:#FF5A5B; --hold:#F0A435; --ok:#4FC186; --soft:#1B2536; }
+html,body{height:100%}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:clamp(15px,1.35vw,20px);line-height:1.45}
+.deck{height:100%;overflow-y:auto;scroll-snap-type:y mandatory}
+.slide{min-height:100vh;min-height:100dvh;scroll-snap-align:start;box-sizing:border-box;padding:calc(env(safe-area-inset-top,0px) + 4vh) clamp(16px,6vw,96px) 7vh;display:flex;flex-direction:column;justify-content:center;gap:1.4em;position:relative;border-bottom:1px solid var(--line)}
+.eyebrow{font-family:var(--mono);font-size:.72em;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);display:flex;gap:1em;align-items:center}
+.eyebrow b{color:var(--accent);font-weight:500}
+h1,h2{font-family:var(--display);text-wrap:balance;margin:0;line-height:1.05;letter-spacing:-.01em}
+h1{font-size:clamp(2.4em,7vw,5.2em);font-weight:800}
+h2{font-size:clamp(1.6em,3.6vw,2.6em);font-weight:700}
+p{margin:0;max-width:34em}
+.lead{font-size:1.15em;max-width:30em}
+.grid{display:grid;gap:1em}
+.g3{grid-template-columns:repeat(3,minmax(0,1fr))} .g2{grid-template-columns:repeat(2,minmax(0,1fr))} .g4{grid-template-columns:repeat(4,minmax(0,1fr))}
+@media (max-width:760px){.g3,.g2,.g4{grid-template-columns:1fr}}
+.num{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.stat{background:var(--panel);border:1px solid var(--line);padding:1em 1.1em;display:flex;flex-direction:column;gap:.25em}
+.stat .v{font-family:var(--display);font-weight:800;font-size:2.1em;line-height:1;letter-spacing:-.02em}
+.stat .v.hold{color:var(--hold)} .stat .v.ok{color:var(--ok)} .stat .v.acc{color:var(--accent)}
+.stat .l{color:var(--muted);font-size:.85em}
+.src{font-size:.72em;color:var(--muted);font-family:var(--mono)}
+.step{display:grid;grid-template-columns:auto 1fr;gap:.9em;align-items:start}
+.step .k{font-family:var(--display);font-weight:800;font-size:1.6em;line-height:1;color:var(--accent);min-width:1.4em}
+.step h3{margin:0 0 .15em;font-family:var(--display);font-size:1.1em}
+.step p{font-size:.95em;color:var(--muted);max-width:24em}
+.flow{display:flex;flex-wrap:wrap;gap:.6em;align-items:stretch}
+.flow .box{background:var(--panel);border:1px solid var(--line);padding:.7em .9em;flex:1 1 9em;min-width:0}
+.flow .box.me{border-color:var(--accent);box-shadow:inset 3px 0 0 var(--accent)}
+.flow .box small{display:block;color:var(--muted);font-size:.8em}
+.flow .arr{align-self:center;color:var(--muted);font-family:var(--mono)}
+table{border-collapse:collapse;width:100%;font-size:.9em;background:var(--panel)}
+th,td{text-align:left;padding:.55em .7em;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-family:var(--mono);font-size:.75em;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:500}
+td.num{white-space:nowrap}
+.tier{background:var(--panel);border:1px solid var(--line);padding:.9em 1em;display:flex;flex-direction:column;gap:.3em}
+.tier.star{border-color:var(--accent)}
+.tier .n{font-family:var(--display);font-weight:700}
+.tier .p{font-family:var(--display);font-weight:800;font-size:1.7em;letter-spacing:-.02em}
+.tier .p small{font-size:.5em;font-weight:500;color:var(--muted);font-family:var(--body)}
+.tier .d{font-size:.82em;color:var(--muted)}
+.quote{font-family:var(--display);font-weight:700;font-size:1.35em;max-width:26em;border-left:4px solid var(--accent);padding-left:.8em;text-wrap:balance}
+.tag{display:inline-block;font-family:var(--mono);font-size:.7em;padding:.15em .5em;border:1px solid var(--line);color:var(--muted);border-radius:2px}
+.foot{position:absolute;left:clamp(16px,6vw,96px);right:clamp(16px,6vw,96px);bottom:calc(env(safe-area-inset-bottom,0px) + 2vh);display:flex;justify-content:space-between;font-family:var(--mono);font-size:.7em;color:var(--muted)}
+.notes{display:none;background:var(--soft);border-left:3px solid var(--hold);padding:.8em 1em;font-size:.85em;max-width:40em}
+body.shownotes .notes{display:block}
+.annex .eyebrow b{color:var(--hold)}
+.hint{position:fixed;right:1em;bottom:calc(env(safe-area-inset-bottom,0px) + .8em);font-family:var(--mono);font-size:.7em;color:var(--muted);background:var(--panel);border:1px solid var(--line);padding:.3em .6em;z-index:2}
+ul{margin:0;padding-left:1.1em} li{margin:.2em 0}
+.limits li{color:var(--muted)} .limits li b{color:var(--ink)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+@media print{.deck{height:auto;overflow:visible}.slide{min-height:0;page-break-after:always;padding:24px}.hint{display:none}.notes{display:block}}
+@media (prefers-reduced-motion:no-preference){.deck{scroll-behavior:smooth}}
+</style>
+
+<div class="deck" id="deck" tabindex="0">
+
+<section class="slide" id="s1">
+  <div class="eyebrow"><b>Breaker</b> Secure Horizons · Track 1 Fintech Security · axe 2 SOC antifraude</div>
+  <h1>Le 21 février 2025, trois personnes ont signé le plus gros vol de l'histoire.</h1>
+  <p class="lead">Elles pensaient signer un virement de routine. L'écran leur montrait un virement de routine. <b>1,46 milliard de dollars.</b></p>
+  <p class="lead">Breaker : la garde antifraude qui se greffe sur le coffre de votre trésorerie et vous dit <b>« attendez »</b> avant que l'argent parte.</p>
+  <div class="notes">Dire le chiffre, marquer un silence, puis « Nous sommes Romain et Timéo ». Source : Bybit, 21/02/2025 (business-probleme.md fait 1).</div>
+  <div class="foot"><span>Romain · Timéo</span><span>1 / 8</span></div>
+</section>
+
+<section class="slide" id="s2">
+  <div class="eyebrow"><b>Problème</b> ce ne sont plus les contrats qu'on casse, ce sont les gens qu'on trompe au moment de signer</div>
+  <h2>Le coffre fait exactement ce qu'on lui demande. Il n'a aucune idée de ce qui est normal pour vous.</h2>
+  <div class="grid g3">
+    <div class="stat"><span class="v acc num">1,46 Md$</span><span class="l">Bybit, fév. 2025 : 3 signataires sur 6 valident une transaction que leur interface leur montre falsifiée</span></div>
+    <div class="stat"><span class="v acc num">≈ 280 M$</span><span class="l">Drift, avr. 2026 : des mois de fausses identités pour approcher les signataires, puis le multisig</span></div>
+    <div class="stat"><span class="v acc num">3,4 Md$</span><span class="l">volés en 2025 (Chainalysis) ; médiane d'un incident significatif : 1,3 M$ (TRM)</span></div>
+  </div>
+  <p><b>Conséquence.</b> Les grandes plateformes se paient des équipes et des outils dépositaires à partir de 36 000 $/an. Les autres, l'immense majorité, n'ont <b>rien, à aucun prix</b>.</p>
+  <span class="src">Sources : shared/business-probleme.md · TRM 2025 · Fireblocks pricing (D9)</span>
+  <div class="notes">Geste : mimer une signature. Insister : la faille est humaine et procédurale, pas dans le code du coffre.</div>
+  <div class="foot"><span>Breaker</span><span>2 / 8</span></div>
+</section>
+
+<section class="slide" id="s3">
+  <div class="eyebrow"><b>Cible</b> les organisations qui ont une trésorerie et pas d'équipe sécurité</div>
+  <h2>Équipes de protocoles, DAO, startups et fonds crypto : 1 à 10 M$ dans un Safe, zéro personne dont c'est le métier.</h2>
+  <div class="grid g4">
+    <div class="stat"><span class="v num">675</span><span class="l">protocoles avec plus de 10 M$ d'actifs gérés, toutes chaînes (API DeFiLlama, 11/10/2026)</span></div>
+    <div class="stat"><span class="v num">≈ 220</span><span class="l">DAO avec plus de 1 M$ de trésorerie (DeepDAO, T1 2026)</span></div>
+    <div class="stat"><span class="v num">32–121</span><span class="l">organisations adressables sur Avalanche (22 protocoles &gt; 10 M$, &gt; 50 L1, 10 équipes Safe prouvées)</span></div>
+    <div class="stat"><span class="v num">675–895</span><span class="l">sur les chaînes EVM, borne basse : fonds et fondations exclus, faute de source</span></div>
+  </div>
+  <p>Tous ont déjà un coffre multi-signatures : Safe sécurise <b>35 Md$</b> sur 61 millions de comptes. Aucun d'eux ne déplacera sa trésorerie pour un essai.</p>
+  <span class="src">shared/business-marche.md D1–D5, § 2 · Safe Foundation, rapport T1 2026</span>
+  <div class="notes">Si on demande la méthode : comptage par seuil de TVL via l'API, hypothèse H1 (protocole &gt; 10 M$ ⇒ trésorerie ≥ 1 M$), script reproductible dans le doc.</div>
+  <div class="foot"><span>Breaker</span><span>3 / 8</span></div>
+</section>
+
+<section class="slide" id="s4">
+  <div class="eyebrow"><b>Solution</b> Breaker n'est pas un coffre</div>
+  <h2>Une garde qui se greffe sur le coffre que vous avez déjà, et qui regarde, explique, freine.</h2>
+  <div class="flow">
+    <div class="box">Votre Safe<small>vos signataires, votre adresse, votre historique</small></div>
+    <span class="arr">→</span>
+    <div class="box me">Guard Breaker<small>appelé avant chaque paiement : signature en plus, attente, gel, probation des clés</small></div>
+    <span class="arr">↔</span>
+    <div class="box me">Moteur Breaker<small>règles apprises sur votre historique · modèle d'anomalie · oracle Web · listes OFAC / ScamSniffer · explication en français</small></div>
+    <span class="arr">→</span>
+    <div class="box">Vos signataires<small>décident, toujours ; l'unanimité lève tout</small></div>
+  </div>
+  <div class="grid g3">
+    <div class="step"><span class="k">1</span><div><h3>Regarde</h3><p>Bénéficiaire nouveau ? Montant 4× vos habitudes ? Trois paiements en dix minutes ? « Urgent » ? Adresse sosie, fonds souillés, sanctions ?</p></div></div>
+    <div class="step"><span class="k">2</span><div><h3>Explique</h3><p>En français, pour des non-experts : « premier paiement à cette adresse, montant quatre fois supérieur à vos habitudes ».</p></div></div>
+    <div class="step"><span class="k">3</span><div><h3>Freine</h3><p>Une signature de plus, ou une attente. Jamais un blocage définitif. Le pire bug possible est un faux ralentissement.</p></div></div>
+  </div>
+  <p><b>Et protège la personne :</b> clé d'identité (révoquer seul sa clé volée) · clé de contrainte (dit « oui » à l'écran, gèle en silence) · probation des clés neuves.</p>
+  <span class="src">shared/ce-que-breaker-est.md · ia-1/score/regles.py · ia-2/contracts/TreasuryGuard.sol</span>
+  <div class="notes">Honnêteté si demandé : le multisig de la démo tient lieu du Safe du client ; portage Guard + Module en feuille de route (6-8 semaines, à confirmer par Timéo).</div>
+  <div class="foot"><span>Breaker</span><span>4 / 8</span></div>
+</section>
+
+<section class="slide" id="s5">
+  <div class="eyebrow"><b>Démo &amp; preuves</b> mesuré une seule fois, sur un jeu préparé à l'aveugle par l'autre membre de l'équipe</div>
+  <h2>Sur Avalanche Fuji : 280 500 tentés, zéro sorti.</h2>
+  <div class="grid g4">
+    <div class="stat"><span class="v ok num">95 %</span><span class="l">des fraudes freinées ou arrêtées, formes jamais vues</span></div>
+    <div class="stat"><span class="v ok num">91 %</span><span class="l">des montants frauduleux mis en attente (1,12 M sur 1,23 M)</span></div>
+    <div class="stat"><span class="v hold num">5,1 %</span><span class="l">de paiements légitimes retardés, tous de gros premiers paiements ; 0 % sur les récurrents</span></div>
+    <div class="stat"><span class="v num">5–6 s</span><span class="l">pour signaler, sur 30 s de délai d'examen ; 0,002 $ de gas par alerte</span></div>
+  </div>
+  <div class="grid g3">
+    <div class="stat"><span class="v num">100 %</span><span class="l">oracle Web : précision et rappel sur 35 adresses, 7 injections de prompt déjouées</span></div>
+    <div class="stat"><span class="v num">0 · 50 · 7 000</span><span class="l">détection grave (Slither) · tests · appels aléatoires, 0 invariant violé</span></div>
+    <div class="stat"><span class="v hold num">synthétique</span><span class="l">toutes les données sont fabriquées par nous ; le contrat n'est pas encore audité par un tiers</span></div>
+  </div>
+  <span class="src">shared/mesures.md § 1 · shared/audit-contrat.md · explorateur Fuji (adresses dans ia-2/deployments/fuji.json)</span>
+  <div class="notes">Lancer la vidéo de 2-3 min ici (ou la démo live). Les 5 % manqués : petits paiements d'une mise en confiance.</div>
+  <div class="foot"><span>Breaker</span><span>5 / 8</span></div>
+</section>
+
+<section class="slide" id="s6">
+  <div class="eyebrow"><b>Offre</b> Safe Pro vend des règles que vous écrivez ; nous détectons ce que vous n'avez pas prévu</div>
+  <h2>Observation gratuite 30 jours, puis un abonnement mensuel sans engagement, selon la trésorerie.</h2>
+  <div class="grid g4">
+    <div class="tier"><span class="n">Observation</span><span class="p">0 €<small> 30 jours</small></span><span class="d">détection et explications en lecture seule, rapport final</span></div>
+    <div class="tier"><span class="n">Essentiel</span><span class="p">149 €<small> /mois</small></span><span class="d">&lt; 1 M$ · friction, explications, listes publiques, notifications</span></div>
+    <div class="tier star"><span class="n">Standard</span><span class="p">449 €<small> /mois</small></span><span class="d">1–10 M$ · + oracle Web, traçage, sosies, clé d'identité, rapport mensuel</span></div>
+    <div class="tier"><span class="n">Premium</span><span class="p">990 €<small> /mois</small></span><span class="d">&gt; 10 M$ · + mode cosignataire, réglages sur mesure, support · Entreprise sur devis</span></div>
+  </div>
+  <table>
+    <tr><th>Pourquoi 449 €</th><th>Calcul</th></tr>
+    <tr><td>Perte annuelle évitée</td><td class="num">9,5 % d'incidents (TRM / population) × 1,3 M$ médiane × 91 % d'efficacité ≈ <b>112 k$/an</b> (22 k$ à périmètre restreint)</td></tr>
+    <tr><td>Prix / valeur</td><td class="num">5 400 €/an = <b>5 %</b> de la perte évitée (règle : ≤ 10 %)</td></tr>
+    <tr><td>Repère du client</td><td class="num">Safe Pro Business <b>669 €/mois</b> (règles à écrire) · Fireblocks <b>999 $/mois</b> (dépositaire)</td></tr>
+    <tr><td>Coût marginal</td><td class="num">≈ <b>1,2 $</b>/client/mois (IA + gas) : la valeur dicte le prix, pas le coût</td></tr>
+  </table>
+  <span class="src">shared/business-prix.md · shared/business-safe-et-differenciation.md · safe.global/pricing (8/10/2026)</span>
+  <div class="notes">Différence en une phrase : « Vous avez déjà le coffre. Il vous manque quelqu'un qui regarde chaque paiement et vous dit, en français, quand quelque chose ne colle pas. »</div>
+  <div class="foot"><span>Breaker</span><span>6 / 8</span></div>
+</section>
+
+<section class="slide" id="s7">
+  <div class="eyebrow"><b>Mise sur le marché</b> aucun pourcentage de part de marché : un entonnoir, chaque étape sourcée</div>
+  <h2>Première année : 62 organisations présentées, 3 à 6 clients payants, l'audit avant le premier euro.</h2>
+  <div class="flow">
+    <div class="box"><b class="num">62</b> organisations contactables<small>Retro9000 30 + équipes de L1 10 + protocoles &gt; 10 M$ sur Avalanche 22</small></div>
+    <span class="arr">× 50 %</span>
+    <div class="box"><b class="num">31</b> en observation gratuite<small>hypothèse H4, mesurée dès octobre (± 12 pts)</small></div>
+    <span class="arr">× 8,9–18,5 %</span>
+    <div class="box me"><b class="num">3 à 6</b> clients payants<small>conversion essai → payant, SaaS B2B sans carte</small></div>
+  </div>
+  <table>
+    <tr><th>Quand</th><th>Jalon</th></tr>
+    <tr><td class="num">oct. 2026</td><td>dépôt public · ≥ 10 organisations en observation · dossier subvention</td></tr>
+    <tr><td class="num">nov.–déc.</td><td>portage en Guard + Module de Safe · mesure de H4 · faux positifs réels &lt; 5 %</td></tr>
+    <tr><td class="num">janv. 2027</td><td>contrat gelé, <b>audit externe</b>, puis premiers clients payants</td></tr>
+    <tr><td class="num">mars 2027</td><td>même code sur une 2<sup>e</sup> chaîne EVM : marché × 6 à 8</td></tr>
+    <tr><td class="num">fin 2027 – mi-2028</td><td><b>point mort : 17 clients Standard</b> (7 300 €/mois de coûts fixes) ; plus tôt avec un client Premium</td></tr>
+  </table>
+  <span class="src">shared/business-marche.md § 3 · shared/business-mise-sur-le-marche.md § 3, 3 bis</span>
+  <div class="notes">Si « pourquoi si peu ? » : parce qu'on ne prend que ce que l'entonnoir sourcé donne ; l'année 1 sert aux références et aux données réelles.</div>
+  <div class="foot"><span>Breaker</span><span>7 / 8</span></div>
+</section>
+
+<section class="slide" id="s8">
+  <div class="eyebrow"><b>Équipe · limites · suite</b> 36 heures</div>
+  <h2>Romain, business. Timéo, technique. Et ce qu'il nous reste à faire.</h2>
+  <div class="grid g2">
+    <div>
+      <h3 style="font-family:var(--display);margin:0 0 .4em">Ce qu'on ne cache pas</h3>
+      <ul class="limits">
+        <li><b>Données synthétiques</b>, une organisation fictive, trois mois de trafic.</li>
+        <li><b>Contrat non audité</b> par un tiers ; réseau de test.</li>
+        <li>Le multisig de la démo <b>tient lieu du Safe</b> du client : le greffon reste à écrire.</li>
+        <li><b>Aucun client interrogé</b>, aucun prix validé par le marché.</li>
+      </ul>
+    </div>
+    <div>
+      <h3 style="font-family:var(--display);margin:0 0 .4em">Les 90 prochains jours</h3>
+      <ul>
+        <li>Dès ce mois-ci : <b>10 organisations en observation gratuite</b>, présentées par l'écosystème Avalanche.</li>
+        <li>Portage en Guard + Module de Safe ; notifications ; rejeu de Bybit et Drift sur données réelles.</li>
+        <li>Audit externe financé par subvention, <b>avant le premier euro</b>.</li>
+      </ul>
+    </div>
+  </div>
+  <p class="quote">Breaker, pour que la prochaine signature de routine soit vraiment de routine.</p>
+  <div class="notes">Terminer sur la phrase, regarder le jury, s'arrêter. Annexes A1-A4 pour les questions (flèche →).</div>
+  <div class="foot"><span>Breaker · github.com/veryromain/hackathon-ia-cyber-romain-timeo</span><span>8 / 8</span></div>
+</section>
+
+<section class="slide annex" id="a1">
+  <div class="eyebrow"><b>Annexe A1 · Conformité</b> livrable du track : DORA, MiCA, LCB-FT, AI Act, et comment un auditeur vérifie</div>
+  <h2>Nous ne détenons jamais de fonds. Chaque décision est sur la chaîne, avec ses raisons.</h2>
+  <table>
+    <tr><th>Cadre</th><th>Ce que ça implique pour Breaker</th><th>Preuve</th></tr>
+    <tr><td><b>MiCA</b></td><td>Aucune fonction ne peut transférer sans les signatures humaines du client : hors garde d'actifs. Nous sommes éditeur d'un outil, pas dépositaire.</td><td>seul <code>safeTransfer</code> dans <code>execute</code>, quorum requis ; invariant I1</td></tr>
+    <tr><td><b>DORA</b></td><td>Pour un client régulé, Breaker est un prestataire tiers de services TIC (à confirmer, mentor KPMG). Le rapport d'incident pré-rempli aide le client à classer et déclarer dans les délais (règlement délégué 2025/301).</td><td><code>ia-1/score/rapport.py</code> · <code>shared/dora-notes.md</code></td></tr>
+    <tr><td><b>LCB-FT</b></td><td>Listes OFAC et ScamSniffer consultées ; refus pur des adresses sanctionnées <b>activable par le client</b> dans son contrat : ce n'est pas nous qui bloquons.</td><td><code>ia-1/oracle/sources_publiques.py</code> · code <code>FLAGGED_ADDRESS</code></td></tr>
+    <tr><td><b>AI Act</b></td><td>Le modèle de langage n'explique que : il ne décide rien. Les règles sont lisibles, chaque alerte cite ses codes ; garde-fous contre l'injection ; validation humaine toujours.</td><td><code>ia-1/score/explication.py</code> · <code>regles.py</code></td></tr>
+    <tr><td><b>Auditabilité</b></td><td>Chaque signalement est un événement on-chain avec ses raisons ; l'oracle ne retient une accusation que s'il retrouve la citation exacte, et en inscrit le hash. Tout se rejoue depuis le dépôt.</td><td><code>RiskRegistry</code> · <code>evidence_hash</code> · scripts <code>scenario_*.js</code></td></tr>
+  </table>
+  <div class="foot"><span>Breaker · annexe</span><span>A1</span></div>
+</section>
+
+<section class="slide annex" id="a2">
+  <div class="eyebrow"><b>Annexe A2 · Playbook de réponse</b> livrable du track : qui est alerté, ce qui est automatique, ce qui reste humain</div>
+  <h2>Automatique : regarder, expliquer, freiner. Humain : décider, toujours.</h2>
+  <table>
+    <tr><th>Niveau</th><th>Déclencheur (exemples)</th><th>Automatique</th><th>Humain</th><th>Qui est alerté</th></tr>
+    <tr><td><b>Aucun</b></td><td>bénéficiaire connu, montant habituel</td><td>journalisé, score et raisons</td><td>signatures normales</td><td>—</td></tr>
+    <tr><td><b>Signature en plus</b> (score ≥ 0,30)</td><td>nouveau bénéficiaire, montant inhabituel, « urgent », hors heures</td><td>exige une signature de plus ; explication en français</td><td>un signataire supplémentaire relit « ce que vous signez »</td><td>tous les signataires (tableau de bord, e-mail / Telegram)</td></tr>
+    <tr><td><b>Mise en attente</b> (score ≥ 0,75)</td><td>rafale, adresse signalée, fonds souillés, sosie, nouveau signataire qui pousse un gros paiement</td><td>attente (180 s en démo, 24 h en réel) + signature en plus ; rapport d'incident pré-rempli</td><td>vérifier, annuler, ou lever à l'unanimité ; juger vraie / fausse alerte</td><td>tous les signataires + responsable désigné</td></tr>
+    <tr><td><b>Gel</b></td><td>clé compromise, signature sous contrainte</td><td>clé d'identité : révocation immédiate par la victime seule ; clé de contrainte : gel silencieux, alerte privée</td><td>remplacer la clé, dégeler à la majorité des clés saines</td><td>canal privé aux autres signataires (jamais on-chain)</td></tr>
+  </table>
+  <p class="src">Codes et seuils : ia-1/score/regles.py · délais : config du contrat · démos : ia-1/integration/scenario_*.js</p>
+  <div class="foot"><span>Breaker · annexe</span><span>A2</span></div>
+</section>
+
+<section class="slide annex" id="a3">
+  <div class="eyebrow"><b>Annexe A3 · Sécurité du contrat</b> chaque phrase est vérifiable en une commande</div>
+  <h2>Pas encore audité par un tiers. Voici ce qu'on a fait à la place, et ce que ça vaut.</h2>
+  <div class="grid g4">
+    <div class="stat"><span class="v num">0</span><span class="l">détection haute ou moyenne (Slither 0.11, solc 0.8.24)</span></div>
+    <div class="stat"><span class="v num">50</span><span class="l">tests unitaires (<code>npx hardhat test</code>)</span></div>
+    <div class="stat"><span class="v num">6 926</span><span class="l">appels aléatoires, 300 séquences, 8 types d'acteurs</span></div>
+    <div class="stat"><span class="v ok num">0</span><span class="l">invariant violé sur les 6 promesses du contrat (I1–I6)</span></div>
+  </div>
+  <ul>
+    <li><b>L'architecture borne le risque</b> : aucune fonction, pas même la nôtre, ne transfère sans les signatures du client. Le pire bug possible est un faux ralentissement.</li>
+    <li><b>Code public</b>, licence MIT, commandes dans <code>shared/audit-contrat.md</code>.</li>
+    <li><b>Audit externe avant le premier client payant</b> ; surface d'environ 500 lignes, sans garde de fonds.</li>
+  </ul>
+  <div class="foot"><span>Breaker · annexe</span><span>A3</span></div>
+</section>
+
+<section class="slide annex" id="a4">
+  <div class="eyebrow"><b>Annexe A4 · Les chiffres et leurs sources</b> rien d'arbitraire</div>
+  <h2>Chaque nombre dit à l'oral a une source externe ou un calcul explicite.</h2>
+  <table>
+    <tr><th>Chiffre</th><th>Source ou calcul</th></tr>
+    <tr><td class="num">8 694 · 1 359 · 675 protocoles</td><td>API DeFiLlama <code>api.llama.fi/protocols</code>, lue le 11/10/2026 ; seuils TVL &gt; 0, &gt; 1 M$, &gt; 10 M$</td></tr>
+    <tr><td class="num">561 · 71 · 22 sur Avalanche</td><td>même API, champ <code>chainTvls.Avalanche</code></td></tr>
+    <tr><td class="num">≈ 220 DAO &gt; 1 M$</td><td>DeepDAO (T1 2026), via DAO Times / eco.com : à confirmer sur deepdao.io</td></tr>
+    <tr><td class="num">35,25 Md$ · 61 M comptes</td><td>Safe Foundation, rapport T1 2026 (23/04/2026)</td></tr>
+    <tr><td class="num">189 € · 669 € · 999 $</td><td>safe.global/pricing (Safe Pro, 8/10/2026) · fireblocks.com/pricing</td></tr>
+    <tr><td class="num">≈ 150 incidents · 1,3 M$ médiane</td><td>TRM Labs 2025 ; CertiK : &gt; 700 incidents, médiane 104 k$ (périmètre plus large)</td></tr>
+    <tr><td class="num">8,9 % – 18,5 %</td><td>conversion essai → payant SaaS B2B sans carte : ChartMogul (200 produits), First Page Sage (86 entreprises)</td></tr>
+    <tr><td class="num">95 % · 91 % · 5,1 %</td><td>jeu final préparé à l'aveugle par Timéo, 40 fraudes, 234 paiements légitimes (<code>shared/mesures.md</code>)</td></tr>
+    <tr><td class="num">0,002 $ · 1,2 $</td><td>gas mesuré sur Fuji (<code>shared/frais-gas.md</code>) · Bedrock Opus 4.8 à 5 $ / 25 $ par million de tokens</td></tr>
+  </table>
+  <div class="foot"><span>Breaker · annexe</span><span>A4</span></div>
+</section>
+
+</div>
+<div class="hint">← → slides · N notes</div>
+
+<script>
+(function(){
+  var deck=document.getElementById('deck'), slides=[].slice.call(document.querySelectorAll('.slide'));
+  function current(){var t=deck.scrollTop,best=0,d=1e9;slides.forEach(function(s,i){var x=Math.abs(s.offsetTop-t);if(x<d){d=x;best=i;}});return best;}
+  function go(i){i=Math.max(0,Math.min(slides.length-1,i));slides[i].scrollIntoView({block:'start'});try{history.replaceState(null,'','#'+slides[i].id);}catch(e){}}
+  document.addEventListener('keydown',function(e){
+    if(e.key==='ArrowRight'||e.key==='PageDown'||e.key===' '){e.preventDefault();go(current()+1);}
+    else if(e.key==='ArrowLeft'||e.key==='PageUp'){e.preventDefault();go(current()-1);}
+    else if(e.key==='Home'){go(0);} else if(e.key==='End'){go(slides.length-1);}
+    else if(e.key==='n'||e.key==='N'){document.body.classList.toggle('shownotes');}
+  });
+  if(location.hash){var s=document.getElementById(location.hash.slice(1));if(s)setTimeout(function(){s.scrollIntoView({block:'start'});},50);}
+  deck.focus();
+})();
+</script>

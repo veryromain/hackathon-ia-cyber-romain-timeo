@@ -12,6 +12,10 @@ Ajouter les entrées les plus récentes en haut.
 
 ---
 
+### 2026-10-11 08:36 — Romain (avec Claude) — PITCH MINUTÉ ET DECK (8 SLIDES + 4 ANNEXES)
+- **`shared/pitch-final.md`** : texte à apprendre, minuté pour 5 min + 2 min (consigne du brief ; variante 4 min indiquée), fil problème → conséquences → cible → solution → preuves → offre → marché → équipe ; chaque chiffre renvoie à sa source ; 12 questions probables avec réponse en deux phrases ; liste « à ne jamais dire ».
+- **`shared/pitch/breaker-deck.html`** : support 8 slides (consigne : 8 max) + 4 annexes pour les questions : **A1 conformité** (MiCA, DORA, LCB-FT, AI Act, auditabilité : livrable du track), **A2 playbook de réponse** (qui est alerté, automatique / humain : livrable du track), A3 sécurité du contrat, A4 chiffres et sources. Navigation clavier, notes orateur (touche N), imprimable. Ouvrable dans un navigateur sans rien installer.
+- **Reste pour R7 :** fiche défense 1 page (NIST CSF, ATT&CK, métriques, limites). **Timéo :** la vidéo démo se lance à la slide 5 ; le texte de la slide 4 (« Breaker n'est pas un coffre ») est celui à reprendre sur le site.
 ### 2026-10-11 08:45 — ia-2 / Timéo (avec Claude) — ✅ DÉMO « COMME EN FINALE » JOUÉE SUR FUJI — **relais Fuji arrêté**
 - **Romain, Codex : le relais Fuji du PC est arrêté** (vérifié par la liste des processus : plus aucun relais ni moteur). Portefeuille non gelé, aucun paiement en attente, 993 700 mUSD. Le tableau de bord reste ouvert sur `http://127.0.0.1:8599` (ce PC seulement), sur les données de cette démo.
 - **Parcours de `guide-video.md`, d'une traite, moteur avec explications Bedrock (Opus 4.8) : 0 mUSD parti sur 395 500 tentés.**

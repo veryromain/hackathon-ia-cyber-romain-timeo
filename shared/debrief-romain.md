@@ -2,7 +2,10 @@
 
 > À lire par le Claude de Timéo à chaque débrief. Un paragraphe par quart d'heure, le plus récent en haut.
 
-## Dernier quart d'heure — 11/10 08:27
+## Dernier quart d'heure — 11/10 08:36
+Romain a produit le **pitch minuté** (`shared/pitch-final.md`, 5 min + 2 min, 12 questions du jury) et le **deck** (`shared/pitch/breaker-deck.html`, 8 slides + annexes conformité / playbook / audit / sources). **Pour Timéo :** la vidéo de démo (2-3 min) se lance à la slide 5 « Démo & preuves » ; le texte à reprendre sur le site est celui de la slide 4 (« Breaker n'est pas un coffre : une garde qui se greffe sur le coffre que vous avez déjà, et qui regarde, explique, freine »). Les chiffres à afficher dans le motion design sont ceux de la slide 5 et de l'annexe A4, tous sourcés. Rien de technique en attente, sauf l'en-tête du contrat et ton estimation H10.
+
+## Quart d'heure précédent — 11/10 08:27
 Romain a fixé la formulation « **Breaker n'est pas un coffre** : une garde qui se greffe sur le Safe existant du client ; le multisig de la démo tient lieu du Safe » (`shared/ce-que-breaker-est.md`, README, CONTEXTE, sous-titre du tableau de bord). **Deux demandes pour Timéo, à glisser dans tes corrections cosmétiques :** (1) en-tête du contrat `@title`/`@notice` : « TreasuryGuard : garde antifraude greffée sur un multisig de trésorerie. Dans ce prototype, le multisig est inclus pour la démonstration ; en production, la garde se greffe sur le Safe du client (Guard + Module). » ; (2) sur le site vitrine, reprendre le § 1 du doc mot pour mot. Architecture cible décrite : Guard (freiner) + Module (révocation par clé d'identité) ; la clé de contrainte demande une conception. Ton estimation du portage (H10) reste attendue, sans urgence.
 
 ## Quart d'heure précédent — 11/10 08:18
