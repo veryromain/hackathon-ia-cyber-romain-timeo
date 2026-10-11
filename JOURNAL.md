@@ -12,6 +12,51 @@ Ajouter les entrées les plus récentes en haut.
 
 ---
 
+### 2026-10-11 07:56 — ia-2 / Timéo (avec Claude) — AGENT AUTONOME : SIMULE, RAISONNE, FREINE OU COSIGNE CHAQUE PAIEMENT (TESTÉ EN LOCAL, MODÈLE NON VÉRIFIÉ)
+- **Demande de Timéo (07:45) : des agents autonomes qui, pour chaque transaction, simulent et raisonnent à partir du Web2 et du Web3, puis freinent (un mode) ou cosignent et peuvent refuser (l'autre mode).** Codé sans toucher au contrat ni au moteur, en suivant la décision du 11/10 01:25 (`shared/decisions.md`) : deux modes, Protection et Cosignataire, aucun veto définitif.
+- **Nouveau : `ia-1/agent/agent.py`.** Il se lance **à la place** de `score.moteur` (il le contient) et traite seul chaque `payment_proposed` :
+  1. **Web3 :** il simule le paiement sur le nœud (`eth_call` du transfert émis par le portefeuille : réussirait-il, quelle part de la trésorerie part, que reste-t-il) et lit l'historique on-chain du destinataire.
+  2. **Règles :** l'événement passe dans le moteur, toutes règles inchangées.
+  3. **Web2 (`--web`) :** il cherche le destinataire sur le Web (Apify) et lit les pages avec l'oracle.
+  4. **Raisonnement :** le dossier complet part à Bedrock, qui rend un avis (laisser, freiner, refuser) avec une explication.
+  5. **Action :** `--mode protection` → alerte `step_up` ou `hold`. `--mode cosignataire --signataire 0x…` → il écrit sa signature dans `actions.jsonl` (le relais signe avec cette clé) si rien n'est anormal ; sinon il ne signe pas et son refus met le paiement en attente. Les humains passent outre par la procédure renforcée du portefeuille (signature en plus, puis délai).
+- **Garde-fous de l'agent :** le modèle ne peut que durcir l'avis calculé sans lui, jamais l'adoucir ; le texte du Web est traité comme une donnée ; l'agent n'a aucun pouvoir sur les fonds (pas d'annulation, pas de gel, pas d'exécution) ; chaque décision est écrite avec son dossier complet dans `agent-decisions.jsonl` ; au démarrage en direct il ne re-décide pas sur les paiements de plus de 10 minutes.
+- **Essai de bout en bout sur la chaîne locale, mode cosignataire, un seul humain qui propose** (`npm run agent:local`, nouveau `ia-2/scripts/agent-scenario.js`) :
+  - facture de 3 200 mUSD à un fournisseur du carnet : **l'agent cosigne en 2 s**, 2/2 signatures, paiement exécuté ;
+  - même fournisseur, 600 000 mUSD (60 % de la trésorerie) : **l'agent refuse**, mise en attente (`SIM_TREASURY_SHARE`), 1/3 signatures ;
+  - destinataire jamais vu, 4 800 mUSD : **l'agent ne signe pas**, signature en plus exigée, 1/3 signatures.
+  - Sorti : 3 200 mUSD, la facture légitime.
+- **⚠️ Ce qui n'est PAS vérifié :**
+  1. **Le raisonnement par le modèle n'a jamais tourné pour de vrai.** Bedrock répond `ExpiredTokenException` sur ce PC. Tous les essais ci-dessus ont été décidés par les règles et la simulation seules (l'agent l'écrit : « règles seules »). Le chemin du modèle n'est couvert que par un test avec un faux modèle.
+  2. **La phase Web a tourné une fois pour de vrai, sans résultat utile** (adresse sanctionnée `0x098B…`, 42 s, 3 pages collectées) : sans Bedrock, l'oracle retombe sur ses mots-clés et a rejeté les 8 citations de la fiche de l'OFAC. L'agent est donc resté sur « freiner ». Avec Bedrock, la même lecture avait donné 8 adresses à `hold` cette nuit.
+  3. **Pas joué sur Fuji** : Codex tient le relais Fuji (répétition finale) et je n'en ai pas lancé d'autre.
+  4. Les seuils de la simulation (25 % de la trésorerie → freiner, 50 % → refuser) sont posés à la main.
+- **Limite de conception, à dire au jury :** le « refus » du cosignataire n'est pas un veto inscrit dans le contrat. Le portefeuille reste un M-sur-N : si les humains réunissent seuls les signatures exigées et attendent le délai, le paiement part. C'est exactement la dérogation voulue par la décision de 01:25, mais cela veut dire qu'en mode cosignataire l'agent bloque par mise en attente, pas par une signature obligatoire.
+- **Romain :** l'agent remplace le moteur dans la commande de lancement. Il n'embarque ni ton modèle d'anomalie (`--modele`), ni `--expliquer`, ni `--notifier` : à brancher si tu veux le montrer avec. Le tableau de bord affichera ses codes (`SIM_TREASURY_SHARE`, `WEB_ACCUSATION`, `AGENT_JUDGMENT`…) sans libellé particulier.
+- **78 tests passent**, dont 9 nouveaux (`ia-1/tests/test_agent.py`).
+
+### 2026-10-11 07:51 +02:00 — Timéo (avec Codex) — IA GÉNÉRÉE, SESSION AWS EXPIRÉE PENDANT APIFY
+- **Fait :** Bedrock validé, huit explications IA régénérées visibles dans dashboard, rapport-incident-ia.md généré et vérifié. Même score et règles ; aucune mesure de latence live déduite de cette régénération.
+- **Nouvelle limite :** les identifiants AWS temporaires ont expiré pendant la collecte Apify (73s). Nouveau test direct confirme ExpiredTokenException. Recherche 5 pages, 4 collectées, aucun nouveau flag publié. Les pages sont en cache local ignoré Git ; prochaine reprise peut les lire sans payer/rejouer Apify.
+- **Zéro-secret :** vérification refaite avec les identifiants actuels, aucun secret dans les fichiers suivis ni l'historique. .env jamais affiché.
+- **Coordination :** moteur 21232 (--expliquer, secours déterministe si panne), relais unique 54372, dashboard 50240 ; pas de second relais. Renouveler la session AWS puis redémarrer le moteur pour recharger ses identifiants. Modèle sklearn toujours bloqué par Windows.
+
+### 2026-10-11 07:49 +02:00 — Timéo (avec Codex) — BEDROCK OK, MOTEUR IA ET NOUVELLE COLLECTE WEB
+- **Résolu :** le .env contenait des commandes CMD set AWS_… ; mêmes identifiants temporaires validés par un appel Bedrock réel OK, puis syntaxe .env corrigée. Aucun secret affiché. Région alignée sur AWS_DEFAULT_REGION.
+- **Coordination :** ancien moteur 22236 arrêté après vérification du PID ; moteur --expliquer 21232 lancé, relais 54372 et dashboard 50240 conservés. Ne pas lancer de second relais. Les alertes historiques sont régénérées avec explications IA ; tentatives de re-signalement de paiements déjà annulés refusées sans effet.
+- **En cours :** collecte Apify réelle puis Bedrock, rapport IA séparé. Modèle anomalie reste bloqué par Windows. Aucun contrat/poids modifié.
+
+### 2026-10-11 07:44 +02:00 — Timéo (avec Codex) — BEDROCK RENOUVELÉ MAIS FORMAT REFUSÉ
+- **Vérifié :** après confirmation utilisateur, .env du clone bien enregistré à 07:42:36. Bedrock répond maintenant Invalid API Key format, pas Expired. Aucun secret affiché. Pas de préfixe Bearer/export/variable ni espaces parasites ; aucune correction de copie évidente.
+- **Reste :** recopier la valeur d'une clé API générée dans Amazon Bedrock > API keys dans AWS_BEARER_TOKEN_BEDROCK (documentation AWS officielle vérifiée). Puis appel réel avant collecte IA. Démo Fuji et relais existants préservés ; aucun second relais lancé.
+
+### 2026-10-11 07:40 +02:00 — Timéo (avec Codex) — RÉPÉTITION FUJI TERMINÉE, RELAIS ENCORE ACTIF
+- **Coordination :** relais 54372, moteur 22236, dashboard 50240 maintenus actifs sur ce PC pour inspection ; **NE PAS LANCER UN SECOND RELAIS FUJI**. Dashboard http://localhost:8599, dossier shared/repetition-finale-20261011. Nouveau manifeste actif ia-2/deployments/fuji.json, portefeuille 0xcbd2E98884F187DD70EFFC5bec7285A0C1e9ef24 ; ancien manifeste archivé dans le dossier de répétition.
+- **Vérifié :** paiement normal 3150 exécuté ; fraude 280500 empêchée puis annulée, paiement OFAC 25000 maintenu en attente après 3 signatures puis annulé, contrainte 90000 refusée deux fois + alerte privée + récupération humaine. Traçage : mule TAINTED_FUNDS, dusting/service exclus de ce signal mais StepUp via autres règles. 9 propositions, seule 0 exécutée, huit annulées, solde 996850, non gelé, zéro paiement en attente ; 68 événements, zéro doublon.
+- **Preuves :** rapport-incident.md, etat-final.json, guide-video.md et journaux dans le dossier isolé ; conversation créée. Le total UI 407300 inclut 7000 de demandes légitimes du traçage : pas une mesure de fraude évitée.
+- **Limites concrètes :** modèle anomalie bloqué par Windows (_liblinear) ; Bedrock encore Expired au retest après annonce de renouvellement utilisateur. Emplacement du .env demandé. Sources Web reprises de la collecte OFAC précédente, pas de nouvelle lecture IA. Précharger le registre avant tournage : les 8 inscriptions séquentielles ont retardé certaines alertes (max 35s, examen 30s). Aucun poids modifié.
+- **Reste :** Bedrock à rétablir, modèle à faire fonctionner, capturer vidéo finale ; cosignataire et retrait du garde restent conception.
+
 ### 2026-10-11 07:38 — ia-2 / Timéo (avec Claude) — ✅ ZÉRO SECRET VÉRIFIÉ SUR LE PC DE TIMÉO — ROMAIN : À LANCER SUR LE MAC
 - **Vérification « zéro secret » faite sur le PC de Timéo (livrable L8) : aucun secret dans les fichiers suivis ni dans l'historique complet, toutes branches.** Cherchés par leur vraie valeur, sans jamais l'afficher : la clé Bedrock, le jeton Apify, la phrase secrète Fuji et les clés privées des 20 premiers comptes qui en dérivent. Cherchés aussi par morceaux de 20 caractères (au cas où une transcription les aurait coupés) et par motifs génériques (clés AWS, jetons GitHub, Telegram, Slack, blocs de clé privée, `SMTP_PASSWORD=…`).
 - **Nouveau : `cd ia-2 && npm run zero-secret`** (`ia-2/scripts/zero-secret.js`). Sort avec le code 1 s'il trouve quelque chose. Essayé sur un dépôt d'essai avec un faux jeton ajouté puis supprimé : il le retrouve dans l'historique.
