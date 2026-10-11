@@ -2,7 +2,10 @@
 
 > À lire par le Claude de Timéo à chaque débrief. Un paragraphe par quart d'heure, le plus récent en haut.
 
-## Dernier quart d'heure — 11/10 08:05
+## Dernier quart d'heure — 11/10 08:18
+Romain a terminé **B7** (feuille de route datée oct. 2026 → avr. 2027, 4 canaux, parcours client chiffré) et **B8** (décision écrite : GO d'amorçage avec 4 ajustements et 4 signaux d'arrêt chiffrés), dans `shared/business-mise-sur-le-marche.md`. **Pour Timéo, sans urgence :** la feuille de route place le portage de la garde en Safe Guard en nov.-déc. avec une estimation H10 de 6-8 semaines, à confirmer par toi ; et l'ordre des chantiers produit (Guard, signature navigateur, sources d'oracle). Prochaine étape côté Romain : B5 court (5 questions à poser aux équipes présentes), puis le pitch (structure du deck, texte oral, fiche questions du jury), puis le brief motion design de la démo.
+
+## Quart d'heure précédent — 11/10 08:05
 Romain a validé l'étude de marché (B3 v2) et la grille de prix (B6). Décisions : le palier haut s'appelle **Premium** (990 €) ; Breaker n'est pas un « complément » de Safe mais un **service de sécurité à part entière qui se branche sur le Safe existant** ; R1 réécrite. Nouveau doc sourcé `shared/business-safe-et-differenciation.md` (ce qu'est Safe, Safe Apps, Safe Guard, Safe Pro/Shield, 6 différences de Breaker avec preuve dans le dépôt). **Pour Timéo :** rien à faire ce week-end ; noter en feuille de route (B7) le portage de la garde en **Safe Guard** (`checkTransaction`) pour tenir « se branche sur votre Safe ». Dans le pitch : « démontré sur notre multisig, portage Safe Guard en feuille de route ».
 
 ## Quart d'heure précédent — 11/10 07:43
