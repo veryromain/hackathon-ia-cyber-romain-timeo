@@ -4,7 +4,7 @@
 > Légende : ✅ fait · 🔄 en cours · ⬜ à faire · ✂️ coupé (manque de temps)
 > Détail du projet : [`PLAN.md`](PLAN.md) · Historique : [`JOURNAL.md`](JOURNAL.md) · Brief : [`CONTEXTE.md`](CONTEXTE.md)
 
-**Dernière mise à jour :** 2026-10-11 10:25, par Claude (Romain) — cible élargie au seuil 1 M$ (diapos 3 et 7, business, pitch) ; diapo 4 : bandeau « clé d'identité froide »
+**Dernière mise à jour :** 2026-10-11 10:40, par Claude (Romain) — **L1 livré** : motion design v2 en mp4 avec voix off (`shared/video/motion-v2/motion-v2.mp4`, 2 min 55), à regarder avec le son
 **Rendu (gel définitif) :** dim. 11/10 **12:00** · **Checkpoint :** sam. **18:30** · **Pitch :** dim. 13:00
 
 ---
@@ -154,7 +154,7 @@ Un **garde antifraude pour les organisations qui gardent des millions dans un po
 
 | # | Livrable obligatoire | Qui | Outil | Statut |
 |---|---|---|---|---|
-| L1 | **Vidéo démo** (2–3 min) | Timéo | Enregistrement d'écran | 🔄 ; 09:52 Romain : **v1 du motion design** `shared/video/motion-v1.html` (7 plans de Timéo, 2 min 30, images et terminaux réels, sous-titres = voix off `shared/video/voix-off.md`) ; mp4 = enregistrement d'écran ⌘⇧5 |
+| L1 | **Vidéo démo** (2–3 min) | Timéo → Romain | Motion design rendu image par image + voix off Piper | ✅ 10:40 **v2 : `shared/video/motion-v2/motion-v2.mp4`** (1080p, 2 min 55, voix off, 10 plans, rythme « typographie cinétique », charte du site ; README et texte dans le dossier) ; 09:52 Romain : **v1 du motion design** `shared/video/motion-v1.html` (7 plans de Timéo, 2 min 30, images et terminaux réels, sous-titres = voix off `shared/video/voix-off.md`) ; mp4 = enregistrement d'écran ⌘⇧5 |
 | L2 | **README final** : problème, architecture, installation, limites connues | Romain | Markdown | ⬜ |
 | L3 | **Pitch deck** (8 slides max) : problème, cible, solution, démo, business model, équipe | Romain | Slides | ⬜ |
 | L4 | **Fiche défense** (1 page) : scénario, NIST CSF, OWASP/ATLAS, métriques, limites | Romain | Markdown/PDF | ⬜ |

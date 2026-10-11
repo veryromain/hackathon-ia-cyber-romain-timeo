@@ -322,10 +322,10 @@ html,body{margin:0;height:100%;background:#000;overflow:hidden}
   <div class="el h" id="o-t" style="left:120px;top:140px;width:1200px">Le garde lit aussi <span class="lime">le Web</span>.</div>
   <div class="el term" id="o-term" style="left:120px;top:280px"></div>
   <div class="el k2 amber" id="o-sanc" style="left:1180px;top:290px;font-size:110px">SANCTIONS</div>
-  <div class="el chip step big" id="o-c1" style="left:1180px;top:440px">inscrite au registre · on-chain</div>
-  <div class="el chip hold big" id="o-c2" style="left:1180px;top:540px">3 / 3 signatures · attente maintenue</div>
-  <div class="el chip big" id="o-c3" style="left:1180px;top:640px">25 000 mUSD · annulé</div>
-  <div class="el fiche" id="o-fiche" style="left:1180px;top:120px;width:600px"><img src="__IMG13__" alt=""></div>
+  <div class="el chip step" id="o-c1" style="left:1180px;top:440px">inscrite au registre · on-chain</div>
+  <div class="el chip hold" id="o-c2" style="left:1180px;top:540px">3 / 3 signatures · attente maintenue</div>
+  <div class="el chip" id="o-c3" style="left:1180px;top:640px">25 000 mUSD · annulé</div>
+  <div class="el fiche" id="o-fiche" style="left:1180px;top:110px;width:520px"><img src="__IMG13__" alt=""></div>
 </section>
 
 <!-- 7. Cosignataire -->
@@ -340,10 +340,10 @@ html,body{margin:0;height:100%;background:#000;overflow:hidden}
 
 <!-- 8. La cadence de Drift -->
 <section class="scene" id="s-drift">
-  <div class="el h" id="d-t" style="left:120px;top:140px;width:1600px">La cadence de Drift, rejouée : <span class="amber">31 retraits en 12 minutes</span>.</div>
+  <div class="el h" id="d-t" style="left:120px;top:140px;width:1150px">La cadence de Drift, rejouée : <span class="amber">31 retraits en 12 minutes</span>.</div>
   <div class="el bars" id="d-bars" style="left:120px;top:330px"></div>
   <div class="el mono" id="d-tk" style="left:120px;top:610px;width:1520px;display:flex;justify-content:space-between"><span>01:26:29</span><span>285 000 mUSD tentés · 2 clés volées sur 5</span><span>01:38:39</span></div>
-  <div class="el k2 amber" id="d-count" style="left:1300px;top:120px;text-align:right;width:500px">0</div>
+  <div class="el k2 amber" id="d-count" style="left:1300px;top:150px;text-align:right;width:500px">0</div>
   <div class="el k2 lime" id="d-zero" style="left:120px;top:700px">0 exécuté.</div>
   <div class="el h" id="d-zl" style="left:120px;top:860px;width:1500px">0 mUSD sorti · chaque retrait mis en attente, 2 signatures sur 3.</div>
 </section>
@@ -457,7 +457,7 @@ var DRAW = {
   pop($('a-h1'), rel, b + .5); pop($('a-h2'), rel, b + .9); pop($('a-h3'), rel, b + 1.3);
   ring(880, 400, rel - (b + .5), '#ffc481'); ring(880, 590, rel - (b + .9), '#ffc481'); ring(880, 780, rel - (b + 1.3), '#ffc481');
   ticker(rel, rel >= b + .5 && rel < e, 'MISE EN ATTENTE', false);
-  slide($('a-fiche'), rel, b + 2.8, d, 200); rise($('a-fl'), rel, b + 3.6, d, 20);
+  slide($('a-fiche'), rel, b + 2.8, c, 200); rise($('a-fl'), rel, b + 3.6, c, 20);
   slam($('a-r1'), rel, c + .1, d); slam($('a-r2'), rel, c + 1.3, d); slam($('a-r3'), rel, c + 2.7, d); slam($('a-r4'), rel, c + 4.2, d);
   slam($('a-sig'), rel, d + .2, e); rise($('a-sigl'), rel, d + 1.5, e); pop($('a-gel'), rel, d + 4.4, e); pop($('a-ann'), rel, d + 5.3, e);
   ring(300, 760, rel - (d + 4.4), '#ffc481');
@@ -468,7 +468,7 @@ var DRAW = {
   slam($('o-sanc'), rel, b + .2, b + 3.2); ring(1500, 340, rel - (b + .2), '#ffc481');
   pop($('o-c1'), rel, b + 1.9, b + 3.2);
   slide($('o-fiche'), rel, b + 3.3, null, 200); pop($('o-c2'), rel, b + 4.6); pop($('o-c3'), rel, b + 6.4);
-  $('o-c2').style.left = '1180px'; $('o-c2').style.top = '870px'; $('o-c3').style.left = '1180px'; $('o-c3').style.top = '960px'; },
+  $('o-c2').style.left = '1180px'; $('o-c2').style.top = '775px'; $('o-c3').style.left = '1180px'; $('o-c3').style.top = '865px'; },
 
  cosign: function(rel, S){ var a = S.seg[0], b = S.seg[1];
   rise($('c-t'), rel, a + .1); rise($('c-s'), rel, a + 2.0, null, 20);
