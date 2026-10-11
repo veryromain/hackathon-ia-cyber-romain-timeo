@@ -12,6 +12,12 @@ Ajouter les entrées les plus récentes en haut.
 
 ---
 
+### 2026-10-11 08:05 — Romain (avec Claude) — ✅ ZÉRO SECRET VÉRIFIÉ SUR LE MAC DE ROMAIN
+- **`npm run zero-secret` lancé sur le Mac : rien trouvé** dans les 262 fichiers suivis ni dans les 163 commits (toutes branches). Phrase Fuji cherchée en entier et par morceaux, clés dérivées, motifs génériques : zéro.
+- **Faux positif corrigé dans `ia-2/scripts/zero-secret.js`** : le script prenait `AWS_PROFILE=hackathon` (nom de profil AWS local, pas une clé) pour un secret parce que la valeur fait plus de 8 caractères, et le mot « hackathon » est partout dans le repo. Ajout d'une liste de noms de variables jamais secrets (`AWS_PROFILE`, `AWS_REGION`, `NODE_ENV`, `HARDHAT_NETWORK`…). Le code de sortie était 1, il est maintenant 0.
+- **Couverture côté Romain :** le `.env` racine du Mac ne contient que `AWS_PROFILE`, `AWS_REGION`, `BEDROCK_MODEL_ID` (rien de secret, la clé Bedrock passe par le profil AWS). `ia-2/.env` : `FUJI_RPC_URL` et `FUJI_MNEMONIC`, ce dernier vérifié. Telegram et SMTP ne sont pas dans un `.env` du repo, donc couverts uniquement par les motifs génériques, comme Timéo l'avait noté.
+- **Reste pour L8 :** relancer une dernière fois juste avant midi, et décider à deux de l'accès du jury (invitation en lecture ou dépôt public).
+
 ### 2026-10-11 07:43 — Romain (avec Claude) — B3 v2 ET B6 : TOUT SOURCÉ OU CALCULÉ
 - **Règle de Romain : aucun chiffre arbitraire.** `shared/business-marche.md` réécrit : données D1-D11 datées et sourcées (API DeFiLlama lue le 11/10 : 8 694 protocoles, 675 à > 10 M$, 561 sur Avalanche dont 22 à > 10 M$ ; DeepDAO ≈ 220 DAO ≥ 1 M$ ; Safe Pro 189 / 669 € ; CertiK / TRM), hypothèses nommées H1-H4, TAM 675-895 (borne basse), SAM Avalanche 32-121, **SOM 3 à 6 clients payants en année 1** par un entonnoir explicite (62 contactables → 50 % en observation → 8,9-18,5 % de conversion sourcée). Fonds et fondations exclus faute de source.
 - **B6 `shared/business-prix.md`** : prix ancré sur Safe Pro (règle : 70-80 % du palier Safe), sur la perte annuelle évitée (9,5 % × 1,3 M$ × 91 % ≈ 112 k$, ou 22 k$ à périmètre restreint) et sur le coût marginal (≈ 1,2 $/client/mois en IA + gas). **Offre : Observation 0 € (30 j) / Essentiel 149 € / Standard 449 € / Avancé 990 € / Entreprise sur devis.** Point mort : 17 clients Standard (H8 : 7 300 €/mois de coûts fixes).
