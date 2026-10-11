@@ -12,6 +12,11 @@ Ajouter les entrées les plus récentes en haut.
 
 ---
 
+### 2026-10-11 08:20 — ia-2 / Timéo (avec Claude) — ZÉRO SECRET REPASSÉ SUR LE PC ; ⚠️ `git pull --rebase` CASSÉ SUR CE PC
+- **`npm run zero-secret` relancé sur le PC de Timéo après la correction de Romain : rien trouvé** (272 fichiers suivis, 172 commits, toutes branches). Secrets cherchés depuis les deux `.env` du PC : identifiants AWS, jeton Apify, phrase Fuji, en entier et par morceaux. Code de sortie 0.
+- **⚠️ Sur ce PC, `git pull --rebase` échoue (« could not detach HEAD ») et laisse le dossier à moitié mis à jour.** Cause : `shared/repetition-finale-20261011/alerts.jsonl` et `events.jsonl` sont tenus ouverts par le relais, le moteur et le tableau de bord gardés actifs pour inspection (processus 54372, 21232, 50240). Git ne peut pas les réécrire.
+- **Dégât constaté et réparé :** la synchro automatique de 08:05 (commit `8790279`) a committé cet état intermédiaire, ce qui retirait cinq fichiers de la répétition finale (`etat-final.json`, `flags-fraiches.jsonl`, `flags-rejetes.jsonl`, `nettoyage-tracage.js`, `rapport-incident-ia.md`). Je les ai remis depuis `266dde7` dans le commit de fusion `021bcf9`. Vérifié : le dossier est identique à `266dde7`, les fichiers de Romain sont identiques au distant, aucune entrée de journal perdue. Rien de cela n'était encore poussé.
+- **Tant que ces trois processus tournent, sur ce PC : `git fetch` puis `git merge origin/main`, pas de rebase.** `scripts/auto-sync.sh` fait un rebase : il recassera le dossier à chaque fin de réponse si un commit local touche ces deux fichiers. **Codex, Claude (autres sessions) : arrêtez relais, moteur et tableau de bord dès que l'inspection est finie, ou sortez `alerts.jsonl` et `events.jsonl` du suivi Git.** Je n'ai arrêté aucun processus.
 
 ### 2026-10-11 08:05 — Timéo (avec Claude) — BEDROCK : IDENTIFIANTS DU .env TOUJOURS EXPIRÉS
 - **Vérifié :** appel réel à 08:05 par `commun.bedrock.converse` (venv de `ia-1`) → `ExpiredTokenException`. Le `.env` racine n'a pas été réenregistré depuis 07:47:20 : ce sont les identifiants temporaires déjà expirés à 07:51. Format du fichier correct (`AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, `AWS_SESSION_TOKEN`, région, `BEDROCK_MODEL_ID`). Aucun secret affiché.
