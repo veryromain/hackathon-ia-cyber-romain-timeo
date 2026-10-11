@@ -12,8 +12,9 @@ Ajouter les entrées les plus récentes en haut.
 
 ---
 
+
 ### 2026-10-11 07:18 — ia-2 / Timéo (avec Claude) — REJEU DE DRIFT SUR FUJI : 0 mUSD SORTI SUR 285 000 — RELAIS ARRÊTÉ — CORRECTION DE MON ENTRÉE DE 00:52
-- **Relais et moteur arrêtés à 01:50, vérifié cette fois avec une liste fiable des processus. La voie est libre, Romain.**
+- **Relais et moteur arrêtés à 07:17 seulement, vérifié cette fois avec une liste fiable des processus. La voie est libre, Romain.** Le scénario s'est terminé à 01:42 et les 31 annulations ont suivi, mais ma session s'est interrompue avant l'arrêt : le relais et le moteur sont restés lancés de 01:25 à 07:17 (PC probablement en veille une partie de la nuit). Si tu as lancé un relais Fuji entre-temps, il a tourné en double avec le mien.
 - **⚠️ Correction de mon entrée de 00:52 : le relais Fuji n'était PAS arrêté.** Ma commande d'arrêt ne trouvait aucun processus et ma vérification utilisait la même commande, donc elle affichait « 0 » à tort. Le relais de 00:46 a tourné jusqu'à 01:29, en même temps que celui de 01:25. Effets constatés : des événements en double dans `shared/events.jsonl` (28 sur 90 à 01:28), chaque alerte du moteur émise deux fois, et 15 alertes refusées par le portefeuille parce que l'autre relais venait d'inscrire la même. Aucun effet sur les fonds ni sur les niveaux de risque. J'arrête maintenant les processus par PowerShell (`Get-CimInstance Win32_Process`), plus par `wmic`.
 - **Rejeu de Drift sur Fuji, 2 clés volées (le seuil), 01:26:29 → 01:38:36 : 31 retraits proposés en 727 s, 285 000 mUSD tentés, 0 mUSD sorti.** Trésorerie intacte à 1 000 000 mUSD.
   - Niveaux inscrits sur la chaîne pour les paiements 5 à 35 : **30 en `hold`, 1 en `step_up`** (le tout premier, à 0,59 : rien ne le distingue encore d'un nouveau fournisseur).
@@ -31,6 +32,12 @@ Ajouter les entrées les plus récentes en haut.
 - **Décision :** Observation retiré des modes produit ; conserver Protection et Cosignataire. Remplace le choix antérieur de trois modes. Dérogation humaine renforcée après délai et retrait/affaiblissement du garde par la procédure d'un paiement maintenus.
 - **Coordination / fait :** modification documentaire annoncée dans shared/journal.md du dossier Secure Horizons ; décisions et note evolution-breaker.md mises à jour. Aucun code ni fichier du rejeu Fuji touché.
 - **Reste :** délais, quorums et mise en œuvre.
+
+### 2026-10-11 01:26 — Romain (avec Claude)
+- **Fait : `shared/pitch-argumentaire-audit.md`** : les 30 secondes à dire sur la sécurité du contrat, chaque phrase vérifiable en une commande, les objections du jury et les réponses, ce qu'il ne faut jamais dire (« audité » sans « par nous-mêmes », « aucune vulnérabilité », un chiffre d'audit sans devis). Une seule slide, dans « limites et suite ».
+- **Fait (B3) : `shared/business-marche.md`**, taille de marché avec hypothèses visibles : TAM ≈ 1 200 à 2 100 organisations (EVM), SAM Avalanche ≈ 100 à 300, SOM 10 à 25 clients la première année. **Conclusion : Avalanche seul est un marché d'amorçage** (≤ 1,8 M€/an au prix de 500 €/mois) ; la portabilité EVM et le prix par palier de trésorerie sont les deux leviers. 4 vérifications primaires listées pour demain matin (DeepDAO, Safe sur Avalanche, annuaire Fondation, question au mentor Team1).
+- **Suite :** B5 (script des entretiens), B6 (prix).
+
 
 ### 2026-10-11 01:25 — ia-2 / Timéo (avec Claude) — ⚠️ RELAIS FUJI LANCÉ : REJEU DE DRIFT (31 RETRAITS EN 12 MIN) — ET UNE FAIBLESSE TROUVÉE
 - **⚠️ Je lance un relais et un moteur sur Fuji maintenant, pour environ 20 minutes (décision de Timéo : rejouer Drift). Romain : n'en lance pas d'autre avant mon entrée suivante.** Le portefeuille sera gelé pendant le scénario puis dégelé à la fin.
