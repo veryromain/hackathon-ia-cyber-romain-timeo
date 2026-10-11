@@ -12,6 +12,20 @@ Ajouter les entrées les plus récentes en haut.
 
 ---
 
+### 2026-10-11 09:26 — ia-2 / Timéo (avec Claude) — QUATRE PLANS VIDÉO TOURNÉS — SITE : COSIGNATAIRE EN OPTION DÈS STANDARD
+- **Quatre plans filmés par Timéo, rangés dans `C:\Users\bvtim\breaker-video\plans\` (hors du dépôt, sur son PC) :**
+  - `plan1-site.mp4`, 30 s : le site, défilement et choix annuel / mensuel ;
+  - `plan2-agent-cosignataire.mp4`, 2 min 21 : `npm run agent:local` à droite, journal de l'agent à gauche ;
+  - `plan3-agent-web.mp4`, 1 min 40 : l'agent lit le Web et passe de « freiner » à « refuser » ;
+  - `plan4-tableau-de-bord.mp4`, 19 s : les fiches des paiements 10 à 12 de la démo Fuji de 08:25.
+  Je n'ai pas pu les visionner ; j'ai vérifié leur durée, et relu les journaux de l'agent pour les plans 2 et 3.
+- **Ce que l'agent a réellement décidé pendant le tournage, avec le modèle (Opus 4.8) :**
+  - plan 2 : 3 200 mUSD cosignés en 8 s ; 600 000 mUSD refusés en 6 s (« 60 % de la trésorerie et 188 fois l'habitude ») ; 4 800 mUSD vers un inconnu non signés en 6 s ;
+  - plan 3 : « freiner » à 09:19:23, puis 109 s de recherche et de lecture (fiche de l'OFAC, OpenSanctions, page des actions du Trésor), puis « refuser » à 09:21:17.
+- **Deux réserves pour le montage :** le plan 3 commence environ une minute après la commande, la première décision est déjà à l'écran quand la vidéo démarre ; le plan 2 affiche « paiement bloqué tant qu'un humain de plus ne signe pas », un mot que Romain a retiré du vocabulaire à 09:15 (à dire « mis en attente » en voix).
+- **Processus du tournage arrêtés** (chaîne locale, relais local, agent), vérifié par la liste des processus. Il ne reste que le tableau de bord de 08:24.
+- **Romain, tes deux demandes de 09:15 pour le site :** (1) fait, le mode Cosignataire est « en option dès l'offre Standard » dans le bloc des deux modes et dans la carte Standard ; la carte Premium devient l'offre d'échelle (réglages sur mesure, support prioritaire, engagement de disponibilité), comme dans `business-prix.md` § 2. (2) Vocabulaire : le site disait déjà « signature en plus » et « mise en attente » ; je n'ai pas relu chaque phrase contre ta liste.
+
 ### 2026-10-11 09:15 — Romain (avec Claude) — RETOURS DE ROMAIN SUR LE DECK : TROIS DÉCISIONS
 - **Vocabulaire fixé, le même partout (deck, site, docs) :** *signature en plus* (une personne de plus), *mise en attente* (du temps : rien ne part même avec toutes les signatures ; l'unanimité lève), *Cosignataire* (un agent occupe un siège de signataire et refuse ; dérogation humaine après délai ; le seul mode qui bloque, activé par le client). On ne dit plus « arrêtées » ni « bloquées » pour des fraudes mises en attente ; plus de « Guard », « Module », « H4 » sur les slides (dire : greffon sur votre Safe ; part des équipes qui acceptent l'essai gratuit).
 - **Décision produit : le mode Cosignataire est en option dès Standard (449 €)**, pas réservé au Premium. Raison de Romain : aucune source ne compte les organisations > 10 M$ de trésorerie ; réserver l'innovation à ce segment la rendrait invisible. Premium (990 €) devient l'offre d'échelle (> 5 multisigs, sur mesure, support, disponibilité garantie). `shared/business-prix.md` § 0 et § 2 mis à jour.
