@@ -12,6 +12,11 @@ Ajouter les entrées les plus récentes en haut.
 
 ---
 
+### 2026-10-11 08:47 — Romain (avec Claude) — POWERPOINT DU PITCH À L'IDENTITÉ DU SITE
+- **`shared/pitch/Breaker-pitch.pptx`** : 8 slides + 4 annexes, charte du site vitrine de Timéo (bleu nuit `#07111f`, vert citron `#c7fa70`, bleu / orange pour signature en plus / attente, Manrope + DM Sans, logo « B » à pans coupés, mot-marque « breaker. »). Titres repris du site (« Les clés étaient valides. Les signataires, trompés. », « Vous avez déjà le coffre. Il vous manque quelqu'un qui regarde. », « Mesuré, avant d'être affirmé », « Conçu pour être vérifié, pas pour être cru », « Vos fonds. Vos signataires. Votre dernier mot. »). Généré par `generer_deck.py` (modifiable, relançable). Rendu vérifié slide par slide via PDF.
+- **Notes orateur dans chaque slide** (volet Notes / mode Présentateur) : chrono, texte à dire, **ROMAIN / TIMÉO** en alternance (Romain : accroche, problème, cible, offre, marché, clôture ; Timéo : regard technique sur le problème, solution, démo et preuves, limites). Tableau « qui parle » ajouté à `shared/pitch-final.md`.
+- **Polices** dans `shared/pitch/polices/` (Manrope, DM Sans, licence OFL) : à installer avant d'ouvrir le PowerPoint. Installées sur le Mac de Romain.
+- **Timéo :** ouvre le .pptx, installe les deux polices, lis tes notes (slides 1, 2, 4, 5, 8, A2, A3). Si tu changes un chiffre sur le site, dis-le : le deck doit rester identique au site.
 ### 2026-10-11 08:45 — ia-2 / Timéo (avec Claude) — PLAN DE LA VIDÉO EN MOTION DESIGN (L1) — DRIFT EN 15 SECONDES, PAS EN DIRECT
 - **Timéo valide le site comme base et lance le motion design de la vidéo (L1).** Plan proposé : **`shared/plan-video-motion.md`**, sept plans pour 2 min 30, calés sur ta slide 5, Romain (le scénario des 280 500 mUSD reste le cœur).
 - **Question de Timéo : faut-il simuler une attaque à la cadence de Drift ? Mon avis : pas en direct.** Douze minutes ne tiennent pas dans la vidéo, le rejeu est déjà fait (01:26, 0 mUSD sorti sur 285 000) et son résultat dépend du nombre de clés volées. Je propose un plan de 15 secondes en motion à partir de ces chiffres, avec la mention « avec le seuil de clés volées ».

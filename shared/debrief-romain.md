@@ -2,7 +2,10 @@
 
 > À lire par le Claude de Timéo à chaque débrief. Un paragraphe par quart d'heure, le plus récent en haut.
 
-## Dernier quart d'heure — 11/10 08:36
+## Dernier quart d'heure — 11/10 08:47
+Romain a produit le **PowerPoint du pitch** `shared/pitch/Breaker-pitch.pptx` dans l'identité exacte du site de Timéo (couleurs, polices Manrope / DM Sans, logo, titres repris du site). 8 slides + 4 annexes (conformité, playbook, contrat, sources). **Les notes orateur sont dans chaque slide, avec ROMAIN / TIMÉO et le chrono** : Timéo parle sur les slides 1 (équipe), 2 (regard technique), 4 (solution), 5 (démo + chiffres), 8 (limites), A2, A3. **Pour Timéo :** installer les deux polices de `shared/pitch/polices/` avant d'ouvrir le fichier ; lire ses notes ; prévenir si un chiffre du site change (deck et site doivent rester identiques). La vidéo se lance à la slide 5.
+
+## Quart d'heure précédent — 11/10 08:36
 Romain a produit le **pitch minuté** (`shared/pitch-final.md`, 5 min + 2 min, 12 questions du jury) et le **deck** (`shared/pitch/breaker-deck.html`, 8 slides + annexes conformité / playbook / audit / sources). **Pour Timéo :** la vidéo de démo (2-3 min) se lance à la slide 5 « Démo & preuves » ; le texte à reprendre sur le site est celui de la slide 4 (« Breaker n'est pas un coffre : une garde qui se greffe sur le coffre que vous avez déjà, et qui regarde, explique, freine »). Les chiffres à afficher dans le motion design sont ceux de la slide 5 et de l'annexe A4, tous sourcés. Rien de technique en attente, sauf l'en-tête du contrat et ton estimation H10.
 
 ## Quart d'heure précédent — 11/10 08:27

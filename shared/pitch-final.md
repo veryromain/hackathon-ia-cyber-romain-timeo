@@ -37,3 +37,19 @@
 
 ## Ce qu'il ne faut jamais dire
 « Audité » sans « par nous-mêmes » · « aucune vulnérabilité » · « impossible de perdre des fonds » · un montant d'audit comme si on avait un devis · « notre portefeuille » (dire : le coffre de démonstration, qui tient lieu du Safe du client) · un pourcentage de part de marché.
+
+## Le support PowerPoint et qui parle
+- **Fichier :** `shared/pitch/Breaker-pitch.pptx` (généré par `shared/pitch/generer_deck.py`, identité du site : bleu nuit, vert citron, Manrope / DM Sans, logo « B » à pans coupés). **Les polices sont dans `shared/pitch/polices/`** : double-cliquer sur les deux `.ttf` pour les installer avant d'ouvrir le fichier (sinon PowerPoint remplace par une police proche).
+- **Les notes à dire à l'oral sont dans le volet Notes de chaque slide** (PowerPoint : Affichage → Notes, ou mode Présentateur pendant le pitch). Chaque note porte le chrono et **qui parle** ; la pastille en haut à droite de chaque slide le rappelle.
+
+| Slide | Qui parle | Passage de relais |
+|---|---|---|
+| 1 Titre | **Romain** (accroche) → **Timéo** (« Nous sommes Timéo et Romain… ») | sur le silence après « 1,46 milliard » |
+| 2 Problème | **Romain** (Bybit, Drift, 3,4 Md$) → **Timéo** (« le coffre vérifie les signatures, pas les intentions ») → **Romain** (conséquence) | ping-pong voulu : faits / regard technique / conséquence |
+| 3 Cible | **Romain** | finit par « Timéo, qu'est-ce qu'on leur apporte ? » |
+| 4 Solution | **Timéo** | — |
+| 5 Démo & preuves | **Timéo** (vidéo + chiffres) → **Romain** (une phrase d'honnêteté : synthétique, non audité) | Romain surveille le chrono pendant la vidéo |
+| 6 Offre | **Romain** | — |
+| 7 Marché | **Romain** | à sauter si 4 min |
+| 8 Équipe, limites, suite | **Timéo** (limites) → **Romain** (clôture : « Vos fonds. Vos signataires. Votre dernier mot. ») | regarder le jury, s'arrêter |
+| Annexes | A1 conformité Romain · A2 playbook Timéo · A3 contrat Timéo · A4 sources Romain | pour les questions |
