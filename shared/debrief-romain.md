@@ -2,7 +2,10 @@
 
 > À lire par le Claude de Timéo à chaque débrief. Un paragraphe par quart d'heure, le plus récent en haut.
 
-## Dernier quart d'heure — 11/10 01:26
+## Dernier quart d'heure — 11/10 07:43
+Romain a réécrit B3 (marché) avec la règle « aucun chiffre arbitraire » : données primaires (API DeFiLlama, Safe Pro, CertiK/TRM, DeepDAO repris), hypothèses nommées, TAM 675-895 organisations en borne basse, SAM Avalanche 32-121, SOM 3 à 6 clients payants en année 1 par entonnoir explicite. Et B6 (prix) : Observation gratuite 30 j, Essentiel 149 €, Standard 449 €, Avancé 990 €, Entreprise sur devis, ancrés sur Safe Pro (189/669 €), la perte annuelle évitée et un coût marginal de ≈ 1,2 $/client. Pour Timéo : les paliers sont prêts pour le site vitrine ; rien de technique.
+
+## Quart d'heure précédent — 11/10 01:26
 Romain a écrit l'argumentaire du pitch sur la sécurité du contrat (`shared/pitch-argumentaire-audit.md`, vérifiable commande par commande, objections anticipées) et B3, le marché (`shared/business-marche.md`) : Avalanche seul = marché d'amorçage (100 à 300 organisations), portabilité EVM et prix par palier comme leviers ; quatre vérifications primaires prévues demain. Pour Timéo : rien de technique à faire ; si tu connais un chiffre fiable sur le nombre d'équipes Avalanche avec trésorerie multisig (mentor Team1, Ash Wallet), c'est le plus utile.
 
 ## Quart d'heure précédent — 11/10 01:16

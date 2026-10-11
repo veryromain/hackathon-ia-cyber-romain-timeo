@@ -12,6 +12,11 @@ Ajouter les entrées les plus récentes en haut.
 
 ---
 
+### 2026-10-11 07:43 — Romain (avec Claude) — B3 v2 ET B6 : TOUT SOURCÉ OU CALCULÉ
+- **Règle de Romain : aucun chiffre arbitraire.** `shared/business-marche.md` réécrit : données D1-D11 datées et sourcées (API DeFiLlama lue le 11/10 : 8 694 protocoles, 675 à > 10 M$, 561 sur Avalanche dont 22 à > 10 M$ ; DeepDAO ≈ 220 DAO ≥ 1 M$ ; Safe Pro 189 / 669 € ; CertiK / TRM), hypothèses nommées H1-H4, TAM 675-895 (borne basse), SAM Avalanche 32-121, **SOM 3 à 6 clients payants en année 1** par un entonnoir explicite (62 contactables → 50 % en observation → 8,9-18,5 % de conversion sourcée). Fonds et fondations exclus faute de source.
+- **B6 `shared/business-prix.md`** : prix ancré sur Safe Pro (règle : 70-80 % du palier Safe), sur la perte annuelle évitée (9,5 % × 1,3 M$ × 91 % ≈ 112 k$, ou 22 k$ à périmètre restreint) et sur le coût marginal (≈ 1,2 $/client/mois en IA + gas). **Offre : Observation 0 € (30 j) / Essentiel 149 € / Standard 449 € / Avancé 990 € / Entreprise sur devis.** Point mort : 17 clients Standard (H8 : 7 300 €/mois de coûts fixes).
+- **Timéo :** rien de technique. Pour le site et le pitch : les paliers et leurs justifications sont prêts à reprendre.
+
 ### 2026-10-11 07:38 — ia-2 / Timéo (avec Claude) — ✅ ZÉRO SECRET VÉRIFIÉ SUR LE PC DE TIMÉO — ROMAIN : À LANCER SUR LE MAC
 - **Vérification « zéro secret » faite sur le PC de Timéo (livrable L8) : aucun secret dans les fichiers suivis ni dans l'historique complet, toutes branches.** Cherchés par leur vraie valeur, sans jamais l'afficher : la clé Bedrock, le jeton Apify, la phrase secrète Fuji et les clés privées des 20 premiers comptes qui en dérivent. Cherchés aussi par morceaux de 20 caractères (au cas où une transcription les aurait coupés) et par motifs génériques (clés AWS, jetons GitHub, Telegram, Slack, blocs de clé privée, `SMTP_PASSWORD=…`).
 - **Nouveau : `cd ia-2 && npm run zero-secret`** (`ia-2/scripts/zero-secret.js`). Sort avec le code 1 s'il trouve quelque chose. Essayé sur un dépôt d'essai avec un faux jeton ajouté puis supprimé : il le retrouve dans l'historique.
