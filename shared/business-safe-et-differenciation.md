@@ -7,6 +7,13 @@ Un **Safe** est le coffre-fort numérique standard des organisations crypto : un
 
 **Pourquoi c'est central pour nous :** notre cible a *déjà* un Safe. On ne lui demandera jamais de déplacer sa trésorerie pour nous essayer : ce serait la fin de l'essai gratuit (décision « entrée sur le marché », 10/10).
 
+### 1 bis. Safe, Safe Foundation, Safe Labs : qui est qui ?
+Quand on dit « Safe », on parle d'un seul produit porté par deux entités :
+- **Safe Foundation** (ex-Safe Ecosystem Foundation) : fondation à but non lucratif, elle gouverne le protocole open source, le jeton SAFE et les subventions (S : safefoundation.org).
+- **Safe Labs GmbH** (Berlin) : **filiale commerciale à 100 % de la fondation**, créée le 5 juin 2025, dirigée par Rahul Rumalla ; c'est elle qui développe et exploite Safe{Wallet}, a pris le contrôle direct de l'interface en octobre 2025, et vend **Safe Pro et Safe Shield** (S : safefoundation.org, CoinDesk 11/06/2025, The Defiant). Objectif annoncé : 10 M$ de revenu récurrent en 2025, 100 M$ visés en 2030 (S : GlobeNewswire 03/02/2026).
+
+**Conséquence pour nous :** notre interlocuteur **commercial** (catalogue d'applications, partenariat, Safe Pro comme prix de référence) est **Safe Labs** ; notre interlocuteur **technique** (contrats, mécanisme Guard, subventions) est la **Safe Foundation**. Et Safe Labs est désormais une entreprise qui cherche du revenu : c'est elle qui pourrait un jour vendre de la détection ; voir § 7, première question.
+
 ## 2. Le catalogue d'applications Safe (Safe Apps)
 Dans l'interface Safe{Wallet} (app.safe.global), un onglet « Apps » liste des applications tierces que l'utilisateur ouvre **sans quitter son coffre** : elles s'affichent dans la page et proposent des transactions que les signataires approuvent comme d'habitude. Safe publie un SDK pour les développer (S : github.com/safe-global/safe-apps-sdk : « Client-side SDKs to create third-party Safe Apps »). Un développeur peut aussi donner l'adresse de son application à un utilisateur, qui l'ajoute lui-même (« custom app »).
 
@@ -46,6 +53,7 @@ Safe prévoit, depuis sa version 1.3.0, un point de branchement appelé **Guard*
 - **« Un Guard cassé bloque le Safe. »** Oui, et c'est pourquoi aucune attente n'est définitive chez nous : l'unanimité des signataires lève tout (invariant I5), et la garde ne touche jamais aux fonds (I1).
 
 ## Sources
+- Safe Labs : https://safefoundation.org/blog/safe-labs-launch-rahul-rumalla-ceo · https://www.coindesk.com/tech/2025/06/11/safe-establishes-new-development-firm-to-attract-institutions-and-tackle-cryptos-cyber-warfare-era · https://thedefiant.io/news/infrastructure/safe-labs-takes-the-reins-of-popular-multi-signature-wallet · https://www.globenewswire.com/news-release/2026/02/03/3231251/0/en/Safe-Project-Reports-10M-Revenue-Targets-Break-Even-and-100M-ARR-Path-by-2030.html · https://safe.global/imprint
 - Safe Foundation, rapport T1 2026 (23/04/2026) : https://safefoundation.org/blog/safe-q1-2026-quarterly-report
 - safe.global (40+ réseaux, 9+ ans, 18+ audits) : https://safe.global/ · prix : https://safe.global/pricing
 - Doc Safe Guards : https://docs.safe.global/advanced/smart-account-guards
