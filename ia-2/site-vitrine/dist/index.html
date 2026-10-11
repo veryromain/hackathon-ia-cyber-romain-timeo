@@ -269,7 +269,7 @@
 <section class="section wrap" id="offres">
   <div class="head">
     <h2 class="title">Un prix affiché,<br>selon la taille de votre trésorerie</h2>
-    <p class="subtitle">Trente jours d’essai gratuit, puis un abonnement mensuel par organisation, sans engagement. Vos données restent exportables : aucun verrou commercial.</p>
+    <p class="subtitle">Trente jours d’essai gratuit, puis un abonnement par organisation : annuel avec 10 % de remise, ou mensuel sans engagement. Vos données restent exportables : aucun verrou commercial.</p>
   </div>
   <article class="card accent trial">
     <div>
@@ -279,10 +279,18 @@
     </div>
     <strong class="price">0&nbsp;€<small> pendant 30 jours</small></strong>
   </article>
+  <input class="bill-input" type="radio" name="facturation" id="bill-year" checked>
+  <input class="bill-input" type="radio" name="facturation" id="bill-month">
+  <div class="bill-switch" role="group" aria-label="Rythme de facturation">
+    <label for="bill-year">Annuel <b>−10&nbsp;%</b></label>
+    <label for="bill-month">Mensuel</label>
+  </div>
   <div class="cards four after-trial">
     <article class="card offer">
       <span class="label">Essentiel</span>
-      <strong class="price">149&nbsp;€<small> / mois HT</small></strong>
+      <strong class="price"><s class="annual" aria-label="au lieu de 149 euros">149&nbsp;€</s><span class="annual">134&nbsp;€</span><span class="monthly">149&nbsp;€</span><small> / mois HT</small></strong>
+      <p class="billing annual">Facturé 1&nbsp;609&nbsp;€ par an · 179&nbsp;€ économisés</p>
+      <p class="billing monthly">Facturé chaque mois, sans engagement</p>
       <p class="for">1 portefeuille, trésorerie inférieure à 1 M$</p>
       <ul class="limits">
         <li>Mode Protection : signature en plus, mise en attente</li>
@@ -293,7 +301,9 @@
     </article>
     <article class="card offer accent">
       <span class="label">Standard</span>
-      <strong class="price">449&nbsp;€<small> / mois HT</small></strong>
+      <strong class="price"><s class="annual" aria-label="au lieu de 449 euros">449&nbsp;€</s><span class="annual">404&nbsp;€</span><span class="monthly">449&nbsp;€</span><small> / mois HT</small></strong>
+      <p class="billing annual">Facturé 4&nbsp;849&nbsp;€ par an · 539&nbsp;€ économisés</p>
+      <p class="billing monthly">Facturé chaque mois, sans engagement</p>
       <p class="for">Jusqu’à 5 portefeuilles, de 1 à 10 M$</p>
       <ul class="limits">
         <li>Tout l’Essentiel</li>
@@ -305,7 +315,9 @@
     </article>
     <article class="card offer">
       <span class="label">Premium</span>
-      <strong class="price">990&nbsp;€<small> / mois HT</small></strong>
+      <strong class="price"><s class="annual" aria-label="au lieu de 990 euros">990&nbsp;€</s><span class="annual">891&nbsp;€</span><span class="monthly">990&nbsp;€</span><small> / mois HT</small></strong>
+      <p class="billing annual">Facturé 10&nbsp;692&nbsp;€ par an · 1&nbsp;188&nbsp;€ économisés</p>
+      <p class="billing monthly">Facturé chaque mois, sans engagement</p>
       <p class="for">Plus de 10 M$ ou plus de 5 portefeuilles</p>
       <ul class="limits">
         <li>Tout le Standard</li>
@@ -325,7 +337,7 @@
       </ul>
     </article>
   </div>
-  <p class="fineprint">L’observation est une période d’essai, pas un mode : au bout de 30 jours, vous activez la Protection ou vous arrêtez. Remise d’environ 10 % pour un paiement annuel. Grille prévue : Breaker est un prototype et n’a aucun client payant. Aucune offre ne sera vendue avant l’audit externe du contrat.</p>
+  <p class="fineprint">L’observation est une période d’essai, pas un mode : au bout de 30 jours, vous activez la Protection ou vous arrêtez. Le prix annuel est le prix mensuel moins 10 %, payé en une fois pour douze mois. Grille prévue : Breaker est un prototype et n’a aucun client payant. Aucune offre ne sera vendue avant l’audit externe du contrat.</p>
 
   <h3 class="title small">La suite, datée</h3>
   <div class="cards four">
@@ -447,7 +459,7 @@
     </details>
     <details>
       <summary>Combien ça coûte ?</summary>
-      <p>Rien pendant les 30 premiers jours : Breaker observe et explique, sans toucher à vos paiements. Ensuite, trois offres mensuelles selon la taille de la trésorerie : 149 €, 449 € et 990 € hors taxes, plus une offre sur devis. Le détail est dans <a href="#offres">Les offres</a>. C’est une grille prévue : rien n’est vendu aujourd’hui.</p>
+      <p>Rien pendant les 30 premiers jours : Breaker observe et explique, sans toucher à vos paiements. Ensuite, trois offres selon la taille de la trésorerie : 149 €, 449 € et 990 € par mois hors taxes, ou 10 % de moins en payant à l’année, plus une offre sur devis. Le détail est dans <a href="#offres">Les offres</a>. C’est une grille prévue : rien n’est vendu aujourd’hui.</p>
     </details>
     <details>
       <summary>Pourquoi ce prix ?</summary>

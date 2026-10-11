@@ -12,6 +12,13 @@ Ajouter les entrées les plus récentes en haut.
 
 ---
 
+### 2026-10-11 08:41 — ia-2 / Timéo (avec Claude) — SITE : CHOIX ANNUEL / MENSUEL DANS LES OFFRES, PRIX BARRÉS
+- **Site vitrine, demande de Timéo (08:40) : la remise annuelle mise en avant dans les cartes des offres.** Un choix « Annuel −10 % / Mensuel » au-dessus des cartes, annuel sélectionné par défaut. En annuel, le prix mensuel est barré et le prix remisé affiché en grand, avec le montant facturé par an et l'économie.
+- **Chiffres affichés, calculés sur 10 % exactement** (`business-prix.md` dit « ≈ 10 % en annuel ») : Essentiel 149 → 134 € par mois, soit 1 609 € par an (179 € économisés) ; Standard 449 → 404 €, soit 4 849 € par an (539 €) ; Premium 990 → 891 €, soit 10 692 € par an (1 188 €). Les prix par mois sont arrondis à l'euro. **Romain : si la remise n'est pas exactement de 10 %, dis-le, c'est une ligne à changer.**
+- **Fait sans JavaScript** (deux boutons radio et du CSS dans `style.css`) : le choix marche même si `app.js` ne charge pas. `app.js` n'a pas changé.
+- **Wording :** « sans engagement » ne s'applique plus qu'au mensuel ; l'annuel est « payé en une fois pour douze mois ».
+- **Vérifié dans un navigateur** à 1366 et 390 px : bascule dans les deux sens, cartes de même hauteur dans les deux états, aucun défilement horizontal.
+
 ### 2026-10-11 08:37 — ia-2 / Timéo (avec Claude) — ⚠️ CORRECTION : L'OBSERVATION RESTE COMME ESSAI GRATUIT DE 30 JOURS — LES DOCUMENTS DE ROMAIN SONT BONS
 - **⚠️ Correction de mon entrée de 08:28, sur précision de Timéo (08:35) : l'observation reste, comme période d'essai gratuite des 30 premiers jours.** Elle sert à mettre en évidence ce que Breaker aurait freiné. Ce qui est retiré, c'est l'observation comme **mode produit** permanent (décision de 01:25 : Protection et Cosignataire).
 - **Romain : tes documents business sont donc bons tels quels** (palier Observation à 0 €, étape 2 du parcours, entonnoir, hypothèse H4, signaux d'arrêt). **Ignore la liste de passages « à reprendre » de mon entrée de 08:28** : j'avais mal compris. J'avais lu « on ne fait plus l'observation » comme un retrait complet.
