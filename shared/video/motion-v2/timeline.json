@@ -5,236 +5,149 @@
    "id": "hook",
    "mention": "",
    "start": 0.0,
-   "dur": 15.438,
+   "dur": 12.045,
    "segs": [
     {
-     "text": "Bybit. Un milliard quatre cent soixante millions de dollars.",
-     "rel": 0.6,
-     "start": 0.6,
-     "dur": 3.401,
-     "file": "/Users/veryromain/hackathon-ia-cyber/shared/video/motion-v2/voix/00-00.wav"
+     "text": "Bybit : un milliard quatre cent soixante millions de dollars.",
+     "rel": 0.25,
+     "start": 0.25,
+     "dur": 3.448,
+     "file": "/home/claude/mv2/voix/00-00.wav"
     },
     {
-     "text": "Drift. Deux cent quatre-vingts millions. Trente et un retraits, en douze minutes.",
-     "rel": 4.451,
-     "start": 4.451,
-     "dur": 4.968,
-     "file": "/Users/veryromain/hackathon-ia-cyber/shared/video/motion-v2/voix/00-01.wav"
+     "text": "Drift : deux cent quatre-vingts millions, trente et un retraits en douze minutes.",
+     "rel": 3.948,
+     "start": 3.948,
+     "dur": 4.168,
+     "file": "/home/claude/mv2/voix/00-01.wav"
     },
     {
-     "text": "Dans les deux cas, personne n'a volé de clé au moment du paiement. Des signataires ont validé.",
-     "rel": 9.869,
-     "start": 9.869,
-     "dur": 4.968,
-     "file": "/Users/veryromain/hackathon-ia-cyber/shared/video/motion-v2/voix/00-02.wav"
+     "text": "Aucune clé volée : des signataires trompés ont validé.",
+     "rel": 8.366,
+     "start": 8.366,
+     "dur": 3.379,
+     "file": "/home/claude/mv2/voix/00-02.wav"
     }
    ]
   },
   {
    "id": "marque",
    "mention": "",
-   "start": 15.438,
-   "dur": 15.095,
+   "start": 12.045,
+   "dur": 7.857,
    "segs": [
     {
-     "text": "Un portefeuille à plusieurs signataires protège contre une clé volée. Pas contre un mauvais paiement, validé de bonne foi.",
-     "rel": 0.4,
-     "start": 15.838,
-     "dur": 5.979,
-     "file": "/Users/veryromain/hackathon-ia-cyber/shared/video/motion-v2/voix/01-00.wav"
+     "text": "Un multisig arrête une clé volée. Pas un mauvais paiement.",
+     "rel": 0.2,
+     "start": 12.245,
+     "dur": 3.018,
+     "file": "/home/claude/mv2/voix/01-00.wav"
     },
     {
-     "text": "Breaker. La garde antifraude qui se greffe sur le coffre que vous avez déjà. Une signature ne suffit pas à faire confiance.",
-     "rel": 6.829,
-     "start": 22.266,
-     "dur": 7.267,
-     "file": "/Users/veryromain/hackathon-ia-cyber/shared/video/motion-v2/voix/01-01.wav"
-    }
-   ]
-  },
-  {
-   "id": "reponses",
-   "mention": "",
-   "start": 30.533,
-   "dur": 16.032,
-   "segs": [
-    {
-     "text": "Chaque paiement est noté avant d'être exécuté, à partir de vos habitudes et des signaux extérieurs.",
-     "rel": 0.4,
-     "start": 30.933,
-     "dur": 5.19,
-     "file": "/Users/veryromain/hackathon-ia-cyber/shared/video/motion-v2/voix/02-00.wav"
-    },
-    {
-     "text": "Trois réponses possibles. Sans friction. Une signature en plus. Ou mise en attente. Breaker ne détient jamais les fonds : vos signataires gardent le dernier mot.",
-     "rel": 6.04,
-     "start": 36.572,
-     "dur": 9.193,
-     "file": "/Users/veryromain/hackathon-ia-cyber/shared/video/motion-v2/voix/02-01.wav"
-    }
-   ]
-  },
-  {
-   "id": "normal",
-   "mention": "Avalanche Fuji · réseau de test · accéléré",
-   "start": 46.565,
-   "dur": 10.61,
-   "segs": [
-    {
-     "text": "Un paiement habituel : trois mille cent cinquante, vers un prestataire connu. Deux signatures, aucune friction. Exécuté trente-neuf secondes après la proposition.",
-     "rel": 0.4,
-     "start": 46.965,
-     "dur": 9.31,
-     "file": "/Users/veryromain/hackathon-ia-cyber/shared/video/motion-v2/voix/03-00.wav"
+     "text": "Breaker se greffe sur votre coffre, et note chaque paiement avant son exécution.",
+     "rel": 3.468,
+     "start": 15.513,
+     "dur": 3.889,
+     "file": "/home/claude/mv2/voix/01-01.wav"
     }
    ]
   },
   {
    "id": "attaque",
    "mention": "Avalanche Fuji · réseau de test · accéléré",
-   "start": 57.175,
-   "dur": 33.737,
+   "start": 19.902,
+   "dur": 15.062,
    "segs": [
     {
-     "text": "Deux signataires trompés proposent trois paiements vers une adresse jamais vue. Deux cent quatre-vingt mille cinq cents.",
-     "rel": 0.4,
-     "start": 57.575,
-     "dur": 5.537,
-     "file": "/Users/veryromain/hackathon-ia-cyber/shared/video/motion-v2/voix/04-00.wav"
+     "text": "Trois virements urgents vers une adresse jamais vue : deux cent quatre-vingt mille cinq cents.",
+     "rel": 0.2,
+     "start": 20.102,
+     "dur": 4.145,
+     "file": "/home/claude/mv2/voix/02-00.wav"
     },
     {
-     "text": "En moins de dix secondes, le garde met chaque paiement en attente, l'inscrit sur la chaîne, et explique pourquoi, en français.",
-     "rel": 6.387,
-     "start": 63.563,
-     "dur": 6.92,
-     "file": "/Users/veryromain/hackathon-ia-cyber/shared/video/motion-v2/voix/04-01.wav"
+     "text": "En moins de dix secondes, chacun est mis en attente, inscrit sur la chaîne, et expliqué en français.",
+     "rel": 4.595,
+     "start": 24.497,
+     "dur": 5.48,
+     "file": "/home/claude/mv2/voix/02-01.wav"
     },
     {
-     "text": "Nouveau destinataire. Montants hors norme. Trois paiements en deux minutes. Un libellé qui insiste sur l'urgence et le secret.",
-     "rel": 13.757,
-     "start": 70.932,
-     "dur": 8.032,
-     "file": "/Users/veryromain/hackathon-ia-cyber/shared/video/motion-v2/voix/04-02.wav"
-    },
-    {
-     "text": "Il demande une signature de plus. Il en manque une : rien ne part. Un signataire alerté gèle le coffre, et annule.",
-     "rel": 22.239,
-     "start": 79.414,
-     "dur": 7.348,
-     "file": "/Users/veryromain/hackathon-ia-cyber/shared/video/motion-v2/voix/04-03.wav"
-    },
-    {
-     "text": "Zéro sorti, sur deux cent quatre-vingt mille cinq cents.",
-     "rel": 30.037,
-     "start": 87.212,
-     "dur": 3.1,
-     "file": "/Users/veryromain/hackathon-ia-cyber/shared/video/motion-v2/voix/04-04.wav"
+     "text": "Il manque une signature : rien ne part. Zéro sorti.",
+     "rel": 10.325,
+     "start": 30.227,
+     "dur": 3.738,
+     "file": "/home/claude/mv2/voix/02-02.wav"
     }
    ]
   },
   {
    "id": "oracle",
    "mention": "Avalanche Fuji · accéléré : 2 min 10 en réel",
-   "start": 90.912,
-   "dur": 21.86,
+   "start": 34.964,
+   "dur": 6.605,
    "segs": [
     {
-     "text": "Le garde lit aussi le Web. Vingt-cinq mille vers une adresse nouvelle : d'abord, une signature en plus. Puis il cherche, lit trois pages, et retient une citation exacte.",
-     "rel": 0.4,
-     "start": 91.312,
-     "dur": 10.796,
-     "file": "/Users/veryromain/hackathon-ia-cyber/shared/video/motion-v2/voix/05-00.wav"
-    },
-    {
-     "text": "Cette adresse est sur une liste de sanctions. Elle est inscrite au registre, pour tous les clients. Même avec trois signatures, l'attente reste. Paiement annulé.",
-     "rel": 11.646,
-     "start": 102.558,
-     "dur": 9.414,
-     "file": "/Users/veryromain/hackathon-ia-cyber/shared/video/motion-v2/voix/05-01.wav"
-    }
-   ]
-  },
-  {
-   "id": "cosignataire",
-   "mention": "chaîne de test locale · mode Cosignataire, en option dès Standard",
-   "start": 112.772,
-   "dur": 19.806,
-   "segs": [
-    {
-     "text": "En mode Cosignataire, un agent tient une signature. Il simule chaque paiement, puis signe ou s'abstient, et dit pourquoi.",
-     "rel": 0.4,
-     "start": 113.172,
-     "dur": 7.453,
-     "file": "/Users/veryromain/hackathon-ia-cyber/shared/video/motion-v2/voix/06-00.wav"
-    },
-    {
-     "text": "Une facture habituelle : il cosigne. Soixante pour cent de la trésorerie d'un coup : il refuse. Un inconnu : il attend un humain de plus. Vos signataires gardent le dernier mot.",
-     "rel": 8.303,
-     "start": 121.075,
-     "dur": 10.703,
-     "file": "/Users/veryromain/hackathon-ia-cyber/shared/video/motion-v2/voix/06-01.wav"
+     "text": "Le garde lit aussi le Web : adresse sous sanctions, l'attente reste, même avec trois signatures.",
+     "rel": 0.2,
+     "start": 35.164,
+     "dur": 5.805,
+     "file": "/home/claude/mv2/voix/03-00.wav"
     }
    ]
   },
   {
    "id": "drift",
-   "mention": "Avalanche Fuji · avec le seuil de clés volées (2 sur 5)",
-   "start": 132.578,
-   "dur": 13.108,
+   "mention": "Avalanche Fuji · attaquant au seuil : 2 signatures sur 5",
+   "start": 41.569,
+   "dur": 7.388,
    "segs": [
     {
-     "text": "Nous avons rejoué la cadence de Drift : trente et un retraits en douze minutes, approuvés par deux clés volées.",
-     "rel": 0.4,
-     "start": 132.978,
-     "dur": 5.526,
-     "file": "/Users/veryromain/hackathon-ia-cyber/shared/video/motion-v2/voix/07-00.wav"
-    },
-    {
-     "text": "Chacun mis en attente. Zéro exécuté. Zéro sorti, sur deux cent quatre-vingt-cinq mille.",
-     "rel": 6.376,
-     "start": 138.954,
-     "dur": 5.932,
-     "file": "/Users/veryromain/hackathon-ia-cyber/shared/video/motion-v2/voix/07-01.wav"
+     "text": "La cadence de Drift, avec le même seuil : deux signatures sur cinq. Trente et un retraits, zéro sorti.",
+     "rel": 0.2,
+     "start": 41.769,
+     "dur": 6.188,
+     "file": "/home/claude/mv2/voix/04-00.wav"
     }
    ]
   },
   {
    "id": "chiffres",
    "mention": "jeu de test final · formes de fraude jamais vues · données synthétiques",
-   "start": 145.686,
-   "dur": 19.784,
+   "start": 48.957,
+   "dur": 8.12,
    "segs": [
     {
-     "text": "Mesuré sur des fraudes dont le garde n'avait jamais vu la forme : quatre-vingt-onze pour cent des montants frauduleux mis en attente. Cinq virgule un pour cent de paiements légitimes retardés.",
-     "rel": 0.4,
-     "start": 146.086,
-     "dur": 9.926,
-     "file": "/Users/veryromain/hackathon-ia-cyber/shared/video/motion-v2/voix/08-00.wav"
+     "text": "Sur des fraudes jamais vues : quatre-vingt-onze pour cent des montants mis en attente.",
+     "rel": 0.2,
+     "start": 49.157,
+     "dur": 3.785,
+     "file": "/home/claude/mv2/voix/05-00.wav"
     },
     {
-     "text": "Une alerte expliquée et inscrite sur la chaîne revient à environ un centime. Trente jours d'essai gratuit, puis à partir de cent quarante-neuf euros par mois.",
-     "rel": 10.776,
-     "start": 156.462,
-     "dur": 8.208,
-     "file": "/Users/veryromain/hackathon-ia-cyber/shared/video/motion-v2/voix/08-01.wav"
+     "text": "Trente jours d'essai, puis cent quarante-neuf euros par mois.",
+     "rel": 4.235,
+     "start": 53.192,
+     "dur": 3.286,
+     "file": "/home/claude/mv2/voix/05-01.wav"
     }
    ]
   },
   {
    "id": "fin",
    "mention": "",
-   "start": 165.469,
-   "dur": 9.784,
+   "start": 57.077,
+   "dur": 7.798,
    "segs": [
     {
-     "text": "Prototype de hackathon, non audité, sur réseau de test. Breaker. Gardez la main sur votre trésorerie.",
-     "rel": 0.4,
-     "start": 165.869,
-     "dur": 6.384,
-     "file": "/Users/veryromain/hackathon-ia-cyber/shared/video/motion-v2/voix/09-00.wav"
+     "text": "Prototype non audité, sur réseau de test. Breaker : gardez la main sur votre trésorerie.",
+     "rel": 0.2,
+     "start": 57.277,
+     "dur": 5.398,
+     "file": "/home/claude/mv2/voix/06-00.wav"
     }
    ]
   }
  ],
- "total": 175.754
+ "total": 65.376
 }

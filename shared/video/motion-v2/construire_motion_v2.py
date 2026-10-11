@@ -35,57 +35,45 @@ FPS = 30
 VOICE_DIR = os.path.expanduser("~/.local/share/piper-voices")
 VOICE = os.environ.get("PIPER_MODEL", os.path.join(VOICE_DIR, "fr_FR-siwis-medium.onnx"))
 VOICE_URL = "https://huggingface.co/rhasspy/piper-voices/resolve/main/fr/fr_FR/siwis/medium/fr_FR-siwis-medium.onnx"
-LENGTH_SCALE = os.environ.get("PIPER_LENGTH", "0.93")   # < 1 = débit un peu plus rapide
+LENGTH_SCALE = os.environ.get("PIPER_LENGTH", "0.88")   # < 1 = débit un peu plus rapide
 
 # ---------------------------------------------------------------------------------------------------------
 # Les plans et la voix off. Chaque phrase est un segment ; les visuels sont calés sur le début de chaque
 # segment (S.seg[i] dans le JavaScript). lead : silence après la coupe ; tail : tenue après la dernière phrase.
 # ---------------------------------------------------------------------------------------------------------
+# Version courte (11/10, 11 h 15) : 7 plans, cible 70 s. Drift corrigé : signataires trompés (pré-signature,
+# conseil de sécurité à 2 sur 5, 1er avril 2026), aucune clé volée ; le rejeu Fuji reprend la cadence avec
+# l'attaquant au seuil (2 signatures sur 5).
 SCENES = [
-    dict(id="hook", lead=0.6, tail=0.6, mention="", segs=[
-        "Bybit. Un milliard quatre cent soixante millions de dollars.",
-        "Drift. Deux cent quatre-vingts millions. Trente et un retraits, en douze minutes.",
-        "Dans les deux cas, personne n'a volé de clé au moment du paiement. Des signataires ont validé.",
+    dict(id="hook", lead=0.25, tail=0.3, mention="", segs=[
+        "Bybit : un milliard quatre cent soixante millions de dollars.",
+        "Drift : deux cent quatre-vingts millions, trente et un retraits en douze minutes.",
+        "Aucune clé volée : des signataires trompés ont validé.",
     ]),
-    dict(id="marque", lead=0.4, tail=1.0, mention="", segs=[
-        "Un portefeuille à plusieurs signataires protège contre une clé volée. Pas contre un mauvais paiement, validé de bonne foi.",
-        "Breaker. La garde antifraude qui se greffe sur le coffre que vous avez déjà. Une signature ne suffit pas à faire confiance.",
+    dict(id="marque", lead=0.2, tail=0.5, mention="", segs=[
+        "Un multisig arrête une clé volée. Pas un mauvais paiement.",
+        "Breaker se greffe sur votre coffre, et note chaque paiement avant son exécution.",
     ]),
-    dict(id="reponses", lead=0.4, tail=0.8, mention="", segs=[
-        "Chaque paiement est noté avant d'être exécuté, à partir de vos habitudes et des signaux extérieurs.",
-        "Trois réponses possibles. Sans friction. Une signature en plus. Ou mise en attente. Breaker ne détient jamais les fonds : vos signataires gardent le dernier mot.",
+    dict(id="attaque", lead=0.2, tail=1.0, mention="Avalanche Fuji · réseau de test · accéléré", segs=[
+        "Trois virements urgents vers une adresse jamais vue : deux cent quatre-vingt mille cinq cents.",
+        "En moins de dix secondes, chacun est mis en attente, inscrit sur la chaîne, et expliqué en français.",
+        "Il manque une signature : rien ne part. Zéro sorti.",
     ]),
-    dict(id="normal", lead=0.4, tail=0.9, mention="Avalanche Fuji · réseau de test · accéléré", segs=[
-        "Un paiement habituel : trois mille cent cinquante, vers un prestataire connu. Deux signatures, aucune friction. Exécuté trente-neuf secondes après la proposition.",
+    dict(id="oracle", lead=0.2, tail=0.6, mention="Avalanche Fuji · accéléré : 2 min 10 en réel", segs=[
+        "Le garde lit aussi le Web : adresse sous sanctions, l'attente reste, même avec trois signatures.",
     ]),
-    dict(id="attaque", lead=0.4, tail=0.6, mention="Avalanche Fuji · réseau de test · accéléré", segs=[
-        "Deux signataires trompés proposent trois paiements vers une adresse jamais vue. Deux cent quatre-vingt mille cinq cents.",
-        "En moins de dix secondes, le garde met chaque paiement en attente, l'inscrit sur la chaîne, et explique pourquoi, en français.",
-        "Nouveau destinataire. Montants hors norme. Trois paiements en deux minutes. Un libellé qui insiste sur l'urgence et le secret.",
-        "Il demande une signature de plus. Il en manque une : rien ne part. Un signataire alerté gèle le coffre, et annule.",
-        "Zéro sorti, sur deux cent quatre-vingt mille cinq cents.",
+    dict(id="drift", lead=0.2, tail=1.0, mention="Avalanche Fuji · attaquant au seuil : 2 signatures sur 5", segs=[
+        "La cadence de Drift, avec le même seuil : deux signatures sur cinq. Trente et un retraits, zéro sorti.",
     ]),
-    dict(id="oracle", lead=0.4, tail=0.8, mention="Avalanche Fuji · accéléré : 2 min 10 en réel", segs=[
-        "Le garde lit aussi le Web. Vingt-cinq mille vers une adresse nouvelle : d'abord, une signature en plus. Puis il cherche, lit trois pages, et retient une citation exacte.",
-        "Cette adresse est sur une liste de sanctions. Elle est inscrite au registre, pour tous les clients. Même avec trois signatures, l'attente reste. Paiement annulé.",
+    dict(id="chiffres", lead=0.2, tail=0.6, mention="jeu de test final · formes de fraude jamais vues · données synthétiques", segs=[
+        "Sur des fraudes jamais vues : quatre-vingt-onze pour cent des montants mis en attente.",
+        "Trente jours d'essai, puis cent quarante-neuf euros par mois.",
     ]),
-    dict(id="cosignataire", lead=0.4, tail=0.8, mention="chaîne de test locale · mode Cosignataire, en option dès Standard", segs=[
-        "En mode Cosignataire, un agent tient une signature. Il simule chaque paiement, puis signe ou s'abstient, et dit pourquoi.",
-        "Une facture habituelle : il cosigne. Soixante pour cent de la trésorerie d'un coup : il refuse. Un inconnu : il attend un humain de plus. Vos signataires gardent le dernier mot.",
-    ]),
-    dict(id="drift", lead=0.4, tail=0.8, mention="Avalanche Fuji · avec le seuil de clés volées (2 sur 5)", segs=[
-        "Nous avons rejoué la cadence de Drift : trente et un retraits en douze minutes, approuvés par deux clés volées.",
-        "Chacun mis en attente. Zéro exécuté. Zéro sorti, sur deux cent quatre-vingt-cinq mille.",
-    ]),
-    dict(id="chiffres", lead=0.4, tail=0.8, mention="jeu de test final · formes de fraude jamais vues · données synthétiques", segs=[
-        "Mesuré sur des fraudes dont le garde n'avait jamais vu la forme : quatre-vingt-onze pour cent des montants frauduleux mis en attente. Cinq virgule un pour cent de paiements légitimes retardés.",
-        "Une alerte expliquée et inscrite sur la chaîne revient à environ un centime. Trente jours d'essai gratuit, puis à partir de cent quarante-neuf euros par mois.",
-    ]),
-    dict(id="fin", lead=0.4, tail=3.0, mention="", segs=[
-        "Prototype de hackathon, non audité, sur réseau de test. Breaker. Gardez la main sur votre trésorerie.",
+    dict(id="fin", lead=0.2, tail=2.2, mention="", segs=[
+        "Prototype non audité, sur réseau de test. Breaker : gardez la main sur votre trésorerie.",
     ]),
 ]
-GAP = 0.45  # silence entre deux phrases d'un même plan
+GAP = 0.25  # silence entre deux phrases d'un même plan
 
 
 def run(cmd, **kw):
@@ -166,7 +154,7 @@ def b64(path, mime):
 HTML = r'''<!doctype html>
 <html lang="fr"><head><meta charset="utf-8">
 <title>Breaker, la démonstration (motion v2)</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;800&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>__POLICES__</style>
 <style>
 :root{--bg:#07111f;--ink:#f6f9fc;--text:#e7edf4;--muted:rgba(231,237,244,.7);--faint:rgba(231,237,244,.52);--line:rgba(255,255,255,.11);
 --accent:#c7fa70;--on-accent:#142008;--blue:#a8bfff;--orange:#ffc481;--red:#ff6b6b;
@@ -199,6 +187,7 @@ html,body{margin:0;height:100%;background:#000;overflow:hidden}
 .chip.hold{background:var(--orange);color:#2a1a00;border-color:transparent}
 .chip.step{background:var(--blue);color:#101a3a;border-color:transparent}
 .chip.big{font-size:40px;padding:22px 34px;border-radius:18px}
+.card.solid{background:var(--glass),#0d1a2b}
 .card{background:var(--glass);border:1px solid var(--glass-edge);border-radius:24px;box-shadow:inset 0 1px 0 rgba(255,255,255,.24),0 26px 50px -22px rgba(0,0,0,.7);padding:34px 40px}
 .pay{width:860px;display:grid;grid-template-columns:1fr auto;gap:10px 30px;align-items:center}
 .pay b{font:800 54px/1 var(--display);letter-spacing:-.02em;color:var(--ink)} .pay small{font:400 24px/1.3 var(--mono);color:var(--faint)}
@@ -251,124 +240,81 @@ html,body{margin:0;height:100%;background:#000;overflow:hidden}
 <section class="scene" id="s-hook">
   <div class="blob el" id="h-blob1" style="left:1100px;top:160px;width:720px;height:720px"></div>
   <div class="blob el" id="h-blob2" style="left:1420px;top:560px;width:330px;height:330px"></div>
-  <div class="el mono" id="h-l1" style="left:120px;top:300px">BYBIT · FÉVRIER 2025 · TROIS SIGNATAIRES SUR SIX TROMPÉS</div>
+  <div class="el mono" id="h-l1" style="left:120px;top:300px">BYBIT · 21 FÉVRIER 2025 · 3 SIGNATAIRES SUR 6 TROMPÉS</div>
   <div class="el k1 amber" id="h-n1" style="left:112px;top:350px">1,46 Md$</div>
-  <div class="el mono" id="h-l2" style="left:120px;top:600px">DRIFT · AVRIL 2026 · 31 RETRAITS EN 12 MINUTES</div>
+  <div class="el mono" id="h-l2" style="left:120px;top:600px">DRIFT · 1ER AVRIL 2026 · 31 RETRAITS EN 12 MINUTES</div>
   <div class="el k1 amber" id="h-n2" style="left:112px;top:650px">280 M$</div>
   <div class="el bars" id="h-bars" style="left:1000px;top:640px;height:160px"></div>
-  <div class="el k2" id="h-w1" style="left:120px;top:300px">Aucune clé volée.</div>
-  <div class="el k2 amber" id="h-w2" style="left:120px;top:480px">Des signataires<br>ont validé.</div>
+  <div class="el k1" id="h-w1" style="left:112px;top:260px">Aucune clé volée.</div>
+  <div class="el k2 amber" id="h-w2" style="left:120px;top:500px">Des signataires<br>trompés ont validé.</div>
 </section>
 
 <!-- 2. La marque -->
 <section class="scene" id="s-marque">
-  <div class="el key" id="m-k1" style="left:120px;top:300px"><svg><use href="#key"/></svg><div class="check el" id="m-c1">✓</div></div>
-  <div class="el key" id="m-k2" style="left:310px;top:300px"><svg><use href="#key"/></svg><div class="check el" id="m-c2">✓</div></div>
-  <div class="el key" id="m-k3" style="left:500px;top:300px"><svg><use href="#key"/></svg><div class="check el" id="m-c3">✓</div></div>
-  <div class="el h" id="m-t1" style="left:120px;top:520px;width:900px">Un multisig protège contre une clé volée.</div>
-  <div class="el k2 amber" id="m-t2" style="left:120px;top:660px">Pas contre un mauvais paiement.</div>
-  <div class="el card pay" id="m-pay" style="left:1000px;top:330px;width:760px"><div><b>95 000 mUSD</b><br><span class="who">→ adresse jamais vue</span><br><small>« URGENT - virement confidentiel »</small></div><div class="st"><span class="chip ok">2 / 2 signatures</span><span class="chip">validé de bonne foi</span></div></div>
-  <div class="el" id="m-logo" style="left:120px;top:330px"><svg class="mark" width="190" height="212"><use href="#mark"/></svg></div>
-  <div class="el brand" id="m-brand" style="left:350px;top:355px">breaker<i>.</i></div>
-  <div class="el sub" id="m-tag" style="left:120px;top:600px;width:1300px;font-size:40px;color:var(--text)">La garde antifraude qui se greffe sur le coffre que vous avez déjà.</div>
-  <div class="el h" id="m-h1" style="left:120px;top:720px;width:1500px;font-size:76px">Une signature ne suffit pas<br>à faire <span class="lime">confiance</span>.</div>
+  <div class="el key" id="m-k1" style="left:120px;top:250px"><svg><use href="#key"/></svg><div class="check el" id="m-c1">✓</div></div>
+  <div class="el key" id="m-k2" style="left:310px;top:250px"><svg><use href="#key"/></svg><div class="check el" id="m-c2">✓</div></div>
+  <div class="el key" id="m-k3" style="left:500px;top:250px"><svg><use href="#key"/></svg><div class="check el" id="m-c3">✓</div></div>
+  <div class="el h" id="m-t1" style="left:120px;top:470px;width:1000px">Un multisig arrête une clé volée.</div>
+  <div class="el k2 amber" id="m-t2" style="left:120px;top:600px">Pas un mauvais paiement.</div>
+  <div class="el card pay solid" id="m-pay" style="left:1060px;top:250px;width:720px"><div><b>95 000 mUSD</b><br><span class="who">→ adresse jamais vue</span></div><div class="st"><span class="chip ok">2 / 2 signatures</span><span class="chip">validé de bonne foi</span></div></div>
+  <div class="el" id="m-logo" style="left:120px;top:250px"><svg class="mark" width="190" height="212"><use href="#mark"/></svg></div>
+  <div class="el brand" id="m-brand" style="left:350px;top:275px">breaker<i>.</i></div>
+  <div class="el sub" id="m-tag" style="left:120px;top:520px;width:1400px;font-size:40px;color:var(--text)">La garde antifraude qui se greffe sur le coffre que vous avez déjà.</div>
+  <div class="el h" id="m-h1" style="left:120px;top:640px;width:1600px;font-size:76px">Chaque paiement noté<br><span class="lime">avant</span> d'être exécuté.</div>
 </section>
 
-<!-- 3. Trois réponses -->
-<section class="scene" id="s-reponses">
-  <div class="el h" id="r-t" style="left:120px;top:200px;width:1500px">Chaque paiement est noté <span class="lime">avant</span> d'être exécuté.</div>
-  <div class="el gauge" id="r-g" style="left:120px;top:360px"><b id="r-gb"></b></div>
-  <div class="el mono" id="r-gl" style="left:120px;top:400px">analyse · habitudes du portefeuille · signaux extérieurs · chaîne</div>
-  <div class="el pill ok" id="r-p1" style="left:120px;top:520px">Sans friction</div>
-  <div class="el pill step" id="r-p2" style="left:620px;top:520px">Signature en plus</div>
-  <div class="el pill hold" id="r-p3" style="left:1285px;top:520px">Mise en attente</div>
-  <div class="el h" id="r-t2" style="left:120px;top:760px;width:1600px;font-size:54px">Breaker ne détient jamais les fonds. <span class="lime">Vos signataires gardent le dernier mot.</span></div>
-</section>
-
-<!-- 4. Paiement normal -->
-<section class="scene" id="s-normal">
-  <div class="el h" id="n-t" style="left:120px;top:170px;width:1400px">Un paiement habituel passe <span class="lime">sans friction</span>.</div>
-  <div class="el card pay" id="n-pay" style="left:120px;top:330px"><div><b>3 150 mUSD</b><br><span class="who">→ Prestataire habituel</span><br><small>0x3f79…9438 · paiement 9 · « Facture mensuelle »</small></div><div class="st"><span class="chip ok el" id="n-ok" style="position:relative">aucun risque</span><span class="chip" id="n-sig">1 / 2 signatures</span></div></div>
-  <div class="el k1 lime" id="n-timer" style="left:1120px;top:330px">0 s</div>
-  <div class="el mono" id="n-tl" style="left:1130px;top:560px">après la proposition · délai d'examen 30 s</div>
-  <div class="el chip ok big" id="n-exec" style="left:120px;top:680px">exécuté · 39 s</div>
-  <div class="el mono" id="n-tx" style="left:120px;top:800px">tx 0xf63a4366…5f5219 · testnet.snowtrace.io</div>
-</section>
-
-<!-- 5. L'attaque -->
+<!-- 3. L'attaque -->
 <section class="scene" id="s-attaque">
-  <div class="el h" id="a-t" style="left:120px;top:150px;width:1100px">Trois paiements vers une adresse <span class="amber">jamais vue</span>.</div>
-  <div class="el card pay" id="a-p1" style="left:120px;top:330px;width:900px;padding:24px 36px"><div><b>95 000 mUSD</b> <small>→ 0x2dd0…76f6</small><br><small>« URGENT - virement confidentiel, acquisition en cours »</small></div><div class="st"><span class="chip hold el" id="a-h1" style="position:relative">mise en attente · 10 s</span></div></div>
-  <div class="el card pay" id="a-p2" style="left:120px;top:520px;width:900px;padding:24px 36px"><div><b>93 500 mUSD</b> <small>→ 0x2dd0…76f6</small><br><small>paiement 11</small></div><div class="st"><span class="chip hold el" id="a-h2" style="position:relative">mise en attente · 7 s</span></div></div>
-  <div class="el card pay" id="a-p3" style="left:120px;top:710px;width:900px;padding:24px 36px"><div><b>92 000 mUSD</b> <small>→ 0x2dd0…76f6</small><br><small>« Opération confidentielle validée par la direction »</small></div><div class="st"><span class="chip hold el" id="a-h3" style="position:relative">mise en attente · 9 s</span></div></div>
+  <div class="el h" id="a-t" style="left:120px;top:140px;width:1100px">Trois virements vers une adresse <span class="amber">jamais vue</span>.</div>
+  <div class="el card pay solid" id="a-p1" style="left:120px;top:320px;width:900px;padding:24px 36px"><div><b>95 000 mUSD</b> <small>→ 0x2dd0…76f6</small><br><small>« URGENT · virement confidentiel »</small></div><div class="st"><span class="chip hold el" id="a-h1" style="position:relative">mise en attente · 10 s</span></div></div>
+  <div class="el card pay solid" id="a-p2" style="left:120px;top:500px;width:900px;padding:24px 36px"><div><b>93 500 mUSD</b> <small>→ 0x2dd0…76f6</small><br><small>paiement 11</small></div><div class="st"><span class="chip hold el" id="a-h2" style="position:relative">mise en attente · 7 s</span></div></div>
+  <div class="el card pay solid" id="a-p3" style="left:120px;top:680px;width:900px;padding:24px 36px"><div><b>92 000 mUSD</b> <small>→ 0x2dd0…76f6</small><br><small>« Opération validée par la direction »</small></div><div class="st"><span class="chip hold el" id="a-h3" style="position:relative">mise en attente · 9 s</span></div></div>
   <div class="el k2 amber" id="a-sum" style="left:1120px;top:420px">0</div>
   <div class="el sub" id="a-suml" style="left:1125px;top:560px;width:700px">mUSD proposés par deux signataires trompés</div>
-  <div class="el fiche" id="a-fiche" style="left:1150px;top:120px;width:660px"><img src="__IMG10__" alt=""><i style="left:2%;top:17%;width:96%;height:30%"></i></div>
-  <div class="el mono lime" id="a-fl" style="left:1150px;top:965px">explication rédigée en français · inscrite sur Avalanche Fuji</div>
-  <div class="el k2" id="a-r1" style="left:120px;top:250px">Nouveau destinataire.</div>
-  <div class="el k2 amber" id="a-r2" style="left:120px;top:400px">Montants hors norme.</div>
-  <div class="el k2" id="a-r3" style="left:120px;top:550px">3 paiements en 2 min.</div>
-  <div class="el k2 amber" id="a-r4" style="left:120px;top:700px">« URGENT · confidentiel »</div>
-  <div class="el k1 sky" id="a-sig" style="left:112px;top:280px">2 / 3</div>
-  <div class="el h" id="a-sigl" style="left:120px;top:500px;width:1200px">signatures. Il en manque une : <span class="sky">rien ne part</span>.</div>
-  <div class="el chip hold big" id="a-gel" style="left:120px;top:700px">gel du coffre</div>
-  <div class="el chip big" id="a-ann" style="left:470px;top:700px">annulé ×3</div>
-  <div class="el k1 lime" id="a-zero" style="left:112px;top:330px;font-size:300px">0 mUSD</div>
-  <div class="el h" id="a-zerol" style="left:120px;top:680px;width:1500px">sorti, sur <span class="amber">280 500</span> proposés.</div>
+  <div class="el fiche" id="a-fiche" style="left:1120px;top:130px;width:680px"><img src="__IMG10__" alt=""><i style="left:2%;top:17%;width:96%;height:30%"></i></div>
+  <div class="el k1 sky" id="a-sig" style="left:112px;top:220px">2 / 3</div>
+  <div class="el h" id="a-sigl" style="left:120px;top:440px;width:1400px">signatures. Il en manque une : <span class="sky">rien ne part</span>.</div>
+  <div class="el k1 lime" id="a-zero" style="left:112px;top:280px;font-size:300px">0 mUSD</div>
+  <div class="el h" id="a-zerol" style="left:120px;top:630px;width:1500px">sorti, sur <span class="amber">280 500</span> proposés.</div>
 </section>
 
-<!-- 6. L'oracle -->
+<!-- 4. L'oracle -->
 <section class="scene" id="s-oracle">
   <div class="el h" id="o-t" style="left:120px;top:140px;width:1200px">Le garde lit aussi <span class="lime">le Web</span>.</div>
-  <div class="el term" id="o-term" style="left:120px;top:280px"></div>
+  <div class="el term" id="o-term" style="left:120px;top:270px;min-height:380px"></div>
   <div class="el k2 amber" id="o-sanc" style="left:1180px;top:290px;font-size:110px">SANCTIONS</div>
-  <div class="el chip step" id="o-c1" style="left:1180px;top:440px">inscrite au registre · on-chain</div>
+  <div class="el chip step" id="o-c1" style="left:1180px;top:450px">inscrite au registre · on-chain</div>
   <div class="el chip hold" id="o-c2" style="left:1180px;top:540px">3 / 3 signatures · attente maintenue</div>
-  <div class="el chip" id="o-c3" style="left:1180px;top:640px">25 000 mUSD · annulé</div>
-  <div class="el fiche" id="o-fiche" style="left:1180px;top:110px;width:520px"><img src="__IMG13__" alt=""></div>
+  <div class="el chip" id="o-c3" style="left:1180px;top:630px">25 000 mUSD · annulé</div>
 </section>
 
-<!-- 7. Cosignataire -->
-<section class="scene" id="s-cosign">
-  <div class="el h" id="c-t" style="left:120px;top:140px;width:1500px">En mode <span class="lime">Cosignataire</span>, un agent tient une signature.</div>
-  <div class="el sub" id="c-s" style="left:120px;top:250px;width:1500px">Il simule chaque paiement, puis signe ou s'abstient, et dit pourquoi.</div>
-  <div class="el card dec" id="c-d1" style="left:120px;top:360px"><div><b>3 200 mUSD</b> <span>· facture habituelle, fournisseur du carnet</span></div><span class="chip ok">a cosigné · 6,8 s</span></div>
-  <div class="el card dec" id="c-d2" style="left:120px;top:510px"><div><b>600 000 mUSD</b> <span>· 60 % de la trésorerie d'un coup, 188 fois l'habitude</span></div><span class="chip hold">n'a pas signé · mise en attente</span></div>
-  <div class="el card dec" id="c-d3" style="left:120px;top:660px"><div><b>4 800 mUSD</b> <span>· destinataire jamais vu</span></div><span class="chip step">attend un humain de plus</span></div>
-  <div class="el h" id="c-end" style="left:120px;top:840px;width:1600px;font-size:64px">Vos signataires gardent <span class="lime">le dernier mot</span>.</div>
-</section>
-
-<!-- 8. La cadence de Drift -->
+<!-- 5. La cadence de Drift -->
 <section class="scene" id="s-drift">
-  <div class="el h" id="d-t" style="left:120px;top:140px;width:1150px">La cadence de Drift, rejouée : <span class="amber">31 retraits en 12 minutes</span>.</div>
-  <div class="el bars" id="d-bars" style="left:120px;top:330px"></div>
-  <div class="el mono" id="d-tk" style="left:120px;top:610px;width:1520px;display:flex;justify-content:space-between"><span>01:26:29</span><span>285 000 mUSD tentés · 2 clés volées sur 5</span><span>01:38:39</span></div>
+  <div class="el h" id="d-t" style="left:120px;top:130px;width:1200px">La cadence de Drift :<br><span class="amber">31 retraits en 12 minutes</span>.</div>
+  <div class="el bars" id="d-bars" style="left:120px;top:320px;height:240px"></div>
+  <div class="el mono" id="d-tk" style="left:120px;top:580px;width:1520px;display:flex;justify-content:space-between"><span>01:26:29</span><span>285 000 mUSD tentés · attaquant au seuil : 2 signatures sur 5</span><span>01:38:39</span></div>
   <div class="el k2 amber" id="d-count" style="left:1300px;top:150px;text-align:right;width:500px">0</div>
-  <div class="el k2 lime" id="d-zero" style="left:120px;top:700px">0 exécuté.</div>
-  <div class="el h" id="d-zl" style="left:120px;top:860px;width:1500px">0 mUSD sorti · chaque retrait mis en attente, 2 signatures sur 3.</div>
+  <div class="el k2 lime" id="d-zero" style="left:120px;top:660px">0 mUSD sorti.</div>
+  <div class="el h" id="d-zl" style="left:120px;top:800px;width:1600px;font-size:48px">Chaque retrait mis en attente : il manque la signature que l'attaquant n'a pas.</div>
 </section>
 
-<!-- 9. Les chiffres -->
+<!-- 6. Les chiffres -->
 <section class="scene" id="s-chiffres">
   <div class="el k1 lime" id="f-91" style="left:112px;top:150px;font-size:300px">0 %</div>
   <div class="el sub" id="f-91l" style="left:120px;top:470px;width:800px;font-size:36px">des montants frauduleux mis en attente</div>
   <div class="el k2 amber" id="f-51" style="left:1150px;top:200px">5,1 %</div>
   <div class="el sub" id="f-51l" style="left:1155px;top:340px;width:650px">de paiements légitimes retardés</div>
-  <div class="el k2" id="f-6s" style="left:1150px;top:470px">5 à 6 s</div>
-  <div class="el sub" id="f-6sl" style="left:1155px;top:610px;width:650px">pour signaler, sur Avalanche Fuji</div>
-  <div class="el k2 lime" id="f-ct" style="left:120px;top:620px">≈ 1 ¢</div>
-  <div class="el sub" id="f-ctl" style="left:125px;top:760px;width:900px">par alerte expliquée et inscrite sur la chaîne</div>
-  <div class="el chip ok big" id="f-e1" style="left:1150px;top:760px">30 jours d'essai gratuit</div>
-  <div class="el chip big" id="f-e2" style="left:1150px;top:860px">puis dès 149 € / mois</div>
+  <div class="el chip ok big" id="f-e1" style="left:1150px;top:480px">30 jours d'essai gratuit</div>
+  <div class="el chip big" id="f-e2" style="left:1150px;top:590px">puis dès 149 € / mois</div>
 </section>
 
-<!-- 10. Fin -->
+<!-- 7. Fin -->
 <section class="scene" id="s-fin">
-  <div class="el mono" id="z-fine" style="left:120px;top:150px;width:1400px;line-height:1.6">PROTOTYPE DE HACKATHON · NON AUDITÉ · DONNÉES SYNTHÉTIQUES · RÉSEAU DE TEST AVALANCHE FUJI</div>
-  <div class="el" id="z-logo" style="left:120px;top:330px"><svg class="mark" width="190" height="212"><use href="#mark"/></svg></div>
-  <div class="el brand" id="z-brand" style="left:350px;top:355px">breaker<i>.</i></div>
-  <div class="el h" id="z-h" style="left:120px;top:620px;width:1500px;font-size:88px">Gardez la main<br>sur votre <span class="lime">trésorerie</span>.</div>
-  <div class="el sub" id="z-s" style="left:120px;top:900px;width:1500px">Construit pour Avalanche. Pensé pour les signataires.</div>
+  <div class="el mono" id="z-fine" style="left:120px;top:150px;width:1750px;line-height:1.6">PROTOTYPE DE HACKATHON · NON AUDITÉ · DONNÉES SYNTHÉTIQUES · RÉSEAU DE TEST AVALANCHE FUJI</div>
+  <div class="el" id="z-logo" style="left:120px;top:300px"><svg class="mark" width="190" height="212"><use href="#mark"/></svg></div>
+  <div class="el brand" id="z-brand" style="left:350px;top:325px">breaker<i>.</i></div>
+  <div class="el h" id="z-h" style="left:120px;top:580px;width:1500px;font-size:88px">Gardez la main<br>sur votre <span class="lime">trésorerie</span>.</div>
+  <div class="el sub" id="z-s" style="left:120px;top:830px;width:1500px">Construit pour Avalanche. Pensé pour les signataires.</div>
 </section>
 
 <svg id="grain"><rect width="100%" height="100%" filter="url(#noise)"/></svg>
@@ -411,100 +357,75 @@ function bars(id, n){ var el = $(id); if (el.children.length) return; for (var i
 function typed(el, lines, rel){ var h = ''; lines.forEach(function(l){ if (rel >= l[0]) h += l[1]; }); if (el.dataset.h !== h){ el.dataset.h = h; el.innerHTML = h; } }
 
 var TERM = [
- [0.2, "<span class='d'>$ python -m agent.agent --mode cosignataire --web …</span>\n<span class='d'>paiement 1 · 25 000 mUSD → 0x098b…2f96 · destinataire nouveau</span>\n"],
- [2.4, "agent · immédiat · <span class='b'>freiner</span> · signature en plus · 6,2 s\n"],
- [4.6, "<span class='d'>recherche Web…</span>\n"],
- [5.4, "  lu : etherscan.io/address/0x098B…2f96\n"],
- [6.0, "  lu : x.com/chainalysis/status/1514645222…\n"],
- [6.6, "  lu : basescan.org/address/0x098B…2f96\n"],
- [7.6, "accusation retenue (sanctions, 2 sources) :\n  <span class='hl'>« OFAC added a new ETH address to Lazarus Group's SDN entry : 0x098B716B…2f96 »</span>\n"],
- [11.5, "agent · après lecture du Web · <span class='o'>refuser</span> · mise en attente, signature refusée · 4,7 s\n"]
+ [0.1, "<span class='d'>$ python -m agent.agent --mode cosignataire --web …</span>\n<span class='d'>paiement 1 · 25 000 mUSD → 0x098b…2f96 · destinataire nouveau</span>\n"],
+ [0.6, "agent · immédiat · <span class='b'>freiner</span> · signature en plus · 6,2 s\n"],
+ [1.1, "<span class='d'>recherche Web…</span>\n"],
+ [1.4, "  lu : etherscan.io/address/0x098B…2f96\n"],
+ [1.6, "  lu : x.com/chainalysis/status/1514645222…\n"],
+ [1.8, "  lu : basescan.org/address/0x098B…2f96\n"],
+ [2.2, "accusation retenue (sanctions, 2 sources) :\n  <span class='hl'>« OFAC added a new ETH address to Lazarus Group's SDN entry : 0x098B716B…2f96 »</span>\n"],
+ [3.3, "agent · après lecture du Web · <span class='o'>refuser</span> · mise en attente · 4,7 s\n"]
 ];
 
 var DRAW = {
  hook: function(rel, S){ var a = S.seg[0], b = S.seg[1], c = S.seg[2];
   bars('h-bars', 31);
-  var p1 = eo(prog(rel, a + .6, 1.2)); put($('h-blob1'), p1 * .9 * (1 - exitp(rel, c)), 0, 0, .2 + .8 * p1, 0);
-  rise($('h-l1'), rel, a + .1, c); slam($('h-n1'), rel, a + .7, c);
-  var p2 = eo(prog(rel, b + .5, 1)); put($('h-blob2'), p2 * .9 * (1 - exitp(rel, c)), 0, 0, .2 + .8 * p2, 0);
-  rise($('h-l2'), rel, b + .1, c); slam($('h-n2'), rel, b + .6, c);
-  rise($('h-bars'), rel, b + 2.0, c, 20); var ch = $('h-bars').children; for (var i = 0; i < 31; i++) ch[i].firstChild.style.height = (prog(rel, b + 2.2 + i * .07, .2) * 100) + '%';
-  slam($('h-w1'), rel, c + .25); slam($('h-w2'), rel, c + 3.3);
-  ring(960, 540, rel - (c + 3.3), '#ffc481'); },
+  var p1 = eo(prog(rel, a + .15, .9)); put($('h-blob1'), p1 * .9 * (1 - exitp(rel, c)), 0, 0, .2 + .8 * p1, 0);
+  rise($('h-l1'), rel, a, c); slam($('h-n1'), rel, a + .15, c);
+  var p2 = eo(prog(rel, b + .3, .8)); put($('h-blob2'), p2 * .9 * (1 - exitp(rel, c)), 0, 0, .2 + .8 * p2, 0);
+  rise($('h-l2'), rel, b, c); slam($('h-n2'), rel, b + .15, c);
+  rise($('h-bars'), rel, b + 1.3, c, 20); var ch = $('h-bars').children; for (var i = 0; i < 31; i++) ch[i].firstChild.style.height = (prog(rel, b + 1.4 + i * .05, .15) * 100) + '%';
+  slam($('h-w1'), rel, c + .05); slam($('h-w2'), rel, c + 1.2);
+  ring(960, 540, rel - (c + 1.2), '#ffc481'); },
 
  marque: function(rel, S){ var a = S.seg[0], b = S.seg[1];
-  pop($('m-k1'), rel, a + .1, b); pop($('m-k2'), rel, a + .25, b); pop($('m-k3'), rel, a + .4, b);
-  pop($('m-c1'), rel, a + 1.3); pop($('m-c2'), rel, a + 1.5); pop($('m-c3'), rel, a + 1.7);
-  rise($('m-t1'), rel, a + .9, b); slide($('m-pay'), rel, a + 3.4, b, 160); slam($('m-t2'), rel, a + 4.2, b);
-  slam($('m-logo'), rel, b + .2, null, 2.2); slam($('m-brand'), rel, b + .45, null, 1.4); rise($('m-tag'), rel, b + 1.3);
-  slam($('m-h1'), rel, b + 4.8, null, 1.3); ring(960, 540, rel - (b + .2), '#c7fa70'); },
+  pop($('m-k1'), rel, a, b); pop($('m-k2'), rel, a + .1, b); pop($('m-k3'), rel, a + .2, b);
+  pop($('m-c1'), rel, a + .5, b); pop($('m-c2'), rel, a + .6, b); pop($('m-c3'), rel, a + .7, b);
+  rise($('m-t1'), rel, a + .1, b); slide($('m-pay'), rel, a + 1.2, b, 160); slam($('m-t2'), rel, a + 1.9, b);
+  slam($('m-logo'), rel, b, null, 2.2); slam($('m-brand'), rel, b + .15, null, 1.4); rise($('m-tag'), rel, b + .6);
+  slam($('m-h1'), rel, b + 2.3, null, 1.3); ring(960, 540, rel - b, '#c7fa70'); },
 
- reponses: function(rel, S){ var a = S.seg[0], b = S.seg[1];
-  rise($('r-t'), rel, a + .1); rise($('r-g'), rel, a + .8, b); $('r-gb').style.width = (eo(prog(rel, a + 1.2, 3.2)) * 100) + '%'; rise($('r-gl'), rel, a + 1.0, b, 20);
-  slam($('r-p1'), rel, b + 1.0, null, 1.5); slam($('r-p2'), rel, b + 2.1, null, 1.5); slam($('r-p3'), rel, b + 3.3, null, 1.5);
-  ring(330, 580, rel - (b + 1.0), '#c7fa70'); ring(900, 580, rel - (b + 2.1), '#a8bfff'); ring(1500, 580, rel - (b + 3.3), '#ffc481');
-  rise($('r-t2'), rel, b + 5.0); },
+ attaque: function(rel, S){ var a = S.seg[0], b = S.seg[1], c = S.seg[2];
+  rise($('a-t'), rel, a, c); slide($('a-p1'), rel, a + .3, c); slide($('a-p2'), rel, a + .5, c); slide($('a-p3'), rel, a + .7, c);
+  rise($('a-sum'), rel, a + 1.6, b + 1.5); count($('a-sum'), rel, a + 1.7, 1.4, 280500); rise($('a-suml'), rel, a + 1.8, b + 1.5, 20);
+  pop($('a-h1'), rel, b + .3, c); pop($('a-h2'), rel, b + .55, c); pop($('a-h3'), rel, b + .8, c);
+  ring(880, 390, rel - (b + .3), '#ffc481'); ring(880, 570, rel - (b + .55), '#ffc481'); ring(880, 750, rel - (b + .8), '#ffc481');
+  ticker(rel, rel >= b + .3 && rel < c, 'MISE EN ATTENTE', false);
+  slide($('a-fiche'), rel, b + 1.7, c, 200);
+  slam($('a-sig'), rel, c, c + 1.9); rise($('a-sigl'), rel, c + .4, c + 1.9);
+  slam($('a-zero'), rel, c + 2.0, null, 2.4); rise($('a-zerol'), rel, c + 2.4); ring(760, 430, rel - (c + 2.0), '#c7fa70'); ring(760, 430, rel - (c + 2.15), '#c7fa70'); },
 
- normal: function(rel, S){ var a = S.seg[0];
-  rise($('n-t'), rel, a + .1); slide($('n-pay'), rel, a + 1.0); pop($('n-ok'), rel, a + 1.9);
-  $('n-sig').textContent = rel >= a + 3.6 ? '2 / 2 signatures' : '1 / 2 signatures'; $('n-sig').className = rel >= a + 3.6 ? 'chip step' : 'chip';
-  rise($('n-timer'), rel, a + 4.0); count($('n-timer'), rel, a + 4.2, 2.2, 39, ' s'); rise($('n-tl'), rel, a + 4.2, null, 20);
-  pop($('n-exec'), rel, a + 6.6); ring(400, 720, rel - (a + 6.6), '#c7fa70'); rise($('n-tx'), rel, a + 7.4, null, 20); },
+ oracle: function(rel, S){ var a = S.seg[0];
+  rise($('o-t'), rel, a); rise($('o-term'), rel, a + .1); typed($('o-term'), TERM, rel - a);
+  slam($('o-sanc'), rel, a + 2.3); ring(1500, 340, rel - (a + 2.3), '#ffc481');
+  pop($('o-c1'), rel, a + 3.0); pop($('o-c2'), rel, a + 3.9); pop($('o-c3'), rel, a + 4.8); },
 
- attaque: function(rel, S){ var a = S.seg[0], b = S.seg[1], c = S.seg[2], d = S.seg[3], e = S.seg[4];
-  rise($('a-t'), rel, a + .1, c); slide($('a-p1'), rel, a + 1.1, c); slide($('a-p2'), rel, a + 1.8, c); slide($('a-p3'), rel, a + 2.5, c);
-  rise($('a-sum'), rel, a + 3.2, b + 2.6); count($('a-sum'), rel, a + 3.3, 1.6, 280500); rise($('a-suml'), rel, a + 3.4, b + 2.6, 20);
-  pop($('a-h1'), rel, b + .5); pop($('a-h2'), rel, b + .9); pop($('a-h3'), rel, b + 1.3);
-  ring(880, 400, rel - (b + .5), '#ffc481'); ring(880, 590, rel - (b + .9), '#ffc481'); ring(880, 780, rel - (b + 1.3), '#ffc481');
-  ticker(rel, rel >= b + .5 && rel < e, 'MISE EN ATTENTE', false);
-  slide($('a-fiche'), rel, b + 2.8, c, 200); rise($('a-fl'), rel, b + 3.6, c, 20);
-  slam($('a-r1'), rel, c + .1, d); slam($('a-r2'), rel, c + 1.3, d); slam($('a-r3'), rel, c + 2.7, d); slam($('a-r4'), rel, c + 4.2, d);
-  slam($('a-sig'), rel, d + .2, e); rise($('a-sigl'), rel, d + 1.5, e); pop($('a-gel'), rel, d + 4.4, e); pop($('a-ann'), rel, d + 5.3, e);
-  ring(300, 760, rel - (d + 4.4), '#ffc481');
-  slam($('a-zero'), rel, e + .2, null, 2.4); rise($('a-zerol'), rel, e + 1.6); ring(760, 480, rel - (e + .2), '#c7fa70'); ring(760, 480, rel - (e + .35), '#c7fa70'); },
-
- oracle: function(rel, S){ var a = S.seg[0], b = S.seg[1];
-  rise($('o-t'), rel, a + .1); rise($('o-term'), rel, a + .6); typed($('o-term'), TERM, rel - a);
-  slam($('o-sanc'), rel, b + .2, b + 3.2); ring(1500, 340, rel - (b + .2), '#ffc481');
-  pop($('o-c1'), rel, b + 1.9, b + 3.2);
-  slide($('o-fiche'), rel, b + 3.3, null, 200); pop($('o-c2'), rel, b + 4.6); pop($('o-c3'), rel, b + 6.4);
-  $('o-c2').style.left = '1180px'; $('o-c2').style.top = '775px'; $('o-c3').style.left = '1180px'; $('o-c3').style.top = '865px'; },
-
- cosign: function(rel, S){ var a = S.seg[0], b = S.seg[1];
-  rise($('c-t'), rel, a + .1); rise($('c-s'), rel, a + 2.0, null, 20);
-  slide($('c-d1'), rel, b + .2); ring(1300, 420, rel - (b + .6), '#c7fa70');
-  slide($('c-d2'), rel, b + 2.3); ring(1300, 570, rel - (b + 2.7), '#ffc481');
-  slide($('c-d3'), rel, b + 4.8); ring(1300, 720, rel - (b + 5.2), '#a8bfff');
-  slam($('c-end'), rel, b + 7.4, null, 1.3); },
-
- drift: function(rel, S){ var a = S.seg[0], b = S.seg[1]; bars('d-bars', 31);
-  rise($('d-t'), rel, a + .1); rise($('d-bars'), rel, a + 1.0, null, 20); rise($('d-tk'), rel, a + 1.2, null, 10);
+ drift: function(rel, S){ var a = S.seg[0], z = a + S.d[0] - 1.1; bars('d-bars', 31);
+  rise($('d-t'), rel, a); rise($('d-bars'), rel, a + .3, null, 20); rise($('d-tk'), rel, a + .4, null, 10);
   var ch = $('d-bars').children, n = 0;
-  for (var i = 0; i < 31; i++){ var p = prog(rel, a + 1.6 + i * .16, .25); ch[i].firstChild.style.height = (p * (45 + ((i * 37) % 55))) + '%'; if (p >= 1) n++; ch[i].className = rel >= b + .3 + i * .05 ? 'wait' : ''; }
-  rise($('d-count'), rel, a + 1.4); $('d-count').textContent = n + ' / 31';
-  ticker(rel, rel >= b + .2, 'MISE EN ATTENTE', false);
-  slam($('d-zero'), rel, b + 2.4); ring(500, 760, rel - (b + 2.4), '#c7fa70'); rise($('d-zl'), rel, b + 3.6); },
+  for (var i = 0; i < 31; i++){ var p = prog(rel, a + .5 + i * .085, .18); ch[i].firstChild.style.height = (p * (45 + ((i * 37) % 55))) + '%'; if (p >= 1) n++; ch[i].className = rel >= a + .7 + i * .085 ? 'wait' : ''; }
+  rise($('d-count'), rel, a + .4); $('d-count').textContent = n + ' / 31';
+  ticker(rel, rel >= a + .8, 'MISE EN ATTENTE', false);
+  slam($('d-zero'), rel, z); ring(500, 720, rel - z, '#c7fa70'); rise($('d-zl'), rel, z + .5); },
 
  chiffres: function(rel, S){ var a = S.seg[0], b = S.seg[1];
-  rise($('f-91'), rel, a + .7); count($('f-91'), rel, a + .9, 2.0, 91, ' %'); rise($('f-91l'), rel, a + 1.0, null, 20);
-  slam($('f-51'), rel, a + 5.2); rise($('f-51l'), rel, a + 5.5, null, 20);
-  slam($('f-6s'), rel, a + 7.2); rise($('f-6sl'), rel, a + 7.5, null, 20);
-  slam($('f-ct'), rel, b + .4); rise($('f-ctl'), rel, b + .8, null, 20); ring(300, 700, rel - (b + .4), '#c7fa70');
-  pop($('f-e1'), rel, b + 4.2); pop($('f-e2'), rel, b + 6.0); },
+  rise($('f-91'), rel, a + .2); count($('f-91'), rel, a + .3, 1.6, 91, ' %'); rise($('f-91l'), rel, a + .4, null, 20);
+  slam($('f-51'), rel, a + 2.4); rise($('f-51l'), rel, a + 2.6, null, 20);
+  pop($('f-e1'), rel, b + .1); ring(1450, 520, rel - (b + .1), '#c7fa70'); pop($('f-e2'), rel, b + 1.3); },
 
  fin: function(rel, S){ var a = S.seg[0];
-  rise($('z-fine'), rel, a + .1, null, 20);
-  slam($('z-logo'), rel, a + 3.4, null, 2.2); slam($('z-brand'), rel, a + 3.65, null, 1.4); ring(960, 540, rel - (a + 3.4), '#c7fa70');
-  slam($('z-h'), rel, a + 4.9, null, 1.3); rise($('z-s'), rel, a + 6.4, null, 20); }
+  rise($('z-fine'), rel, a, null, 20);
+  slam($('z-logo'), rel, a + 2.6, null, 2.2); slam($('z-brand'), rel, a + 2.75, null, 1.4); ring(960, 540, rel - (a + 2.6), '#c7fa70');
+  slam($('z-h'), rel, a + 3.3, null, 1.3); rise($('z-s'), rel, a + 4.3, null, 20); }
 };
-var ORDER = ['hook','marque','reponses','normal','attaque','oracle','cosign','drift','chiffres','fin'];
+var ORDER = ['hook','marque','attaque','oracle','drift','chiffres','fin'];
 var SECS = ORDER.map(function(k){ return $('s-' + k); });
 var showSubs = !/[?&]sub=0/.test(location.search);
 
 function sceneAt(t){ var i = 0; TL.scenes.forEach(function(s, k){ if (t >= s.start) i = k; }); return i; }
 function render(t){
   var si = sceneAt(t), sc = TL.scenes[si], rel = t - sc.start;
-  var S = { seg: sc.segs.map(function(s){ return s.rel; }), dur: sc.dur };
+  var S = { seg: sc.segs.map(function(s){ return s.rel; }), d: sc.segs.map(function(s){ return s.dur; }), dur: sc.dur };
   SECS.forEach(function(sec, k){ sec.classList.toggle('on', k === si); });
   RINGS = [];
   DRAW[ORDER[si]](rel, S);
@@ -512,7 +433,7 @@ function render(t){
   var q = prog(rel, sc.dur - .22, .22); var sec = SECS[si];
   sec.style.opacity = 1 - q; sec.style.filter = q > 0 ? 'blur(' + (q * 14) + 'px)' : 'none'; sec.style.transform = 'scale(' + (1 + q * .03) + ')';
   $('flash').style.opacity = si > 0 ? .45 * (1 - prog(rel, 0, .2)) : 0;
-  if (!(si === 4 || si === 7)) ticker(rel, false);
+  if (!(ORDER[si] === 'attaque' || ORDER[si] === 'drift')) ticker(rel, false);
   var h = ''; RINGS.forEach(function(r){ var a = r[2]; h += '<circle cx="' + r[0] + '" cy="' + r[1] + '" r="' + (eo(a / 1.3) * 1100) + '" fill="none" stroke="' + r[3] + '" stroke-width="' + (4 * (1 - a / 1.3)) + '" opacity="' + (.8 * (1 - a / 1.3)) + '"/>'; });
   if ($('rings').dataset.h !== h){ $('rings').dataset.h = h; $('rings').innerHTML = h; }
   // lumières de fond : dérive lente, déterministe
@@ -551,8 +472,28 @@ if (RENDER){ $('help').style.display = 'none'; voice.removeAttribute('src'); ren
 '''
 
 
+POLICES = os.path.join(D, "polices")
+UR = {"latin": "U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD",
+      "latin-ext": "U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF"}
+FAM = {"manrope": "Manrope", "dm-sans": "DM Sans", "ibm-plex-mono": "IBM Plex Mono"}
+
+
+def polices_css():
+    """Polices du site embarquées dans la page (aucun accès réseau au rendu ni à la projection)."""
+    css = []
+    for f in sorted(os.listdir(POLICES)):
+        if not f.endswith(".woff2"): continue
+        base = f[:-len("-normal.woff2")]
+        for fam in FAM:
+            if base.startswith(fam + "-"):
+                sub, w = base[len(fam) + 1:].rsplit("-", 1)
+                css.append("@font-face{font-family:'%s';font-weight:%s;font-style:normal;font-display:block;src:url(%s) format('woff2');unicode-range:%s}"
+                           % (FAM[fam], w, b64(os.path.join(POLICES, f), "font/woff2"), UR[sub]))
+    return "\n".join(css)
+
+
 def etape_html(timeline):
-    out = (HTML.replace("__TIMELINE__", json.dumps(timeline, ensure_ascii=False))
+    out = (HTML.replace("__POLICES__", polices_css()).replace("__TIMELINE__", json.dumps(timeline, ensure_ascii=False))
            .replace("__IMG10__", b64(os.path.join(MATIERE, "plan3-fiche-paiement-10.png"), "image/png"))
            .replace("__IMG13__", b64(os.path.join(MATIERE, "plan4-fiche-paiement-13-sanctions.png"), "image/png"))
            .replace("__AUDIO__", b64(os.path.join(D, "voix-off.mp3"), "audio/mpeg")))
@@ -574,7 +515,10 @@ html, outdir, fps, total = sys.argv[1], sys.argv[2], int(sys.argv[3]), float(sys
 n = int(total * fps) + 1
 os.makedirs(outdir, exist_ok=True)
 with sync_playwright() as p:
-    b = p.chromium.launch(channel="chrome", args=["--disable-gpu-vsync", "--force-device-scale-factor=1"])
+    try:
+        b = p.chromium.launch(channel="chrome", args=["--disable-gpu-vsync", "--force-device-scale-factor=1"])
+    except Exception:
+        b = p.chromium.launch(args=["--disable-gpu-vsync", "--force-device-scale-factor=1"])
     pg = b.new_page(viewport={"width": 1920, "height": 1080}, device_scale_factor=1)
     pg.goto("file://" + html + "?render=1")
     pg.wait_for_function("document.fonts.status === 'loaded'", timeout=30000)
@@ -587,7 +531,7 @@ with sync_playwright() as p:
         pg.screenshot(path=f, type="jpeg", quality=92, clip={"x": 0, "y": 0, "width": 1920, "height": 1080})
         if i % 300 == 0: print("image %d / %d  (%.0f s)" % (i, n, time.time() - t0), flush=True)
     b.close()
-print("rendu :", n, "images en %.0f s" % (time.time() - t0))
+print("rendu :", n, "images")
 '''
 
 
@@ -605,7 +549,7 @@ def etape_rendu(timeline):
          "-c:a", "aac", "-b:a", "160k", "-movflags", "+faststart", "-shortest", MP4_OUT])
     # Vignette : la scène de marque.
     brand = next(s for s in timeline["scenes"] if s["id"] == "marque")
-    tt = brand["start"] + brand["segs"][1]["rel"] + 6.0
+    tt = brand["start"] + brand["segs"][1]["rel"] + 3.5
     run(["ffmpeg", "-loglevel", "error", "-y", "-ss", str(tt), "-i", MP4_OUT, "-frames:v", "1", os.path.join(D, "motion-v2-vignette.jpg")])
     print("écrit", MP4_OUT, os.path.getsize(MP4_OUT) // (1024 * 1024), "Mo")
 

@@ -42,3 +42,5 @@ shared/video/motion-v2/_frames/
 shared/video/motion-v2/voix/
 shared/video/motion-v2/_rendre_images.py
 shared/video/motion-v2/voix-off.wav
+
+shared/video/motion-v2/_voix_parts/

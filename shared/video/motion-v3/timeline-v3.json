@@ -1,0 +1,254 @@
+{
+ "fps": 30,
+ "scenes": [
+  {
+   "id": "hook",
+   "mention": "",
+   "start": 0.0,
+   "dur": 15.912,
+   "segs": [
+    {
+     "text": "Vingt et un février deux mille vingt-cinq. Trois signataires valident un virement de routine.",
+     "rel": 0.15,
+     "start": 0.15,
+     "dur": 4.551,
+     "file": "/home/claude/mv3/voix-v3/00-00.wav"
+    },
+    {
+     "text": "Un milliard quatre cent soixante millions de dollars disparaissent.",
+     "rel": 4.921,
+     "start": 4.921,
+     "dur": 3.297,
+     "file": "/home/claude/mv3/voix-v3/00-01.wav"
+    },
+    {
+     "text": "Avril deux mille vingt-six. Drift : deux cent quatre-vingts millions, trente et un retraits en douze minutes.",
+     "rel": 8.438,
+     "start": 8.438,
+     "dur": 5.816,
+     "file": "/home/claude/mv3/voix-v3/00-02.wav"
+    },
+    {
+     "text": "Aucune clé volée.",
+     "rel": 14.474,
+     "start": 14.474,
+     "dur": 1.138,
+     "file": "/home/claude/mv3/voix-v3/00-03.wav"
+    }
+   ]
+  },
+  {
+   "id": "trou",
+   "mention": "",
+   "start": 15.912,
+   "dur": 10.08,
+   "segs": [
+    {
+     "text": "Le coffre multi-signatures a fait exactement ce qu'on lui demandait.",
+     "rel": 0.15,
+     "start": 16.062,
+     "dur": 3.193,
+     "file": "/home/claude/mv3/voix-v3/01-00.wav"
+    },
+    {
+     "text": "Il arrête une clé volée. Pas un mauvais paiement, validé de bonne foi.",
+     "rel": 3.563,
+     "start": 19.474,
+     "dur": 3.738,
+     "file": "/home/claude/mv3/voix-v3/01-01.wav"
+    },
+    {
+     "text": "La faille, ce sont les signataires.",
+     "rel": 7.521,
+     "start": 23.432,
+     "dur": 2.159,
+     "file": "/home/claude/mv3/voix-v3/01-02.wav"
+    }
+   ]
+  },
+  {
+   "id": "solution",
+   "mention": "",
+   "start": 25.992,
+   "dur": 14.671,
+   "segs": [
+    {
+     "text": "Breaker. La garde antifraude qui se greffe sur le coffre que vous avez déjà.",
+     "rel": 0.15,
+     "start": 26.142,
+     "dur": 3.819,
+     "file": "/home/claude/mv3/voix-v3/02-00.wav"
+    },
+    {
+     "text": "Chaque paiement est noté avant d'être exécuté. Sans friction. Une signature en plus. Ou mise en attente.",
+     "rel": 4.189,
+     "start": 30.181,
+     "dur": 6.093,
+     "file": "/home/claude/mv3/voix-v3/02-01.wav"
+    },
+    {
+     "text": "Breaker ne détient jamais les fonds. Vos signataires gardent le dernier mot.",
+     "rel": 10.503,
+     "start": 36.494,
+     "dur": 3.668,
+     "file": "/home/claude/mv3/voix-v3/02-02.wav"
+    }
+   ]
+  },
+  {
+   "id": "attaque",
+   "mention": "Avalanche Fuji · réseau de test · accéléré",
+   "start": 40.662,
+   "dur": 14.771,
+   "segs": [
+    {
+     "text": "Sur Avalanche, trois virements urgents vers une adresse jamais vue : deux cent quatre-vingt mille cinq cents.",
+     "rel": 0.15,
+     "start": 40.812,
+     "dur": 4.667,
+     "file": "/home/claude/mv3/voix-v3/03-00.wav"
+    },
+    {
+     "text": "En moins de dix secondes, chacun est mis en attente, inscrit sur la chaîne, et expliqué en français.",
+     "rel": 5.037,
+     "start": 45.7,
+     "dur": 5.027,
+     "file": "/home/claude/mv3/voix-v3/03-01.wav"
+    },
+    {
+     "text": "Il manque une signature : rien ne part. Zéro sorti.",
+     "rel": 10.284,
+     "start": 50.947,
+     "dur": 3.587,
+     "file": "/home/claude/mv3/voix-v3/03-02.wav"
+    }
+   ]
+  },
+  {
+   "id": "oracle",
+   "mention": "Avalanche Fuji · accéléré : 2 min 10 en réel",
+   "start": 55.434,
+   "dur": 5.979,
+   "segs": [
+    {
+     "text": "Le garde lit aussi le Web : adresse sous sanctions, l'attente reste, même avec trois signatures.",
+     "rel": 0.15,
+     "start": 55.584,
+     "dur": 5.329,
+     "file": "/home/claude/mv3/voix-v3/04-00.wav"
+    }
+   ]
+  },
+  {
+   "id": "drift",
+   "mention": "Avalanche Fuji · attaquant au seuil : 2 signatures sur 5",
+   "start": 61.412,
+   "dur": 7.33,
+   "segs": [
+    {
+     "text": "La cadence de Drift, avec le même seuil : deux signatures sur cinq. Trente et un retraits, zéro sorti.",
+     "rel": 0.15,
+     "start": 61.562,
+     "dur": 6.28,
+     "file": "/home/claude/mv3/voix-v3/05-00.wav"
+    }
+   ]
+  },
+  {
+   "id": "chiffres",
+   "mention": "jeu de test final · formes de fraude jamais vues · données synthétiques",
+   "start": 68.743,
+   "dur": 11.29,
+   "segs": [
+    {
+     "text": "Sur des fraudes qu'il n'avait jamais vues : quatre-vingt-onze pour cent des montants mis en attente.",
+     "rel": 0.15,
+     "start": 68.893,
+     "dur": 4.18,
+     "file": "/home/claude/mv3/voix-v3/06-00.wav"
+    },
+    {
+     "text": "Cinq virgule un pour cent de paiements légitimes retardés. Cinq secondes pour signaler. Un centime par alerte.",
+     "rel": 4.55,
+     "start": 73.292,
+     "dur": 6.14,
+     "file": "/home/claude/mv3/voix-v3/06-01.wav"
+    }
+   ]
+  },
+  {
+   "id": "marche",
+   "mention": "DeFiLlama 11/10/2026 · DeepDAO T1 2026 · Safe T1 2026",
+   "start": 80.033,
+   "dur": 20.112,
+   "segs": [
+    {
+     "text": "Notre cible : protocoles, DAO, startups et fonds crypto. Plus d'un million dans un coffre, et personne dont la sécurité est le métier.",
+     "rel": 0.15,
+     "start": 80.183,
+     "dur": 8.115,
+     "file": "/home/claude/mv3/voix-v3/07-00.wav"
+    },
+    {
+     "text": "Plus de mille trois cents organisations. Toutes ont déjà un coffre : aucune n'a à le déplacer.",
+     "rel": 8.485,
+     "start": 88.518,
+     "dur": 4.922,
+     "file": "/home/claude/mv3/voix-v3/07-01.wav"
+    },
+    {
+     "text": "Avalanche d'abord. Puis le même code sur une deuxième chaîne : un marché onze à dix-neuf fois plus grand.",
+     "rel": 13.627,
+     "start": 93.66,
+     "dur": 5.886,
+     "file": "/home/claude/mv3/voix-v3/07-02.wav"
+    }
+   ]
+  },
+  {
+   "id": "modele",
+   "mention": "prix HT · sans engagement",
+   "start": 100.145,
+   "dur": 10.965,
+   "segs": [
+    {
+     "text": "Trente jours d'observation gratuite. Puis cent quarante-neuf, quatre cent quarante-neuf ou neuf cent quatre-vingt-dix euros par mois.",
+     "rel": 0.15,
+     "start": 100.295,
+     "dur": 6.095,
+     "file": "/home/claude/mv3/voix-v3/08-00.wav"
+    },
+    {
+     "text": "Environ un dollar de coût par client. Point mort à dix clients Standard.",
+     "rel": 6.465,
+     "start": 106.61,
+     "dur": 3.9,
+     "file": "/home/claude/mv3/voix-v3/08-01.wav"
+    }
+   ]
+  },
+  {
+   "id": "fin",
+   "mention": "",
+   "start": 111.11,
+   "dur": 14.824,
+   "segs": [
+    {
+     "text": "Les quatre-vingt-dix prochains jours : dix organisations en observation. Le branchement sur Safe. Puis l'audit externe, avant le premier euro.",
+     "rel": 0.15,
+     "start": 111.26,
+     "dur": 8.161,
+     "file": "/home/claude/mv3/voix-v3/09-00.wav"
+    },
+    {
+     "text": "Prototype non audité, sur réseau de test. Breaker : gardez la main sur votre trésorerie.",
+     "rel": 8.531,
+     "start": 119.641,
+     "dur": 5.294,
+     "file": "/home/claude/mv3/voix-v3/09-01.wav"
+    }
+   ]
+  }
+ ],
+ "total": 126.435
+}
