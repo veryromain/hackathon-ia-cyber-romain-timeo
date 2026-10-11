@@ -1,0 +1,12 @@
+$ python -m agent.agent --mode cosignataire --web …   (paiement de 25 000 mUSD vers 0x098b716b8aaf21512996dc57eb0615e2383e2f96)
+
+agent · paiement 1 · immédiate · freiner · alerte step_up, signature refusée · 6.2 s
+  explication : Paiement de 25 000 MUSD vers un destinataire nouveau et hors carnet, proposé hors heures ouvrées : rien de frauduleux établi, mais la simulation est absente et le destinataire n'a aucune transaction émise. Une vérification humaine (identité du fournisseur et confirmation de la facture) est recommandée avant signature.
+
+agent · paiement 1 · après Web · refuser · alerte hold, signature refusée · 4.7 s
+  pages lues : https://etherscan.io/address/0x098B716B8Aaf21512996dC57EB0615e2383E2f96 , https://x.com/chainalysis/status/1514645222512377864 , https://basescan.org/address/0x098B716B8Aaf21512996dC57EB0615e2383E2f96
+  accusation retenue (sanctions, 2 sources) : « Today, OFAC added a new ETH address to Lazarus Group’s SDN entry as an identifier: 0x098B716B8Aaf21512996dC57EB0615e2383E2f96. »
+    source : https://x.com/chainalysis/status/1514645222512377864
+  explication : L'adresse destinataire figure sur la liste des sanctions OFAC (ajoutée à l'entrée SDN du groupe Lazarus), confirmée par deux sources avec une confiance de 0,95. Un paiement de 25 000 USD vers une adresse sanctionnée ne doit pas être signé, indépendamment du fait qu'il s'agisse d'un nouveau destinataire ou d'une proposition hors heures ouvrées.
+
+Durée réelle de bout en bout : 2 min 10 (08:13:44 → 08:15:54). Aucune signature écrite par l'agent.

@@ -1,0 +1,25 @@
+$ npm run agent:local
+Trésorerie : 1 000 000 mUSD. Agent cosignataire : 0x15d34AAf54267DB7D7c367839AAf71A00a2C6A65
+
+1. Facture habituelle à un fournisseur du carnet
+  paiement 0 proposé par un seul humain : 3 200 mUSD. L'agent instruit le dossier…
+  l'agent A COSIGNÉ ; risque : aucun ; 2/2 signatures
+  → paiement exécuté après le délai d'examen
+
+2. Même fournisseur, mais 60 % de la trésorerie d'un coup
+  paiement 1 proposé par un seul humain : 600 000 mUSD. L'agent instruit le dossier…
+  l'agent N'A PAS SIGNÉ ; risque : mise en attente ; 1/3 signatures
+  → paiement bloqué tant qu'un humain de plus ne signe pas
+
+3. Destinataire jamais vu
+  paiement 2 proposé par un seul humain : 4 800 mUSD. L'agent instruit le dossier…
+  l'agent N'A PAS SIGNÉ ; risque : signatures en plus ; 1/3 signatures
+  → paiement bloqué tant qu'un humain de plus ne signe pas
+
+Sorti : 3 200 mUSD (la facture habituelle). Paiements non signés par l'agent annulés : 2.
+
+# Dans le terminal de l'agent (python -m agent.agent --mode cosignataire …)
+Agent démarré en mode cosignataire, signataire 0x15d34aaf54267db7d7c367839aaf71a00a2c6a65 ; simulation sur http://127.0.0.1:8545 ; Web non
+agent · paiement   0 · immédiate · laisser  · cosignature · modèle us.anthropic.claude-opus-4-8 · 6.8 s
+agent · paiement   1 · immédiate · refuser  · alerte hold, signature refusée · modèle us.anthropic.claude-opus-4-8 · 5.4 s
+agent · paiement   2 · immédiate · freiner  · alerte step_up, signature refusée · modèle us.anthropic.claude-opus-4-8 · 5.8 s
