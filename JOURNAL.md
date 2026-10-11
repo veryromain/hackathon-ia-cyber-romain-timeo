@@ -12,6 +12,23 @@ Ajouter les entrées les plus récentes en haut.
 
 ---
 
+### 2026-10-11 09:00 — ia-2 / Timéo (avec Claude) — TOURNAGE : CHAÎNE LOCALE, RELAIS LOCAL ET AGENT LANCÉS SUR LE PC DE TIMÉO (PAS DE FUJI)
+- **Timéo filme lui-même quelques plans** (`Windows + Alt + R`). Je lui ai donné la liste : le site, l'agent cosignataire, l'agent qui lit le Web, et le tableau de bord en dernier.
+- **⚠️ Processus lancés sur le PC de Timéo pour le tournage, à ne pas arrêter :** une chaîne locale (port 8545), un relais **local** et l'agent en mode cosignataire. Ils écrivent dans `C:\Users\bvtim\breaker-video\`, hors du dépôt et hors de `shared/`. **Aucun relais Fuji lancé.** Le tableau de bord de 08:24 n'est pas touché.
+- `ia-2/deployments/localhost.json` (ignoré par Git) a été réécrit par ce déploiement local.
+
+### 2026-10-11 08:57 — ia-2 / Timéo (avec Codex) — SITE ZÉRO-SECRET : VERSION FINALE PRIVÉE V3 VÉRIFIÉE
+- **Fait :** les trois points demandés sont traités ; commit Sites `a7366264e1958fab7e66898b6770f4a773d7aeb3`, version v3 publiée et vérifiée, audience propriétaire conservée. Pas de publication publique ni de modification du dist équipe. Aucun secret dans le paquet ou les réponses contrôlées ; zéro variable côté hébergement.
+- **Contrôles :** `ia-2/site-vitrine/scripts/verify-static.py` et les quatre preuves `shared/site-{zero-secret-corrections.md,publication-validation.json,production-validation.json,final-deployment.json}`. La métadonnée Sites est requise dans l’archive et n’est pas exposée par les chemins testés. HTTP 200 de repli = page d’accueil, pas fichier sensible.
+- **Coordination :** la publication privée sert au contrôle demandé par Tim, pas à un livrable obligatoire ; aucune ouverture jury/publique faite. Les clés futures restent côté serveur/service de signature. L’entrée Codex précédente a subi un problème d’encodage dans la console ; cette entrée et le rapport UTF-8 font foi.
+
+
+### 2026-10-11 08:55 ? ia-2 / Tim?o (avec Codex) ? SITE : TROIS POINTS Z?RO-SECRET TRAIT?S
+- **Fait :** vitrine actuelle publi?e en priv? ; paquet natif valid?, 318 variantes de secrets contr?l?es, aucune d?tection. JS/CSS de production identiques aux sources ; HTML identique hors ajout de d?tection Cloudflare. Les chemins .env/.git/.openai/README/scripts renvoient seulement la page d?accueil (HTTP200 de repli), aucun fichier demand? expos?.
+- **Protection :** nouveau `ia-2/site-vitrine/scripts/verify-static.py`, liste ferm?e de fichiers, motifs/valeurs de secrets et contr?le archive/production. Aucune cl? ajout?e au navigateur ni ? l?h?bergement. M?tadonn?e .openai exig?e dans archive par Sites, mais non expos?e.
+- **Preuves :** `shared/site-zero-secret-corrections.md`, `shared/site-publication-validation.json`, `shared/site-production-validation.json`. Aucun changement au dist ou README ?quipe. Site reste propri?taire seul : ouverture jury s?par?e.
+
+
 ### 2026-10-11 08:53 — ia-2 / Timéo (avec Claude) — MATIÈRE DE LA VIDÉO DANS shared/video (IMAGES ET TERMINAUX RÉELS, PAS DE CAPTURE D'ÉCRAN FILMÉE)
 - **Matière de la vidéo rassemblée dans `shared/video/`** (demande de Timéo : « je te laisse enregistrer »). Trois fiches du tableau de bord en image (paiements 10, 12 et 13 de la démo Fuji de 08:25) et trois sorties réelles de terminal en texte (l'agent qui lit le Web, l'agent cosignataire, les 31 retraits à la cadence de Drift). Chaque fichier est rattaché à un plan de `shared/plan-video-motion.md` dans `shared/video/README.md`.
 - **Ce que je n'ai pas pu faire : une capture vidéo de l'écran.** Je n'ai pas d'enregistreur (pas de ffmpeg sur ce PC) ; je ne produis que des images fixes et du texte. Pour une séquence filmée, Timéo peut utiliser `Windows + Alt + R`.
