@@ -1,8 +1,8 @@
 # Évolution de Breaker après le benchmark concurrentiel
 
-11 octobre 2026 — recommandations Codex à l'équipe. Source fournie : `Downloads/business-concurrence.md`, complétée par le benchmark P1, le code courant et les documentations officielles. Les recommandations ne sont pas des choix de conception déjà approuvés.
+11 octobre 2026 — note Codex à l'équipe. Source fournie : `Downloads/business-concurrence.md`, complétée par le benchmark P1, le code courant et les documentations officielles. Les décisions explicites de Tim sur les modes, la dérogation et le retrait du garde sont distinguées ci-dessous des recommandations restantes.
 
-Les orientations exprimées par l'utilisateur sont : ajouter avec Timéo une capacité d'analyse/simulation et de signataire automatique ; conserver la protection sous contrainte, la lecture Web et des explications simples ; rester sur Avalanche en priorité ; laisser le prix et le multichaîne pour la suite. La question blocage/ralentissement reste ouverte.
+Les orientations exprimées par l'utilisateur sont : ajouter avec Timéo une capacité d'analyse/simulation et de signataire automatique ; conserver la protection sous contrainte, la lecture Web et des explications simples ; rester sur Avalanche en priorité ; laisser le prix et le multichaîne pour la suite. Tim a désormais fixé le principe : deux modes au choix du client : Protection et Cosignataire, aucun blocage par défaut, et dérogation humaine renforcée après délai même en mode cosignataire.
 
 ## Positionnement recommandé
 
@@ -14,7 +14,9 @@ Ne pas concurrencer au départ une plateforme de conservation MPC, un SOC géné
 
 ## Pouvoir de décision des agents
 
-Conserver la friction graduée par défaut ; permettre un refus automatique sur des violations de règles explicites. Éviter un veto permanent fondé sur une accusation Web isolée ou un score de modèle.
+**Décision de Tim : l'agent cosignataire ne bloque pas par défaut. Le client choisit entre Protection et Cosignataire ; Observation est retiré des modes produit. Même en mode cosignataire, une dérogation humaine renforcée reste possible après délai.** Protection : analyse et alertes, attente et signatures humaines renforcées selon le risque. Cosignataire : signature automatique de sécurité selon les règles choisies, sans remplacer les signatures humaines. Les droits précis, les délais et les quorums restent à formaliser.
+
+Un refus de cosignature dans le mode choisi suspend l'approbation automatique, sans donner à Breaker un veto définitif. La dérogation concerne une transaction précise ; elle exige un quorum humain renforcé, le délai prévu et une trace de la décision. Le délai seul ne déclenche jamais un paiement. Les réponses du tableau ci-dessous sont des règles candidates à adapter au mode choisi, pas un blocage imposé par défaut.
 
 | Situation | Réponse proposée |
 |---|---|
@@ -26,7 +28,9 @@ Conserver la friction graduée par défaut ; permettre un refus automatique sur 
 
 La dernière ligne implique une revue des interactions entre dérogation et protection sous contrainte. Aucun délai chiffré ou quorum de récupération n'est fixé ici.
 
-Blockaid décrit une règle de rejet des menaces malveillantes non dérogeable. Notre proposition ne doit donc pas être présentée comme une reproduction identique de Cosigner. [Recommended Policies](https://blockaid.io/blog/introducing-recommended-policies-for-cosigner-onchain-operational-security-powered-by-ai).
+Blockaid décrit une règle de rejet des menaces malveillantes non dérogeable. La différence adoptée pour Breaker est le choix du mode par le client et un dernier recours humain protégé, même en mode cosignataire. Cette comparaison porte sur cette politique documentée, pas sur tous les parcours de tous les concurrents. [Recommended Policies](https://blockaid.io/blog/introducing-recommended-policies-for-cosigner-onchain-operational-security-powered-by-ai).
+
+Ce choix structure la réponse à « qui décide ? » : le client fixe la politique et les personnes habilitées assument une dérogation explicite ; Breaker fournit l'analyse et applique le cadre convenu. Cela ne décharge pas le fournisseur de ses propres défaillances. La maîtrise finale par le client et l'absence de pouvoir autonome de transfert sont des objectifs d'architecture ; la qualification juridique « hors garde de fonds » ne découle pas à elle seule du nom des modes. MiCA définit la garde notamment par le contrôle des actifs ou des moyens d'accès : les droits effectifs doivent donc être examinés. [MiCA, article 3(1)(17), ESMA](https://www.esma.europa.eu/publications-and-data/interactive-single-rulebook/mica/article-3-definitions).
 
 Architecture à préciser avec Timéo : **moteur EVM de simulation → faits vérifiables → agents d'analyse → moteur de règles → action et explication**. Un modèle de langage ne doit ni inventer les effets d'exécution ni manipuler directement une clé de signature. Les résultats de simulation incluent notamment traces, variations de soldes et stockage. [Tenderly](https://docs.tenderly.co/simulations/overview).
 
@@ -60,7 +64,9 @@ Réserver scores, traces et détails techniques à une vue secondaire. Afficher 
 
 Séparer **résiliation commerciale**, **désactivation technique** et **dérogation pour un paiement**. Le paiement de l'abonnement ne doit jamais conditionner l'accès aux fonds ou aux preuves existantes.
 
-Recommandation : remplacement/révocation du signataire automatique ou du moniteur par une gouvernance client renforcée et temporisée ; notifications à tous ; export des politiques, preuves et journaux ; parcours utilisable sans serveur, API ou accord de Breaker. La récupération doit fonctionner même si le composant défaillant refuse toutes les transactions. Safe avertit qu'un guard cassé peut provoquer un déni de service et demande d'examiner audit et récupération. [Safe Guards](https://docs.safe.global/advanced/smart-account-guards).
+**Décision de Tim : retirer ou affaiblir le garde passe par la procédure d'un paiement, jamais en une transaction.** Il faut une proposition explicite, les approbations humaines requises, l'attente prévue puis une exécution distincte. Un bouton administrateur, un appel groupé ou un changement de mode ne doit pas permettre de contourner cette procédure. L'application à une baisse de quorum, une réduction de délai ou une nouvelle exception est à intégrer au périmètre des changements qui affaiblissent la protection.
+
+Recommandations complémentaires : notifications à tous ; export des politiques, preuves et journaux ; parcours utilisable sans serveur, API ou accord de Breaker. La récupération doit fonctionner même si le composant défaillant refuse toutes les transactions : sa propre approbation ne peut être une condition du recours humain après délai. Safe avertit qu'un guard cassé peut provoquer un déni de service et demande d'examiner audit et récupération. [Safe Guards](https://docs.safe.global/advanced/smart-account-guards).
 
 **Écart du prototype :** `riskOracle` et `registry` sont immuables dans `ia-2/contracts/TreasuryGuard.sol` ; aucune fonction dédiée de remplacement/désactivation. Le recours unanime sur les paiements raccourcit le délai ordinaire mais ne retire pas ces dépendances. Les fonds peuvent suivre les chemins de paiement autorisés ; cela ne démontre pas une sortie d'urgence indépendante et robuste. Remplacement, récupération et effet de signataires indisponibles doivent être conçus/testés avant l'offre commerciale.
 
@@ -96,4 +102,4 @@ Prix laissé ouvert conformément à la demande. B6 devra inclure collecte Web, 
 4. Quelques pilotes Avalanche, validation de l'effort opérationnel et de la volonté de payer.
 5. Tarification, inscription plus autonome puis extension à d'autres chaînes demandée par les clients.
 
-Le prototype, les choix commerciaux et les travaux en cours de Timéo ne sont pas modifiés par cette note.
+Cette mise à jour documente les décisions de Tim ; elle ne modifie pas le prototype. Les recommandations commerciales précédentes restent à rapprocher des décisions de Romain inscrites dans JOURNAL.md (01:16 : libre-service, observation gratuite et démo secondaire), qui priment sur la proposition de démarrage par démo figurant plus haut.
