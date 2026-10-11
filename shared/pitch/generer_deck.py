@@ -274,10 +274,10 @@ for i, (n, p, u, grad, gc, d, star) in enumerate([
     text(s, x + Inches(0.3), y + Inches(1.15), w - Inches(0.5), Inches(0.4), grad, size=15, color=gc, font=DISPLAY, bold=True)
     text(s, x + Inches(0.3), y + Inches(1.55), w - Inches(0.5), h - Inches(1.65), d, size=10.5, color=MUTED, spacing=1.12)
 rows(s, [["Pourquoi ces prix", ""],
-         ["449 €", "5 % de la perte annuelle évitée (9,5 % d'incidents × 1,3 M$ médiane × 91 % ≈ 112 k$/an) · repère : Safe Pro Business, 669 €/mois"],
-         ["990 €", "10 % de la perte évitée, le plafond : le seul niveau où quelqu'un dit non à votre place quand tous vos signataires sont trompés · repère : Fireblocks, 999 $/mois"],
+         ["449 €", "5 % de la perte évitée, borne haute (9,5 % × 1,3 M$ × 91 % ≈ 112 k$/an) · 0,05 à 0,5 % de la trésorerie par an · repère : Safe Pro Business 669 €"],
+         ["990 €", "10 % de la perte évitée, le plafond : le seul niveau où quelqu'un dit non à votre place quand tous vos signataires sont trompés · repère : Fireblocks 999 $"],
          ["Entreprise", "sur devis : plusieurs entités, audit, intégrations · coût marginal ≈ 1,2 $/client/mois : la valeur dicte le prix"]],
-     y=Inches(5.25), col_w=[Inches(1.6), W - 2 * M - Inches(1.6)], h_row=Inches(0.34), size=11)
+     y=Inches(5.22), col_w=[Inches(1.4), W - 2 * M - Inches(1.4)], h_row=Inches(0.36), size=10.5)
 notes(s, """[3:50 → 4:20]  ROMAIN
 « Safe vient de lancer Safe Pro : 669 euros par mois pour des règles que vous écrivez vous-même. Nous, nous détectons ce que vous n'avez pas prévu, et nous l'expliquons.
 Observation gratuite 30 jours : rien ne change à vos paiements. Puis trois niveaux, selon le pouvoir que vous nous déléguez : Essentiel, 149 euros, une personne de plus sur les paiements inhabituels. Standard, 449 euros, du temps : la mise en attente, et la protection de la personne. Premium, 990 euros, un refus : un agent qui occupe un siège de signataire et peut dire non à votre place. Sans engagement.
@@ -290,10 +290,12 @@ POURQUOI UN CLIENT PAIE 990 € PLUTÔT QUE 449 € (si on nous le demande) :
 • Garde-fou : même en Premium, l'agent n'a jamais de veto définitif : dérogation humaine renforcée après délai (décision Timéo, shared/decisions.md).
 
 LE CALCUL DE LA PERTE ANNUELLE ÉVITÉE (shared/business-prix.md § 1.B) :
-• 9,5 % : TRM Labs compte ≈ 150 incidents significatifs en 2025, rapportés aux 1 579 organisations ≥ 1 M$ (1 359 protocoles > 1 M$ d'actifs, API DeFiLlama, + 220 DAO > 1 M$, DeepDAO). Borne haute : on montre aussi le cas « un incident sur cinq dans notre périmètre » (22 k$).
-• 1,3 M$ : perte médiane des incidents significatifs de 2025 selon TRM Labs (la moitié coûtent plus, la moitié moins). Immunefi donne 1,5 M$ en DeFi ; CertiK 104 k$ mais sur plus de 700 incidents dont beaucoup de petits. On prend TRM, dont le périmètre ressemble au nôtre.
+• 9,5 % : TRM Labs compte ≈ 150 hacks et exploits en 2025 (2,87 Md$), rapportés aux 1 579 organisations ≥ 1 M$ (1 359 protocoles > 1 M$, API DeFiLlama, + 220 DAO > 1 M$, DeepDAO). Borne haute : les 150 incidents couvrent toutes les victimes, plateformes centralisées comprises.
+• 1,3 M$ : perte médiane des 150 incidents TRM, toutes victimes confondues (moyenne 19,5 M$, tirée par Bybit). Pas une médiane « organisations de 1 à 10 M$ » : cette donnée n'existe pas publiquement. Immunefi donne 1,5 M$ sur les seuls protocoles DeFi, la population la plus proche de la nôtre ; CertiK 104 k$ mais en comptant le phishing d'individus. Pour une organisation de 1 à 10 M$, une fraude de signataires vide le coffre : 1,3 M$ est le bas de la fourchette.
 • 91 % : part des montants frauduleux mis en attente sur le jeu final préparé à l'aveugle (shared/mesures.md).
-• 9,5 % × 1,3 M$ × 91 % ≈ 112 k$/an.
+• 9,5 % × 1,3 M$ × 91 % ≈ 112 k$/an en borne haute. Dans le seul périmètre de Breaker (attaques d'infrastructure TRM : clés, accès, front-ends = 45 incidents sur 150, 76 % de la valeur volée) : 2,9 % × 1,3 M$ × 91 % ≈ 34 k$/an, et Standard représente alors 16 %.
+
+SI « SUR QUELLE POPULATION ? » OU « VOS 5 % TIENNENT-ILS ? » : « Les 5 % sont une borne haute, calculée sur toutes les victimes de 2025. La lecture la plus solide pour notre cible est par trésorerie : si l'incident arrive, vous perdez le coffre. Avec 2,9 % d'incidents dans notre périmètre et 91 % retenus, on vous évite 2,6 % de votre trésorerie par an ; Standard coûte 0,05 à 0,5 % de cette trésorerie. La règle des 10 % est respectée dès 2 M$ pour Standard, dès 5 M$ pour Premium, dès 0,7 M$ pour Essentiel : c'est pour ça que les paliers suivent la taille. »
 
 Différence en une phrase : « Vous avez déjà le coffre. Il vous manque quelqu'un qui regarde chaque paiement et vous dit, en français, quand quelque chose ne colle pas. »""")
 

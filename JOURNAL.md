@@ -12,6 +12,11 @@ Ajouter les entrées les plus récentes en haut.
 
 ---
 
+### 2026-10-11 10:44 — Romain (avec Claude) — POPULATION DES CHIFFRES DE PERTE PRÉCISÉE (D7, prix, diapo 6)
+- **Question de Romain :** les 123 500 $ de perte attendue et la médiane de 1,3 M$ portent-ils sur notre cible (1 à 10 M$ de trésorerie) ? **Réponse : non.** Vérifié sur le rapport TRM 2026 : ≈ 150 hacks en 2025, 2,87 Md$, **toutes victimes** (Bybit, Nobitex, protocoles, infrastructures) ; médiane 1,3 M$ sur ces 150 ; moyenne 19,5 M$. Par vecteur : attaques d'infrastructure (clés, accès privilégiés, front-ends = notre périmètre) **45 incidents, 76 % de la valeur** ; exploits de code 52 ; attaques de protocole 25. Immunefi 1,5 M$ = protocoles DeFi seuls (population la plus proche de nous).
+- **Modifs :** D7 détaillé dans `business-marche.md` ; § 1.B de `business-prix.md` réécrit (populations, H5 sourcée à 30 % des incidents, trois lectures 112 / 34 / 22 k$, **lecture par trésorerie : 2,6 % de T évités par an, règle des 10 % tenue dès 0,7 M$ Essentiel / 2,1 M$ Standard / 4,6 M$ Premium**) ; diapo 6 : ligne « 449 € » dit « borne haute » et « 0,05 à 0,5 % de la trésorerie par an », notes orateur refaites avec la réponse au jury ; HTML et `pitch-final.md` (Q&A) alignés.
+- **À dire au jury :** « 5 % en borne haute ; la lecture solide est par trésorerie : une fraude de signataires vide le coffre. »
+
 ### 2026-10-11 10:40 — Romain (avec Claude) — V2 DU MOTION DESIGN : MP4 AVEC VOIX OFF, RYTHME « TYPOGRAPHIE CINÉTIQUE »
 - **Livrable L1 : `shared/video/motion-v2/motion-v2.mp4`** (1080p, 30 i/s, 2 min 55, voix off incluse). Même page en autonome : `motion-v2.html` (Chrome, Espace). C'est lui qui se lance à la diapo 5. La v1 reste pour l'historique.
 - **Forme :** Romain a donné trois reels de motion design comme référence de rythme (un ou deux mots géants par coupe, flou de mouvement, chiffres incarnés par des bulles, HUD monospace, cercles concentriques, bandeau « MISE EN ATTENTE » répété, grain). **La charte reste celle du site** (bleu nuit, vert citron, bleu clair / ambre pour les réponses, verre, Manrope / DM Sans / Plex Mono, logo). Rien des reels n'est copié, seulement le tempo.

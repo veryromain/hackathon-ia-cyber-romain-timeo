@@ -4,7 +4,7 @@
 > Légende : ✅ fait · 🔄 en cours · ⬜ à faire · ✂️ coupé (manque de temps)
 > Détail du projet : [`PLAN.md`](PLAN.md) · Historique : [`JOURNAL.md`](JOURNAL.md) · Brief : [`CONTEXTE.md`](CONTEXTE.md)
 
-**Dernière mise à jour :** 2026-10-11 10:40, par Claude (Romain) — **L1 livré** : motion design v2 en mp4 avec voix off (`shared/video/motion-v2/motion-v2.mp4`, 2 min 55), à regarder avec le son
+**Dernière mise à jour :** 2026-10-11 10:44, par Claude (Romain) — population des chiffres de perte précisée (D7, prix § 1.B, diapo 6) ; cible au seuil 1 M$ ; bandeau clé d'identité froide
 **Rendu (gel définitif) :** dim. 11/10 **12:00** · **Checkpoint :** sam. **18:30** · **Pitch :** dim. 13:00
 
 ---
