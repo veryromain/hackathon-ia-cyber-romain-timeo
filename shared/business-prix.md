@@ -4,7 +4,7 @@
 
 ## 1. Les trois ancrages d'un prix
 
-**A. Ce que le même acheteur paie déjà pour le même besoin (D8, D9).** Notre client a un Safe. Depuis le 8 octobre 2026, Safe lui vend Safe Pro : 189 €/mois (Starter) ou dès 669 €/mois (Business, avec les politiques de transaction). Au-dessus, Fireblocks à 999 $/mois. **Règle R1 : un complément de sécurité à Safe doit coûter moins que le palier Safe correspondant**, sinon le client arbitre contre nous. On se place à **70 à 80 % du palier Safe**.
+**A. Le prix de référence dans la tête du client (D8, D9).** Notre client a un Safe. Depuis le 8 octobre 2026, Safe lui vend Safe Pro : 189 €/mois (Starter) ou dès 669 €/mois (Business, avec les politiques de transaction). Au-dessus, Fireblocks à 999 $/mois. **Règle R1 (corrigée le 11/10 à la demande de Romain) : Safe Pro est le prix de référence que le client connaît, pas notre plafond.** Breaker n'est pas un « complément » de Safe : c'est un **service de sécurité à part entière** (détection de ce que le client n'a pas prévu, voir `shared/business-safe-et-differenciation.md`), qui **se branche sur le Safe existant**. Safe Pro vend des règles que le client écrit ; nous vendons la détection de l'imprévu. On se place donc au voisinage de Safe Pro, et c'est la valeur (R2) qui justifie le chiffre, pas une décote.
 
 **B. La valeur : ce que le client évite de perdre.**
 - Probabilité qu'une organisation subisse un incident significatif dans l'année : C : 150 incidents significatifs en 2025 (D7, TRM) / population d'organisations avec ≥ 1 M$ ≈ 1 359 protocoles > 1 M$ + 220 DAO ≈ 1 579 (D1, D4) = **≈ 9,5 % par an**, borne haute (tous les incidents ne sont pas des fraudes de signataires ; **H5** : la part dans notre périmètre est inconnue, on la montre à 20 % et à 100 %).
@@ -30,22 +30,23 @@
 | Palier | Pour qui | Ce qui est inclus | Prix / mois HT | Justification |
 |---|---|---|---|---|
 | **Observation** | tout nouveau client, 30 jours | détection et explications en lecture seule, rapport de fin d'observation | **0 €** | D10 : l'essai gratuit sans carte est le parcours qui convertit en B2B ; c'est aussi notre preuve d'efficacité sur les données du client |
-| **Essentiel** | 1 multisig, trésorerie < 1 M$ | friction (signature en plus, mise en attente), explications, listes publiques (OFAC, ScamSniffer), notifications | **149 €** | R1 : 79 % de Safe Starter (189 €) |
-| **Standard** | jusqu'à 5 multisigs, 1 à 10 M$ | Essentiel + oracle Web, traçage des fonds, adresses sosies et pièges, clé d'identité, rapport mensuel | **449 €** | R1 : 67 % de Safe Business (669 €) ; R2 : 5,4 k€/an = 5 % de la perte évitée à périmètre complet, 25 % à périmètre H5 |
-| **Avancé** | > 10 M$ ou plus de 5 multisigs | Standard + mode cosignataire (agent qui refuse, dérogation humaine), réglages sur mesure, support prioritaire, engagement de disponibilité | **990 €** | D9 : l'alternative à ce niveau est Fireblocks Essentials (999 $) |
-| **Entreprise** | fonds, fondations, plusieurs entités | Avancé + audit, intégrations, contrat | sur devis | comme Safe Enterprise et Guardian |
+| **Essentiel** | 1 multisig, trésorerie < 1 M$ | friction (signature en plus, mise en attente), explications, listes publiques (OFAC, ScamSniffer), notifications | **149 €** | R1 : au voisinage de Safe Starter (189 €), pour une trésorerie où R2 plafonne bas |
+| **Standard** | jusqu'à 5 multisigs, 1 à 10 M$ | Essentiel + oracle Web, traçage des fonds, adresses sosies et pièges, clé d'identité, rapport mensuel | **449 €** | R2 : 5,4 k€/an = 5 % de la perte évitée à périmètre complet, 25 % à périmètre H5 ; R1 : sous Safe Business (669 €), le repère du client. Option ouverte : 669 € reste dans la fourchette de valeur (170-850 €) |
+| **Premium** | > 10 M$ ou plus de 5 multisigs | Standard + mode cosignataire (agent qui refuse, dérogation humaine), réglages sur mesure, support prioritaire, engagement de disponibilité | **990 €** | D9 : l'alternative à ce niveau est Fireblocks Essentials (999 $) |
+| **Entreprise** | fonds, fondations, plusieurs entités | Premium + audit, intégrations, contrat | sur devis | comme Safe Enterprise et Guardian |
 
 Tous les paliers : sans engagement, mensuel, données exportables (décision « aucun verrou commercial »). Remise ≈ 10 % en annuel, comme Safe Pro (D8).
 
 ## 3. Rentabilité : point mort et chiffre d'affaires selon le SOM
 
 **H8** : coûts fixes = deux fondateurs à 3 500 €/mois chacun + 300 € d'infrastructure = **7 300 €/mois**.
-- **Point mort** : C : 7 300 / 449 ≈ **17 clients Standard** (ou 8 clients Avancé, ou 49 Essentiel).
+- **Point mort** : C : 7 300 / 449 ≈ **17 clients Standard** (ou 8 clients Premium, ou 49 Essentiel).
 - **SOM année 1 (B3)** : 3 à 6 clients payants par l'écosystème Avalanche → 16 à 32 k€/an : **l'année 1 ne couvre pas les fondateurs**. C'est attendu pour un amorçage ; il faut soit des subventions (Avalanche, Bpifrance, mentionnés par les mentors), soit l'ouverture EVM (× 6 à 8 sur le SAM) pour atteindre le point mort en année 2.
 - **À 17 clients Standard**, la marge brute est > 95 % (coût marginal < 20 €).
 
 ## 4. Ce que le jury demandera
-- **« Pourquoi 449 € ? »** Parce que le client paie déjà 669 € à Safe pour le palier qui inclut les politiques, qu'un complément doit coûter moins, et que 449 €/mois représente 5 % de la perte annuelle qu'il évite, borne basse.
+- **« Pourquoi 449 € ? »** Parce que 449 €/mois représente 5 % de la perte annuelle que le client évite (borne basse), et que c'est au voisinage de ce qu'il connaît déjà (Safe Business, 669 €) pour un service d'une autre nature : Safe Pro applique les règles qu'il écrit, Breaker détecte ce qu'il n'a pas prévu.
+- **« Vous êtes un module de Safe ? »** Non : un service de sécurité à part entière, qui se branche sur le Safe existant (mécanisme « Guard » prévu par Safe) pour que le client n'ait pas à déplacer sa trésorerie. Détail et sources : `shared/business-safe-et-differenciation.md`.
 - **« Pourquoi pas moins cher, vu votre coût marginal ? »** Parce que le prix vend la valeur, pas le coût ; et qu'en dessous de 100 €, Safe Shield gratuit suffit au client.
 - **« Qui paie quoi dans l'équipe ? »** Le client paie l'abonnement ; nous payons le gas des alertes (0,002 $) et l'IA (0,01 $) : ça tient dans le prix sans ligne de frais cachée.
 - **« Et si personne ne convertit ? »** Alors le mode observation nous aura quand même donné les données réelles, et on révise la cible ou le prix en B8. L'hypothèse H4 (50 % acceptent l'observation) est celle à tester en premier en B5.

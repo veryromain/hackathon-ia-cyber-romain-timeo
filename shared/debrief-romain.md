@@ -2,7 +2,10 @@
 
 > À lire par le Claude de Timéo à chaque débrief. Un paragraphe par quart d'heure, le plus récent en haut.
 
-## Dernier quart d'heure — 11/10 07:43
+## Dernier quart d'heure — 11/10 08:05
+Romain a validé l'étude de marché (B3 v2) et la grille de prix (B6). Décisions : le palier haut s'appelle **Premium** (990 €) ; Breaker n'est pas un « complément » de Safe mais un **service de sécurité à part entière qui se branche sur le Safe existant** ; R1 réécrite. Nouveau doc sourcé `shared/business-safe-et-differenciation.md` (ce qu'est Safe, Safe Apps, Safe Guard, Safe Pro/Shield, 6 différences de Breaker avec preuve dans le dépôt). **Pour Timéo :** rien à faire ce week-end ; noter en feuille de route (B7) le portage de la garde en **Safe Guard** (`checkTransaction`) pour tenir « se branche sur votre Safe ». Dans le pitch : « démontré sur notre multisig, portage Safe Guard en feuille de route ».
+
+## Quart d'heure précédent — 11/10 07:43
 Romain a réécrit B3 (marché) avec la règle « aucun chiffre arbitraire » : données primaires (API DeFiLlama, Safe Pro, CertiK/TRM, DeepDAO repris), hypothèses nommées, TAM 675-895 organisations en borne basse, SAM Avalanche 32-121, SOM 3 à 6 clients payants en année 1 par entonnoir explicite. Et B6 (prix) : Observation gratuite 30 j, Essentiel 149 €, Standard 449 €, Avancé 990 €, Entreprise sur devis, ancrés sur Safe Pro (189/669 €), la perte annuelle évitée et un coût marginal de ≈ 1,2 $/client. Pour Timéo : les paliers sont prêts pour le site vitrine ; rien de technique.
 
 ## Quart d'heure précédent — 11/10 01:26
