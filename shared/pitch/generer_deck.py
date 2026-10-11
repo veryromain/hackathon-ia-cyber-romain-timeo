@@ -189,18 +189,18 @@ ROMAIN
 « Conséquence : les grandes plateformes se paient des équipes de sécurité et des outils à 36 000 dollars par an. Les autres, l'immense majorité, n'ont rien, à aucun prix. »""")
 
 # 3. Cible — ROMAIN
-s = base(("Cible", "les organisations qui ont une trésorerie et pas d'équipe sécurité"), 3, who="ROMAIN")
+s = base(("Cible", "toute organisation avec plus de 1 M$ de trésorerie et pas d'équipe sécurité"), 3, who="ROMAIN")
 title(s, "Pour les équipes compactes aux trésoreries importantes", size=36)
-tiles(s, [("675", "protocoles > 10 M$ d'actifs gérés, toutes chaînes (API DeFiLlama, 11/10/2026)", INK),
+tiles(s, [("1 359", "protocoles > 1 M$ d'actifs gérés, toutes chaînes, dont 675 > 10 M$ (API DeFiLlama, 11/10/2026)", INK),
           ("≈ 220", "DAO avec plus de 1 M$ de trésorerie (DeepDAO, T1 2026)", INK),
-          ("32 – 121", "organisations adressables sur Avalanche (protocoles > 10 M$, équipes de L1)", ACCENT),
-          ("675 – 895", "sur les chaînes EVM, borne basse (fonds et fondations exclus, faute de source)", INK)], y=Inches(2.6), h=Inches(2.0), value_size=30)
-text(s, M, Inches(4.95), W - 2 * M, Inches(1.1), [[("Protocoles, DAO, startups et fonds crypto : 1 à 10 M$ dans un Safe, zéro personne dont c'est le métier. ", {"color": INK, "bold": True}), ("Tous ont déjà un coffre : Safe sécurise 35 Md$ sur 61 millions de comptes. Aucun ne déplacera sa trésorerie pour un essai.", {})]], size=16, color=MUTED)
+          ("81 – 121", "organisations adressables sur Avalanche (71 protocoles > 1 M$, 10 à 50 équipes de L1)", ACCENT),
+          ("1 359 – 1 579", "sur les chaînes EVM, borne basse (fonds et fondations exclus, faute de source)", INK)], y=Inches(2.6), h=Inches(2.0), value_size=24)
+text(s, M, Inches(4.95), W - 2 * M, Inches(1.1), [[("Protocoles, DAO, startups et fonds crypto : plus de 1 M$ dans un Safe, zéro personne dont c'est le métier. ", {"color": INK, "bold": True}), ("Tous ont déjà un coffre : Safe sécurise 35 Md$ sur 61 millions de comptes. Aucun ne déplacera sa trésorerie pour un essai.", {})]], size=16, color=MUTED)
 notes(s, """[1:20 → 2:00]  ROMAIN
-« Les autres, ce sont les équipes de protocoles, les DAO, les startups et les fonds crypto : une trésorerie de un à dix millions dans un coffre multi-signatures, le plus souvent un Safe, et zéro personne dont c'est le métier. Il y en a au moins 675 à 895 sur les chaînes compatibles Ethereum. Sur Avalanche, où nous sommes nés, entre 32 et 121. Ces chiffres viennent de l'API DeFiLlama lue hier et de DeepDAO ; les calculs sont dans le dépôt. »
+« Les autres, ce sont les équipes de protocoles, les DAO, les startups et les fonds crypto : une trésorerie de plus d'un million dans un coffre multi-signatures, le plus souvent un Safe, et zéro personne dont c'est le métier. Il y en a au moins 1 359 à 1 579 sur les chaînes compatibles Ethereum. Sur Avalanche, où nous sommes nés, entre 81 et 121. Ces chiffres viennent de l'API DeFiLlama lue hier et de DeepDAO ; les calculs sont dans le dépôt. »
 (passer la main : « Timéo, qu'est-ce qu'on leur apporte ? »)
 
-Si question sur la méthode : comptage par seuil de TVL, hypothèse H1 (protocole > 10 M$ ⇒ trésorerie ≥ 1 M$), script reproductible dans shared/business-marche.md § 5.""")
+Si question sur la méthode : comptage par seuil de TVL, hypothèse H1 révisée le 11/10 (protocole > 1 M$ d'actifs ⇒ trésorerie ≥ 1 M$ ; borne prudente > 10 M$ : 675 protocoles, 22 sur Avalanche), script reproductible dans shared/business-marche.md § 5.""")
 
 # 4. Solution — TIMÉO
 s = base(("Solution", "Breaker n'est pas un coffre"), 4, who="TIMÉO")
@@ -299,21 +299,21 @@ Différence en une phrase : « Vous avez déjà le coffre. Il vous manque quelqu
 
 # 7. Marché — ROMAIN
 s = base(("Mise sur le marché", "aucun pourcentage de part de marché : un entonnoir, chaque étape sourcée"), 7, who="ROMAIN")
-title(s, "Première année : 62 organisations présentées, 3 à 6 clients payants.", size=32)
-flow(s, [("62 contactables", "Retro9000 30 + équipes de L1 10 + protocoles > 10 M$ sur Avalanche 22, présentées par l'écosystème"),
-         ("31 en observation", "× 50 % : une équipe sur deux accepte l'essai gratuit ; seule hypothèse non sourcée, mesurée dès octobre"),
-         ("3 à 6 payants", "× 8,9 – 18,5 % : conversion essai → payant du SaaS B2B sans carte bancaire")], y=Inches(2.4), h=Inches(1.5), highlight=(2,))
+title(s, "Première année : 111 organisations présentées, 5 à 10 clients payants.", size=32)
+flow(s, [("111 contactables", "Retro9000 30 + équipes de L1 10 + protocoles > 1 M$ sur Avalanche 71, présentées par l'écosystème"),
+         ("56 en observation", "× 50 % : une équipe sur deux accepte l'essai gratuit ; seule hypothèse non sourcée, mesurée dès octobre"),
+         ("5 à 10 payants", "× 8,9 – 18,5 % : conversion essai → payant du SaaS B2B sans carte bancaire")], y=Inches(2.4), h=Inches(1.5), highlight=(2,))
 rows(s, [["Quand", "Jalon"],
          ["oct. 2026", "dépôt public · ≥ 10 organisations en observation · dossier subvention"],
          ["nov. – déc.", "greffon sur le Safe du client · mesurer la part des équipes qui acceptent l'essai (hypothèse : une sur deux)"],
          ["janv. 2027", "contrat gelé, audit externe, puis premiers clients payants"],
-         ["mars 2027", "même code sur une 2e chaîne EVM : marché × 6 à 8"],
-         ["T3 2027 – mi-2028", "point mort : 10 clients Standard (coûts fixes 4 300 €/mois : 2 fondateurs à 2 000 € + 300 € d'infra) ; plus tôt avec un Premium"]],
+         ["mars 2027", "même code sur une 2e chaîne EVM : marché × 11 à 19"],
+         ["T2 – T3 2027", "point mort : 10 clients Standard (coûts fixes 4 300 €/mois : 2 fondateurs à 2 000 € + 300 € d'infra) ; Avalanche seul suffit à 18,5 % de conversion, un écosystème EVM de plus à 8,9 % ; plus tôt avec un Premium"]],
      y=Inches(4.1), col_w=[Inches(2.6), W - 2 * M - Inches(2.6)], h_row=Inches(0.34), size=11.5)
 notes(s, """[4:20 → 4:45]  ROMAIN
-« Première année : 62 organisations présentées par l'écosystème Avalanche, la moitié en observation, 3 à 6 clients payants selon les taux de conversion du SaaS B2B. L'audit externe avant le premier euro. Puis le même code sur les autres chaînes compatibles. Nos coûts fixes sont de 4 300 euros par mois, deux fondateurs à 2 000 euros : le point mort est à 10 clients Standard, atteignable entre le troisième trimestre 2027 et la mi-2028 selon le taux de conversion, plus tôt avec un seul client Premium. »
+« Première année : 111 organisations présentées par l'écosystème Avalanche, la moitié en observation, 5 à 10 clients payants selon les taux de conversion du SaaS B2B. L'audit externe avant le premier euro. Puis le même code sur les autres chaînes compatibles. Nos coûts fixes sont de 4 300 euros par mois, deux fondateurs à 2 000 euros : le point mort est à 10 clients Standard, atteignable entre le deuxième et le troisième trimestre 2027 selon le taux de conversion, plus tôt avec un seul client Premium. »
 
-Si on demande « comment vous arrivez à 10 clients ? » : à l'envers. 10 clients ÷ 8,9 à 18,5 % de conversion = 54 à 112 équipes en observation ÷ une sur deux qui accepte = 108 à 225 équipes à contacter. Avalanche en donne 62 d'ici décembre ; chaque nouvel écosystème EVM en donne autant par semestre : un à trois écosystèmes de plus, donc T3 2027 dans le cas favorable, mi-2028 dans le cas défavorable.
+Si on demande « comment vous arrivez à 10 clients ? » : à l'envers. 10 clients ÷ 8,9 à 18,5 % de conversion = 54 à 112 équipes en observation ÷ une sur deux qui accepte = 108 à 225 équipes à contacter. Avalanche en donne 111 d'ici décembre : ça suffit dans le cas favorable (18,5 %), point mort au T2 2027 ; dans le cas défavorable (8,9 %), un écosystème EVM de plus au premier semestre 2027, qui en donne autant, point mort au T3 2027.
 
 Si on a droit à 4 min seulement : sauter cette slide, les chiffres sont en annexe.
 Si « pourquoi si peu ? » : « Parce qu'on ne prend que ce que l'entonnoir sourcé donne. L'année 1 sert aux références et aux données réelles. »""")

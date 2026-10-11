@@ -10,3 +10,7 @@
 
 ## Prochaines étapes
 - Relecture par Timéo de la diapo 4 (c'est sa diapo). Éventuellement ajouter l'unité « mUSD » au titre de la diapo 5.
+
+## Suite (2026-10-11 10:25) — cible élargie au seuil 1 M$
+- Explication des 5 % : perte annuelle attendue évitée = 9,5 % × 1,3 M$ × 91 % = 112 385 $/an ; 449 € × 12 = 5 388 €/an = 4,8 % ; 990 € × 12 = 11 880 € = 10,6 %.
+- Romain décide d'inclure toute organisation > 1 M$ de trésorerie : H1 révisée, 111 contactables, 56 en observation, 5 à 10 payants, point mort T2-T3 2027. Diapos 3 et 7, HTML, business-marche, mise-sur-le-marché, prix, pitch-final mis à jour (détail dans JOURNAL).

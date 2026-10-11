@@ -48,7 +48,7 @@ Tous les paliers : sans engagement, mensuel, données exportables (décision « 
 
 **H8** : coûts fixes = deux fondateurs à 3 500 €/mois chacun + 300 € d'infrastructure = **7 300 €/mois**.
 - **Point mort** : C : 7 300 / 449 ≈ **17 clients Standard** (ou 8 clients Premium, ou 49 Essentiel).
-- **SOM année 1 (B3)** : 3 à 6 clients payants par l'écosystème Avalanche → 16 à 32 k€/an : **l'année 1 ne couvre pas les fondateurs** (4 300 × 12 = 51,6 k€). C'est attendu pour un amorçage ; subventions (Avalanche, Bpifrance) et ouverture EVM (× 6 à 8 sur le SAM) comblent l'écart ; calendrier du point mort dans `shared/business-mise-sur-le-marche.md` § 3 bis.
+- **SOM année 1 (B3, H1 révisée au seuil 1 M$)** : 5 à 10 clients payants par l'écosystème Avalanche → 27 à 54 k€/an : **l'année 1 ne couvre les fondateurs que dans le cas favorable** (4 300 × 12 = 51,6 k€). C'est attendu pour un amorçage ; subventions (Avalanche, Bpifrance) et ouverture EVM (× 11 à 19 sur le SAM) comblent l'écart ; calendrier du point mort dans `shared/business-mise-sur-le-marche.md` § 3 bis.
 - **À 10 clients Standard**, la marge brute est > 95 % (coût marginal < 20 €).
 
 ## 4. Ce que le jury demandera

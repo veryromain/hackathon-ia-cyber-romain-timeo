@@ -27,30 +27,30 @@
 
 **Unité** : une organisation = un multisig à protéger, avec une trésorerie d'au moins 1 M$ (en dessous, le prix ne se justifie pas face à Safe Shield gratuit).
 
-**H1** — *Une équipe dont le protocole gère plus de 10 M$ d'actifs d'utilisateurs détient une trésorerie propre ≥ 1 M$.* Pourquoi : pour opérer à cette échelle, l'équipe a levé des fonds ou perçoit des commissions ; c'est une hypothèse de minimum, pas une mesure. **H2** — *Les DAO ≥ 1 M$ (D4) et les équipes H1 se recouvrent partiellement, de façon inconnue.* On donne donc une fourchette : recouvrement total (borne basse) ou nul (borne haute).
+**H1** (révisée le 11/10, décision de Romain : **toute organisation avec plus de 1 M$ de trésorerie est dans la cible et comptée**) — *Une équipe dont le protocole gère plus de 1 M$ d'actifs d'utilisateurs détient une trésorerie propre ≥ 1 M$.* Pourquoi : pour opérer à cette échelle, l'équipe a levé des fonds ou perçoit des commissions ; c'est une hypothèse, pas une mesure, et elle est plus large que l'ancienne (seuil 10 M$, qui reste la **borne prudente** : 675 protocoles toutes chaînes, 22 sur Avalanche, 62 contactables, 3 à 6 payants). **H2** — *Les DAO ≥ 1 M$ (D4) et les équipes H1 se recouvrent partiellement, de façon inconnue.* On donne donc une fourchette : recouvrement total (borne basse) ou nul (borne haute).
 
 | Cercle | Calcul | Résultat |
 |---|---|---|
-| **TAM** (chaînes EVM, borne basse : fonds et fondations exclus, D11) | C : 675 équipes (D1, H1) + 220 DAO (D4) − recouvrement (H2) | **675 à 895 organisations** |
-| **SAM** (Avalanche, ce que le produit sert aujourd'hui) | C : équipes dont le protocole a > 10 M$ sur Avalanche : 22 (D2, H1) + équipes de L1 avec trésorerie : 10 (D5, prouvées) → borne basse ; borne haute : 71 (D2, seuil 1 M$) + 50 L1 (D5) | **32 à 121 organisations** |
-| **SOM** (12 mois) | voir § 3 | **3 à 6 clients payants** par l'écosystème, jusqu'à ≈ 10 avec les entrées spontanées (non chiffrables aujourd'hui) |
+| **TAM** (chaînes EVM, borne basse : fonds et fondations exclus, D11) | C : 1 359 équipes (D1, H1) + 220 DAO (D4) − recouvrement (H2) ; borne prudente au seuil 10 M$ : 675 à 895 | **1 359 à 1 579 organisations** |
+| **SAM** (Avalanche, ce que le produit sert aujourd'hui) | C : équipes dont le protocole a > 1 M$ sur Avalanche : 71 (D2, H1) + équipes de L1 avec trésorerie : 10 (D5, prouvées) → borne basse ; borne haute : 71 + 50 L1 (D5) ; borne prudente au seuil 10 M$ : 32 à 121 | **81 à 121 organisations** |
+| **SOM** (12 mois) | voir § 3 | **5 à 10 clients payants** par l'écosystème, plus les entrées spontanées (non chiffrables aujourd'hui) |
 
-**Ce que ça dit, sans enjoliver** : sur Avalanche seul, on parle de **quelques dizaines à une centaine** d'organisations adressables. C'est un **marché d'amorçage**. La portabilité EVM (le contrat est en Solidity) multiplie le SAM par 6 à 8 (TAM / SAM = 675 / 121 à 895 / 32). Le TAM lui-même est une borne basse : il ignore les fonds, les fondations et les entreprises classiques qui paient en stablecoins, faute de source de comptage.
+**Ce que ça dit, sans enjoliver** : sur Avalanche seul, on parle de **quelques dizaines à une centaine** d'organisations adressables. C'est un **marché d'amorçage**. La portabilité EVM (le contrat est en Solidity) multiplie le SAM par 11 à 19 (TAM / SAM = 1 359 / 121 à 1 579 / 81). Le TAM lui-même est une borne basse : il ignore les fonds, les fondations et les entreprises classiques qui paient en stablecoins, faute de source de comptage.
 
 ## 3. Le SOM, par un entonnoir explicite (plus de « 10 à 15 % » posés sans raison)
 
 | Étape | Calcul | Résultat |
 |---|---|---|
-| Organisations contactables la 1re année via l'écosystème | C : cohorte Retro9000 (D6) 30 + équipes de L1 servies par Ash (D5) 10 + équipes > 10 M$ sur Avalanche (D2) 22 = 62 ; **H3** : les présentations par Team1 et la Fondation atteignent ces 62 (c'est leur rôle, et ils sont nos mentors) | **62** |
-| Entrent en mode observation gratuit (sans carte bancaire) | **H4** : la moitié accepte un essai gratuit qui ne change rien à leurs paiements (pas de source : hypothèse à **mesurer en B5** sur les équipes du hackathon) | **31** |
-| Deviennent payants | C : 31 × 8,9 % à 18,5 % (D10, essai sans carte) | **3 à 6** |
-| Revenu année 1 | C : 3 à 6 clients × palier Standard 449 €/mois (B6) × 12 | **16 à 32 k€** |
+| Organisations contactables la 1re année via l'écosystème | C : cohorte Retro9000 (D6) 30 + équipes de L1 servies par Ash (D5) 10 + équipes > 1 M$ sur Avalanche (D2, H1) 71 = 111 ; **H3** : les présentations par Team1 et la Fondation atteignent ces 111 (c'est leur rôle, et ils sont nos mentors) | **111** |
+| Entrent en mode observation gratuit (sans carte bancaire) | **H4** : la moitié accepte un essai gratuit qui ne change rien à leurs paiements (pas de source : hypothèse à **mesurer en B5** sur les équipes du hackathon) | **56** |
+| Deviennent payants | C : 56 × 8,9 % à 18,5 % (D10, essai sans carte) = 5,0 à 10,4 | **5 à 10** |
+| Revenu année 1 | C : 5 à 10 clients × palier Standard 449 €/mois (B6) × 12 | **27 à 54 k€** |
 
-Ce SOM est petit et c'est normal pour un amorçage : le but de l'année 1 est **les références et les données réelles** (mode observation), pas le chiffre d'affaires. Ce qui le fait monter : le catalogue d'applications Safe (entrées spontanées, non chiffrables), et l'ouverture EVM (× 6 à 8).
+Ce SOM est petit et c'est normal pour un amorçage : le but de l'année 1 est **les références et les données réelles** (mode observation), pas le chiffre d'affaires. Ce qui le fait monter : le catalogue d'applications Safe (entrées spontanées, non chiffrables), et l'ouverture EVM (× 11 à 19).
 
 ## 4. Ce que le jury demandera
-- **« Avalanche est-il assez grand ? »** Pour démarrer : 561 protocoles présents, 22 équipes à plus de 10 M$ d'actifs gérés, plus de 50 L1 avec leurs équipes, Safe disponible, un écosystème qui présente. Pour croître : non, et c'est pourquoi le contrat est portable EVM dès le premier jour.
-- **« Combien de clients ? »** 32 à 121 organisations adressables sur Avalanche, 675 à 895 sur l'EVM en borne basse, 3 à 6 clients payants la première année par l'écosystème. Tous les calculs sont dans le dépôt.
+- **« Avalanche est-il assez grand ? »** Pour démarrer : 561 protocoles présents, 71 équipes à plus de 1 M$ d'actifs gérés (22 à plus de 10 M$), plus de 50 L1 avec leurs équipes, Safe disponible, un écosystème qui présente. Pour croître : non, et c'est pourquoi le contrat est portable EVM dès le premier jour.
+- **« Combien de clients ? »** 81 à 121 organisations adressables sur Avalanche, 1 359 à 1 579 sur l'EVM en borne basse, 5 à 10 clients payants la première année par l'écosystème. Tous les calculs sont dans le dépôt.
 - **« D'où viennent vos chiffres ? »** API DeFiLlama lue le 11/10, DeepDAO (à confirmer sur leur site), safe.global/pricing, CertiK, TRM. Ce qu'on n'a pas pu sourcer est exclu, pas inventé.
 
 ## 5. Reproduire D1-D3

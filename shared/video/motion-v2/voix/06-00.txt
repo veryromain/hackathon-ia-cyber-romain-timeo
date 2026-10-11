@@ -1,0 +1,1 @@
+En mode Cosignataire, un agent tient une signature. Il simule chaque paiement, puis signe ou s'abstient, et dit pourquoi.0.93

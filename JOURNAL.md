@@ -12,6 +12,13 @@ Ajouter les entrées les plus récentes en haut.
 
 ---
 
+### 2026-10-11 10:25 — Romain (avec Claude) — CIBLE ÉLARGIE AU SEUIL 1 M$ DE TRÉSORERIE : DIAPOS 3 ET 7, BUSINESS, PITCH
+- **Décision de Romain :** toute organisation avec plus de 1 M$ de trésorerie est dans la cible et comptée. Hypothèse **H1 révisée** : protocole > 1 M$ d'actifs ⇒ trésorerie ≥ 1 M$ (l'ancien seuil 10 M$ devient la borne prudente, gardée dans `business-marche.md`).
+- **Nouveaux chiffres :** TAM EVM **1 359 à 1 579** (était 675-895) · SAM Avalanche **81 à 121** (était 32-121) · contactables **111** = 30 Retro9000 + 10 L1 + 71 protocoles > 1 M$ (était 62) · observation **56** · payants année 1 **5 à 10** (était 3-6) · revenu année 1 **27 à 54 k€** · point mort 10 clients Standard **T2-T3 2027** (était T3 2027-mi-2028 ; Avalanche seul suffit à 18,5 % de conversion, un écosystème EVM de plus à 8,9 %) · précision de H4 ± 9 pts.
+- **Fichiers :** `shared/pitch/generer_deck.py` (diapos 3 et 7 + notes), `Breaker-pitch.pptx` régénéré, `breaker-deck.html` (y compris la ligne de point mort qui affichait encore 17 clients / 7 300 €), `shared/business-marche.md`, `shared/business-mise-sur-le-marche.md` (dont le jalon « 10 clients payants » de févr.-mars, incohérent avec § 3 bis), `shared/business-prix.md` § 3, `shared/pitch-final.md`.
+- **Inchangé :** 9,5 % d'incidents, 1,3 M$, 91 %, 112 k$ (déjà calculés sur la population ≥ 1 M$), prix 149/449/990 €.
+- **Timéo :** rien à changer côté contrat ; la vidéo ne porte pas ces chiffres.
+
 ### 2026-10-11 10:10 — Romain (avec Claude) — DIAPO 4 : « CLÉ D'IDENTITÉ FROIDE » MISE EN AVANT
 - **Fait :** sur la diapo 4 (Solution), la ligne « Et protège la personne » devient un bandeau encadré en vert : **Clé d'identité froide** (nom retenu le 10/10 à 22:10), « une seconde clé, gardée hors ligne, pour révoquer seul sa clé volée, sans quorum, même coffre gelé ». La clé de contrainte, la probation des clés neuves, le flux Safe → Guard → Moteur → Signataires, les trois verbes et les deux modes restent tels quels. Notes orateur de Timéo complétées avec la preuve Fuji (80 000 approuvés 2/2 par le voleur, révoqués en une transaction, 0 sorti). Même nom sur la diapo 6 (Standard) et l'annexe. `shared/pitch/generer_deck.py`, `Breaker-pitch.pptx` régénéré, `breaker-deck.html` aligné.
 - **Précision pour le pitch :** « 280 500 tentés, zéro sorti » (diapo 5) = 95 000 + 93 500 + 92 000 **mUSD**, le jeton de test de la démo Fuji (pas des euros ni des dollars réels) ; 0 mUSD sorti.
