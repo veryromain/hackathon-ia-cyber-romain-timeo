@@ -303,3 +303,13 @@ h1, h2, h3, p { margin: 0; }
   html { scroll-behavior: auto; }
   * { transition: none !important; animation: none !important; }
 }
+
+/* Offres et feuille de route (11 octobre) */
+.cards.four { grid-template-columns: repeat(4, 1fr); }
+.card.offer { display: flex; flex-direction: column; }
+.card .price { display: block; font-family: var(--display, inherit); font-size: 40px; line-height: 1.1; letter-spacing: -1.2px; margin: 14px 0 6px; color: var(--ink); font-weight: 500; }
+.card .price small { font-size: 14px; letter-spacing: 0; color: var(--muted); font-weight: 400; }
+.card .for { margin: 0 0 14px; font-size: 14.5px; color: var(--muted); }
+.card.offer .limits li { padding: 10px 0; font-size: 14.5px; }
+@media (max-width: 1050px) { .cards.four { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 760px) { .cards.four { grid-template-columns: 1fr; } .card .price { font-size: 34px; } }

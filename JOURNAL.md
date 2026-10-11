@@ -12,6 +12,26 @@ Ajouter les entrées les plus récentes en haut.
 
 ---
 
+### 2026-10-11 08:28 — ia-2 / Timéo (avec Claude) — PLUS D'OBSERVATION (DÉCISION DE TIMÉO) — SITE MIS À JOUR AVEC LES OFFRES, LES DEUX MODES ET SAFE
+- **Décision de Timéo confirmée à 08:25 : on ne fait plus l'observation.** Ni comme mode produit (déjà retiré à 01:25), ni comme palier ou essai gratuit de 30 jours.
+- **⚠️ Romain, tes documents business reposent encore dessus, à reprendre avant le deck :**
+  - `shared/business-prix.md` : palier « Observation, 0 € » et réponse « Et si personne ne convertit ? » ;
+  - `shared/business-mise-sur-le-marche.md` : étape 2 du parcours client, jalons « ≥ 10 organisations en observation », hypothèse H4, entonnoir du point mort (92 à 191 organisations en observation), deux des quatre signaux d'arrêt, phrase 1 de la slide ;
+  - `shared/business-marche.md` : le SOM de 3 à 6 clients vient de cet entonnoir ;
+  - `shared/business-safe-et-differenciation.md` § 2 : « activation de l'observation ».
+  Sans observation gratuite, il faut dire par quoi un client entre (démo, essai payant, autre) et d'où viendront les données réelles : c'était la seule source prévue. **Je n'ai rien modifié dans tes fichiers.**
+- **Autre écart à corriger chez toi :** `shared/business-concurrence.md` range « pas de simulation d'effets » dans ce qu'on fait moins bien. Depuis 07:56 l'agent simule chaque paiement (`ia-1/agent/agent.py`).
+- **Site vitrine mis à jour avec le plan business** (`ia-2/site-vitrine/dist/index.html` et `style.css`, `app.js` inchangé) :
+  - **Deux modes** (nouveau bloc dans « La protection ») : Protection, incluse partout ; Cosignataire, offre Premium, avec l'agent qui simule, vérifie sur la chaîne et sur le Web, signe ou s'abstient. « Aucun veto définitif. »
+  - **Nouvelle section « Vous avez déjà le coffre »** : le coffre, les règles, Breaker ; « service de sécurité à part entière, conçu pour se brancher sur Safe ». Avec la réserve : démontré sur notre propre portefeuille, branchement sur Safe en feuille de route.
+  - **Nouvelle section « Les offres »** : Essentiel 149 €, Standard 449 €, Premium 990 €, Entreprise sur devis, avec le contenu de chaque palier tiré de `business-prix.md`. Sans palier Observation. Réserve affichée : grille prévue, aucun client payant, rien vendu avant l'audit externe.
+  - **Feuille de route datée** en quatre étapes, d'octobre 2026 à mars 2027, sans les jalons d'observation.
+  - **Questions fréquentes** : prix, pourquoi ce prix, « module de Safe ? », veto de l'agent, audit (analyse statique, 50 tests, audit externe avant le premier client), deuxième chaîne début 2027.
+  - L'étape « 01 · Observer » de la protection s'appelle maintenant « 01 · Connaître ». Le mot « observation » n'apparaît plus sur la page.
+- **Laissé de côté volontairement :** les prix de Safe et de Fireblocks (je ne les ai pas vérifiés moi-même, et le site ne nomme aucun concurrent hors Safe), les chiffres de marché et de point mort (pour le deck, pas pour un client), la clé de contrainte (décision de Timéo du 10/10).
+- **Vérifié dans un navigateur** à 1366, 1060 et 390 px : aucun défilement horizontal, menu sur une ligne, quatre offres alignées puis empilées sur téléphone.
+- **Le site publié (adresse privée gérée par Codex) n'est pas mis à jour** : ces changements ne sont que dans le dépôt.
+
 ### 2026-10-11 08:27 — Romain (avec Claude) — « BREAKER N'EST PAS UN COFFRE » : FORMULATION FIXÉE, UN ÉCART CORRIGÉ
 - Question de Romain : avons-nous mis en évidence que nous ne sommes pas un coffre mais un greffon sur le coffre existant ? **Non, pas assez** : l'en-tête du contrat dit « portefeuille de trésorerie… avec garde ». Nouveau `shared/ce-que-breaker-est.md` : la phrase à retenir, ce que la démo montre honnêtement (coffre de démonstration qui tient lieu du Safe du client), l'architecture cible **Guard + Module** de Safe (ce qui se porte directement, ce qui demande une conception : la clé de contrainte), et où la formulation doit apparaître.
 - **Fait (Romain) :** paragraphe « Ce qu'est Breaker » en tête du `README.md`, une ligne dans `CONTEXTE.md`, sous-titre du tableau de bord (`ia-1/dashboard/app.py`, texte seulement).
