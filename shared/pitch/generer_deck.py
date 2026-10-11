@@ -178,7 +178,6 @@ tiles(s, [("1,46 Md$", "Bybit, février 2025 : 3 signataires sur 6 valident une 
           ("≈ 280 M$", "Drift, avril 2026 : des mois de fausses identités pour approcher les signataires, puis le multisig", ORANGE),
           ("3,4 Md$", "volés en 2025 (Chainalysis). Médiane d'un incident significatif : 1,3 M$ (TRM)", ORANGE)], y=Inches(2.75), h=Inches(1.75))
 text(s, M, Inches(4.85), W - 2 * M, Inches(1.2), [[("Le coffre fait exactement ce qu'on lui demande. ", {"bold": True, "color": INK}), ("Il n'a aucune idée de ce qui est normal pour vous. Les grandes plateformes se paient des équipes et des outils dépositaires à partir de 36 000 $ par an. Les autres n'ont rien, à aucun prix.", {})]], size=17, color=MUTED)
-source(s, "shared/business-probleme.md · TRM Labs 2025 · fireblocks.com/pricing")
 notes(s, """[0:30 → 1:20]  ROMAIN
 « Bybit, c'est trois signataires sur six, trompés par leur propre écran. Drift, en avril 2026 : 280 millions, après des mois où des attaquants ont construit de fausses identités pour approcher les signataires. En 2025, 3,4 milliards volés. Le point commun : ce ne sont plus les contrats qu'on casse, ce sont les gens qu'on trompe au moment de signer. »
 (geste : mimer une signature)
@@ -197,7 +196,6 @@ tiles(s, [("675", "protocoles avec plus de 10 M$ d'actifs gérés, toutes chaîn
           ("32 – 121", "organisations adressables sur Avalanche : 22 protocoles > 10 M$, > 50 L1, 10 équipes sur Safe", ACCENT),
           ("675 – 895", "sur les chaînes EVM, borne basse : fonds et fondations exclus, faute de source", INK)], y=Inches(2.65), h=Inches(1.85), value_size=30)
 text(s, M, Inches(4.85), W - 2 * M, Inches(1.1), [[("Protocoles, DAO, startups et fonds crypto : 1 à 10 M$ dans un Safe, zéro personne dont c'est le métier. ", {"color": INK, "bold": True}), ("Tous ont déjà un coffre : Safe sécurise 35 Md$ sur 61 millions de comptes. Aucun ne déplacera sa trésorerie pour un essai.", {})]], size=16, color=MUTED)
-source(s, "shared/business-marche.md D1–D5 · Safe Foundation, rapport T1 2026")
 notes(s, """[1:20 → 2:00]  ROMAIN
 « Les autres, ce sont les équipes de protocoles, les DAO, les startups et les fonds crypto : une trésorerie de un à dix millions dans un coffre multi-signatures, le plus souvent un Safe, et zéro personne dont c'est le métier. Il y en a au moins 675 à 895 sur les chaînes compatibles Ethereum. Sur Avalanche, où nous sommes nés, entre 32 et 121. Ces chiffres viennent de l'API DeFiLlama lue hier et de DeepDAO ; les calculs sont dans le dépôt. »
 (passer la main : « Timéo, qu'est-ce qu'on leur apporte ? »)
@@ -219,13 +217,13 @@ for i, (k, t, d, c) in enumerate([("1", "Regarde", "Bénéficiaire nouveau ? Mon
     text(s, x, y3, Inches(0.5), Inches(0.6), k, size=30, color=c, font=DISPLAY, bold=True)
     text(s, x + Inches(0.55), y3 + Inches(0.05), w - Inches(0.6), Inches(0.4), t, size=16, color=INK, font=DISPLAY, bold=True)
     text(s, x + Inches(0.55), y3 + Inches(0.45), w - Inches(0.6), Inches(1.1), d, size=11.5, color=MUTED)
-text(s, M, Inches(5.85), W - 2 * M, Inches(0.5), [[("Et protège la personne : ", {"bold": True, "color": INK}), ("clé d'identité pour révoquer seul sa clé volée · clé de contrainte qui dit « oui » à l'écran et gèle en silence · probation des clés neuves.", {})]], size=13.5, color=MUTED)
-source(s, "shared/ce-que-breaker-est.md · ia-1/score/regles.py · ia-2/contracts/TreasuryGuard.sol")
+text(s, M, Inches(5.85), W - 2 * M, Inches(0.4), [[("Et protège la personne : ", {"bold": True, "color": INK}), ("clé d'identité pour révoquer seul sa clé volée · clé de contrainte qui dit « oui » à l'écran et gèle en silence · probation des clés neuves.", {})]], size=13, color=MUTED)
+text(s, M, Inches(6.22), W - 2 * M, Inches(0.5), [[("Deux modes, au choix du client : ", {"bold": True, "color": INK}), ("Protection", {"bold": True, "color": ACCENT}), (" (signature en plus, mise en attente : rien n'est jamais bloqué) · ", {}), ("Cosignataire", {"bold": True, "color": ORANGE}), (" (un agent occupe un siège de signataire et refuse ; dérogation humaine après délai).", {})]], size=13, color=MUTED)
 notes(s, """[2:00 → 3:00]  TIMÉO
 « Breaker n'est pas un coffre. C'est une garde qui se greffe sur le coffre que vous avez déjà, et qui fait trois choses.
 Un : elle regarde chaque paiement avec ce qu'elle a appris de votre historique. Ce bénéficiaire est-il nouveau ? Ce montant est-il normal ? Pourquoi trois paiements en dix minutes ? Pourquoi “urgent” ? Elle vérifie aussi l'adresse sur le Web et sur les listes de sanctions.
 Deux : elle explique, en français, à des gens qui ne sont pas experts : “premier paiement à cette adresse, montant quatre fois supérieur à vos habitudes”.
-Trois : elle freine. Une signature de plus, ou une attente. Jamais un blocage définitif : l'unanimité de vos signataires lève tout.
+Trois : elle freine. Une signature de plus, ou une mise en attente : un délai pendant lequel rien ne part, même avec toutes les signatures. Jamais un blocage définitif : l'unanimité de vos signataires lève tout. Et si vous voulez qu'elle puisse dire non, vous activez le mode Cosignataire : un agent prend un siège de signataire et refuse de signer un paiement à risque ; vos signataires gardent une dérogation après délai.
 Et parce que l'attaque vise la personne, chaque signataire a une clé d'identité, gardée à part, pour révoquer seul sa clé volée ; et une clé de contrainte, qui dit oui à l'écran mais gèle en silence si on le force. »
 
 Si question « vous êtes un module de Safe ? » : « Le multisig de la démo tient lieu du Safe du client ; le portage en Guard + Module de Safe est en feuille de route, 6 à 8 semaines. »""")
@@ -233,18 +231,17 @@ Si question « vous êtes un module de Safe ? » : « Le multisig de la démo ti
 # 5. Démo & preuves — TIMÉO
 s = base(("Démo & preuves", "mesuré, avant d'être affirmé : une seule fois, sur un jeu préparé à l'aveugle par l'autre membre"), 5, who="TIMÉO")
 title(s, "Sur Avalanche Fuji : 280 500 tentés, zéro sorti.", size=34)
-tiles(s, [("95 %", "des fraudes freinées ou arrêtées, formes jamais vues", ACCENT),
+tiles(s, [("95 %", "des fraudes freinées ou mises en attente, formes jamais vues", ACCENT),
           ("91 %", "des montants frauduleux mis en attente (1,12 M sur 1,23 M)", ACCENT),
-          ("5,1 %", "de paiements légitimes retardés : gros premiers paiements ; 0 % sur les récurrents", ORANGE),
+          ("5,1 %", "de paiements légitimes retardés, tous des premiers paiements", ORANGE),
           ("5 – 6 s", "pour signaler, sur 30 s d'examen · 0,002 $ de gas par alerte", BLUE)], y=Inches(2.3), h=Inches(1.8), value_size=32)
 tiles(s, [("100 %", "oracle Web : précision et rappel sur 35 adresses · 7 injections déjouées", INK),
           ("0 · 50 · 7 000", "détection grave (Slither) · tests · appels aléatoires, 0 invariant violé", INK),
           ("synthétique", "données fabriquées par nous · contrat pas encore audité par un tiers", ORANGE)], y=Inches(4.35), h=Inches(1.6), value_size=24)
-source(s, "shared/mesures.md § 1 · shared/audit-contrat.md · explorateur Fuji : adresses dans ia-2/deployments/fuji.json")
 notes(s, """[3:00 → 3:50]  TIMÉO
 « Tout ça tourne sur Avalanche Fuji, et vous allez le voir. »
 → LANCER LA VIDÉO (2 à 3 min) ou la démo live. Pendant la vidéo, Timéo commente ; Romain surveille le chrono.
-« Les chiffres, mesurés une seule fois sur un jeu de fraudes que Romain a préparé à l'aveugle : 95 % des fraudes freinées ou arrêtées, 91 % des montants frauduleux mis en attente, 5,1 % de paiements légitimes retardés, tous de gros premiers paiements. Sur Fuji : 280 500 tentés, zéro sorti, signalement en 5 secondes, 0,002 dollar de gas par alerte. L'oracle Web : 100 % sur 35 adresses, 7 injections déjouées. Le contrat : zéro détection grave à l'analyse statique, 50 tests, 7 000 appels aléatoires sans qu'une seule promesse soit violée. »
+« Les chiffres, mesurés une seule fois sur un jeu de fraudes que Romain a préparé à l'aveugle : 95 % des fraudes freinées ou mises en attente, 91 % des montants frauduleux mis en attente, 5,1 % de paiements légitimes retardés, tous de gros premiers paiements à un nouveau bénéficiaire, zéro sur les prestataires habituels. Sur Fuji : 280 500 tentés, zéro sorti, signalement en 5 secondes, 0,002 dollar de gas par alerte. L'oracle Web : 100 % sur 35 adresses, 7 injections déjouées. Le contrat : zéro détection grave à l'analyse statique, 50 tests, 7 000 appels aléatoires sans qu'une seule promesse soit violée. »
 
 ROMAIN (une phrase, pour l'honnêteté)
 « Données synthétiques, contrat pas encore audité par un tiers : on le dit avant qu'on nous le demande. »
@@ -254,11 +251,11 @@ Si le chrono dépasse 3:50 ici : couper la phrase sur l'oracle.""")
 # 6. Offre — ROMAIN
 s = base(("Offre", "Safe Pro vend des règles que vous écrivez ; nous détectons ce que vous n'avez pas prévu"), 6, who="ROMAIN")
 title(s, "Un prix affiché, selon la taille de votre trésorerie", size=36)
-gap = Inches(0.2); w = int((W - 2 * M - 3 * gap) / 4); y = Inches(2.45); h = Inches(2.0)
+gap = Inches(0.2); w = int((W - 2 * M - 3 * gap) / 4); y = Inches(2.4); h = Inches(2.15)
 for i, (n, p, u, d, star) in enumerate([("Observation", "0 €", "30 jours", "détection et explications en lecture seule, rapport de fin d'observation", False),
                                         ("Essentiel", "149 €", "/ mois", "< 1 M$ · friction, explications, listes publiques, notifications", False),
-                                        ("Standard", "449 €", "/ mois", "1 à 10 M$ · + oracle Web, traçage, sosies, clé d'identité, rapport mensuel", True),
-                                        ("Premium", "990 €", "/ mois", "> 10 M$ · + mode cosignataire, réglages sur mesure, support · Entreprise sur devis", False)]):
+                                        ("Standard", "449 €", "/ mois", "1 à 10 M$ · + oracle Web, traçage, sosies, clé d'identité, Cosignataire en option", True),
+                                        ("Premium", "990 €", "/ mois", "> 10 M$ ou > 5 multisigs · sur mesure, support prioritaire, disponibilité garantie · Entreprise sur devis", False)]):
     x = M + i * (w + gap)
     rect(s, x, y, w, h, fill=GLASS, line=ACCENT if star else LINE, shape=MSO_SHAPE.ROUNDED_RECTANGLE, radius=0.08)
     text(s, x + Inches(0.3), y + Inches(0.22), w - Inches(0.5), Inches(0.4), n, size=13, color=ACCENT if star else MUTED, bold=True)
@@ -268,12 +265,18 @@ rows(s, [["Pourquoi 449 €", ""],
          ["Perte annuelle évitée", "9,5 % d'incidents (TRM ÷ population) × 1,3 M$ médiane × 91 % d'efficacité ≈ 112 k$/an  (22 k$ à périmètre restreint)"],
          ["Prix / valeur", "5 400 €/an = 5 % de la perte évitée (règle : ≤ 10 %)"],
          ["Repère du client · coût marginal", "Safe Pro Business 669 €/mois (règles à écrire) · Fireblocks 999 $/mois (dépositaire) · coût marginal ≈ 1,2 $/client/mois"]],
-     y=Inches(4.65), col_w=[Inches(3.2), W - 2 * M - Inches(3.2)], h_row=Inches(0.36), size=11.5)
-source(s, "shared/business-prix.md · shared/business-safe-et-differenciation.md · safe.global/pricing (8/10/2026)")
+     y=Inches(4.8), col_w=[Inches(3.2), W - 2 * M - Inches(3.2)], h_row=Inches(0.36), size=11.5)
 notes(s, """[3:50 → 4:20]  ROMAIN
 « Safe vient de lancer Safe Pro : 669 euros par mois pour des règles que vous écrivez vous-même. Nous, nous détectons ce que vous n'avez pas prévu, et nous l'expliquons.
 Observation gratuite 30 jours : rien ne change à vos paiements. Puis 149, 449 ou 990 euros par mois selon la trésorerie, sans engagement.
-449 euros, c'est 5 % de la perte annuelle que vous évitez, calculée avec les taux d'incidents de TRM et notre efficacité mesurée. »
+449 euros, c'est 5 % de la perte annuelle que vous évitez, calculée avec les taux d'incidents de TRM et notre efficacité mesurée. Et le mode Cosignataire, l'agent qui peut dire non, est disponible dès cette formule : c'est vous qui choisissez le pouvoir que vous lui déléguez. »
+
+LE CALCUL DE LA PERTE ANNUELLE ÉVITÉE, si on nous le demande (tout est dans shared/business-prix.md § 1.B) :
+• Probabilité d'un incident dans l'année ≈ 9,5 % : TRM Labs compte ≈ 150 incidents significatifs en 2025 ; on les rapporte à la population des organisations qui ont au moins 1 M$ : 1 359 protocoles avec plus de 1 M$ d'actifs (API DeFiLlama) + 220 DAO avec plus de 1 M$ de trésorerie (DeepDAO) = 1 579. 150 / 1 579 = 9,5 %. C'est une borne haute : tous ces incidents ne sont pas des fraudes de signataires ; on montre aussi le cas où un incident sur cinq est dans notre périmètre.
+• Perte médiane par incident = 1,3 M$ : médiane des incidents significatifs de 2025 selon TRM Labs (la moitié des incidents coûtent plus, la moitié moins). Deux autres sources l'encadrent : Immunefi donne 1,5 M$ de médiane en DeFi ; CertiK donne 104 k$ mais sur un périmètre beaucoup plus large qui inclut les petits incidents (plus de 700). On prend TRM parce que son périmètre (incidents significatifs) ressemble au nôtre.
+• Efficacité = 91 % : part des montants frauduleux que Breaker a mis en attente sur le jeu final, préparé à l'aveugle (shared/mesures.md).
+• Perte évitée = 9,5 % × 1,3 M$ × 91 % ≈ 112 k$ par an ; 22 k$ si un incident sur cinq est dans notre périmètre.
+• Règle de prix : un outil de sécurité se vend sans discussion sous 10 % de la perte qu'il évite ; 449 € × 12 = 5 400 € = 5 % de 112 k$ (25 % de 22 k$).
 
 Différence en une phrase si on nous la demande : « Vous avez déjà le coffre. Il vous manque quelqu'un qui regarde chaque paiement et vous dit, en français, quand quelque chose ne colle pas. »""")
 
@@ -281,18 +284,19 @@ Différence en une phrase si on nous la demande : « Vous avez déjà le coffre.
 s = base(("Mise sur le marché", "aucun pourcentage de part de marché : un entonnoir, chaque étape sourcée"), 7, who="ROMAIN")
 title(s, "Première année : 62 organisations présentées, 3 à 6 clients payants.", size=32)
 flow(s, [("62 contactables", "Retro9000 30 + équipes de L1 10 + protocoles > 10 M$ sur Avalanche 22, présentées par l'écosystème"),
-         ("31 en observation", "× 50 % : hypothèse H4, la seule non sourcée, mesurée dès octobre (± 12 points)"),
+         ("31 en observation", "× 50 % : une équipe sur deux accepte l'essai gratuit ; seule hypothèse non sourcée, mesurée dès octobre"),
          ("3 à 6 payants", "× 8,9 – 18,5 % : conversion essai → payant du SaaS B2B sans carte bancaire")], y=Inches(2.4), h=Inches(1.5), highlight=(2,))
 rows(s, [["Quand", "Jalon"],
          ["oct. 2026", "dépôt public · ≥ 10 organisations en observation · dossier subvention"],
-         ["nov. – déc.", "portage en Guard + Module de Safe · mesure de H4 · faux positifs réels < 5 %"],
+         ["nov. – déc.", "greffon sur le Safe du client · mesurer la part des équipes qui acceptent l'essai (hypothèse : une sur deux)"],
          ["janv. 2027", "contrat gelé, audit externe, puis premiers clients payants"],
          ["mars 2027", "même code sur une 2e chaîne EVM : marché × 6 à 8"],
-         ["fin 2027 – mi-2028", "point mort : 17 clients Standard (7 300 €/mois de coûts fixes) ; plus tôt avec un client Premium"]],
+         ["T3 2027 – mi-2028", "point mort : 10 clients Standard (coûts fixes 4 300 €/mois : 2 fondateurs à 2 000 € + 300 € d'infra) ; plus tôt avec un Premium"]],
      y=Inches(4.1), col_w=[Inches(2.6), W - 2 * M - Inches(2.6)], h_row=Inches(0.34), size=11.5)
-source(s, "shared/business-marche.md § 3 · shared/business-mise-sur-le-marche.md § 3 et 3 bis")
 notes(s, """[4:20 → 4:45]  ROMAIN
-« Première année : 62 organisations présentées par l'écosystème Avalanche, la moitié en observation, 3 à 6 clients payants selon les taux de conversion du SaaS B2B. L'audit externe avant le premier euro. Puis le même code sur les autres chaînes compatibles : point mort à 17 clients, entre fin 2027 et mi-2028, plus tôt avec un seul client Premium. »
+« Première année : 62 organisations présentées par l'écosystème Avalanche, la moitié en observation, 3 à 6 clients payants selon les taux de conversion du SaaS B2B. L'audit externe avant le premier euro. Puis le même code sur les autres chaînes compatibles. Nos coûts fixes sont de 4 300 euros par mois, deux fondateurs à 2 000 euros : le point mort est à 10 clients Standard, atteignable entre le troisième trimestre 2027 et la mi-2028 selon le taux de conversion, plus tôt avec un seul client Premium. »
+
+Si on demande « comment vous arrivez à 10 clients ? » : à l'envers. 10 clients ÷ 8,9 à 18,5 % de conversion = 54 à 112 équipes en observation ÷ une sur deux qui accepte = 108 à 225 équipes à contacter. Avalanche en donne 62 d'ici décembre ; chaque nouvel écosystème EVM en donne autant par semestre : un à trois écosystèmes de plus, donc T3 2027 dans le cas favorable, mi-2028 dans le cas défavorable.
 
 Si on a droit à 4 min seulement : sauter cette slide, les chiffres sont en annexe.
 Si « pourquoi si peu ? » : « Parce qu'on ne prend que ce que l'entonnoir sourcé donne. L'année 1 sert aux références et aux données réelles. »""")
@@ -302,13 +306,12 @@ s = base(("Équipe · limites · suite", "36 heures"), 8, who="TIMÉO · ROMAIN"
 title(s, "Conçu pour être vérifié, pas pour être cru.", size=36)
 colw = int((W - 2 * M - Inches(0.4)) / 2)
 text(s, M, Inches(2.5), colw, Inches(0.4), "Ce qu'on ne cache pas", size=14, color=ORANGE, bold=True)
-text(s, M, Inches(2.95), colw, Inches(2.4), ["•  Données synthétiques : une organisation fictive, trois mois de trafic.", "•  Contrat non audité par un tiers ; réseau de test.", "•  Le multisig de la démo tient lieu du Safe du client : le greffon reste à écrire.", "•  Aucun client interrogé, aucun prix validé par le marché."], size=14, color=TEXT, spacing=1.35)
+text(s, M, Inches(2.95), colw, Inches(2.4), ["•  Données synthétiques : une organisation fictive, trois mois de trafic.", "•  Contrat non audité par un tiers ; réseau de test.", "•  Le coffre de la démo tient lieu du Safe du client : le greffon reste à écrire.", "•  Aucun client interrogé, aucun prix validé par le marché."], size=14, color=TEXT, spacing=1.35)
 x2 = M + colw + Inches(0.4)
 text(s, x2, Inches(2.5), colw, Inches(0.4), "Les 90 prochains jours", size=14, color=ACCENT, bold=True)
-text(s, x2, Inches(2.95), colw, Inches(2.4), ["•  Dès ce mois-ci : 10 organisations en observation gratuite, présentées par l'écosystème Avalanche.", "•  Portage en Guard + Module de Safe · notifications · rejeu de Bybit et Drift sur données réelles.", "•  Audit externe financé par subvention, avant le premier euro."], size=14, color=TEXT, spacing=1.35)
+text(s, x2, Inches(2.95), colw, Inches(2.4), ["•  Dès ce mois-ci : 10 organisations en observation gratuite, présentées par l'écosystème Avalanche.", "•  Greffon sur le Safe du client · notifications · rejeu de Bybit et Drift sur données réelles.", "•  Audit externe financé par subvention, avant le premier euro."], size=14, color=TEXT, spacing=1.35)
 rect(s, M, Inches(5.45), Inches(0.08), Inches(0.75), fill=ACCENT)
 text(s, M + Inches(0.3), Inches(5.4), W - 2 * M, Inches(0.9), "Vos fonds. Vos signataires. Votre dernier mot.", size=26, color=INK, font=DISPLAY, bold=True, anchor=MSO_ANCHOR.MIDDLE)
-text(s, M + Inches(0.3), Inches(6.15), W - 2 * M, Inches(0.4), "Romain, business · Timéo, technique · github.com/veryromain/hackathon-ia-cyber-romain-timeo", size=11, color=FAINT)
 notes(s, """[4:45 → 5:00]  TIMÉO
 « Ce qu'on ne cache pas : données synthétiques, contrat pas encore audité, le multisig de la démo tient lieu du Safe du client. Ce qu'il nous reste : le greffon Safe, l'audit, et surtout de vraies données. »
 
@@ -329,14 +332,17 @@ rows(s, [["Cadre", "Ce que ça implique pour Breaker", "Preuve"],
 notes(s, "ROMAIN répond aux questions de conformité ; TIMÉO complète sur la preuve technique (événements on-chain, hash de preuve).")
 
 s = base(("Annexe A2 · Playbook de réponse", "qui est alerté, ce qui est automatique, ce qui reste humain"), "A2", annex=True, who="TIMÉO")
-title(s, "Automatique : regarder, expliquer, freiner. Humain : décider, toujours.", size=28)
-rows(s, [["Niveau", "Déclencheur", "Automatique", "Humain", "Alerté"],
-         ["Aucun", "bénéficiaire connu, montant habituel", "journalisé : score et raisons", "signatures normales", "—"],
-         ["Signature en plus (≥ 0,30)", "nouveau bénéficiaire, montant inhabituel, « urgent », hors heures", "exige une signature de plus ; explication en français", "un signataire supplémentaire relit « ce que vous signez »", "tous les signataires (tableau de bord, e-mail / Telegram)"],
-         ["Mise en attente (≥ 0,75)", "rafale, adresse signalée, fonds souillés, sosie, nouveau signataire qui pousse un gros paiement", "attente (180 s en démo, 24 h en réel) + signature en plus ; rapport d'incident pré-rempli", "vérifier, annuler, ou lever à l'unanimité ; juger vraie / fausse alerte", "tous les signataires + responsable désigné"],
-         ["Gel", "clé compromise, signature sous contrainte", "clé d'identité : révocation immédiate par la victime seule ; clé de contrainte : gel silencieux, alerte privée", "remplacer la clé, dégeler à la majorité des clés saines", "canal privé aux autres signataires, jamais on-chain"]],
-     y=Inches(2.3), col_w=[Inches(1.9), Inches(2.7), Inches(2.9), Inches(2.4), W - 2 * M - Inches(9.9)], h_row=Inches(0.78), size=10.5)
-notes(s, "TIMÉO présente le playbook ; les seuils sont ceux de ia-1/score/regles.py (SEUIL_STEP_UP 0,30 ; SEUIL_HOLD 0,75).")
+title(s, "Trois réponses graduées : une paire d'yeux en plus, du temps, un refus.", size=28)
+rows(s, [["Niveau", "Déclencheur", "Ce qui se passe, automatiquement", "Ce que ça protège vraiment", "Humain"],
+         ["Signature en plus (score ≥ 0,30)", "nouveau bénéficiaire, montant inhabituel, « urgent », hors heures", "le paiement exige une signature humaine de plus que votre seuil ; explication en français à tous les signataires", "contre UN signataire trompé ou une clé volée quand le quorum vient d'être atteint : une autre personne relit", "un signataire de plus relit « ce que vous signez » et signe, ou non"],
+         ["Mise en attente (score ≥ 0,75)", "rafale, adresse signalée, fonds souillés, sosie, nouveau signataire qui pousse un gros paiement", "signature en plus ET un délai (24 h en réel, 180 s en démo) pendant lequel rien ne part, même avec toutes les signatures ; oracle, traçage et rapport d'incident tournent pendant ce temps", "contre des attaquants qui tiennent DÉJÀ assez de clés (Bybit : 3 sur 6) : la seule protection qui reste est le temps, pour vérifier, annuler, ou révoquer sa clé", "vérifier, annuler, ou lever l'attente à l'unanimité ; juger vraie / fausse alerte"],
+         ["Cosignataire (option, dès Standard)", "mêmes signaux ; le client a activé le mode", "l'agent occupe un siège de signataire : il REFUSE de signer un paiement à risque, donc le quorum n'est pas atteint ; c'est le seul niveau qui bloque", "contre une équipe qui, sous pression, signerait quand même : le non est posé par l'agent, pas par un collègue", "dérogation renforcée après délai : les signataires humains peuvent passer outre, à plusieurs"],
+         ["Gel", "clé compromise, signature sous contrainte", "clé d'identité : révocation immédiate par la victime seule ; clé de contrainte : gel silencieux et alerte privée", "contre la perte d'une clé ou la menace physique sur une personne", "remplacer la clé ; dégeler à la majorité des clés saines"]],
+     y=Inches(2.25), col_w=[Inches(1.75), Inches(2.3), Inches(3.3), Inches(2.6), W - 2 * M - Inches(9.95)], h_row=Inches(0.9), size=10)
+notes(s, """TIMÉO.
+Ce qui diffère vraiment : la signature en plus ajoute une PERSONNE ; la mise en attente ajoute du TEMPS. Une personne de plus ne sert à rien si les attaquants tiennent déjà assez de clés (Bybit) : là, seul le délai protège, parce qu'il laisse le temps de vérifier, d'annuler, de révoquer sa clé avec la clé d'identité, et parce que l'oracle et le traçage tournent pendant ce temps.
+Où interviennent les agents : partout pour regarder et expliquer (automatique, toujours). Pour DÉCIDER, seulement si le client a activé le mode Cosignataire : l'agent devient un signataire qui peut refuser. En mode Protection, l'agent ne signe jamais et ne refuse jamais : il ajoute une signature à obtenir ou un délai.
+Seuils : ia-1/score/regles.py (SEUIL_STEP_UP 0,30 ; SEUIL_HOLD 0,75). Niveau « Aucun » (bénéficiaire connu, montant habituel) : journalisé avec score et raisons, signatures normales.""")
 
 s = base(("Annexe A3 · Sécurité du contrat", "chaque phrase est vérifiable en une commande"), "A3", annex=True, who="TIMÉO")
 title(s, "Pas encore audité par un tiers. Voici ce qu'on a fait à la place, et ce que ça vaut.", size=28)

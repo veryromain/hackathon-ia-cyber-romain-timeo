@@ -2,7 +2,10 @@
 
 > À lire par le Claude de Timéo à chaque débrief. Un paragraphe par quart d'heure, le plus récent en haut.
 
-## Dernier quart d'heure — 11/10 08:47
+## Dernier quart d'heure — 11/10 09:15
+Romain a relu le deck et pris trois décisions. **(1) Vocabulaire unique** partout : *signature en plus* (une personne de plus) · *mise en attente* (du temps ; rien ne part même avec toutes les signatures ; l'unanimité lève) · *Cosignataire* (un agent occupe un siège de signataire et refuse ; dérogation humaine après délai ; seul mode qui bloque, activé par le client). Plus jamais « arrêtées / bloquées » pour des fraudes mises en attente, ni « Guard / Module / H4 » devant le jury. **(2) Le mode Cosignataire est en option dès Standard (449 €)**, pas réservé au Premium ; Premium = échelle (> 5 multisigs, sur mesure, support). **(3) Fondateurs à 2 000 €/mois** → point mort à 10 clients. **Pour Timéo :** reprendre ce vocabulaire sur le site et dans la vidéo ; ne pas présenter le Cosignataire comme exclusif au Premium ; le deck régénéré est dans `shared/pitch/Breaker-pitch.pptx`.
+
+## Quart d'heure précédent — 11/10 08:47
 Romain a produit le **PowerPoint du pitch** `shared/pitch/Breaker-pitch.pptx` dans l'identité exacte du site de Timéo (couleurs, polices Manrope / DM Sans, logo, titres repris du site). 8 slides + 4 annexes (conformité, playbook, contrat, sources). **Les notes orateur sont dans chaque slide, avec ROMAIN / TIMÉO et le chrono** : Timéo parle sur les slides 1 (équipe), 2 (regard technique), 4 (solution), 5 (démo + chiffres), 8 (limites), A2, A3. **Pour Timéo :** installer les deux polices de `shared/pitch/polices/` avant d'ouvrir le fichier ; lire ses notes ; prévenir si un chiffre du site change (deck et site doivent rester identiques). La vidéo se lance à la slide 5.
 
 ## Quart d'heure précédent — 11/10 08:36
