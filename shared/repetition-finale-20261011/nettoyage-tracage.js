@@ -1,0 +1,3 @@
+const path=require('path'); const hre=require(require.resolve('hardhat',{paths:[process.cwd()]}));
+const {loadDeployment}=require(path.join(process.cwd(),'lib','deployment'));
+(async()=>{const {info,signerOf,wallet}=await loadDeployment(hre); const signer=signerOf(info.owners[0]); for(const id of [6,7,8]){const p=await wallet.getProposal(id);if(!p.executed&&!p.cancelled){const r=await(await wallet.connect(signer).cancel(id,'Fin de répétition du traçage, annulation de test')).wait();console.log('Paiement '+id+' annulé : '+r.hash);}}})().catch(e=>{console.error(e.shortMessage||e.message);process.exitCode=1;});
